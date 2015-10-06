@@ -1,0 +1,58 @@
+@import "question.css";
+
+.question-slogan {position:relative; }
+.question-slogan i {display:block; width:60px; height:60px; background:url("../img/g_icon_24.png") no-repeat 0 -1250px; position:absolute; left:30px; top:0;}
+.question-slogan strong {display:block; font-size:20px; font-weight:normal; color:#666; padding-left:100px;}
+.question-slogan p {text-align:center; padding-top:10px;}
+
+.answer-guide .g-btn {width:160px; padding-left:0; padding-right:0}
+
+.question .question-title {font-size:18px; margin-bottom:18px;}
+.question .question-state {color:#999; border-bottom:1px solid #eee; padding-bottom:10px; margin-bottom:20px;_position: relative;}
+.question-state .share-link {color:#aaa;}
+.question-state .time {}
+.question-state .g-share-list {margin-left:4px;}
+.question-addition {margin-bottom:20px;}
+.question-state .g-share-list{_width: 140px; _position: absolute;_top:0;_right: 0;}
+.question-state .g-share-list ul{_position: absolute;_right: 0;_top: 0;}
+.question-state .g-share-list .g-icon{_font-size: 0;_margin-top: -5px;}
+.question-state .time{_position: absolute;_top: 0;_right: 180px;}
+.question-state .g-sep{_position: absolute;_right: 160px;_top: 0}
+
+.answer-list li {position:relative; padding:20px 0 20px 100px; border-bottom:1px solid #eee;zoom:1;}
+.answer-list li.last {border:none;}
+.answer-list .g-avatar {position:absolute; left:0; top:20px;}
+.answer-list .post-time {color:#ccc;}
+.answer-list .answer-content {word-wrap: break-word; word-break: break-all; padding:10px 0 20px 0; font-size:14px;}
+.answer-list .answer-operation {text-align:right; color:gray;}
+.answer-list .answer-operation a {color:gray;}
+.answer-list .answer-operation a:hover {color:#ff5500}
+.answer-list .mark-as-best-answer {display:block; position:absolute; top:20px; right:0;}
+.answer-list .answer-best-flag {display:block; position:absolute; top:0; right:0; font-size:14px; font-weight:bold; color:#ff5500}
+.answer-list .answer-like {margin-left:1em}
+
+.ask-frm-input{_zoom:1;}
+.ask-frm-input textarea.ask-ext-content {height:45px;}
+.answer-frm legend {font-size:14px; font-weight:bold}
+.ask-frm p.op {text-align:right; padding-top:20px;}
+.ask-frm fieldset {margin-bottom:0;}
+
+/*底部弹层*/
+.lay-tipfont, .wenda-layout .yyico{background:url("../img/abico.png") no-repeat;_background:url("../img/abico_8.png") no-repeat;}
+.wenda-layout{width: 100%;height: 70px;display: none; padding-top: 20px; position: fixed;bottom: 0;left: 0;z-index: 100;
+_position: absolute;_bottom: auto;
+_top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));
+filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#99000000', endColorstr='#99000000');background:rgba(0,0,0,0.6);_background:#444;}
+.wenda-bottomlay{width: 1000px;margin: 0 auto;}
+.lay-tipfont{float: left;width: 291px;height: 45px;margin-right: 15px; background-position: 0 -291px; text-indent: -9999px;}
+.wenda-layout .g-txt{padding: 11px 10px;width: 200px;}
+.wenda-layout .g-btn-big{width: 90px;text-align: center;margin-top: 0;}
+.wenda-layout .yyico{  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-position: -582px 0;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.wenda-layout-btm{bottom: 126px;}
+

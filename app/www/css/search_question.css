@@ -1,0 +1,11 @@
+.g-layout-main2 {border:1px solid #eee; width:658px; padding:0 20px 20px 20px; background-color:#fff;}
+.question-list {margin-bottom:20px;}
+.question-list li {overflow:hidden; padding:20px 0 40px 0; border-bottom:1px solid #eee; position:relative}
+.question-list li.last {border:none;}
+.question-list .ti {font-size:14px; color:#666; font-weight:bold}
+.question-list .desc {display:block;}
+.question-list .question-state {display:block; position:absolute; bottom:15px; right:10px; color:#999}
+.feq-qs-op {margin-top:10px;}
+
+.other-focus-list {overflow:hidden;}
+.other-focus-list li {float:left; width: 50%;}

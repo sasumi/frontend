@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+.g-body {padding-top:60px;}
+
+.find-password-guide ul {width:490px; margin:0 auto; padding:80px 0 280px 0;}
+.find-password-guide ul li {float:left; margin-right:80px;}
+.find-password-guide ul li.last {margin-right:0;}
+.find-password-guide a {display:block; width:204px; height:204px; background:url("../img/find_type.png") no-repeat; text-indent:-9999em; border-radius:102px;}
+.find-password-guide .by-mobile-btn {background-position:-207px 0;}
+.find-password-guide .by-email-btn:hover {background-position:0 -204px;}
+.find-password-guide .by-mobile-btn:hover {background-position:-207px -204px;}
+
+.register-guide {font-size:14px; position:absolute; right:0; top:-45px;}
+.register-guide a {color:#ff5500}
+
+.step-frm {padding:90px 0; _height:370px; min-height:370px; width:300px; margin:0 auto; position:relative}
+.step-frm legend {display:none}
+.step-frm .g-txt {width:278px;}
+.step-frm .g-btn-big {width:152px;}
+.step-frm p {margin:10px 0;}
+
+.step-frm #msg-token {width:130px}
+.step-frm #resend-msg-btn {width:140px; padding:0; font-weight:normal; font-size:12px;}
+
+
+.verify-fail {border-color:#ff5500}
+
+.change-verify-img {width:3em; display:inline-block; vertical-align:middle; cursor:pointer}
+.change-verify-img:hover {color:#ff5500}
+form p.error {color:#ff5500; padding:0}
+
+#verify-code {width:130px;}
+#verify-img {height:45px; vertical-align:middle; cursor:pointer}

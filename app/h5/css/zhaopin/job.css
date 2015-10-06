@@ -1,0 +1,603 @@
+html{
+    -webkit-text-size-adjust : none ;
+    -moz-text-size-adjust : none ;
+    -ms-text-size-adjust : none ;
+    text-size-adjust : none;
+    font-family: Microsoft Yahei;
+}
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,header,hgroup,nav,section,article,aside,footer,figure,figcaption,menu,button {
+    margin: 0;
+    padding: 0;
+    outline: 0
+}
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-height: 100%;
+    background: #eee;
+}
+
+.hide{
+    display: none !important;
+}
+.h5-bg{background-size: contain;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-position: center;}
+
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color:#0d3d7e;
+    background-image:url("../../img/zhaopin/pagebg1.jpg");
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+}
+.loading .logo{
+    background-image: url("../../img/zhaopin/logo.png");
+    position: absolute;left: 50%;bottom: 1.5rem;
+    margin-left: -1.7rem; 
+    width: 3.45rem; 
+    height: 1.175rem; 
+    text-indent: -200rem;
+}
+.loading-img{
+    width: 16rem; height: 8.25rem;
+    position: absolute;
+    top: 6.7rem;
+    left: 0;
+    z-index: 3;
+    -webkit-animation: loading .6s ease infinite alternate;
+    animation: loading .6s ease infinite alternate;
+}
+.progress-bar{
+    position: absolute;
+    left: 1rem;
+    top: 11.8rem;
+    width: 14rem; height: 0.2rem;
+    z-index: 1;
+}
+.progress-color{
+    background-color: #ee7e2e;
+    height: 0.2rem;
+    border-top: 0.05rem solid #000;
+    border-bottom: 0.05rem solid #000;
+}
+.progress-bar strong{
+    position: absolute;
+    left: 50%;bottom: -1rem;
+    margin-left: -0.3rem;
+    color: #ee7e2e;
+    font-size: 0.5rem;
+}
+.progress-layer{
+    position: absolute;
+    left: 1rem;
+    top: 11.8rem;
+    width: 14rem; height: 0.3rem;
+    z-index: 2;
+    background: -webkit-linear-gradient(left, rgba(13,61,126,1), rgba(13,61,126,0), rgba(13,61,126,1));
+}
+/*翻页提示箭头*/
+.arrow-btn {
+    z-index: 10;
+    bottom: .7rem;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+}
+.arrow-btn .tc-btnlist-top{
+    background-image: url("../../img/zhaopin/arrow.png");
+    background-size: cover;
+    display: inline-block;
+    width: 1.15rem;
+    height: .7rem;
+    vertical-align: middle;
+    -webkit-animation: arrow 1.5s infinite ease-in-out;
+    animation: arrow 1.5s infinite ease-in-out;
+}
+/*翻页提示箭头 end*/
+
+.panes.wrapper {
+    overflow: hidden;
+    background: #0d3d7e;
+}
+
+.panes {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.panes i{
+    opacity: 0;  
+    animation-fill-mode: forwards !important;
+    -webkit-animation-fill-mode: forwards !important;
+}
+.panes .bottom-txt-icon{
+    opacity: 1;   
+}
+
+.pane {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+}
+
+.page1, .page2, .page3, .page3-2, .page4, .page5, .page6, .page7, .page8{
+  background-size: cover;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+/*第一页*/
+.page1{background-color:#0d3d7e; background-image:url("../../img/zhaopin/pagebg1.jpg");}
+.page1 .colorbg{
+    background-image: url("../../img/zhaopin/page1_bg4.png");
+    position: absolute;bottom: 0;left: 0;
+    width: 16rem; height: 10.25rem;
+    z-index: 3;
+}
+.page1.current .jobtlt{
+    background-image: url("../../img/zhaopin/page1_bg3.png");
+    position: absolute;bottom: 1rem;left: 50%;
+    width: 13rem; height: 6rem;
+    margin-left: -6.5rem;
+    z-index: 4;
+    -webkit-animation:fadeInUpdown .8s ease-in;
+    animation:fadeInUpdown .8s ease-in;
+}
+.page1.current .peopel{
+    background-image: url("../../img/zhaopin/page1_bg2.png");
+    position: absolute;bottom: 5.65rem;left: .5rem;
+    width: 15.157rem; height: 12.5rem;
+    z-index: 4;
+    -webkit-animation: scaleErge .5s ease-in-out;
+    animation: scaleErge .5s ease-in-out;
+}
+.page1.current .txt-1{
+    background-image: url("../../img/zhaopin/page1_bg1.png");
+    position: absolute;top: 0.2rem;left: 1.25rem;
+    width: 13.775rem; height: 18.575rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation: scale .5s ease-in .3s;
+    animation: scale .5s ease-in .3s;
+    -webkit-transform-origin:center 60%;
+    transform-origin:center 60%;
+}
+/*第二页*/
+.page2,.page3,.page3-2{background-color:#0d3d7e; background-image:url("../../img/zhaopin/pagebg2.jpg");}
+
+.page2 .colorbg{
+    background-image: url("../../img/zhaopin/page2_bg4.png");
+    position: absolute;bottom: 0;left: 0;
+    width: 16rem; height: 10.55rem;
+    z-index: 3;
+}
+.page2.current .house{
+    background-image: url("../../img/zhaopin/page2_bg3.png");
+    position: absolute;top: 5.5rem;right: 0.925rem;
+    width: 8.1rem; height: 11.1rem;
+    z-index: 2;
+    -webkit-animation:fadeInUp .6s ease-in;
+    animation:fadeInUp .6s ease-in;
+}
+.page2.current .txt-1{
+    background-image: url("../../img/zhaopin/page2_bg2.png");
+    position: absolute;top: 1.5rem;left: 1.2rem;
+    width: 10.55rem; height: 14.775rem;
+    z-index: 2;
+    opacity: 0;
+    -webkit-animation:scale .6s ease .5s;
+    animation:scale .6s ease .5s;
+}
+.page2.current .txt-2{
+    background-image: url("../../img/zhaopin/page2_bg1.png");
+    position: absolute;bottom: 2.5rem;left: 2rem;
+    width: 11.6rem; height: 5.725rem;
+    z-index: 4;
+    opacity: 0;
+    -webkit-animation: fadeInUp .3s ease-in .8s;
+    animation: fadeInUp .3s ease-in .8s;
+}
+.page2.current .belt{
+    background-image: url("../../img/zhaopin/page2_bg5.png");
+    position: absolute;top: 2.6rem;right: 0;
+    width: 14.85rem; height: 6.325rem;
+    opacity: 0;
+    z-index: 1;
+    -webkit-animation: fadeInLeft .3s ease-in 1s;
+    animation: fadeInLeft .3s ease-in 1s;
+}
+/*第三页*/
+.pane .txt-1,
+.pane .txt-2,
+.pane .txt-3,
+.pane .txt-4,
+.pane .txt-5,
+.pane .txt-6,
+.pane .txt-7,
+.pane .txt-8,
+.page2.current .belt,
+.page3.current .peopel-p1,
+.page3.current .peopel-p2,
+.page9.current .photo2,
+.page9.current .photo3{
+    animation-fill-mode: forwards !important;
+    -webkit-animation-fill-mode: forwards !important;
+}
+
+.page3.current .peopel-p1, .page3-2.current .peopel-p1{
+    background-image: url("../../img/zhaopin/page3_bg4.png");
+    position: absolute;bottom: 0;left: 0;
+    width: 100%; height: 9.525rem;
+    z-index: 2;
+    -webkit-animation:fadeInUp .5s ease-in;
+    animation:fadeInUp .5s ease-in;  
+}
+.page3.current .txt-1{
+    background-image: url("../../img/zhaopin/page3_bg1.png");
+    position: absolute;top: .8rem;left: 0.5rem;
+    width: 14.35rem; height: 5.625rem;
+    opacity: 0;
+    z-index: 4;
+    -webkit-animation:fadeInRightT .5s ease-in;
+    animation:fadeInRightT .5s ease-in;
+}
+.page3.current .txt-2{
+    background-image: url("../../img/zhaopin/page3_bg2.png");
+    position: absolute;top: 6.8rem;left: 2.2rem;
+    width: 12.175rem; height: 5.125rem;
+    opacity: 0;
+    z-index: 4;
+    -webkit-animation:fadeInRightT .5s ease-in .5s;
+    animation:fadeInRightT .5s ease-in .5s;
+}
+.page3.current .txt-3{
+    background-image: url("../../img/zhaopin/page3_bg3.png");
+    position: absolute;top: 12.5rem;left: 1rem;
+    width: 13.1rem; height: 4.175rem;
+    opacity: 0;
+    z-index: 4;
+    -webkit-animation:fadeInRightT .5s ease-in 1s;
+    animation:fadeInRightT .5s ease-in 1s;
+}
+.page3-2.current .peopel-p1{animation:none;-webkit-animation:none;}
+.page3-2.current .peopel-p2{
+    background-image: url("../../img/zhaopin/page3_bg4_2.png");
+    position: absolute;bottom: 0;left: 0;
+    width: 100%; height: 9.625rem;
+    z-index: 2;
+    -webkit-animation:fadeInUp .5s ease-in;
+    animation:fadeInUp .5s ease-in;
+}
+.page3-2.current .txt-4{
+    background-image: url("../../img/zhaopin/page3_bg5.png");
+    position: absolute;top: .6rem;left: 1.5rem;
+    width: 12.15rem; height: 4.525rem;
+    z-index: 4;
+    -webkit-animation:fadeInRightT .5s ease-in;
+    animation:fadeInRightT .5s ease-in;
+}
+.page3-2.current .txt-5{
+    background-image: url("../../img/zhaopin/page3_bg6.png");
+    position: absolute;top: 4.3rem;left: 3rem;
+    width: 11.275rem; height: 3.475rem;
+    opacity: 0;
+    z-index: 4;
+    -webkit-animation:fadeInRightT .5s ease-in .5s;
+    animation:fadeInRightT .5s ease-in .5s;
+}
+.page3-2.current .txt-6{
+    background-image: url("../../img/zhaopin/page3_bg7.png");
+    position: absolute;top: 8rem;left: 1rem;
+    width: 13.125rem; height: 2.975rem;
+    opacity: 0;
+    z-index: 4;
+    -webkit-animation:fadeInRightT .5s ease-in 1s;
+    animation:fadeInRightT .5s ease-in 1s;
+}
+.page3-2.current .txt-7{
+    background-image: url("../../img/zhaopin/page3_bg8.png");
+    position: absolute;top: 11.2rem;left: 1rem;
+    width: 12.9rem; height: 3.1rem;
+    opacity: 0;
+    z-index: 4;
+    -webkit-animation:fadeInRightT .5s ease-in 1.5s;
+    animation:fadeInRightT .5s ease-in 1.5s;
+}
+.page3-2.current .txt-8{
+    background-image: url("../../img/zhaopin/page3_bg9.png");
+    position: absolute;top: 14rem;left: 1.2rem;
+    width: 12.825rem; height: 2.675rem;
+    opacity: 0;
+    z-index: 4;
+    -webkit-animation:fadeInRightT .5s ease-in 2s;
+    animation:fadeInRightT .5s ease-in 2s;
+}
+/*第四页*/
+.page4{background-color:#4e7430; background-image:url("../../img/zhaopin/pagebg4.jpg");}
+.page4.current .peopel{
+    background-image: url("../../img/zhaopin/page4_bg1.png");
+    position: absolute;top: 0;left: 1rem;
+    width: 15.25rem; height: 10.425rem;
+    z-index: 2;
+    -webkit-animation:fadeInDown .6s ease-in;
+    animation:fadeInDown .6s ease-in;
+}
+.page4.current .txt-1{
+    background-image: url("../../img/zhaopin/page4_bg2.png");
+    position: absolute;top: 4.5rem;left: 0;
+    width: 16rem; height: 14.95rem;
+    z-index: 2;
+    opacity: 0;
+    -webkit-animation:scale .6s ease-in .5s;
+    animation:scale .6s ease-in .5s;
+}
+.page4.current .txt-2{
+    background-image: url("../../img/zhaopin/page4_bg3.png");
+    position: absolute;bottom: 1rem;left: 1.5rem;
+    width: 10.5rem; height: 3.88rem;
+    z-index: 2;
+    opacity: 0;
+    -webkit-animation:fadeInLeft .5s ease-in-out 1s;
+    animation:fadeInLeft .5s ease-in-out 1s;
+}
+/*第五页*/
+.page5{background-color:#c29414; background-image:url("../../img/zhaopin/pagebg5.jpg");}
+.page5.current .peopel{
+    background-image: url("../../img/zhaopin/page5_bg2.png");
+    position: absolute;top: .5rem;left: 1.5rem;
+    width: 12.1rem; height: 24.05rem;
+    z-index: 2;
+    -webkit-animation:fadeInRightT .6s ease-in;
+    animation:fadeInRightT .6s ease-in;
+}
+.page5.current .txt-1{
+    background-image: url("../../img/zhaopin/page5_bg1.png");
+    position: absolute;top: 2rem;left: 1rem;
+    width: 14rem; height: 17.85rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation:scale .6s ease-in .4s;
+    animation:scale .6s ease-in .4s;
+}
+.page5.current .txt-2{
+    background-image: url("../../img/zhaopin/page5_bg3.png");
+    position: absolute;bottom: 1rem;left: 1.5rem;
+    width: 9.72rem; height: 3.82rem;
+    z-index: 2;
+    opacity: 0;
+    -webkit-animation:fadeInLeft .5s ease-in-out 1s;
+    animation:fadeInLeft .5s ease-in-out 1s;
+}
+/*第六页*/
+.page6{background-color:#76502f; background-image:url("../../img/zhaopin/pagebg6.jpg");}
+.page6.current .peopel{
+    background-image: url("../../img/zhaopin/page6_bg1.png");
+    position: absolute;top: 6.5rem;left: 0;
+    width: 11.2rem; height: 13.45rem;
+    z-index: 2;
+    -webkit-animation:fadeInRightT .6s ease-in;
+    animation:fadeInRightT .6s ease-in;
+}
+.page6.current .txt-1{
+    background-image: url("../../img/zhaopin/page6_bg2.png");
+    position: absolute;top: 0.25rem;left: 1.5rem;
+    width: 13.75rem; height: 18.7rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation:scale .5s ease-in-out .5s;
+    animation:scale .5s ease-in-out .5s;
+    -webkit-transform-origin:left center;
+    transform-origin:left center;
+}
+.page6.current .txt-2{
+    background-image: url("../../img/zhaopin/page6_bg3.png");
+    position: absolute;bottom: 1rem;left: 1.5rem;
+    width: 12rem; height: 3.9rem;
+    z-index: 2;
+    opacity: 0;
+    -webkit-animation:fadeInLeft .5s ease-in-out 1s;
+    animation:fadeInLeft .5s ease-in-out 1s;
+}
+/*第七页*/
+.page7{background-color:#6c396f; background-image:url("../../img/zhaopin/pagebg7.jpg");}
+.page7.current .peopel{
+    background-image: url("../../img/zhaopin/page7_bg1.png");
+    position: absolute;top: 0;left: 0;
+    width: 16rem; height: 11.5rem;
+    z-index: 2;
+    -webkit-animation:fadeInDown .6s ease-in;
+    animation:fadeInDown .6s ease-in;
+}
+.page7.current .txt-1{
+    background-image: url("../../img/zhaopin/page7_bg2.png");
+    position: absolute;top: 5rem;left: 0;
+    width: 16rem; height: 15.1rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation:scaleFly .4s ease-in .5s;
+    animation:scaleFly .4s ease-in .5s;
+    -webkit-transform-origin:center -30%;
+    transform-origin:center -30%;
+}
+.page7.current .txt-2{
+    background-image: url("../../img/zhaopin/page7_bg3.png");
+    position: absolute;bottom: 1rem;left: 1.5rem;
+    width: 10.45rem; height: 3.88rem;
+    z-index: 2;
+    opacity: 0;
+    -webkit-animation:fadeInLeft .5s ease-in-out 1.2s;
+    animation:fadeInLeft .5s ease-in-out 1.2s;
+}
+/*第八页*/
+.page8{background-color:#214fa7; background-image:url("../../img/zhaopin/pagebg8.jpg");}
+.page8.current .peopel{
+    background-image: url("../../img/zhaopin/page8_bg1.png");
+    position: absolute;top: 4rem;left: 4.2rem;
+    width: 11.2rem; height: 19.88rem;
+    z-index: 2;
+    -webkit-animation:fadeInRightT .6s ease-in;
+    animation:fadeInRightT .6s ease-in;
+}
+.page8.current .txt-1{
+    background-image: url("../../img/zhaopin/page8_bg2.png");
+    position: absolute;top: 2rem;left: 1.5rem;
+    width: 13.58rem; height: 15.4rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation:scale .7s ease-in-out .5s;
+    animation:scale .7s ease-in-out .5s;
+}
+.page8.current .txt-2{
+    background-image: url("../../img/zhaopin/page8_bg3.png");
+    position: absolute;bottom: 1rem;left: 1.7rem;
+    width: 13.38rem; height: 3.9rem;
+    z-index: 2;
+    opacity: 0;
+    -webkit-animation:fadeInLeft .5s ease-in-out 1.2s;
+    animation:fadeInLeft .5s ease-in-out 1.2s;
+}
+/*第九页*/
+.page9{background-color:#ee7d2d;}
+.page9.current .photo1{
+    background-image: url("../../img/zhaopin/page9_bg1.jpg");
+    position: absolute;top: .5rem;left: 0.5rem;
+    width: 15.1rem; height: 5.85rem;
+    z-index: 1;
+    -webkit-animation:fadeInUp .8s ease-in-out;
+    animation:fadeInUp .8s ease-in-out;
+}
+.page9.current .photo2{
+    background-image: url("../../img/zhaopin/page9_bg2.jpg");
+    position: absolute;top: 6.8rem;left: 0.5rem;
+    width: 15.1rem; height: 6.225rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation:fadeInUp .8s ease-in-out .5s;
+    animation:fadeInUp .8s ease-in-out .5s;
+}
+.page9.current .txt-1{
+    background-image: url("../../img/zhaopin/page9_bg3.png");
+    position: absolute;top: 13.5rem;left: 0.5rem;
+    width: 15.1rem; height: 4.1rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation:fadeInUp .8s ease-in-out 1s;
+    animation:fadeInUp .8s ease-in-out 1s;
+}
+.page9.current .photo3{
+    background-image: url("../../img/zhaopin/page9_bg4.jpg");
+    position: absolute;top: 18.2rem;left: 0.5rem;
+    width: 15.1rem; height: 5.85rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation:fadeInUp .8s ease-in-out 1.5s;
+    animation:fadeInUp .8s ease-in-out 1.5s;
+}
+
+/*第十页*/
+.page10{background-color:#ee7d2d;}
+.page10.current .txt-1{
+    background-image: url("../../img/zhaopin/page10_bg1.png");
+    position: absolute;top: 0.5rem;left: 0.5rem;
+    width: 15.1rem; height: 4.35rem;
+    z-index: 1;
+    -webkit-animation:fadeInUp .7s ease-in-out;
+    animation:fadeInUp .7s ease-in-out;
+}
+.page10.current .txt-2{
+    background-image: url("../../img/zhaopin/page10_bg2.png");
+    position: absolute;top: 5.3rem;left: 0.5rem;
+    width: 15.1rem; height: 3.6rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation:fadeInUp .7s ease-in-out .5s;
+    animation:fadeInUp .7s ease-in-out .5s;
+}
+.page10.current .txt-3{
+    background-image: url("../../img/zhaopin/page10_bg3.png");
+    position: absolute;top: 9.3rem;left: 0.5rem;
+    width: 15.1rem; height: 3.6rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation:fadeInUp .7s ease-in-out 1s;
+    animation:fadeInUp .7s ease-in-out 1s;
+}
+.page10.current .txt-4{
+    background-image: url("../../img/zhaopin/page10_bg4.png");
+    position: absolute;top: 13.3rem;left: 0.5rem;
+    width: 7.85rem; height: 7.35rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation:fadeInUp .7s ease-in-out 1.5s;
+    animation:fadeInUp .7s ease-in-out 1.5s;
+}
+.page10.current .txt-5{
+    background-image: url("../../img/zhaopin/page10_bg5.png");
+    position: absolute;top: 13.3rem;right: 0.2rem;
+    width: 7rem; height: 7.15rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation:scale .7s ease-in-out 2s,opacity 1.5s ease infinite 2s;
+    animation:scale .7s ease-in-out 2s, opacity 1.5s ease infinite 2s;
+}
+.page10.current .txt-6{
+    background-image: url("../../img/zhaopin/page10_bg6.png");
+    position: absolute;bottom: 0;left: 0;
+    width: 16rem; height: 3.7rem;
+    z-index: 1;
+    opacity: 0;
+    -webkit-animation:fadeInUpdownT .5s ease-in-out 2s;
+    animation:fadeInUpdownT .5s ease-in-out 2s;
+}
+
+/*IP4 媒体查询*/
+@media all and (device-height: 480px) {
+    .page1.current .txt-1{width: 11rem;left: 2.5rem; top: -2rem;}
+    .page1.current .peopel{width: 10rem;left: 3rem;bottom: 4.5rem;}
+
+    .page2.current .txt-1{top: 0.2rem;}
+    .page2.current .belt{top: 1rem;}
+    .page2.current .house{top: 4.5rem;}
+
+    .page3.current .peopel-p1, .page3-2.current .peopel-p1{bottom:-3rem;}
+
+    .page4.current .txt-1{left: 1rem;width: 12rem;top: 3rem;}
+    .page4.current .peopel{top: -1rem;}
+
+    .page5.current .peopel{top:0;}
+
+    .page6.current .txt-1{top: -2rem;left: 3.5rem; width: 11rem;}
+    .page6.current .peopel{top: 4.5rem;}
+
+
+    .page7.current .txt-1{top: 2rem;width: 15rem;}
+    .page7.current .peopel{top: -3rem;}
+
+    .page8.current .txt-1{top:0;}
+    .page8.current .peopel{top: 2rem;}
+
+    .page9.current .photo1{height: 4.7rem;}
+    .page9.current .photo2{height: 5rem;top: 5.8rem;}
+    .page9.current .txt-1{height: 3.3rem;top: 11.5rem;}
+    .page9.current .photo3{height: 4.8rem;top: 15.6rem;}
+
+    .page10.current .txt-1{height: 3.4rem;}
+    .page10.current .txt-2{height: 2.8rem; top:4.5rem;}
+    .page10.current .txt-3{height: 2.8rem;top: 8rem;}
+    .page10.current .txt-4{left: 1.6rem;top: 11.5rem; height: 6.4rem;}
+    .page10.current .txt-5{top: 11.5rem;right: 0.4rem; height: 5.5rem;}
+}
+

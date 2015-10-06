@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+.image-detail-wrap {border-top:1px solid #eee; position:relative; overflow:hidden; width:100%;zoom:1;}
+.image-detail-wrap .g-layout-main2 {width:699px; padding:20px 20px 0 0; border-right:1px solid #eee;}
+.image-detail-wrap .g-layout-side2 {overflow:hidden; width:280px;}
+.g-side-mod {margin:0; border:none;}
+
+.g-slide-img {display:block; position:absolute; top:0; left:0; width:100%; height:100%; z-index:1}
+
+.g-slide-loading .g-slide-thumb {display:block;}
+.g-slide-thumb {display:none; width:100%; height:100%}
+
+.image-detail-hide-side .g-layout-main2 {display:block; float:none; border:none; padding-right:0; width:auto;}
+.image-detail-hide-side .g-layout-side2 {display:none;}
+.image-detail-hide-side .g-slide-img-op {right:30px;}
+
+.hide-side-btn {display:block; position:absolute; top:0; right:0; height:56px; width:20px; border:1px solid #eee; border-top:none; text-align:center; color:gray; line-height:17px;}
+.hide-side-btn:hover {text-decoration:none;}
+
+.page-cap {padding:15px 0;_overflow: hidden;_zoom:1;}
+.page-cap h2 {font-size:20px; display:inline-block; color:#333;_float: left;}
+.g-share-list {float:right; margin-top:20px;}
+.g-share-list li{_width: 20px}
+
+.tag-list {overflow:hidden; width:240px}
+.tag-list li {float:left; margin:0 10px 10px 0; }
+.tag-list a {display:block; background-color:#f6f6f6; padding:5px 10px; text-align:center}
+
+.image-viewer {margin:30px; position:relative; }
+
+.cursor-forward {cursor:url("../img/cursor_right.cur"), auto}
+.cursor-back {cursor:url("../img/cursor_left.cur"), auto}
+
+.g-slide {height:520px;}
+
+.slide-left-btn,
+.slide-right-btn {display:inline-block; height:80px; width:40px; text-indent:-999em;background-color:#eee; float:left; margin-left:-40px; margin-top:10px;}
+.slide-left-btn:hover,
+.slide-right-btn:hover {background-color:#eee;}
+.slide-right-btn {float:right; margin-left:auto; margin-right:-40px;}
+.slide-left-btn span,
+.slide-right-btn span {display:block; width:18px; height:33px; background:url("../img/g_icon_24.png") no-repeat 0 -722px; margin:25px auto 0 auto;}
+.slide-left-btn span {background-position:0 -761px;}
+
+.image-viewer-selector {height:110px; padding:10px 10px 0 10px; margin:0 40px 0 40px;}
+.image-view-selector-content-wrap {height:85px; padding:10px 0; margin:0 10px; background-color:#fff; overflow:hidden;}
+.image-viewer-selector-list {display:block; margin-top:-2px;}
+.image-viewer-selector-list li {float:left; border:3px solid white; width:80px; height:80px; margin-bottom:10px; position:relative}
+.image-viewer-selector-list span, .image-viewer-selector-list li a{display:block; width:80px; height:80px; overflow:hidden; cursor:pointer;}
+.image-viewer-selector-list li.active {border-color:#ff5500}
+.image-viewer-selector-list li i {display:none;}
+.image-viewer-selector-list li.active i {display:block; position:absolute; width:0; height:0; border:8px solid transparent; border-bottom-color:#ff5500; left:50%; margin:-18px 0 0 -7px;}
+
+.relative-album-list { overflow:hidden;}
+.relative-album-list li {float:left; margin:0 10px 10px 0; position:relative}
+.relative-album-list .cnt {position:absolute; background-color:rgba(0, 0, 0, 0.5); bottom:0; right:0; padding:1px 8px; color:white; filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#55000000', EndColorStr='#55000000')}
+.relative-album-list .g-img {width:70px; height:70px}
+
+.free-consult{width: 228px;margin: 10px 0 10px 15px;padding-bottom: 15px; border:1px solid #ededed; background:url("../img/gezibg.jpg");}
+.free-consult h3{font-size: 24px; text-align: center;padding:10px 0;}
+.free-consult p{padding:20px 0 20px 20px;}
+.free-consult .g-btn-big{width: 136px; text-align: center;}
+.artfont, .free-consult .countico{ background: url("../img/abico.png") no-repeat;_background: url("../img/abico_8.png") no-repeat;}
+.artfont{margin: 0 auto;width: 198px;height: 46px; background-position: -234px -183px;}
+.free-consult .countico{display: inline-block;width: 19px;height: 20px; background-position: -581px -19px; vertical-align: middle;margin-right: 10px;}

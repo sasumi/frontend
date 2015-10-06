@@ -1,0 +1,24 @@
+.touch-icon {display:inline-block; height:12px; width:12px; text-indent:-999em; overflow:hidden; background:no-repeat 0 0; vertical-align:middle; cursor:pointer}
+
+.checkbox-icon {background-image:url("img/checkbox-unchecked.png"); border-radius:2px;}
+.checkbox-checked {background-image:url("img/checkbox-checked.png")}
+.checkbox-partial {background-image:url("img/checkbox-partial.png")}
+
+.collapse-icon {background-image:url("img/collapse.png"); background-position:0 -12px; position:absolute; margin:8px 0 0 -14px;}
+.collapse-icon:hover {background-position:-12px -12px}
+.collapse-expand {background-position:0 0}
+.collapse-expand:hover {background-position:-12px 0}
+
+.access-list {font-size:12px; color:#444; padding:0 12px;}
+.access-list:hover .collapse-icon {visibility:visible}
+.access-list ul {display:block; margin-left:16px}
+.access-list label { cursor:pointer;}
+.access-list label:hover span {color:black; text-shadow:1px 1px 1px #ccc;}
+.access-list .access-subtree {}
+.access-list .access-collapse {height:1px; overflow:hidden; display:block; position:relative; border-top:2px dotted #ccc; width:30px;}
+.access-list .access-fold,
+.access-list .access-name,
+.access-list .access-uri {display:inline-block; padding:0 4px; vertical-align:middle}
+.access-list .access-fold {}
+.access-list .access-name {}
+.access-list .access-uri {padding-left:10px; color:#ccc; font-style:italic}

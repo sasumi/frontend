@@ -1,0 +1,45 @@
+.ywj-tip-container-wrap {width:200px; padding:10px; position:absolute; top:180px; left:100px; z-index:10;}
+.ywj-tip-content {border:1px solid #dcdcdc; background-color:#ffffff; padding:20px; box-shadow:0 0 8px rgba(0,0,0, 0.2);}
+.ywj-tip-arrow {display:block; width:0; height:0; border:10px solid transparent; position:absolute; z-index:1}
+.ywj-tip-close {display:block; overflow:hidden; width:15px; height:20px; position:absolute; right:13px; top:11px; text-align:center; cursor:pointer; font-size:13px; font-family:Verdana; text-decoration:none; color:gray;}
+.ywj-tip-close:hover {color:black;}
+
+/** top **/
+.ywj-tip-0 .ywj-tip-arrow,
+.ywj-tip-11 .ywj-tip-arrow,
+.ywj-tip-1 .ywj-tip-arrow {top:-9px; left:50%; border-bottom-color:white; margin-left:-10px;}
+.ywj-tip-0 .ywj-tip-arrow-pt,
+.ywj-tip-11 .ywj-tip-arrow-pt,
+.ywj-tip-1 .ywj-tip-arrow-pt {top:-10px; border-bottom-color:#dcdcdc;}
+.ywj-tip-1 .ywj-tip-arrow {left:75%;}
+.ywj-tip-11 .ywj-tip-arrow {left:25%;}
+
+/** right **/
+.ywj-tip-8 .ywj-tip-arrow,
+.ywj-tip-9 .ywj-tip-arrow,
+.ywj-tip-10 .ywj-tip-arrow {left:-9px; top:50%; border-right-color:white; margin-top:-10px;}
+.ywj-tip-8 .ywj-tip-arrow-pt,
+.ywj-tip-9 .ywj-tip-arrow-pt,
+.ywj-tip-10 .ywj-tip-arrow-pt {left:-10px; border-right-color:#dcdcdc;}
+.ywj-tip-10 .ywj-tip-arrow {top:25%}
+.ywj-tip-8 .ywj-tip-arrow {top:75%}
+
+/** bottom **/
+.ywj-tip-5 .ywj-tip-arrow,
+.ywj-tip-6 .ywj-tip-arrow,
+.ywj-tip-7 .ywj-tip-arrow {left:50%; bottom:-9px; border-top-color:white; margin-left:-10px;}
+.ywj-tip-5 .ywj-tip-arrow-pt,
+.ywj-tip-6 .ywj-tip-arrow-pt,
+.ywj-tip-7 .ywj-tip-arrow-pt {bottom:-10px; border-top-color:#dcdcdc;}
+.ywj-tip-7 .ywj-tip-arrow {left:25%}
+.ywj-tip-5 .ywj-tip-arrow {left:75%}
+
+/** left **/
+.ywj-tip-2 .ywj-tip-arrow,
+.ywj-tip-3 .ywj-tip-arrow,
+.ywj-tip-4 .ywj-tip-arrow {right:-9px; top:50%; border-left-color:white; margin-top:-10px;}
+.ywj-tip-2 .ywj-tip-arrow-pt,
+.ywj-tip-3 .ywj-tip-arrow-pt,
+.ywj-tip-4 .ywj-tip-arrow-pt {right:-10px; border-left-color:#dcdcdc;}
+.ywj-tip-2 .ywj-tip-arrow {top:25%}
+.ywj-tip-4 .ywj-tip-arrow {top:75%}

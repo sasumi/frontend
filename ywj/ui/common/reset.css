@@ -1,0 +1,14 @@
+/** reset **/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0}
+body{font-family:Microsoft Yahei, SimSun, Courier new,Tahoma,Lucida Grande,serif;font-size:12px;line-height:20px}
+table{border-collapse:collapse;border-spacing:0}
+fieldset,img{border:0}
+ol,ul,li{list-style:none}
+label,input,select{vertical-align:middle}
+q:before,q:after{content:''}
+.l{float:left}
+.r{float:right}
+.clear:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.clear{zoom:1;display:block}
+.hide{display:none}
+.center {text-align:center}

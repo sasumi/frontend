@@ -1,0 +1,6 @@
+.special-list {font-size:14px;}
+.special-list li {float:left; width:320px; margin-right:20px; margin-bottom:30px}
+.special-list .row-last {margin-right:0;}
+.special-list .g-img {width:320px; height:200px; margin-bottom:5px;}
+.special-list a {display:block; position:relative}
+.special-list .dist { position:absolute; top:0; left:0; background-color:#19b97d; color:white; padding:5px;}
