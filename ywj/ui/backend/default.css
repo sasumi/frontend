@@ -80,7 +80,6 @@ input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier ne
 #logo span {font-size:10px; color:#ddd}
 #logo .small {font-size:12px; font-weight:normal;}
 #footer {text-align:center; color:#bbb; padding:10px 0; clear:both;}
-#welcome {float:right; margin:10px 5px 0 10px;}
 #welcome a {color:white;}
 
 /** 侧边导航 **/
@@ -92,6 +91,21 @@ input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier ne
 .aside-nav dd a:hover,.aside-nav dd .active {background-color:#CFDDFF;}
 .aside-nav dd.active a {background-color:#837E97; color:white}
 .aside-nav .shortcut_nav a {padding:0 10px;overflow: hidden;width: 140px;}
+
+/** 登录用户信息 **/
+#welcome {}
+#welcome .user { position:relative; cursor:default; padding:10px 35px 10px 20px;}
+#welcome .user:after {content:"\f0d7"; font-family:FontAwesome, serif; font-size:14px; display:block; position:absolute; right:-15px; top:10px;}
+#welcome:hover .user:after {content:"\f0d8"}
+#welcome .user-panel {display:none; width:300px; padding:15px; border-radius:3px; margin-top:-3px; right:0; box-shadow:1px 1px 10px #BBB; position: absolute; color:gray; background-color:rgba(255, 255, 255, 0.74); border:1px solid #bbb; z-index:10}
+#welcome .user-panel p {padding-bottom:3px;}
+#welcome .user-panel p span {white-space: nowrap}
+#welcome .user-panel a {color:#ff5500}
+#welcome .user-panel a:hover {text-decoration: underline}
+#welcome:hover .user-panel { display:block;}
+#welcome .g-img-error img {display:none}
+#welcome .g-img-error { background:url("img/default_avatar.png") no-repeat center #7C7C7C; background-size:contain}
+#welcome .avatar-wrap {width:90px; height:90px; overflow: hidden; float:left; margin-right:10px}
 
 /** 系统选择按钮 **/
 .system-choice {background-color:#545369; color:white; border-radius:3px; position:absolute; top:11px; right:9px;}
