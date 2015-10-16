@@ -80,7 +80,6 @@ input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier ne
 #logo span {font-size:10px; color:#ddd}
 #logo .small {font-size:12px; font-weight:normal;}
 #footer {text-align:center; color:#bbb; padding:10px 0; clear:both;}
-#welcome a {color:white;}
 
 /** 侧边导航 **/
 .aside-nav {padding-bottom:20px; display:block}
@@ -94,7 +93,10 @@ input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier ne
 
 /** 登录用户信息 **/
 #welcome {}
+#welcome a {color:white;}
+#welcome .login-link {padding:10px 20px;}
 #welcome .user { position:relative; cursor:default; padding:10px 35px 10px 20px;}
+#welcome .user:before {content:"\f007"; display:inline-block; margin-right:5px; font-family:FontAwesome, serif;}
 #welcome .user:after {content:"\f0d7"; font-family:FontAwesome, serif; font-size:14px; display:block; position:absolute; right:-15px; top:10px;}
 #welcome:hover .user:after {content:"\f0d8"}
 #welcome .user-panel {display:none; width:300px; padding:15px; border-radius:3px; margin-top:-3px; right:0; box-shadow:1px 1px 10px #BBB; position: absolute; color:gray; background-color:rgba(255, 255, 255, 0.74); border:1px solid #bbb; z-index:10}
@@ -161,9 +163,11 @@ li:hover .sub-nav {display:block;}
 .col-label {text-align:right;}
 
 /** 表单tab **/
-.frm-tab {overflow:hidden; border-bottom:3px solid #ccc; margin-top:10px;}
-.frm-tab li {float:left; margin:0 0 0 10px; padding:5px 20px; background-color:#eee; border-radius:2px 2px 0 0; color:gray; cursor:pointer}
-.frm-tab a {color:#999; font-size:14px;}
+.frm-tab {overflow:hidden; border-bottom:3px solid #ccc; margin-top:10px; clear:both;}
+.frm-tab li {margin:0 0 0 10px; display:inline-block; background-color:#eee; border-radius:2px 2px 0 0; color:gray; cursor:pointer}
+.frm-tab a,
+.frm-tab span { font-size:12px; padding:3px 15px; display:inline-block;}
+.frm-tab a {color:#999;}
 .frm-tab .active {background-color:#ccc; color:black; text-shadow:1px 1px 1px white}
 .frm-tab .active a {color:#333;}
 .frm-tab-content {padding:10px 0;}
