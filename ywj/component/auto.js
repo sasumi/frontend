@@ -187,7 +187,7 @@ define('ywj/auto', function(require){
 			var url = link.attr('href');
 			if(url){
 				showMsg('正在提交请求...', 'load', MSG_LOAD_TIME);
-				url = net.mergeCgiUri(url, {ref:'json'});
+				url = net.mergeCgiUri(url);
 				net.get(url, null, function(rsp){
 					hideMsg();
 					auto_process_async(_this, rsp);
@@ -382,7 +382,7 @@ define('ywj/auto', function(require){
 
 		//时间组件触发
 		var _TIME_N_CHK = 'date-widget-bind';
-		$.each(['input.date-time-txt', 'input.date-txt', 'input[type=time]'], function(idx, s){
+		$.each(['input.datetime-txt', 'input.date-txt', 'input[type=time]'], function(idx, s){
 			if($(s).size()){
 				require.async('ywj/timepicker');
 			}
@@ -398,7 +398,7 @@ define('ywj/auto', function(require){
 				var min_date = new Date(current_timestamp+enable_past_duration) ;
 				var max_date = new Date(current_timestamp+enable_future_duration) ;
 				require.async('ywj/timepicker', function(){
-					if(s.indexOf('date-time') >= 0){
+					if(s.indexOf('datetime') >= 0){
 						$this.datetimepicker({dateFormat:'yy-mm-dd', timeFormat:'HH:mm:ss',minDateTime:min_date,maxDateTime:max_date});
 					}
 					else if(s.indexOf('date') >= 0){

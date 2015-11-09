@@ -1,6 +1,6 @@
 @charset "UTF-8";
 @import "../common/reset.css";
-body {font-family:Microsoft Yahei, helvetica, verdana, sans-serif; font-size:12px; background:#f7f7f7 url("img/body-bg.png")}
+body {font-family:Microsoft Yahei, helvetica, verdana, sans-serif; font-size:13px; background:#f7f7f7 url("img/body-bg.png"); color:#444}
 a {color:#3B6DA6; text-decoration:none;}
 
 /** 环境标识 **/
@@ -37,23 +37,28 @@ html, body {padding:0; margin:0}
 /** 表单元素 **/
 select, input.chk, label{vertical-align:middle;}
 select {font-family:Microsoft Yahei, SimSun, Courier new, Tahoma, Lucida Grande, serif}
-select {padding:5px; border-radius:3px; border:1px solid #ccc; min-width:147px; height:29px}
+select {border-radius:3px; border:1px solid #ccc; min-width:163px; height:29px}
 
 /** 表单输入元素 **/
-input.txt, textarea.txt {border:1px solid #bbb; min-width:135px; border-bottom-color:#ddd; border-right-color:#ddd; vertical-align:middle; padding:5px 5px; border-radius:3px; font-family:microsoft yahei, Arial, Helvetica, sans-serif; font-size:12px; background-color:white}
+input.txt[required] {border-color:#F7D1BD}
+input.txt, textarea.txt {border:1px solid #bbb; min-width:150px; border-bottom-color:#ddd; border-right-color:#ddd; vertical-align:middle; padding:5px 5px; border-radius:3px; font-family:microsoft yahei, Arial, Helvetica, sans-serif; font-size:13px; background-color:white}
 input.txt[type=number] {min-width:80px; max-width:80px;}
+input[type=checkbox],
+input[type=radio] {margin-right:2px;}
 input.long-txt {width:770px;}
 input.date_txt {background:url("img/date.png") no-repeat left center; padding-left:18px; font-weight:bolder; color:blue}
 .rich-txt {width:800px; height:400px}
 .small-txt {width:400px; height:50px; resize:vertical}
-.date-time-txt, .date-txt {background:url("img/date.png") no-repeat 97% center}
+.datetime-txt, .date-txt {background:url("img/date.png") no-repeat 97% center}
 
 /** 按钮 **/
 .btn {border:none; display:inline-block; cursor:pointer; padding:3px 13px 5px; background-color:#7C97B9; color:white; border-radius:2px; vertical-align:middle; text-align:center}
 .btn-disabled {background-color:#ddd; color:#aaa; text-shadow:1px 1px 1px #eee;}
+body .btn-danger {background-color:#CEA481;}
 input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier new, Tahoma, Lucida Grande, serif; _padding:4px 13px 5px 13px; vertical-align:middle}
 .btn:hover {background-color:#50657E; text-decoration:none}
-.btn-disabled:hover {background-color:#ddd; cursor:default;}
+body .btn-disabled:hover {background-color:#ddd; cursor:default;}
+body .btn-danger:hover {background-color:#BB5F14}
 .small-btn {display:inline-block; margin:1px 3px; text-shadow:1px 1px 1px #ccc; padding-left:14px; cursor:pointer; color:#555; background:url("img/arrow_up_small.gif") no-repeat 0; vertical-align:middle}
 .small-btn:hover {color:black;}
 .small-add-btn {background-image:url("img/arrow_add_small.png")}
@@ -133,7 +138,7 @@ input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier ne
 
 /** 主导航 - 子菜单 **/
 li:hover .sub-nav {display:block;}
-.sub-nav {display:none; width:130px; position:absolute; z-index:1000; padding-top:5px; padding-bottom:5px; background-color: rgba(16, 16, 16, 0.8); box-shadow:2px 2px 4px #7B7B7B}
+.sub-nav {display:none; width:130px; position:absolute; z-index:99; padding-top:5px; padding-bottom:5px; background-color: rgba(16, 16, 16, 0.8); box-shadow:2px 2px 4px #7B7B7B}
 #main-nav .sub-nav a {margin:0 5px; padding-right:0;}
 .sub-nav dt:first-child {border:none}
 .sub-nav dt {color:gray; margin:0 10px; font-size:9px; cursor:default; clear:both; background:url("img/line.png") repeat-x 0 center;}
@@ -150,14 +155,15 @@ li:hover .sub-nav {display:block;}
 /** 表单 **/
 .frm {margin:5px; padding:10px; background-color:#fff}
 .frm legend {font-size:18px; padding:2px 0 15px; text-shadow: 1px 1px 1px gray;}
+.frm-field-desc {color:#ccc}
 .frm-tip {color:gray; padding:0 10px;}
 .frm-tbl {width:100%; margin-bottom:10px;}
 .frm-tbl caption {text-align:left; font-weight:bold; font-size:16px; border-bottom:1px solid #ddd; color:#555; padding:5px 5px 15px 5px; margin-bottom:10px;}
 .frm-tbl {border-collapse:collapse; border-spacing:0;}
-.frm-tbl td.col-label {width:60px; vertical-align:top}
+.frm-tbl td.col-label {width:30px; vertical-align:top; white-space:nowrap;}
 .frm-tbl tr.odd {background-color:#FAFAFA;}
 .frm-tbl td {padding:5px 10px; line-height:20px;}
-.frm-tbl td label {margin-right:7px;}
+.frm-tbl td label {margin-right:7px; cursor:pointer;}
 .frm-tbl td.col-label label {margin-right:0}
 .col-action {padding-top:10px !important;}
 .col-label {text-align:right;}
@@ -198,7 +204,7 @@ li:hover .sub-nav {display:block;}
 .uploader .file-thumb {display:none;}
 .uploader-normal .uploader-btn,
 .upload-success .uploader-btn,
-.upload-error .uploader-btn {display:inline-block; background:url("img/upload24.png") no-repeat 7px #fff; color:#437cb0; cursor:pointer; border-radius:3px; padding:3px 8px 3px 37px;}
+.upload-error .uploader-btn {display:inline-block; background:url("img/upload24.png") no-repeat 7px; color:#437cb0; cursor:pointer; border-radius:3px; padding:3px 8px 3px 37px;}
 
 .upload-error .uploader-btn:hover,
 .upload-success .uploader-btn:hover,
@@ -273,9 +279,9 @@ span.state-label {padding:2px 8px; display:inline-block; font-size:10px; border-
 .drop-list span {white-space:nowrap; cursor:pointer;}
 .drop-list dt {display:block; position:relative; cursor:pointer;}
 .drop-list dt a,
-.drop-list dt span {padding:3px 20px 3px 10px; white-space:nowrap; display:block;}
+.drop-list dt span {padding:0 20px 0 0; white-space:nowrap; display:block;}
 .drop-list dt.btn a {color:white;}
-.drop-list dt:after {content:''; display:block; position:absolute; width:0; height:0; border:4px solid transparent; border-top-color:#ccc; right:7px; top:12px;}
+.drop-list dt:after {content:''; display:block; position:absolute; width:0; height:0; border:4px solid transparent; border-top-color:#ccc; right:7px; top:8px;}
 .drop-list dt.btn:after {border-top-color:white;}
 .drop-list dd {display:none; position:absolute; box-shadow:1px 1px 5px #ddd; padding:5px 0; margin-right:10px; z-index:1; left:0; background-color:rgba(255, 255, 255, 0.95); border-radius:3px; min-width:80px;}
 .drop-list dd a,
@@ -284,7 +290,7 @@ span.state-label {padding:2px 8px; display:inline-block; font-size:10px; border-
 .drop-list dd span:hover {background-color:#ddd;}
 .drop-list-left dd {left:auto; right:0; margin-right:0}
 .drop-list:hover dd {display:block;}
-.drop-list:hover dt:after {border-color:transparent; border-bottom-color:gray; top:8px;}
+.drop-list:hover dt:after {border-color:transparent; border-bottom-color:gray; top:4px;}
 .drop-list:hover dt.btn:after {border-bottom-color:white;}
 
 /** 日历 **/
