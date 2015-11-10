@@ -473,7 +473,7 @@ define('ywj/popup', function(require){
 		//构建内容容器
 		var content = '<div class="'+this.config.cssClass.body+'">';
 		if(typeof(this.config.content) == 'string'){
-			content += '<p class="'+this.config.cssClass.textCon+'">'+this.config.content+'</p>';
+			content += '<div class="'+this.config.cssClass.textCon+'">'+this.config.content+'</div>';
 		} else if(this.config.content.src){
 			content += '<iframe allowtransparency="true" guid="'+this.guid+'" src="'+this.config.content.src+'" class="'+this.config.cssClass.iframe+'" frameborder=0></iframe>';
 		} else if(this.config.content.id){
