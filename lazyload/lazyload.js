@@ -55,22 +55,31 @@
 
             var pageYOffset =  window.pageYOffset || document.documentElement.scrollTop || body.scrollTop;
             var viewportHeight = getRegion().visibleHeight;
-            var offsetParentLeft = 0;
-            var temp = view_elements[count];
-            do{
-                if(!isNaN(temp.offsetLeft))
-                {
-                    offsetParentLeft += temp.offsetLeft;
-                }
-            }while(temp = temp.offsetParent);
 
-            var pageXOffset =  window.pageXOffset || body.scrollLeft;
-            var viewportWidth = getRegion().visibleWidth;
+            //delete pagex event
+            // var offsetParentLeft = 0;
+            // var temp = view_elements[count];
+            // do{
+            //     if(!isNaN(temp.offsetLeft))
+            //     {
+            //         offsetParentLeft += temp.offsetLeft;
+            //     }
+            // }while(temp = temp.offsetParent);
 
+            // var pageXOffset =  window.pageXOffset || body.scrollLeft;
+            // var viewportWidth = getRegion().visibleWidth;
+
+            // if(offsetParentTop > pageYOffset &&
+            //     offsetParentTop < pageYOffset + viewportHeight &&
+            //     offsetParentLeft > pageXOffset &&
+            //     offsetParentLeft < pageXOffset + viewportWidth){
+            //     view_elements[count].src = view_elements[count].getAttribute("data-qazy-src");
+            //     console.log(view_elements[count].src);
+            //     view_elements.splice(count, 1);
+            //     count--;
+            // }
             if(offsetParentTop > pageYOffset &&
-                offsetParentTop < pageYOffset + viewportHeight &&
-                offsetParentLeft > pageXOffset &&
-                offsetParentLeft < pageXOffset + viewportWidth){
+                offsetParentTop < pageYOffset + viewportHeight){
                 view_elements[count].src = view_elements[count].getAttribute("data-qazy-src");
                 console.log(view_elements[count].src);
                 view_elements.splice(count, 1);

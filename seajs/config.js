@@ -45,15 +45,25 @@ if(!window['console']){
 
 //静态资源版本，缺省使用
 (function(){
-	var ver = window['STATIC_GLOBAL_VERSION'] ? '?'+window['STATIC_GLOBAL_VERSION'] : 'v201509231552';
-	var map = window['STATIC_VERSION_MAP'];
+	var convert_reg = function(str){
+		str = str.replace('.', '\\.')
+			.replace(':', '\\:')
+			.replace('*', '.*?');
+		return new RegExp(str);
+	};
+
 	seajs.onAfterResolve(function(url){
-		if(url.substring(url.length-3) == '.js'
-			||url.substring(url.length-4) == '.css'){
-			if(map && map[url.tolowercase()]){
-				return url + '?'+map[url.tolowercase()];
-			} else {
-				return url + '?'+ver;
+		var C = window['STATIC_VERSION_CONFIG'];
+		if(C){
+			for(var str in C){
+				var reg = convert_reg(str);
+				if(reg.test(url)){
+					if(C[str]){
+						return url+(url.indexOf('?') >= 0 ? '&' : '?')+'v'+C[str];
+					} else {
+						return url;
+					}
+				}
 			}
 		}
 		return url;

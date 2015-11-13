@@ -15,7 +15,7 @@ body {background:#32C2CD url(img/bg-default.jpg);}
 #main-nav a {line-height:inherit}
 #main-nav li {float:none; margin-right:0; border-bottom:1px solid #41ACB3; border-top:1px solid #73DDE4; position:relative;}
 #main-nav li:last-child {border-bottom:none;}
-#main-nav li:before {content:"\f0e4"; display:block; text-align:center; background-color:rgba(30, 171, 182, 0.48); position:absolute; top:0; left:0; width:50px; height:50px; line-height:50px; font-family:FontAwesome, serif; font-size:20px; font-weight: normal; font-style: normal;}
+#main-nav li:before {content:"\f0e4"; display:block; text-align:center; /**background-color:rgba(30, 171, 182, 0.48);**/ position:absolute; top:0; left:0; width:50px; height:50px; line-height:50px; font-family:FontAwesome, serif; font-size:20px; font-weight: normal; font-style: normal;}
 #main-nav li:after {content:"\f0da"; font-family:FontAwesome, serif; display:block; position:absolute; right:15px; top:15px;}
 #main-nav li.active:after {content:"\f0d7"}
 #main-nav .main-nav-empty:after {display:none !important;}

@@ -84,7 +84,12 @@ define('ywj/areaselector', function(require){
 			var init_pro = parseInt(this.getAttribute('data-value'), 10) || 0;
 			var init_city = parseInt(city_sel.getAttribute('data-value'), 10) || 0;
 			var init_county = parseInt(county_sel.getAttribute('data-value'), 10) || 0;
-
+			if(init_county && !init_city){
+				init_city=area_list[init_county]["parent_id"];
+			}
+			if(init_city && !init_pro){
+				init_pro=area_list[init_city]["parent_id"];
+			}
 			showPro(init_pro, this);
 			if(init_pro){
 				showCity(init_city, init_pro, city_sel);

@@ -37,7 +37,7 @@ html, body {padding:0; margin:0}
 /** 表单元素 **/
 select, input.chk, label{vertical-align:middle;}
 select {font-family:Microsoft Yahei, SimSun, Courier new, Tahoma, Lucida Grande, serif}
-select {padding:5px; border-radius:3px; border:1px solid #ccc; min-width:147px; height:29px}
+select {padding:5px; border-radius:3px; border:1px solid #ccc; min-width:147px; height:28px}
 
 /** 表单输入元素 **/
 input.txt, textarea.txt {border:1px solid #bbb; min-width:135px; border-bottom-color:#ddd; border-right-color:#ddd; vertical-align:middle; padding:5px 5px; border-radius:3px; font-family:microsoft yahei, Arial, Helvetica, sans-serif; font-size:12px; background-color:white}
