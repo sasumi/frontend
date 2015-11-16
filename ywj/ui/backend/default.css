@@ -38,6 +38,7 @@ html, body {padding:0; margin:0}
 select, input.chk, label{vertical-align:middle;}
 select {font-family:Microsoft Yahei, SimSun, Courier new, Tahoma, Lucida Grande, serif}
 select {border-radius:3px; border:1px solid #ccc; min-width:163px; height:29px}
+select[multiple=multiple] {height:100px;}
 
 /** 表单输入元素 **/
 input.txt[required] {border-color:#F7D1BD}
@@ -163,7 +164,7 @@ li:hover .sub-nav {display:block;}
 .frm-tbl td.col-label {width:30px; vertical-align:top; white-space:nowrap;}
 .frm-tbl tr.odd {background-color:#FAFAFA;}
 .frm-tbl td {padding:5px 10px; line-height:20px;}
-.frm-tbl td label {margin-right:7px; cursor:pointer;}
+.frm-tbl td label {margin-right:10px; cursor:pointer;}
 .frm-tbl td.col-label label {margin-right:0}
 .col-action {padding-top:10px !important;}
 .col-label {text-align:right;}
