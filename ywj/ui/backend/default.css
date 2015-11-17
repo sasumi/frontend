@@ -41,7 +41,9 @@ select {border-radius:3px; border:1px solid #ccc; min-width:163px; height:29px}
 select[multiple=multiple] {height:100px;}
 
 /** 表单输入元素 **/
-input.txt[required] {border-color:#F7D1BD}
+input.txt[required],
+textarea.txt[required],
+select[required] {border-color:#F7D1BD}
 input.txt, textarea.txt {border:1px solid #bbb; min-width:150px; border-bottom-color:#ddd; border-right-color:#ddd; vertical-align:middle; padding:5px 5px; border-radius:3px; font-family:microsoft yahei, Arial, Helvetica, sans-serif; font-size:13px; background-color:white}
 input.txt[type=number] {min-width:80px; max-width:80px;}
 input[type=checkbox],
@@ -191,7 +193,8 @@ li:hover .sub-nav {display:block;}
 .image-thumb .chk { position:absolute; bottom:0; right:0;}
 
 /** 文件上传 **/
-.file-thumb {display:block; height:40px; position:relative; overflow:hidden; border:1px dotted #eee; margin:10px 0 0; text-align:center;}
+div.uploader-file {width:auto;}
+.file-thumb {display:block; height:40px; position:relative; overflow:hidden; border:1px dotted #eee; margin:10px 0 0}
 .file-thumb .delete-link {display:none; position:absolute; bottom:0; text-align:center; width:100%; background-color:rgba(61, 83, 205, 0.31); color:white; text-shadow:1px 1px 1px gray; cursor:pointer}
 .file-thumb .delete-link:hover {background-color:rgba(61, 83, 205, 0.9)}
 .file-thumb:hover .delete-link {display:block}

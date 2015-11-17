@@ -80,7 +80,7 @@ html, body {height:100%}
 .page-iframe,
 .page-iframe body,
 .page-iframe #page,
-.page-iframe #container {height:auto; overflow:hidden; background:white;}
+.page-iframe #container {height:auto; overflow:hidden; background:none;}
 .page-iframe #container {padding:0; box-shadow:none}
 .page-iframe #col-main {overflow:auto; height:auto;}
 

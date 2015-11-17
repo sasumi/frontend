@@ -511,8 +511,8 @@ define('ywj/auto', function(require){
 			}
 			$(this).data('upload-image-binded', 1);
 			var _this = this;
-			require.async('ywj/simpleimageuploader', function(UP){
-				var a = new UP($(_this), {
+			require.async('ywj/uploader', function(UP){
+				new UP($(_this, {TYPE: 'image'}), {
 					UPLOAD_URL: window.UPLOAD_URL,
 					PROGRESS_URL: window.UPLOAD_PROGRESS_URL
 				});
@@ -526,8 +526,8 @@ define('ywj/auto', function(require){
 			}
 			$(this).data('upload-file-binded', 1);
 			var _this = this;
-			require.async('ywj/simplefileuploader', function(UP){
-				var a = new UP($(_this), {
+			require.async('ywj/uploader', function(UP){
+				new UP($(_this), {
 					UPLOAD_URL: window.UPLOAD_URL,
 					PROGRESS_URL: window.UPLOAD_PROGRESS_URL
 				});
