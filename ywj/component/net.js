@@ -210,7 +210,7 @@ define('ywj/net', function(require){
 		opt = $.extend({
 			onSuccess: onSuccess
 		},opt||{});
-		request(url, data, opt);
+		return request(url, data, opt);
 	};
 
 	/**
@@ -225,7 +225,7 @@ define('ywj/net', function(require){
 			method: 'post',
 			onSuccess: onSuccess
 		},opt||{});
-		request(url, data, opt);
+		return request(url, data, opt);
 	};
 
 	/**

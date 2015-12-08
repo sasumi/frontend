@@ -42,9 +42,10 @@ define('ywj/auto', function(require){
 		});
 	};
 
-	var showPopup = function(conf, onSuccess, onError){
+	var showPopup = function(conf, onSuccess, onError, onShow){
 		require.async('ywj/popup', function(Pop){
 			var p = new Pop(conf);
+			p.onShow = onShow;
 			if(onSuccess){
 				p.listen('onSuccess', onSuccess);
 			}
@@ -127,23 +128,33 @@ define('ywj/auto', function(require){
 
 		//自动弹窗
 		$body.delegate('a[rel=popup]', 'click', function(){
-			if(!checkConfirm(this)){
-				return;
+			var $node = $(this);
+			var POPUP_ON_LOADING = 'data-popup-on-loading-flag';
+			var RET = this.tagName == 'A' ? false : null;
+
+			if($node.attr(POPUP_ON_LOADING) == 1){
+				showMsg('正在加载页面...', 'load', MSG_LOAD_TIME);
+				$('.ywj-msg-container-wrap').css('background', 'rgba(0,0,0,0.2)'); //style hack
+				return RET;
 			}
 
-			var node = $(this);
-			var src = net.mergeCgiUri(node.attr('href'), {'ref':'iframe'});
-			var width = parseFloat(node.data('width')) || DEF_POPUP_WIDTH;
-			var height = parseFloat(node.data('height')) || 0;
-			var title = node.attr('title') || node.html() || '';
-			var onSuccess = node.data('onsuccess');
+			if(!checkConfirm(this)){
+				return RET;
+			}
+
+			$node.attr(POPUP_ON_LOADING, 1);
+			var src = net.mergeCgiUri($node.attr('href'), {'ref':'iframe'});
+			var width = parseFloat($node.data('width')) || DEF_POPUP_WIDTH;
+			var height = parseFloat($node.data('height')) || 0;
+			var title = $node.attr('title') || $node.html() || '';
+			var onSuccess = $node.data('onsuccess');
 			if(onSuccess){
 				eval('var fn1 = window.'+onSuccess);
 				onSuccess = fn1;
 			} else {
 				onSuccess = function(){};
 			}
-			var onError = node.data('onerror');
+			var onError = $node.data('onerror');
 			if(onError){
 				eval('var fn2 = window.'+onError);
 				onError = fn2;
@@ -162,11 +173,12 @@ define('ywj/auto', function(require){
 				conf.height = height;
 			}
 			showPopup(conf, function(){
-				return onSuccess.apply(node, util.toArray(arguments));
-			}, onError);
-			if(this.tagName == 'A'){
-				return false;
-			}
+				return onSuccess.apply($node, util.toArray(arguments));
+			}, onError, function(){
+				hideMsg();
+				$node.attr(POPUP_ON_LOADING, 0);
+			});
+			return RET;
 		});
 
 		//自动MSG
@@ -179,18 +191,30 @@ define('ywj/auto', function(require){
 
 		//自动ajax链接
 		$body.delegate('a[rel=async]', 'click', function(){
-			if(!checkConfirm(this)){
-				return;
-			}
 			var _this = this;
-			var link = $(this);
-			var url = link.attr('href');
-			if(url){
+			var $link = $(this);
+			var SUBMITTING_KEY = 'data-submitting-flag';
+			var url = $link.attr('href');
+
+			if($link.attr(SUBMITTING_KEY) == 1){
 				showMsg('正在提交请求...', 'load', MSG_LOAD_TIME);
-				url = net.mergeCgiUri(url);
-				net.get(url, null, function(rsp){
-					hideMsg();
-					auto_process_async(_this, rsp);
+				return false;
+			}
+			if(!checkConfirm(this)){
+				return false;
+			}
+			if(url){
+				$link.attr(SUBMITTING_KEY, 1);
+				showMsg('正在提交请求...', 'load', MSG_LOAD_TIME);
+				net.request(url, null, {
+					onSuccess: function(rsp){
+						$link.attr(SUBMITTING_KEY, 0);
+						hideMsg();
+						auto_process_async(_this, rsp);
+					},
+					onError: function(){
+						$link.attr(SUBMITTING_KEY, 0);
+					}
 				});
 				return false;
 			}

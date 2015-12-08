@@ -2,16 +2,16 @@
 
 .SERVER-IDENTIFY-DEV #header:after, .SERVER-IDENTIFY-BETA #header:after, .SERVER-IDENTIFY-GAMMA #header:after, .SERVER-IDENTIFY-IDC #header:after {display:none;}
 
-body {background:#32C2CD url(img/bg-default.jpg);}
-#header {height:auto; padding:0; background:none; border:none;}
+body {background:#32C2CD url(img/bg-default.jpg); overflow-y:scroll;}
+#header {height:auto; padding:0; background:none; border:none; width:200px;}
 #logo {float:none; padding:0 15px; height:45px; line-height:40px; background:#333; text-indent:0;}
 #logo:before {content:"\f1cd"; font-family:FontAwesome,serif; display:inline-block; vertical-align:middle; font-size:18px; color:#ccc;}
 #logo a {color:#ccc; display:inline-block; padding:0; vertical-align:middle;}
-#welcome {position:absolute; top:0; right:15px; margin:0; float:none; border-radius:0 0 10px 10px; height:25px; background-color:rgba(51, 51, 51, 0.52);}
+#welcome {position:absolute; top:0; z-index:1; right:15px; margin:0; float:none; border-radius:0 0 10px 10px; height:25px; background-color:rgba(51, 51, 51, 0.52);}
 #welcome .user-panel {display:none;}
-#welcome .user { color:white;}
+#welcome .user {color:white;}
 
-#main-nav {float:none; position:relative; margin:0; width:200px; display:block}
+#main-nav {float:none; position:relative; margin:0; display:block}
 #main-nav a {line-height:inherit}
 #main-nav li {float:none; margin-right:0; border-bottom:1px solid #41ACB3; border-top:1px solid #73DDE4; position:relative;}
 #main-nav li:last-child {border-bottom:none;}
@@ -26,11 +26,11 @@ body {background:#32C2CD url(img/bg-default.jpg);}
 #main-nav li:hover>a {color:white;}
 #main-nav li:hover {background-color:rgba(25, 141, 150, 0.43)}
 #main-nav li:nth-child(2):before {content:"\f1b3"}
-#main-nav li:nth-child(3):before {content:"\f0ae"}
+#main-nav li:nth-child(3):before {content:"\f07a"}
 #main-nav li:nth-child(4):before {content:"\f09d"}
-#main-nav li:nth-child(5):before {content:"\f0e8"}
-#main-nav li:nth-child(6):before {content:"\f0e8"}
-#main-nav li:nth-child(7):before {content:"\f0e8"}
+#main-nav li:nth-child(5):before {content:"\f0e3"}
+#main-nav li:nth-child(6):before {content:"\f1b3"}
+#main-nav li:nth-child(7):before {content:"\f085"}
 #main-nav li:nth-child(8):before {content:"\f0f7"}
 #main-nav li:nth-child(9):before {content:"\f013"}
 
@@ -41,14 +41,14 @@ body {background:#32C2CD url(img/bg-default.jpg);}
 .active .sub-nav {display:block !important;}
 #main-nav .sub-nav a {margin:0; padding:8px 0;}
 .sub-nav dd:hover{background-color:rgba(90, 198, 206, 0.57)}
-.sub-nav dd.active { background-color:rgba(15, 15, 15, 0.41);}
-.sub-nav dd.active:hover { background-color:rgba(15, 15, 15, 0.3);}
+.sub-nav dd.active {background-color:rgba(15, 15, 15, 0.41);}
+.sub-nav dd.active:hover {background-color:rgba(15, 15, 15, 0.3);}
 
 .dashboard {background-color:transparent}
 #container {padding:30px 15px; display:block; flex:1; background:url("img/body-bg.png"); box-shadow:0 -1px 10px gray;}
 #col-aside {display:none}
 #col-main {padding:10px; background-color:transparent; box-shadow:none;}
-#footer {display:none}
+#footer {position:fixed; bottom:0; width:100%; left:0}
 
 a {color:#177A82}
 .btn {background-color:#21BFCB;}
@@ -64,15 +64,24 @@ a {color:#177A82}
 .data-tbl thead tr th {background-color:transparent; font-weight:normal;}
 .data-tbl tr:nth-child(odd) {background-color:#fff;}
 .data-tbl tr:hover td {background-color:#fafafa;}
-.data-tbl caption {display:table-caption; background-color: white; text-align: left; font-size: 16px; padding: 13px; color: #888;}
+.data-tbl caption {display:table-caption; background-color: white; text-align: left; font-size: 16px; padding: 13px; color: #888; box-shadow:0 0 3px #C7C7C7}
 
 .frm-tbl caption {font-size:20px; font-weight:normal; border:none; padding-bottom:5px;}
 .frm-tbl caption:after {content:""; margin-top:10px; display:block; height:0; width:100%; border-top:1px solid #ccc; border-bottom:1px solid #fff;}
 .frm {background-color:transparent}
 .frm-tab {border-color:#21BFCA}
 .frm-tab li {}
-.frm-tab .active { background-color:#21bfca; text-shadow:none;}
+.frm-tab .active {background-color:#21bfca; text-shadow:none;}
 .frm-tab .active a {color:white;}
+
+.caption {font-size:20px; font-weight:normal; border:none; padding:5px 5px 15px 5px; color:#555}
+.caption:after {content:""; margin-top:10px; display:block; height:0; width:100%; border-top:1px solid #ccc; border-bottom:1px solid #fff;}
+
+h3.caption {font-size:17px; padding-bottom:10px}
+h3.caption:after {display:none;}
+
+.caption a {font-size:13px; display:inline-block; margin-left:10px; color:#50A0A7}
+.caption a:hover {color:#177A82}
 
 html, body {height:100%}
 #col-main {padding:0}

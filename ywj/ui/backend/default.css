@@ -44,10 +44,12 @@ select[multiple=multiple] {height:100px;}
 input.txt[required],
 textarea.txt[required],
 select[required] {border-color:#F7D1BD}
-input.txt, textarea.txt {border:1px solid #bbb; min-width:150px; border-bottom-color:#ddd; border-right-color:#ddd; vertical-align:middle; padding:5px 5px; border-radius:3px; font-family:microsoft yahei, Arial, Helvetica, sans-serif; font-size:13px; background-color:white}
-input.txt[type=number] {min-width:80px; max-width:80px;}
+input.txt, textarea.txt {border:1px solid #bbb; width:150px; border-bottom-color:#ddd; border-right-color:#ddd; vertical-align:middle; padding:5px 5px; border-radius:3px; font-family:microsoft yahei, Arial, Helvetica, sans-serif; font-size:13px; background-color:white}
+textarea.txt {width:300px;}
+input.txt[type=number] {width:80px;}
 input[type=checkbox],
-input[type=radio] {margin-right:2px;}
+input[type=radio] {margin-right:2px; vertical-align:middle; position:relative; top:-1px;}
+input.txt[readonly] {background-color:#eee; color:#bbb; text-shadow:1px 1px 1px white}
 input.long-txt {width:770px;}
 input.date_txt {background:url("img/date.png") no-repeat left center; padding-left:18px; font-weight:bolder; color:blue}
 .rich-txt {width:800px; height:400px}
@@ -103,7 +105,7 @@ body .btn-danger:hover {background-color:#BB5F14}
 #welcome {}
 #welcome a {color:white;}
 #welcome .login-link {padding:10px 20px;}
-#welcome .user { position:relative; cursor:default; padding:10px 35px 10px 20px;}
+#welcome .user {position:relative; cursor:default; padding:10px 35px 10px 20px;}
 #welcome .user:before {content:"\f007"; display:inline-block; margin-right:5px; font-family:FontAwesome, serif;}
 #welcome .user:after {content:"\f0d7"; font-family:FontAwesome, serif; font-size:14px; display:block; position:absolute; right:-15px; top:10px;}
 #welcome:hover .user:after {content:"\f0d8"}
@@ -112,9 +114,9 @@ body .btn-danger:hover {background-color:#BB5F14}
 #welcome .user-panel p span {white-space: nowrap}
 #welcome .user-panel a {color:#ff5500}
 #welcome .user-panel a:hover {text-decoration: underline}
-#welcome:hover .user-panel { display:block;}
+#welcome:hover .user-panel {display:block;}
 #welcome .g-img-error img {display:none}
-#welcome .g-img-error { background:url("img/default_avatar.png") no-repeat center #7C7C7C; background-size:contain}
+#welcome .g-img-error {background:url("img/default_avatar.png") no-repeat center #7C7C7C; background-size:contain}
 #welcome .avatar-wrap {width:90px; height:90px; overflow: hidden; float:left; margin-right:10px}
 
 /** 系统选择按钮 **/
@@ -175,7 +177,7 @@ li:hover .sub-nav {display:block;}
 .frm-tab {overflow:hidden; border-bottom:3px solid #ccc; margin-top:10px; clear:both;}
 .frm-tab li {margin:0 0 0 10px; display:inline-block; background-color:#eee; border-radius:2px 2px 0 0; color:gray; cursor:pointer}
 .frm-tab a,
-.frm-tab span { font-size:12px; padding:3px 15px; display:inline-block;}
+.frm-tab span {font-size:12px; padding:3px 15px; display:inline-block;}
 .frm-tab a {color:#999;}
 .frm-tab .active {background-color:#ccc; color:black; text-shadow:1px 1px 1px white}
 .frm-tab .active a {color:#333;}
@@ -183,14 +185,16 @@ li:hover .sub-nav {display:block;}
 .frm-tab-content .disactive {display:none}
 
 /** 图片缩略图 **/
-.image-thumb {display:block; width:80px; height:80px; position:relative; overflow:hidden; border:1px solid #eee; border-radius:5px; margin:10px 0 0; text-align:center}
-.image-thumb img {height:100%; vertical-align:middle;}
-.image-thumb .delete-link {display:none; position:absolute; bottom:0; text-align:center; width:100%; background-color:rgba(61, 83, 205, 0.31); color:white; text-shadow:1px 1px 1px gray; cursor:pointer}
-.image-thumb .delete-link:hover {background-color:rgba(61, 83, 205, 0.9)}
-.image-thumb:hover .delete-link {display:block}
-.image-thumb .view-source-link {display:none; position:absolute; top:0; right:0; text-align:center; width:100%; background-color:rgba(61, 83, 205, 0.31); color:white; text-shadow:1px 1px 1px gray; cursor:pointer}
-.image-thumb:hover .view-source-link {display:block;}
-.image-thumb .chk { position:absolute; bottom:0; right:0;}
+.image-thumb {display:block; width:250px; height:180px; position:relative; overflow:hidden; border:5px solid rgba(255, 255, 255, 0.6); box-shadow:1px 1px 3px #ccc}
+.image-thumb img {}
+.image-thumb [data-flag=delete]{display:none; padding:2px 5px; position:absolute; top:0; right:0; background-color:#eee;}
+.image-thumb [data-flag=source]{display:none; padding:2px 5px; position:absolute; background-color:#eee; bottom:0; right:0;}
+.image-thumb:hover [data-flag=delete],
+.image-thumb:hover [data-flag=source]{ display:block;}
+
+/** 图片缩略图列表 **/
+.image-thumb-list {overflow:hidden; clear:both;}
+.image-thumb-list .image-thumb {float:left; list-style:none; margin:0 10px 10px 0;}
 
 /** 文件上传 **/
 div.uploader-file {width:auto;}
@@ -233,7 +237,7 @@ div.uploader-file {width:auto;}
 .search-frm input, .search-frm select {min-width:0;}
 
 /** 数据表格 **/
-.data-tbl {border-collapse:collapse; border-spacing:0; border:none; width:100%; _width:98%; background-color:#fff}
+.data-tbl {border-collapse:collapse; border-spacing:0; margin-bottom:10px; border:none; width:100%; clear:both; background-color:#fff}
 .data-tbl caption {display:none;}
 .data-tbl tr th {padding:5px; text-align:left; background-color:#D2D4D7; color:#666; white-space:nowrap;}
 .data-tbl td {padding:5px;}
@@ -243,6 +247,13 @@ div.uploader-file {width:auto;}
 .data-tbl tr.selected td {background-color:#f0f0f0}
 .data-tbl a {white-space:nowrap}
 .data-tbl tr:hover td {background-color:#F1F1F1}
+
+/** 信息表 **/
+.info-tbl {clear:both; min-width:400px; border-collapse:collapse; background-color:rgba(255,255,255,0.5); margin-bottom:10px; border-spacing:0; border:none;}
+.info-tbl caption {text-align:left; padding:10px; background-color:rgba(255,255,255,0.2)}
+.info-tbl th, .info-tbl td {text-align:left; padding:10px;}
+.info-tbl tbody tr {border-bottom:1px solid white;}
+.info-tbl tbody th {width:30px; white-space:nowrap; font-weight:normal}
 
 /** 分页 **/
 .pagination {padding:10px 0; display:inline-block; color:gray}
