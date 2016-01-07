@@ -52,13 +52,17 @@ body {background:#32C2CD url(img/bg-default.jpg); overflow-y:scroll;}
 
 a {color:#177A82}
 .btn {background-color:#21BFCB;}
+.btn[disabled],
+.btn-disabled {background-color:#ddd}
 .btn:hover {background-color:#309BA2}
 
 .well {border-radius:3px; background-color:rgba(255, 255, 255, 0.43)}
 .operate-bar {float:left; padding:0; margin-top:15px; min-height:40px;}
 .search-frm {float:right; margin:0; background:none;}
 .search-frm:hover {box-shadow:none; background-color:rgba(255, 255, 255, 0.5);}
+.search-frm .txt {width:100px;}
 
+.page-iframe .data-tbl {box-shadow:none;}
 .data-tbl {background-color:#fafafa; border:10px solid white; box-shadow:0 0 5px #ccc}
 .data-tbl thead tr:nth-child(odd),
 .data-tbl thead tr th {background-color:transparent; font-weight:normal;}
@@ -80,7 +84,9 @@ a {color:#177A82}
 h3.caption {font-size:17px; padding-bottom:10px}
 h3.caption:after {display:none;}
 
-.caption a {font-size:13px; display:inline-block; margin-left:10px; color:#50A0A7}
+.caption a {font-size:13px; display:inline-block; color:#50A0A7}
+.caption a.btn {color:white;}
+.caption a:first-child {margin-left:10px;}
 .caption a:hover {color:#177A82}
 
 html, body {height:100%}

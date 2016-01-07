@@ -274,7 +274,12 @@ define('ywj/auto', function(require){
 				if(this.type == 'checkbox'){
 					toState = this.checked;
 				}
-				$('input[type=checkbox]', $(tag)).attr('checked', toState).trigger('change');
+				$('input[type=checkbox]', $(tag)).each(function(){
+					var $this = $(this);
+					if(!$this.attr('disabled')){
+						$this.attr('checked', toState).trigger('change');
+					}
+				});
 			}
 		});
 
@@ -559,12 +564,13 @@ define('ywj/auto', function(require){
 		});
 
 		//自动富文本编辑器
-		$('textarea[rel=rich]').each(function(){
+		$('textarea[rel=simple-rich],textarea[rel=rich]').each(function(){
 			if($(this).data('rich-binded')){
 				return;
 			}
 			$(this).data('rich-binded', 1);
 
+			var rel = $(this).attr('rel');
 			var txt = $(this);
 			var id = util.guid();
 			var name = txt.attr('name');
@@ -574,8 +580,8 @@ define('ywj/auto', function(require){
 
 			var script = '<script id="'+id+'" name="'+name+'" type="text/plain" style="width:'+w+'px; height:'+h+'px;"></script>';
 			$(script).insertAfter(txt);
-
-			require.async('ueditor_admin_config', function(){
+			var cfg_name = rel == 'simple-rich' ? 'ueditor_config_simple' : 'ueditor_config_normal';
+			require.async(['ueditor_config',cfg_name], function(){
 				require.async('ueditor', function(){
 					var ue = UE.getEditor(id);
 					setTimeout(function(){

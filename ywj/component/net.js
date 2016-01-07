@@ -70,6 +70,11 @@ define('ywj/net', function(require){
 		}
 	};
 
+	var download = function(url, save_name){
+		var a = document.createElement('A');
+		a.href = url;
+	};
+
 	/**
 	 * check is scalar
 	 * @param val

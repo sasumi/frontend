@@ -14,12 +14,9 @@
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的从新定义
         , toolbars: [[
-            'fontfamily', 'fontsize', 'undo', 'redo', 'bold', 'italic', 'underline', 'strikethrough', 'removeformat', 'blockquote',
-		    'forecolor', 'backcolor', 'formatmatch', 'insertorderedlist', 'insertunorderedlist', 'selectall',
-			'fullscreen','|','wordimage',
-            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
-            'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-            'simpleupload',  'emotion', 'source'
+            'undo', 'redo', 'fontfamily', 'fontsize', 'bold', 'italic', 'underline', 'strikethrough', 'removeformat',
+		    'forecolor', 'backcolor', 'formatmatch', 'insertorderedlist', 'insertunorderedlist',
+            'link', 'unlink'
         ]]
     };
 

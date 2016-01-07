@@ -85,7 +85,9 @@ seajs.config({
 		"swiper": "swiper/swiper.min.js",
 		"waterfall": "waterfall/waterfall.js",
 		"ueditor": FRONTEND_HOST+"/ueditor/ueditor.all.js",
-		"ueditor_admin_config": FRONTEND_HOST+"/ueditor/ueditor.admin.js"
+		"ueditor_config": FRONTEND_HOST+"/ueditor/ueditor.config.js",
+		"ueditor_config_simple": FRONTEND_HOST+"/ueditor/ueditor.config.simple.js",
+		"ueditor_config_normal": FRONTEND_HOST+"/ueditor/ueditor.config.normal.js"
 	},
 	paths: {
 		"ywj": FRONTEND_HOST+"/ywj/component",
