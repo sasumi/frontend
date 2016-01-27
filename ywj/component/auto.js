@@ -571,25 +571,26 @@ define('ywj/auto', function(require){
 			$(this).data('rich-binded', 1);
 
 			var rel = $(this).attr('rel');
-			var txt = $(this);
+			var $txt = $(this);
 			var id = util.guid();
-			var name = txt.attr('name');
-			var w = txt.width() || 400;
-			var h = txt.height() || 300;
-			txt.hide();
+			var name = $txt.attr('name');
+			var w = $txt.width() || 400;
+			var h = $txt.height() || 300;
+			$txt.hide();
 
 			var script = '<script id="'+id+'" name="'+name+'" type="text/plain" style="width:'+w+'px; height:'+h+'px;"></script>';
-			$(script).insertAfter(txt);
+			$(script).insertAfter($txt);
 			var cfg_name = rel == 'simple-rich' ? 'ueditor_config_simple' : 'ueditor_config_normal';
-			require.async(['ueditor_config',cfg_name], function(){
+			require.async(cfg_name, function(){
 				require.async('ueditor', function(){
 					var ue = UE.getEditor(id);
 					setTimeout(function(){
-						ue.setContent(txt.val());
+						ue.setContent($txt.val());
 						ue.setHeight(h+'px');
-						ue .addListener( "contentchange", function () {
+						ue.addListener("contentchange", function () {
 							window['EDITOR_CONTENT_CHANGED_FLAG'] = true;
-						} );
+							$txt.val(ue.getContent());
+						});
 					}, 1000);
 				});
 			});
