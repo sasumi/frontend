@@ -1,0 +1,79 @@
+@charset "UTF-8";
+
+.g-new-wrap{font-family: Microsoft Yahei;}
+.n-article-slide{margin-top: 20px;}
+.g-slide {width:900px; height:360px;background-color: #eee}
+.g-slide .g-slide-nav{left: 50%;margin-left: -40px;}
+.g-page-mod-ti{position: relative;zoom:1;}
+.g-page-mod-ti .more{position: absolute;right: 0;top: 25px;margin: 0}
+.g-page-mod-ti h2{color: #000000;font-size: 30px;_background: none!important;}
+.g-new-side .g-page-mod-ti h2{font-size: 18px;}
+
+/*旧的S*/
+.strategy-article-top-2 {overflow:hidden; padding-bottom:15px; margin-bottom:15px; border-bottom:1px solid #ddd;}
+.strategy-article-top-2 .g-img{width:320px; height:240px; margin-bottom:10px;}
+.strategy-article-top-2 li.first {margin-right:20px;}
+.strategy-article-top-2 li {float:left; width:320px;}
+.strategy-article-list li {float:left; width:50%;}
+.strategy-article-list a {display:block;}
+.strategy-article-list .time {float:right; padding-right:15px;}
+
+#mod-other-views-article h3 {font-size:18px; font-weight:bold; padding-bottom:15px; color:#555}
+#mod-other-views-article li {height:100px; margin-bottom:25px;position: relative;zoom:1;padding-left: 110px;width: 180px;}
+#mod-other-views-article li .ti {display:block; width: 180px; font-size:18px;height: 20px;line-height: 20px;overflow: hidden; text-overflow:ellipsis; white-space:nowrap;}
+#mod-other-views-article .g-img {position: absolute;left: 0;top: 0;width: 100px; height: 107px; overflow: hidden;}
+#mod-other-views-article .desc {margin-top: 10px; line-height:20px}
+#mod-other-views-article h2 {background:none; padding-left:0;}
+
+#mod-special .g-layout-main .g-img {width:660px; height:370px;}
+.special-sub-list li {margin-bottom:15px;}
+.special-sub-list .g-img {width:322px; height:176px;}
+
+#mod-news-list .article-list li {float:left; width:475px; height:30px; line-height:30px; }
+#mod-news-list .article-list li.even {margin-right:50px;}
+#mod-news-list .article-list .ti {display:block; width:350px; overflow:hidden; height:30px; float:left;}
+#mod-news-list .article-list .date { float:right;}
+
+#mod-bake-list dl {width:1000px; margin-right:20px; float:left}
+#mod-bake-list dt {font-size:14px; font-weight:bold; margin-bottom:10px;}
+#mod-bake-list dl.last {margin-right:0;}
+#mod-bake-list dd {width:78px; float:left; margin-bottom:5px;}
+/*旧的E*/
+
+/*2.5*/
+.mustknow-cont{border: 1px solid #eee; width: 289px;}
+.mustknow-tlt{ background: url("../img/abico.png?v20150611") no-repeat; _background: url("../img/abico_8.png?v20150611") no-repeat;}
+.mustknow-tlt{width: 264px; height: 89px; background-position: -75px -338px;line-height: 32px; color: #fff;padding-left: 25px;padding-top: 10px;font-size: 23px;}
+.mustknow-tlt p{font-size: 30px;}
+.mustknow-list{padding:10px 15px; height: 240px;}
+.mustknow-list li{ height: 46px;line-height: 46px;border-bottom: 1px solid #eee;background-position: 0 -1517px;font-size: 14px;}
+.mustknow-list li:last-child{border-bottom: none;}
+.mustknow-list li a{color: #333}
+.mustknow-list li a:hover{color: #ff5500}
+
+.n-mod-gonglue{}
+.n-mod-gonglue .squarelist {margin-top: 20px;}
+.n-mod-gonglue .squarelist li{float: left;width: 295px;}
+.n-strategy-list{border-bottom: 1px solid #eee;padding-bottom: 25px;}
+.n-strategy-list li{float: left;width: 295px;margin-right: 7px;}
+.n-strategy-list li.last{margin-right: 0;}
+.n-strategy-list li .g-img{display: block;width: 295px; height: 220px;overflow: hidden;position: relative;zoom:1;z-index: 1;}
+.n-strategy-list li .ti{margin-top: 10px; font-size: 18px; height: 35px;line-height: 35px;}
+.n-strategy-list li .ti a{color: #000000}
+.n-strategy-list li .ti a:hover{color: #ff5500}
+.n-strategy-list li .desc{color: #7f7f7f;width: 280px;}
+
+.knowledge-cont{float: left;margin-top: 15px; width: 280px;height: 230px; padding-left: 310px; padding-right: 10px; position: relative;zoom:1;}
+.knowledge-cont .g-img{position: absolute;left: 0;top: 0;width: 295px; height: 220px;overflow: hidden;}
+.knowledge-cont h3{font-size: 18px;}
+.knowledge-cont h3 a{color: #000}
+.knowledge-cont h3 a:hover{color: #ff5500}
+.knowledge-cont .kn-sort{width: 290px; position: absolute;bottom: 0;right: 0;}
+.knowledge-cont .kn-sort li{ float: left;width: 68px; height: 25px; line-height: 25px;font-size: 14px;overflow: hidden;font-weight: bold;}
+
+#mod-bake-list .n-strategy-list{margin-top: 20px;padding-bottom: 0;border: 0;}
+#mod-bake-list .n-strategy-list li .g-img{height: 225px;background-color: #f9f9f9;}
+
+
+
+

@@ -1,0 +1,7 @@
+.g-layout-main2 {border:1px solid #eee; width:658px; padding:0 20px 20px 20px; background-color:#fff;}
+.article-list {margin-bottom:20px;}
+.article-list .g-img {width:220px; height:165px; float:left; margin-right:20px;}
+.article-list li { overflow:hidden; padding:20px 0; border-bottom:1px solid #eee; position:relative;_zoom:1;}
+.article-list li.last {border:none;}
+.article-list .ti {font-size:14px; color:#666; font-weight:bold; display:block; height:25px; overflow:hidden}
+.article-list .article-state {display:block; position:absolute; bottom:15px; right:10px; color:#999}

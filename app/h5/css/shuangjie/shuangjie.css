@@ -1,0 +1,456 @@
+@charset "UTF-8";
+.sj-content {
+  background-image: url("../../img/shuangjie/bg.jpg");
+  background-repeat: repeat;
+  background-size: 5rem 5rem;
+}
+.sj-content:after {
+  display: block;
+  content: "";
+  width: 100%;
+  height: 1.35rem;
+  background-image: url("../../img/shuangjie/btmbg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.sj-bg, .sj-mod0 h2 em, .sj-mod2 h2, .sj-mod2 h3 em, .sj-mod3 h2, .sj-mod4 h2, .sj-content .regform .btn, .sj-layer .layer-cont h2, .sj-layer .layer-cont h3, .sj-layer-order .regform .btn {
+  background-image: url("../../img/shuangjie/sj_bg.jpg");
+  background-repeat: no-repeat;
+  background-size: 20.95rem 10.85rem;
+}
+
+.sj-banner {
+  background-image: url("../../img/shuangjie/banner.jpg?v20151211");
+  height: 10.325rem;
+  position: relative;
+}
+.sj-banner h2 {
+  text-indent: -999rem;
+}
+.sj-banner .ac-rule {
+  position: absolute;
+  right: 0.95rem;
+  top: 1.375rem;
+  width: 2.5rem;
+  height: 0.625rem;
+  text-indent: -999rem;
+  cursor: pointer;
+  z-index: 6;
+}
+.sj-banner .ac-order {
+  position: absolute;
+  left: 5rem;
+  bottom: 0.75rem;
+  width: 5.95rem;
+  height: 1.65rem;
+  text-indent: -999rem;
+  cursor: pointer;
+  z-index: 6;
+}
+.sj-banner svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 10rem;
+  z-index: 5;
+}
+.sj-banner svg path {
+  FILL: #ffffff;
+}
+
+.sj-mod0 h2 {
+  position: relative;
+  color: #fffc0e;
+  font-size: 0.65rem;
+  font-weight: bold;
+  margin: 0 0.75rem;
+  padding-left: 0.875rem;
+  height: 1.75rem;
+  line-height: 1.75rem;
+}
+.sj-mod0 h2 em {
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  background-position: -18.05rem 0;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+.sj-mod0 .regform .input-txt {
+  margin-top: 0;
+}
+
+.sj-mod1 {
+  background-image: url("../../img/shuangjie/modbg1.jpg?v20151211");
+  height: 16.5rem;
+  position: relative;
+}
+.sj-mod1 h2 {
+  text-indent: -999rem;
+}
+.sj-mod1 span {
+  position: absolute;
+  color: #fff;
+  padding: 0 0.2rem;
+  background-color: #00542b;
+  font-size: 0.5rem;
+  -webkit-animation: scale-three 2.5s ease infinite;
+  animation: scale-three 2.5s ease infinite;
+}
+.sj-mod1 span.yh-tag1 {
+  left: 0.6rem;
+  top: 7.1rem;
+}
+.sj-mod1 span.yh-tag2 {
+  left: 0.4rem;
+  top: 9.2rem;
+  background-color: #008745;
+  -webkit-animation-delay: .3s;
+  animation-delay: .3s;
+}
+.sj-mod1 span.yh-tag3 {
+  left: 3.6rem;
+  top: 5rem;
+  background-color: #008745;
+  -webkit-animation-delay: .4s;
+  animation-delay: .4s;
+}
+.sj-mod1 span.yh-tag4 {
+  left: 7.9rem;
+  top: 6.8rem;
+}
+.sj-mod1 span.yh-tag5 {
+  right: 2.15rem;
+  top: 6.35rem;
+  background-color: #008745;
+  -webkit-animation-delay: .2s;
+  animation-delay: .2s;
+}
+.sj-mod1 span.yh-tag6 {
+  right: 0.5rem;
+  top: 8.15rem;
+  -webkit-animation-delay: .6s;
+  animation-delay: .6s;
+}
+.sj-mod1 span.yh-tag7 {
+  right: 1.55rem;
+  top: 9.15rem;
+  background-color: #008745;
+  -webkit-animation-delay: .5s;
+  animation-delay: .5s;
+}
+
+.modtopbg, .sj-mod2:before, .sj-mod3:before, .sj-mod4:before {
+  display: block;
+  margin: 0 auto;
+  content: "";
+  background-image: url("../../img/shuangjie/modtopbg.jpg");
+  width: 14.7rem;
+  height: 0.5rem;
+  background-size: 14.7rem 0.5rem;
+}
+
+.sj-mod2 {
+  margin-top: 1rem;
+}
+.sj-mod2 h2 {
+  text-indent: -999rem;
+  width: 11.05rem;
+  height: 3.9rem;
+  background-position: 0 0;
+  margin: 0.25rem auto 0;
+}
+.sj-mod2 h3 {
+  color: #fffc0e;
+  font-size: 0.6rem;
+  padding-left: 1rem;
+  margin-left: 0.75rem;
+  position: relative;
+}
+.sj-mod2 h3 strong {
+  font-size: 0.65rem;
+  padding-right: 0.25rem;
+}
+.sj-mod2 h3 em {
+  position: absolute;
+  left: 0;
+  top: 1.1rem;
+  background-position: -18.05rem 0;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+.sj-mod2 h3:before {
+  content: "";
+  display: block;
+  height: 1rem;
+}
+.sj-mod2 h3:after {
+  content: "";
+  display: block;
+  height: 0.5rem;
+}
+.sj-mod2 img {
+  display: block;
+  margin: 0 auto;
+  width: 14.375rem;
+  height: 6.75rem;
+}
+
+.sj-mod3 {
+  margin-top: 1rem;
+  position: relative;
+  padding-bottom: 3rem;
+}
+.sj-mod3 h2 {
+  text-indent: -999rem;
+  width: 10.35rem;
+  height: 3.85rem;
+  background-position: 0 -4.15rem;
+  margin: 0.25rem auto 0;
+}
+.sj-mod3:after {
+  margin-top: 0.5rem;
+  margin-left: 0.75rem;
+  content: "";
+  display: block;
+  width: 14.375rem;
+  height: 11.9rem;
+  background-image: url("../../img/shuangjie/tyg_photo.jpg");
+  background-size: cover;
+}
+.sj-mod3 .tyg-open-contact {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  color: #fff;
+}
+.sj-mod3 .tyg-open-contact a {
+  color: #fff;
+}
+.sj-mod3 .tyg-open-contact dt {
+  display: none;
+}
+.sj-mod3 .tyg-open-contact .share-adress {
+  background-position: 0 -11.25rem;
+}
+.sj-mod3 .tyg-open-contact .share-hotline {
+  background-position: 0 -12.35rem;
+}
+
+.sj-mod4 {
+  margin-top: 1rem;
+}
+.sj-mod4 h2 {
+  text-indent: -999rem;
+  width: 10.35rem;
+  height: 3.85rem;
+  background-position: -10.6rem -4.15rem;
+  margin: 0.25rem auto 0;
+}
+
+.sj-content .regform {
+  background: none;
+}
+.sj-content .regform input[name="name"] {
+  width: 6rem;
+}
+.sj-content .regform input[name="mobile"] {
+  width: 7rem;
+  margin-left: 0.25rem;
+}
+.sj-content .regform .btn {
+  display: block;
+  margin: 1rem auto 0;
+  background-position: -11.3rem 0;
+  width: 6.5rem;
+  height: 1.95rem;
+  text-indent: -999rem;
+}
+
+.sj-layer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+.sj-layer .sj-layer-cont {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -45%);
+  transform: translate(-50%, -45%);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+.sj-layer .sj-layer-cont:before {
+  content: "";
+  position: absolute;
+  left: -0.175rem;
+  top: -1.8rem;
+  width: 14rem;
+  height: 1.8rem;
+  background-image: url("../../img/shuangjie/laytopbg.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.sj-layer .sj-layer-cont .close {
+  position: absolute;
+  right: -0.625rem;
+  top: -1.625rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  text-indent: -999rem;
+}
+.sj-layer .layer-cont {
+  width: 12.075rem;
+  height: 19rem;
+  overflow-y: scroll;
+  background-image: url("../../img/shuangjie/bg.jpg");
+  background-repeat: repeat;
+  background-size: 5rem 5rem;
+  border-radius: 0 0 .5rem .5rem;
+  color: #fff;
+  padding: 0 0.625rem 1rem;
+}
+.sj-layer .layer-cont h2 {
+  background-position: 0 -8.4rem;
+  width: 6.65rem;
+  height: 1.35rem;
+  text-indent: -999rem;
+  margin-top: 0.25rem;
+}
+.sj-layer .layer-cont h3 {
+  margin: 0.5rem 0;
+  text-indent: -999rem;
+}
+.sj-layer .layer-cont h3.tc-tlt1 {
+  background-position: -6.9rem -8.4rem;
+  width: 5.5rem;
+  height: 0.85rem;
+}
+.sj-layer .layer-cont h3.tc-tlt2 {
+  background-position: -12.65rem -8.4rem;
+  width: 7rem;
+  height: 0.85rem;
+}
+.sj-layer .layer-cont h3.tc-tlt3 {
+  background-position: 0 -10rem;
+  width: 4.1rem;
+  height: 0.85rem;
+}
+.sj-layer .layer-cont img {
+  display: block;
+  margin: 0 auto;
+  width: 10.9rem;
+}
+
+.sj-layer-tc {
+  font-size: 0.5rem;
+}
+.sj-layer-tc table th, .sj-layer-tc table td {
+  vertical-align: top;
+  padding-top: 1rem;
+}
+.sj-layer-tc table th {
+  width: 3.75rem;
+  font-weight: normal;
+  text-align: left;
+}
+.sj-layer-tc p {
+  padding: 0 1rem;
+}
+
+.sj-layer-order h2 {
+  margin-left: 0.8rem;
+}
+.sj-layer-order .sj-layer-cont {
+  top: 8.5rem;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+}
+.sj-layer-order .layer-cont {
+  height: 9rem;
+  overflow-y: hidden;
+}
+.sj-layer-order .layer-cont h2 {
+  background-position: -4.35rem -10rem;
+  width: 4.8rem;
+  height: 0.85rem;
+}
+.sj-layer-order .regform {
+  background: none;
+}
+.sj-layer-order .regform .input-txt {
+  width: 10rem;
+}
+.sj-layer-order .regform .btn {
+  display: block;
+  margin: 1rem auto 0;
+  background-position: -11.3rem 0;
+  width: 6.5rem;
+  height: 1.95rem;
+  text-indent: -999rem;
+}
+
+.sj-layer-rule {
+  font-size: 0.5rem;
+}
+.sj-layer-rule h4 {
+  color: #fffc0e;
+  font-weight: bold;
+  font-size: 0.75rem;
+  text-align: center;
+}
+.sj-layer-rule a {
+  color: #fff;
+}
+.sj-layer-rule p:after {
+  content: "";
+  display: block;
+  height: 0.2rem;
+}
+.sj-layer-rule p em {
+  margin-left: 0.7rem;
+  margin-right: 0.1rem;
+}
+
+.sj-ad {
+  display: block;
+  margin: 1rem auto 0;
+  width: 14.375rem;
+}
+
+.gotop {
+  -webkit-transform: scale(0.6);
+  transform: scale(0.6);
+  right: .3rem;
+  bottom: .3rem;
+}
+.gotop a {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+/** 设备横屏时调用该段css代码 **/
+@media all and (orientation: landscape) {
+  .sj-layer .layer-cont {
+    height: 6rem;
+  }
+  .sj-layer .layer-cont .input-txt {
+    padding: 0.2rem;
+    margin-top: 0.3rem;
+  }
+  .sj-layer .layer-cont .btn {
+    margin-top: 0.5rem;
+  }
+}
+.ywj-msg-content {
+  font-size: 0.6rem;
+}
+
+/*# sourceMappingURL=shuangjie.css.map */

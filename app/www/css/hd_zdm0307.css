@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+.hd-bannerbg{
+	height: 600px;
+	background: url("../img/hd/zdm_bannerbg.jpg") no-repeat center;
+}
+.hd-banner{
+	height: 600px;
+	background:#ffe7bb url("../img/hd/zdm_banner.jpg") no-repeat center;
+}
+#page-hd-zdm .order-form{
+	position: absolute;
+	top: 620px;
+	left: 50%;
+	width: 1210px;
+	height: 180px;
+	padding-top: 35px;
+	margin-left: -605px;
+	background:#ffe7bb url("../img/hd/zdm_orderbg.png") no-repeat center;
+	text-align: center;
+}
+#page-hd-zdm .order-form label{
+	font-size: 18px;
+	color: #bbd4ed;
+}
+#page-hd-zdm .order-form .g-txt{
+	width: 210px;
+	height: 22px;
+	line-height: 22px;
+	font-family: Microsoft Yahei;
+	font-size: 14px;
+}
+#page-hd-zdm .order-form .g-btn{
+	margin-top: 30px;
+	width: 150px;
+	height: 48px;
+	line-height: 48px;
+	background-color: #de1757;
+	border-radius: 50px;
+	font-size: 24px;
+	font-family: Microsoft Yahei;
+}

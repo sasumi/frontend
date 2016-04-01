@@ -1,0 +1,19 @@
+.g-layout-side {float:left; width:280px;}
+.g-layout-main {float:right; width:700px;}
+
+.article-category-list {margin-bottom:10px;}
+.article-category-list dt {font-size:14px; padding-bottom:10px; font-weight:bold; color:#333}
+.article-category-list dd {padding-left:15px; margin:5px 0}
+
+.article-list {text-align:right; margin-bottom:10px;}
+.article-list li {padding:15px 0; overflow:hidden; border-bottom:1px dotted #ccc;}
+.article-list li.last {border:none;}
+.article-list .ti {display:block; font-weight:bold; color:#444; font-size:16px; margin-bottom:5px; text-align:left}
+.article-list .g-img {width:220px; height:165px; float:left; margin-right:20px; text-align:left}
+.article-list .desc {height:130px; text-align:left}
+.article-list .date {}
+
+.article-multi-category .cat-ti {font-weight:bold; line-height:1; font-size:14px; color:#555; border-bottom:1px solid #eee; padding-bottom:10px; margin-bottom:10px;}
+.article-multi-category ul { overflow:hidden; margin-bottom:20px;}
+.article-multi-category li {float:left; margin:0 10px 10px 0}
+.article-multi-category a.active {color:#ff5500}

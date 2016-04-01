@@ -1,0 +1,669 @@
+@charset "UTF-8";
+
+body{
+	background-color: #f6f6f6;
+}
+input{
+	font-family: Microsoft Yahei;
+}
+.g-body{
+	padding-bottom: 150px;
+}
+.hd-bannerbg{
+	width: 100%;
+	height: 550px;
+	background: url("../img/hd/kn_bannerbg.png") no-repeat center;
+}
+.hd-banner{
+	margin: 0 auto;
+	width: 1210px;
+	height: 550px;
+	background:#ffe7bb url("../img/hd/kn_banner.png") no-repeat center;
+	text-indent: -9999px;
+}
+
+.hd-tlt{
+	width: 985px;
+	height: 88px;
+	line-height: 88px;
+	background: url("../img/hd/tltbg2.png");
+	text-align: center;
+	color: #e63521;
+	font-size: 48px;
+	font-weight: bold;
+	text-align: center;
+}
+.hd-tlt, .hd-cont{
+	margin: 0 auto;
+	width: 1210px;
+}
+.hd-tlt{
+	margin-top: 40px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.hd-cont{
+	margin-top: 15px;
+}
+/**大礼包S**/
+.bgcont1{
+	background: #ffe7bb url("../img/hd/kn_bg1.png") no-repeat center bottom;
+	padding-bottom: 155px;
+}
+.bgcont1 .hd-tlt{
+	margin-top: 0;
+}
+.gift-bag{
+	background: url("../img/hd/kn_contbg1.png?v20160229") no-repeat center;
+	height: 442px;
+	text-indent: -9999px;
+}
+/**大礼包E**/
+
+.hd-list-pz{
+	width: 1220px;
+	padding-top: 20px;
+}
+.hd-list-pz li{
+	float: left;
+	width: 301px;
+	height: 435px;
+	font-size: 20px;
+	line-height: 1.2;
+	border-left: 1px solid #cccccc;
+}
+.hd-list-pz li img{
+	width:302px;
+	height: 220px;
+	margin-left: -1px;
+}
+.hd-list-pz h3, .hd-list-pz p{
+	padding-left: 20px;
+}
+.hd-list-pz h3{
+	padding-bottom: 15px;
+}
+.hd-list-pz h3, .hd-list-pz h3 strong{
+	display: block;
+	font-size: 50px;
+	color: #333333;
+}
+.hd-list-pz span{
+	color: #e95520;
+}
+/**精品家平面户型图S**/
+.room-show{
+	height: 450px;
+	position: relative;
+	zoom:1;
+	z-index: 1
+}
+.hd-tc-intro{
+	float: left;
+	width: 320px;
+	height: 410px;
+	padding: 20px;
+	color: #e63521;
+	font-size: 16px;
+	background-color: #ffffff;
+	line-height: 1.2;
+}
+.bor-box{
+	height: 185px;
+	border: 1px solid #e63520;
+	padding: 15px 20px;
+	position: relative;
+	zoom:1;
+}
+.hd-tc-intro strong{
+	color: #e63521;
+	font-size: 40px;
+}
+.hd-tc-intro h3{
+	color: #e63521;
+	font-size: 18px;
+	line-height: 1.4;
+}
+.hd-tc-intro h3 strong{
+	display: block;
+}
+.hd-tc-intro .price{
+	position: absolute;
+	bottom: -10px;
+	left: 30px;
+	background-color: #ffffff;
+}
+.hd-tc-intro .price strong{
+	font-size: 120px;
+	line-height: 1;
+}
+.hd-tc-intro .tip{
+	color: #333333;
+	font-size: 24px;
+	border-top: 1px solid #cccccc;
+	margin-top: 40px;
+	padding-top: 30px;
+	position: relative;
+	zoom:1;
+}
+.hd-tc-intro .tip em{
+	position: absolute;
+	top: -10px;
+	left: 50%;
+	margin-left: -15px;
+	width: 30px;
+	height: 20px;
+	line-height: 20px;
+	background: #ffffff;
+	color: #cccccc;
+	font-family: arial;
+	font-weight: normal;
+	font-size: 16px;
+	text-align: center;
+}
+.hd-tc-intro .tip strong{
+	font-size: 60px;
+}
+.hd-tc-intro .tip2{
+	color: #333333;
+}
+.room-photo{
+	float: right;
+	width: 810px;
+	height: 450px;
+	z-index: 1;
+	position: relative;
+	zoom:1;
+}
+.tc-toom-tag{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 730px;
+	height: 50px;
+	padding-top: 120px;
+	padding-left: 80px;
+	z-index: 2;
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.8));
+}
+.tc-toom-tag li{
+	float: left;
+	width: 86px;
+	height: 22px;
+	line-height: 22px;
+	color: #ffffff;
+	font-size: 20px;
+	text-align: center;
+	border-right: 1px solid #fff;
+	cursor: pointer;
+}
+.tc-toom-tag li.tc-room8{
+	border-right:0;
+}
+.tc-toom-tag li.active{
+	color: #ff5500;
+}
+.arrow-left, .arrow-left:hover, .arrow-right, .arrow-right:hover{
+	filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#99000000', endColorstr='#99000000');
+	background:rgba(0,0,0,0.3);
+	cursor: pointer;
+	width: 17px;
+	height: 35px;
+	padding: 50px 10px;
+	z-index: 10;
+	position: absolute;
+	top: 120px;
+}
+.arrow-left {
+	left: 10px;
+}
+.arrow-left span{
+	background-position: 0 -683px;
+	margin: 0;
+}
+.arrow-right {
+	right: 10px;
+}
+.arrow-right span{
+	background-position: 0 -645px;
+	margin: 0;
+}
+.swiper-container {
+	width: 810px;
+	height: 450px;
+}
+.pagination {
+	position: absolute;
+	left: 0;
+	text-align: center;
+	bottom:5px;
+	width: 100%;
+	z-index: 10;
+}
+.swiper-pagination-switch {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 10px;
+	background: #353436;
+	margin: 0 3px;
+	cursor: pointer;
+}
+.swiper-active-switch {
+	background: #ff923f;
+}
+.room-photo .swiper-slide{
+	position: relative;
+	zoom:1;
+	cursor: default;
+}
+.swiper-slide span{
+	position: absolute;
+	right: 0;
+	top: 0;
+	background-color: #fa9f5a;
+	z-index: 11;
+	padding: 12px 30px;
+	line-height: 1;
+	color: #ffffff;
+	font-size: 18px;
+}
+/**精品家平面户型图E**/
+/**精品家3D图S**/
+.room-3d{
+	background: url("../img/hd/kn_contbg2.jpg") no-repeat center;
+	margin: 0 auto;
+	width: 1070px;
+	height: 750px;
+	text-indent: -9999px;
+}
+/**精品家3D图E**/
+/**品牌保障S**/
+.our-brands{
+	display: block;
+}
+/**品牌保障E**/
+/**专业保证S**/
+.our-guarantee{
+	background: url("../img/hd/ny_contbg3.png?v20160114") no-repeat center;
+	height: 390px;
+}
+.our-guarantee li{
+	float: left;
+	margin-right: 6px;
+	width: 170px;
+	padding: 70px 10px 0 15px;
+	font-size:18px;
+	line-height: 1.2;
+}
+.our-guarantee h3{
+	font-size: 30px;
+	font-weight: bold;
+	padding-left: 50px;
+	padding-bottom: 10px;
+}
+.our-guarantee h4{
+	text-align: center;
+	color: #ffffff;
+	padding-bottom: 60px;
+}
+.our-guarantee li p{
+	line-height: 1.5;
+}
+.our-guarantee .guarantee1 h3{
+	padding-left: 40px;
+}
+li.guarantee2, li.guarantee4, li.guarantee6{
+	padding-top: 85px;
+}
+li.guarantee5{
+	padding-left: 18px;
+}
+/**专业保证E**/
+/**体验馆照片S**/
+.tyg-photo1, .tyg-photo2{
+	display: block;
+	width: 1210px;
+	height: auto;
+}
+.tyg-photo2{
+	margin-top: 0;
+}
+/**体验馆照片E**/
+/**打造精品家S**/
+.make-quality{
+	background: url("../img/hd/kn_contbg4.png") no-repeat 35px center;
+	height:215px;
+	width: 1265px;
+	position: relative;
+	z-index: 2;
+}
+.make-quality li{
+	float: left;
+	width: 215px;
+	text-align: center;
+	padding-top: 110px;
+	padding-left: 34px;
+	color: #ffffff;
+	font-size: 24px;
+	line-height: 1.2;
+}
+/**打造精品家E**/
+/**活动细则S**/
+.ny-rule{
+	margin-top: -40px;
+	width: 1110px;
+	padding: 60px 0 40px 100px;
+	color: #6e6e6e;
+	font-size: 16px;
+	line-height: 1.4;
+	background: #ffffff;
+	position: relative;
+	z-index: 1;
+}
+.ny-rule h2{
+	padding-bottom: 15px;
+	font-size: 24px;
+	font-weight: bold;
+	color: #333333;
+}
+/**活动细则E**/
+.hd-media{
+	border-top: 1px solid #cccccc;
+	background: url("../img/hd/kn_contbg3.png?v20160119") no-repeat center;
+	height: 269px;
+	margin-top: 0;
+	text-indent: -9999px;
+	position: relative;
+	zoom:1;
+}
+.hd-media .this-shadow{
+	position: absolute;
+	bottom: -24px;
+	left: 0;
+	background: url("../img/hd/ny_contbg5_shadow.png?v") no-repeat center;
+	width: 1210px;
+	height: 24px;
+}
+
+/**sidebar S**/
+.side-bar{
+	background: url("../img/hd/ny_sidebarbg.png") no-repeat center;
+	position: fixed;
+	_position: absolute;
+	top: 150px;
+	right: 5px;
+	width: 139px;
+	height: 385px;
+	padding: 0 33px 0 28px;
+	z-index: 11;
+}
+.side-bar dl{
+	font-size: 16px;
+}
+.side-bar dt{
+	height: 80px;
+	text-indent: -9999px;
+}
+.side-bar dd{
+	margin-top: 2px;
+}
+.side-bar dd a{
+	display: block;
+	height: 37px;
+	line-height: 37px;
+	text-align: center;
+	color: #ffe6d3;
+}
+.side-bar dd a.ladder-active{
+	color: #ffba86;
+}
+.gotop{
+	margin: 15px auto 0;
+	display: block;
+	width: 80px;
+	height: 50px;
+	text-indent: -9999px;
+}
+/**sidebar E**/
+.side-btn, .note-box .tip{
+	background: url("../img/hd/ny_bg.png") no-repeat;
+}
+/**预约弹层S**/
+.side-btn{
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	background-position: 0 0;
+	width: 248px;
+	height: 102px;
+	cursor: pointer;
+	text-indent: -9999px;
+	z-index: 10;
+}
+.note-box{
+	height: 105px;
+	padding-top: 0;
+}
+.note-box .g-new-wrap{
+	position: relative;
+	zoom:1;
+}
+.note-box .close{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 50px;
+	height: 50px;
+	line-height: 0.5;
+	text-align: center;
+	font-size: 50px;
+	color: #cccacb;
+	cursor: pointer;
+}
+.note-box .tip{
+	float: left;
+	width: 372px;
+	height: 100px;
+	margin-top: 5px;
+	background-position: -258px 0;
+	text-indent: -9999px;
+}
+.note-box form{
+	float: left;
+	padding-top: 25px;
+}
+.note-box input{
+	width: 230px;
+	padding: 0 10px;
+	height: 55px;
+	line-height: 55px;
+	font-size: 22px;
+	margin-left: 20px;
+}
+.note-box input.sj-btn, .note-box input.sj-btn:hover{
+	background: #c42045;
+	border-radius: 0;
+	height: 55px;
+	line-height: 55px;
+	font-size: 25px;
+	font-weight: bold;
+}
+.note-box-btm{bottom: 130px;}
+/**预约弹层样式S**/
+.ac-order-layer {
+  position: fixed;
+  _position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#66000000', endColorstr='#66000000');
+  background:rgba(0,0,0,0.4);
+}
+
+.ac-order-tip {
+  position: fixed;
+  _position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: -100px;
+  margin-left: -180px;
+  width: 360px;
+  height: 200px;
+  filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#CC000000', endColorstr='#CC000000');
+  background:rgba(0,0,0,0.8);
+  border-radius: 10px;
+  color: #fff;
+  text-align: center;
+  line-height: 1.5;
+  display: table;
+  display: block\9;
+  z-index: 16;
+}
+
+.ac-order-tip .ac-order-tip-con {
+	width: 320px;
+	padding: 0 20px;
+	display: table-cell;
+	display: block\9;
+	padding-top: 80px\9;
+	height: 220px\9;
+	vertical-align: middle;
+	font-size: 16px;
+}
+
+.close-btn {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background: #000000;
+  width: 40px;
+  height: 40px;
+  line-height: 1.2;
+  text-align: center;
+  font-size: 30px;
+  color: #ffffff;
+  border-radius: 100%;
+  cursor: pointer;
+}
+/**预约弹层E**/
+
+/**设计师预约表S**/
+.sjs-order-form{
+	padding-left: 250px;
+	font-size: 16px;
+}
+.sjs-order-form .input-txt{
+	width: 250px;
+	height: 22px;
+	line-height: 22px;
+	padding: 15px;
+	border:1px solid #cccccc;
+	background: transparent;
+	box-shadow: 2px 2px 2px #1e2123;
+	font-size: 16px;
+	color: #a9a9a9;
+}
+.sjs-order-form .item{
+	margin-top: 10px;
+}
+.sjs-order-form .zx-type{
+	margin-left: 25px;
+	color: #ffffff;
+}
+
+.sjs-order-form .zx-type input{
+	display: none;
+	display: inline-block\9;
+	margin: 0 4px 2px 0\9;
+}
+.sjs-order-form .zx-type em{
+	display: inline-block;
+	background-color: transparent;
+	border:1px solid #cfcfcf;
+	width: 24px;
+	height: 24px;
+	border-radius: 100%;
+	position: relative;
+	vertical-align: middle;
+	margin: 0 4px 2px 0;
+	box-shadow: inset 2px 2px 2px #1e2123;
+	display: none\9;
+}
+.sjs-order-form .zx-type em:after{
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	background-color: transparent;
+	width: 10px;
+	height: 10px;
+	border-radius: 100%;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+.sjs-order-form .zx-type input:checked + em:after{
+	background-color: #ff5500;
+}
+.sjs-order-form .item.clear input, .sjs-order-form .item.clear .auth-code, .sjs-order-form .item.clear .g-btn{
+	float: left;
+}
+.sjs-order-form .auth-code{
+	width: 250px;
+	height: 22px;
+	margin: 0 10px;
+	padding: 15px;
+	border:1px solid #cccccc;
+	background: transparent;
+	box-shadow: 2px 2px 2px #1e2123;
+	font-size: 16px;
+	position: relative;
+	zoom:1;
+}
+.sjs-order-form .auth-code input{
+	background: transparent;
+	border: 0;
+	height: 25px;
+	line-height: 25px;
+	width: 120px;
+	font-size: 16px;
+	color: #a9a9a9;
+}
+.sjs-order-form .auth-code .btn{
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	width: 122px;
+	height: 48px;
+	background: #ff5500;
+	color: #ffffff;
+	margin: 0;
+	cursor: pointer;
+	text-align: center;
+}
+.sjs-order-form .auth-code .btn-disabled{
+	background: #888888;
+	cursor: inherit;
+}
+.sjs-order-form .item.clear .g-btn{
+	border-radius: 5px;
+	width: 295px;
+	height: 52px;
+	line-height: 52px;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	box-shadow: inset 0 -3px 2px #ef3b02, 0 3px 2px #5c1214;
+}
+.sjs-order-form .nytip{
+	padding-right: 50px;
+	padding-top: 5px;
+	text-align: right;
+	font-size: 12px;
+	color: #666666;
+}
+/**设计师预约表E**/

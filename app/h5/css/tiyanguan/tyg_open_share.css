@@ -1,0 +1,670 @@
+@charset "UTF-8";
+
+.app-wrap{
+	font-size: 0.7rem;
+}
+.step-cont, .share-explain-tag, .num-input, .submit-btn, .shareico, .ac-intro-btn .arrow, .people-ico, .share-lay-top, .share-lay-btm, .tyd-share-cont .close-btn, .share-ing-tag, .share-got-tag, .getpuz-popup .close, .joinbox a, .joinbox .plus{
+	background-image: url("../../img/tiyanguan/tyg_share_h5.png");
+	background-repeat: no-repeat;
+	background-size: 15rem 22.5rem;
+}
+.tyg-share-banner{
+	background-image: url("../../img/tiyanguan/share_banner.gif");
+	width: 100%;
+	height: 4.225rem;
+	position: relative;
+}
+.tyg-share-banner h2{
+	text-indent: -999rem;
+	height: 0;
+}
+/**礼品介绍S**/
+.tyg-share-gift1{
+	background-image: url("../../img/tiyanguan/share_giftbg1.jpg");
+	width: 100%;
+	height: 4rem;
+}
+.tyg-share-gift2{
+	background-image: url("../../img/tiyanguan/share_giftbg2.jpg");
+	width: 100%;
+	height: 5rem;
+}
+.tyg-share-gift3{
+	background-image: url("../../img/tiyanguan/share_giftbg3.jpg");
+	width: 100%;
+	height: 5rem;
+}
+.gift-cont{
+	width: 13rem;
+	margin: 0 auto;
+	position: relative;
+}
+.share-explain-tag, .share-ing-tag, .share-got-tag{
+	text-indent: -999rem;
+}
+.share-explain-tag{
+	width: 2.4rem;
+	height: 2.4rem;
+	position: absolute;
+	left: -0.125rem;
+	top: -0.125rem;
+}
+.share-ing-tag, .share-got-tag{
+	width: 2.15rem;
+	height: 2.15rem;
+	position: absolute;
+	right: -0.125rem;
+	top: -0.125rem;
+}
+.share-ing-tag{
+	background-position: -10.35rem 0;
+}
+.share-got-tag{
+	background-position: -7.95rem 0;
+}
+.gift1-cont{
+	height: 3.5rem;
+	padding-top: 0.5rem;
+}
+.gift1-cont .share-explain-tag, .gift1-cont .share-ing-tag, .gift1-cont .share-got-tag{
+	top: 0.4rem;
+}
+.gift2-cont{
+	height: 4.75rem;
+	padding-top: 0.25rem;
+}
+.gift2-cont .share-explain-tag{
+	background-position:-2.65rem 0;
+}
+.gift3-cont{
+	height: 5rem;
+}
+.gift3-cont .share-explain-tag{
+	background-position:-5.3rem 0;
+}
+/**礼品介绍E**/
+
+.tyg-stepbg{
+	background-image: url("../../img/tiyanguan/share_stepbg.jpg");
+	width: 16rem;
+	height: 2.5rem;
+	padding-top: 0.625rem;
+}
+.step-cont{
+	background-position: 0 -17.575rem;
+	width: 14.2rem;
+	height: 1.35rem;
+	margin: 0 auto;
+}
+.user-puzzle{
+	line-height: 1.5rem;
+	color: #ffffff;
+	text-align: center;
+	font-size: 0.6rem;
+}
+.user-puzzle span{
+	border-bottom: 1px solid #fff;
+	padding: 0 0.2rem 0.1rem;
+	margin: 0 0.1rem;
+}
+.joinbox{
+	position: relative;
+}
+.joinbox a, .joinbox span{
+	width: 7.25rem;
+	height: 2.1rem;
+	text-indent: -999rem;
+}
+.joinbox a.join-btn1{
+	float: left;
+	background-position: 0 -5rem;
+}
+/*.joinbox a.join-btn1.active{
+	background-position: 0 -7.35rem;
+}*/
+.joinbox a.join-btn2{
+	float: right;
+	background-position: -7.5rem -5rem;
+}
+/*.joinbox a.join-btn2.active{
+	background-position: -7.5rem -7.35rem;
+}*/
+.joinbox a.join-btn3, .joinbox a.join-btn3.active{
+	background-position: 0 -19.175rem;
+	cursor: none;
+}
+.joinbox .plus{
+	position: absolute;
+	right: 3.2rem;
+	top: -0.5rem;
+	background-position: -12.75rem -1rem;
+	width: 1.16rem;
+	height: 0.925rem;
+	opacity: 0;
+	text-indent: -999rem;
+	-webkit-transition:all .3s linear;
+	transition:all .3s linear;
+}
+.joinbox .plus-up{
+	-webkit-animation:up 3s linear .5s;
+	animation:up 3s linear .5s;
+}
+/**活动细则之下S**/
+.tyg-share-halfbtm{
+	background: #931506;
+	padding: 0.3rem 0.5rem 0.75rem;
+	position: relative;
+}
+.getpuz-popup{
+	position: absolute;
+	top: -4.1rem;
+	right: 0.5rem;
+	width: 7.25rem;
+	height: 4rem;
+	background: #fff;
+	border-radius: 10px;
+	text-align: center;
+	font-size: 0.6rem;
+}
+.getpuz-popup p{
+	padding-top: 1.4rem;
+}
+.getpuz-popup:after{
+	content: "";
+	position: absolute;
+	bottom: -0.55rem;
+	left: 50%;
+	margin-left: -0.3rem;
+	border:0.3rem solid transparent;
+    border-top-color: #fff;
+}
+.getpuz-popup .close{
+	background-position: -12.75rem 0;
+	width: 0.9rem;
+	height: 0.9rem;
+	position: absolute;
+	right: 0.3rem;
+	top: 0.3rem;
+	text-indent: -999rem;
+}
+.share-form{
+}
+.share-form input{
+	float: left;
+}
+.num-input{
+	background-position: 0 -2.65rem;
+	width: 7.75rem;
+	height: 1.1rem;
+	padding: 0.5rem;
+}
+.num-input::-webkit-input-placeholder {
+  color: #ecbc84;
+  font-weight: bold;
+}
+
+.submit-btn{
+	background-position: -9rem -2.65rem;
+	width: 6rem;
+	height: 2.1rem;
+	margin-left: 0.2rem;
+	text-indent: -999rem;
+}
+/*.submit-btn.active{
+	background-position: -2.4rem -10.675rem;
+}*/
+.ac-intro-btn{
+	display: block;
+	width: 100%;
+	height: 1.1rem;
+	text-align: center;
+	line-height: 1.1rem;
+	color: #fff;
+	margin-top: 0.3rem;
+	border:1px solid #b8655d;
+}
+a:active.ac-intro-btn, a:hover.ac-intro-btn, a.ac-intro-btn.active{
+	color: #ffffff;
+}
+.ac-intro-btn .arrow{
+	display: inline-block;
+	width: 0.4rem;
+	height: 0.5rem;
+	background-position: -14rem -2rem;
+}
+.ac-intro-btn .arrow-left{
+	margin-left: 0.5rem;
+}
+.ac-intro-btn .arrow-right{
+	-webkit-transform:rotate(180deg);
+	transform:rotate(180deg);
+	margin-left: 0.5rem;
+}
+.tyg-share-tlt{
+	color: #fbcd51;
+	border-top: 1px solid #fbcd51;
+	margin-top: 1rem;
+	position: relative;
+}
+.tyg-share-tlt h3{
+	font-weight: bold;
+	background: #931506;
+	width: 6.25rem;
+	position: absolute;
+	top: -0.5rem;
+	left: 50%;
+	margin-left: -3.1rem;
+	text-align: center;
+}
+.share-ad{
+	display: block;
+	background-image: url("../../img/tiyanguan/share_ad.jpg");
+	width: 100%;
+	height: 6.5rem;
+	text-indent: -999rem;
+	margin-top: 0.8rem;
+}
+.share-map{
+	display: block;
+	background-image: url("../../img/tiyanguan/share_map.jpg");
+	width: 100%;
+	height: 7.125rem;
+	text-indent: -999rem;
+	margin-top: 0.8rem;
+	position: relative;
+}
+.landmark {
+  position: absolute;
+  left: 6.625rem;
+  top: 0.125rem;
+  width: 1.05rem;
+  height: 1.4rem;
+  background-image: url("../../img/tiyanguan/tyg_h5.png");
+  background-repeat: no-repeat;
+  background-size: 14.5rem 20.375rem;
+  background-position: -10.45rem -2.7rem;
+  -webkit-animation: jump 2s ease-in infinite;
+  animation: jump 2s ease-in infinite;
+}
+.tyg-contact{
+	color: #fff;
+	font-size: 0.6rem;
+}
+.tyg-contact dt{
+	font-weight: bold;
+	padding: 0.5rem 0 0.2rem;
+}
+.tyg-contact dd{
+	padding-bottom: 0.2rem;
+	padding-left: 0.85rem;
+	position: relative;
+}
+.tyg-contact a{
+	color: #ffffff;
+}
+.shareico{
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 0.2rem;
+	position: absolute;
+	left: 0;
+	top: 0.1rem;
+}
+.share-adress{
+	background-position: -14rem 0;
+	width: 0.6rem;
+	height: 0.85rem;
+	left: 0.05rem;
+}
+.share-hotline{
+	background-position: -14rem -1.1rem;
+	width: 0.725rem;
+	height: 0.725rem;
+}
+.copyright{
+	background:#931506;
+	padding: 0 0 0.7rem;
+	color: #d86658;
+	font-size: 0.45rem;
+}
+.media-cut{
+	display: none;
+}
+.share-guide-layer{
+	background: rgba(0,0,0,.5);
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+}
+.guide-arrow{
+	background-image: url("../../img/guide-arrow.png");
+	width: 4.35rem;
+	height: 3.625rem;
+	position: absolute;
+	top:0;
+	right: 0;
+	z-index: 11;
+}
+.share-layer-tip{
+	background: #ffffff;
+	border-radius: 0.3rem;
+	position: absolute;
+	top: 3rem;
+	left: 50%;
+	margin-left: -6rem;
+	width: 9rem;
+	height: 5rem;
+	padding: 1.5rem;
+	text-align: center;
+	line-height: 1.5;
+}
+.share-layer-tip .pb{
+	padding-bottom: 0.5rem
+}
+.hand-ico{
+	background-image: url("../../img/share-tipico.png");
+	width: 2rem;
+	height: 2.75rem;
+	position: absolute;
+	top: 0.8rem;
+	right: 0.8rem;
+	z-index: 11;
+}
+.people-ico{
+	background-position: -11.8rem -9.7rem;
+	width: 3.2rem;
+	height: 3.2rem;
+	position: absolute;
+	bottom: -0.3rem;
+	left: 0.8rem;
+	z-index: 11;
+}
+/**分享活动细则S**/
+.tyd-share-detail{
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9;
+	background: rgba(0,0,0,.6);
+}
+.tyd-share-cont{
+	width: 14rem;
+	padding: 0;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -7rem;
+	margin-top: -9rem;
+}
+.tyd-share-cont .det-tlt{
+	text-align: center;
+	font-size: 0.7rem;
+	font-weight: bold;
+}
+.tyd-share-cont .det-text{
+	line-height: 2;
+	height: 13rem;
+	overflow-y: scroll;
+	font-size: 0.5rem;
+}
+.tyd-share-cont .close-btn{
+	position: absolute;
+	right: -0.5rem;
+	top: -0.5rem;
+	background-position: 0 -10.675rem;
+	width: 2.15rem;
+	height: 2.15rem;
+	text-indent: -999rem;
+}
+/**定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸**/
+.det-text::-webkit-scrollbar
+{
+    width: 0.2rem;
+    background: rgba(0,0,0,0);
+}
+
+/**定义滚动条轨道 内阴影+圆角**/
+.det-text::-webkit-scrollbar-track
+{
+    background: rgba(0,0,0,0);
+}
+
+/**定义滑块 内阴影+圆角**/
+.det-text::-webkit-scrollbar-thumb
+{
+   background: #d76f00;
+   border-radius: 5rem;
+}
+
+.share-lay-top{
+	background-position: 0 -13.075rem;
+	width: 14rem;
+	height: 2rem;
+}
+.share-lay-btm{
+	background-position: 0 -15.35rem;
+	width: 14rem;
+	height: 2rem;
+}
+.share-lay-center{
+	background-image: url("../../img/tiyanguan/share_tipbg.jpg");
+	background-repeat: repeat-y;
+	background-size: contain;
+	width: 14rem;
+	padding: 0 1.25rem;
+}
+/**分享活动细则E**/
+/**话费拼图S**/
+.huafei-puzzle-list{
+	position: relative;
+	width: 12.5rem;
+	height: 4.5rem;
+	margin-left: 0.25rem;
+}
+.huafei-puzzle-list li{
+	float: left;
+}
+.huafei-puzzle-list span{
+	background-image: url("../../img/tiyanguan/huafei_bg1.png");
+	background-repeat: no-repeat;
+	background-size: 15.125rem 5.375rem;
+	position: absolute;
+}
+.huafei-puzzle-list .active span{
+	background-image: url("../../img/tiyanguan/huafei_bg2.png");
+}
+.huafei-puzzle-list .puzzle1{
+	width: 3.75rem;
+	height: 2.25rem;
+	background-position: 0 0;
+	left: 0;
+	top: 0;
+}
+.huafei-puzzle-list .puzzle2{
+	width: 3.125rem;
+	height: 2.25rem;
+	background-position: -4rem 0;
+	left: 3.125rem;
+	top: 0;
+}
+.huafei-puzzle-list .puzzle3{
+	width: 4.375rem;
+	height: 2.25rem;
+	background-position: -7.375rem 0;
+	left: 5.625rem;
+	top: 0;
+}
+.huafei-puzzle-list .puzzle4{
+	width: 3.125rem;
+	height: 2.85rem;
+	background-position: -12rem 0;
+	right: 0;
+	top: 0;
+}
+.huafei-puzzle-list .puzzle5{
+	width: 3.125rem;
+	height: 2.875rem;
+	background-position: 0 -2.5rem;
+	left: 0;
+	bottom: 0;
+}
+.huafei-puzzle-list .puzzle6{
+	width: 4.375rem;
+	height: 2.875rem;
+	background-position: -3.375rem -2.5rem;
+	left: 2.5rem;
+	bottom: 0;
+}
+.huafei-puzzle-list .puzzle7{
+	width: 3.125rem;
+	height: 2.875rem;
+	background-position: -8rem -2.5rem;
+	left: 6.28rem;
+	bottom: 0;
+}
+.huafei-puzzle-list .puzzle8{
+	width: 3.75rem;
+	height: 2.25rem;
+	background-position:-11.35rem -3.125rem;
+	right: 0;
+	bottom: 0;
+}
+/**话费拼图S**/
+
+/**抱枕拼图S**/
+.doll-puzzle-list{
+	position: relative;
+	width: 12.5rem;
+	height: 4.5rem;
+	margin-left: 0.25rem;
+}
+.doll-puzzle-list li{
+	float: left;
+}
+.doll-puzzle-list span{
+	background-image: url("../../img/tiyanguan/doll_bg1.png");
+	background-repeat: no-repeat;
+	background-size: 16rem 5.375rem;
+	position: absolute;
+}
+.doll-puzzle-list .active span{
+	background-image: url("../../img/tiyanguan/doll_bg2.png");
+}
+.doll-puzzle-list .puzzle1{
+	width: 3.125rem;
+	height: 2.25rem;
+	background-position: 0 0;
+	left: 0;
+	top: 0;
+}
+.doll-puzzle-list .puzzle2{
+	width: 2.5rem;
+	height: 2.25rem;
+	background-position: -3.375rem 0;
+	left: 2.5rem;
+	top: 0;
+}
+.doll-puzzle-list .puzzle3{
+	width: 3.75rem;
+	height: 2.25rem;
+	background-position: -6.125rem 0;
+	left: 4.375rem;
+	top: 0;
+}
+.doll-puzzle-list .puzzle4{
+	width: 2.5rem;
+	height: 2.875rem;
+	background-position: -10.125rem 0;
+	left: 7.5rem;
+	top: 0;
+}
+.doll-puzzle-list .puzzle5{
+	width: 3.125rem;
+	height: 2.25rem;
+	background-position: -12.875rem 0;
+	right: 0;
+	top: 0;
+}
+.doll-puzzle-list .puzzle6{
+	width: 2.5rem;
+	height: 2.875rem;
+	background-position: 0 -2.5rem;
+	left: 0;
+	bottom: 0;
+}
+.doll-puzzle-list .puzzle7{
+	width: 3.75rem;
+	height: 2.875rem;
+	background-position: -2.75rem -2.5rem;
+	left: 1.875rem;
+	bottom: 0;
+}
+.doll-puzzle-list .puzzle8{
+	width: 2.5rem;
+	height: 2.875rem;
+	background-position: -6.75rem -2.5rem;
+	left: 5rem;
+	bottom: 0;
+}
+.doll-puzzle-list .puzzle9{
+	width: 3.75rem;
+	height: 2.25rem;
+	background-position: -9.5rem -3.125rem;
+	left: 6.875rem;
+	bottom: 0;
+}
+.doll-puzzle-list .puzzle10{
+	width: 2.5rem;
+	height: 2.875rem;
+	background-position: -13.5rem -2.5rem;
+	right: 0;
+	bottom: 0;
+}
+/**抱枕拼图S**/
+.huafei-puzzle-list .active-animate span, .doll-puzzle-list .active-animate span{
+	-webkit-animation:scale-three 3s ease-in 1s;
+	animation:scale-three 3s ease-in 1s;
+}
+
+/**plus**/
+@keyframes up {
+    60% {
+        opacity: 1;
+        top: -4rem;
+    }
+    100% {
+        opacity: 0;
+        top: -5rem;
+    }
+}
+@-webkit-keyframes up {
+    60% {
+        opacity: 1;
+        top: -4rem;
+    }
+    100% {
+        opacity: 0;
+        top: -5rem;
+    }
+}
+.ywj-msg-content{
+	font-size: 0.6rem;
+}
+
+/** 设备横屏时调用该段css代码 **/
+@media all and (orientation : landscape){
+	.tyd-share-cont{
+		margin-top: -5.5rem;
+	}
+	.tyd-share-cont .det-text{
+		height: 6rem;
+	}
+	.tyd-detail-cont .det-text{
+		height: 5rem;
+	}
+}

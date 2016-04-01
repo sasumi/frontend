@@ -1,0 +1,24 @@
+.qt-base-info {padding:20px; border:1px solid #ddd; overflow:hidden;}
+.qt-thumb {padding-right:20px; float:left;}
+.qt-thumb .g-img {width:240px; height:180px;}
+.qt-info h2 {color:#333; font-size:16px; font-weight:bold; float:left;}
+.change-style {color:#e1975a; display:inline-block; padding:0 5px; border:1px solid #e1975a; border-radius:3px; margin-left:10px;}
+.qt-radar {float:right;}
+
+.qt-data-wrap {border:1px solid #ddd; border-top:none; padding:20px;}
+.qt-mod {margin-bottom:20px;}
+
+.qt-mod-ti {padding:10px 0;}
+.qt-mod-ti h3 {display:inline-block; font-size:18px; color:#333}
+.qt-mod-sum {float:right; font-size:22px;}
+.qt-mod-sum strong {font-size:28px;}
+
+.qt-tbl {width:100%; font-size:14px;}
+.qt-tbl caption {display:none}
+.qt-tbl th, td {border:1px solid #ddd; padding:15px 0; text-align:center}
+.qt-tbl thead th { background-color:#eeeeee;}
+.qt-tbl tbody th { background-color:#fafafa;}
+
+.qt-sum-wrap {text-align:right; padding:20px 0 50px 0}
+.qt-sum {font-size:20px;  }
+.qt-sum strong {font-size:36px;}

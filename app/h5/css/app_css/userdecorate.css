@@ -1,0 +1,231 @@
+@charset "UTF-8";
+
+/*表格类页面*/
+.waitico, .passico, .stampico, .repico, .rscutico, .orsuc-ico{background:url("../../img/app_img/app_ico.png?v20150624") no-repeat;}
+/*一期基础材料清单*/
+.riglistcont{}
+.smfont{ background-color:#f2f2f2;width:16%;}
+.listtable{margin-top: 20px;width: 100%;border-top:1px solid #dfdfdf;border-right:1px solid #dfdfdf;font-size: 14px;}
+.listtable caption{border:1px solid #dfdfdf;border-bottom: 0;padding: 10px 0;}
+.listtable td, .listtable th{padding: 10px 0; text-align: center;border-bottom:1px solid #e7e4e4; vertical-align:middle;}
+.listtable th{font-size: 1.4rem;font-family: Microsoft Yahei; color: #333333; background-color: #f2f2f2;}
+.lit-logo{margin:0 auto;width: 93px; height: 31px; background:url("../../img/app_img/little_logo.png") no-repeat;}
+.riglistcont .listtable th{background-color: #eaeaea; font-size: 16px;font-weight: normal;}
+.riglistcont .listtable td, .riglistcont .listtable th{border-bottom:1px solid #dfdfdf;border-left:1px solid #dfdfdf;}
+
+/*验收报告*/
+.checklist{}
+.grabg{background-color:#f2f2f2;}
+
+/*质检报告*/
+.chepholist{}
+.chepholist li{float: left;width: 17%;height: auto;margin-left: 0.2%;display: inline;overflow:hidden;}
+.chepholist li img{width: 100%;height: 100%;}
+.waitfix{display: block;z-index: 1}
+.waitfixdw{position: relative;zoom:1;}
+.waitfix .waitstate{}
+.waitfix a{color: #ff5500;}
+.waitfix .popupbox{top: 28px;right: 8px;z-index: 6; width: 1rem;height: 55px;padding:5px;border-radius:3px;
+color: #ffffff;font-size:1rem; background-color: #585858;filter:alpha(opacity=95);opacity: 0.95;-moz-opacity:0.95; text-align: left;}
+.waitfixdw .popupbox{position: absolute;z-index: 5}
+.waitfix .popupbox .triang-up{position: absolute;top:-5px;right: 20px;}
+.waitfix .waitico, .passico{display: inline-block;width: 13px;height: 13px;margin-right: 5px;vertical-align: middle;_overflow: hidden;}
+.waitfix .waitico{background-position: 0 -155px;}
+.passico{background-position: 0 -168px;}
+.chekpassp{color: #0db26a;}
+
+.reportbox{min-height: 70px; border-top: 15px solid #ffffff;margin-top: -10px;
+padding: 30px 5% 0;position: relative;zoom:1; text-align: left;}
+.reportbox h3{position: absolute;left:5%;top: 0; padding-top:2px;font-size: 18px;color: #333333;z-index: 2}
+.reportbox p{word-break: break-all;}
+.reportbox .reptime{text-align: right;padding-right: 5px;}
+.repico{display: inline-block;margin-right: 10px;margin-bottom: 2px; width: 21px;height: 15px; vertical-align: middle; background-position: 0 -182px;}
+.stampico{position: absolute;right: 1%;bottom: 0;width: 128px;height: 101px; background-position: 0 0;z-index: 1;opacity: 0.7;}
+
+.bigimgbox{position: fixed;left: 0;top: 0;width: 100%;height: 100%; z-index: 10;background:rgba(0,0,0,0.8);display: none;}
+.bigimgbox .bigimg{position: absolute;left: 50%;top: 50%;width: 100%; height: auto;
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);}
+.bigimgbox .close-img{position: absolute;right: 0.2rem;top: 0.2rem;width: 1rem; height: 1rem;line-height: 1rem; text-align: center; z-index: 11;background:rgba(0,0,0,0.5);color: #fff;border-radius: 100%;font-size: 1rem;}
+
+/*在线报价*/
+
+.quote {width:100%;padding:10px 0; margin:0 auto; border:1px solid #ddd;box-shadow:5px 6px 28px #eee; font-size:14px}
+
+.quote input.quote-num {width:50px !important; min-width:0 !important; text-align:center; margin-right:5px;}
+.quote select.quote-spec-sel {min-width:0; width:100px;}
+.quote var {font-style:normal; padding:0 1px}
+
+.quote-cap {font-size:20px; font-weight:bold;}
+.quote-state {padding:10px 0; color:gray;}
+.quote-catalog {margin:20px 0;}
+.quote-catalog-name {height:40px; padding-left:20px;position: relative;zoom:1;z-index: 2;}
+.quote-catalog-name .ti {font-size:18px; font-weight:normal; float:left; line-height:40px;}
+.quote-help {display:inline-block; width:14px; line-height:14px; height:14px; background-color:white; border-radius:10px; text-align:center; margin-left:5px; border:1px solid #ccc; cursor:pointer; color:#ccc;}
+.quote-help:hover {border-color:#ff5500; color:#ff5500;}
+.quote-catalog-name .quote-help {width:20px; line-height:20px; height:20px; margin-top:10px;}
+
+.quote-item-list {}
+.quote-item-list table {border-collapse:collapse; border-spacing:0; width:100%;}
+.quote-item-list thead th {padding:5px 10px; font-weight:normal}
+.quote-item-list thead th a {font-size:12px;}
+.quote-item-list tr:hover {background-color:#fafafa}
+.quote-item-list th,
+.quote-item-list td {text-align:left; padding:5px 10px 5px 10px; border-bottom:1px dotted #eee;}
+.quote-col-label{width: 100%;}
+.quote-col-label thead th {height: 30px;line-height: 30px; color: #333333; background-color:#eeeeee;border-top: 1px solid #cccccc;}
+.quote-col-label thead th:last-child {}
+
+.quote-item-list .sum {display:block; text-align:right}
+.quote-item-list tbody .sum {color:gray;}
+
+.quote-catalog-sum {position: absolute;right: 0;top: 0; font-size:16px; color:#444;}
+.quote-catalog-sum em {font-style:normal; color: #ff5500; font-size: 28px;}
+.quote-sum {font-size:18px; text-align:right; color:green; padding-right:20px;}
+.quote-sum em {font-style:normal; font-weight:bold;}
+.quote-sum var {font-size:26px;}
+.quote-note {text-align:right; color:#ccc; padding:10px 20px 10px 0;}
+
+.quote .col-name {width:400px;}
+.quote .col-spec {width:180px;}
+.quote .col-num {width:180px;}
+.quote .col-price {width:100px;}
+
+.quote-other-cost-tbl {width:300px; margin-left:20px;}
+.quote-other-cost-tbl caption {text-align:left; color:#444; font-size:16px; padding:0 0 10px 10px;}
+.quote-other-cost-tbl th,
+.quote-other-cost-tbl td {padding:5px 10px; border:1px solid #eee; font-weight:normal; color:gray;}
+
+a[rel=delete-product],
+a[rel=delete-room],
+a[rel=update-room],
+a[rel=add-room-product],
+a[rel=delete-category],
+a[rel=add-category],
+a[rel=delete-category-item],
+a[rel=add-category-item],
+a[rel=add-room] {visibility:hidden}
+
+.quote-catalog:hover a[rel=add-room],
+.quote-catalog:hover a[rel=add-category],
+table:hover a[rel=add-room-product],
+table:hover a[rel=update-room],
+table:hover a[rel=delete-room],
+table:hover a[rel=delete-room],
+table:hover a[rel=delete-category],
+table:hover a[rel=add-category],
+table:hover a[rel=add-category-item],
+tr:hover a[rel=delete-category-item],
+tr:hover a[rel=delete-product] {visibility:visible}
+
+.quote-readonly select,
+.quote-readonly input[type=number] {border:none;}
+.quote-readonly input[type=submit] {display:none}
+.quote-readonly a[rel=delete-product],
+.quote-readonly a[rel=add-room-product],
+.quote-readonly a[rel=delete-room],
+.quote-readonly a[rel=update-room],
+.quote-readonly a[rel=add-room],
+.quote-readonly a[rel=delete-category],
+.quote-readonly a[rel=add-category],
+.quote-readonly a[rel=add-category-item],
+.quote-readonly a[rel=delete-category-item] {visibility:hidden !important;}
+
+.gene-quote{}
+.chosstyle{min-height: 180px;}
+.chosintro{float: left;width: 47%;position: relative;zoom:1;padding-left: 22%;}
+.chosintro h3{font-size: 20px;}
+.chosintro .chosimg{position: absolute;left: 2%;top: 0;width: 28%; height: 180px;}
+.chosintro .chosimg img{width: 100%; height: auto;}
+.chosintro .backchg{position: static;margin-top: 10px;}
+.assess{float: right;width: 28%;}
+.assess img{width: 100%;}
+
+.qt-priceall{padding-right: 20px;padding-top:10px;border-top: 1px solid #cbcbcb; text-align: right;}
+.qt-priceall .tip{font-size: 12px;color: #999999;}
+.qt-priceall em{font-size: 30px;}
+.qt-priceall strong{font-weight: normal;color: #ff5500;}
+.qt-savebtn{margin-top: 15px; text-align: center;}
+.qt-savebtn input{width: 160px; height: 38px;line-height: 38px;font-weight: bold;}
+
+.qt-addhouse{position: relative;zoom:1;}
+.qt-layer{width: 100%;height: 100%; position: absolute;left: 0;top: 0px;margin: 0 0 0 0;color: #ffffff;text-align: center; filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#7F000000', endColorstr='#7F000000');background:rgba(0,0,0,0.5);}
+.qt-layer p{position: absolute;top: 50%;left: 50%;margin: -10px 0 0 -70px;}
+
+.or-savep{padding-left: 15px;height: 35px;line-height: 35px;}
+.litogbtn, .litgrabtn{width: 75px;height: 30px; text-align: center;line-height: 30px; cursor: pointer;border-radius: 3px;font-size: 14px;}
+.litogbtn{background-color: #ff5500;color: #ffffff;border:none;}
+.litgrabtn{border:1px solid #cccccc; color: #666666;margin-left: 10px;}
+.savetip{padding-left: 20px;color: #ff5500;}
+.wrong-ico{display: inline-block;width: 19px;height: 18px;font-size: 12px; background-position: 0 -185px; vertical-align: middle;margin-right: 5px;}
+.pencil-ico{display: inline-block;width: 11px;height: 11px;background-position: 0 -204px; vertical-align: middle;margin-right: 2px;margin-left: 5px;}
+
+.quo-explain{position: absolute;left: -10px;top:25px;
+	width: 290px;padding: 20px 20px 20px 150px;
+	border:1px solid #eeeeee;background-color: #ffffff; 
+	font-size: 12px;z-index: 3;display: none}
+.quo-expimg{position: absolute;left: 20px;top: 20px;width: 120px;height: 90px;overflow: hidden; display: table-cell;}
+.quo-expimg img{width: 120px;vertical-align: middle;}
+.quo-trg1, .quo-trg2{width: 0;height: 0;font-size: 0;}
+.quo-trg1{position: absolute;top: -6px;left: 15px;border-left: 6px solid transparent;border-right: 6px solid transparent;border-bottom: 6px solid #eeeeee;}
+.quo-trg2{position: absolute;top: -4px;left: 15px;border-left: 6px solid transparent;border-right: 6px solid transparent;border-bottom: 6px solid #ffffff;}
+
+.quo-savesuc{position: fixed;_position: absolute; top: 50%;left: 50%;margin: -50px 0 0 -180px;
+width: 250px;padding: 20px 20px 20px 100px;border:1px solid #eeeeee; background-color: #ffffff;border-radius: 5px;z-index: 3;}
+.orsuc-ico{width: 64px;height: 64px;
+	background-position: -197px -1px;position: absolute;left: 20px;top: 25px;
+}
+.quo-savesuc p{line-height: 25px;}
+.quo-savesuc strong{color: #666666;}
+.quo-savesuc .g-btn{margin-top: 10px;}
+.quo-number{float: left;margin-top: 10px;margin-right: 3px; border:1px solid #cccccc;height: 18px;line-height: 18px;width: 72px;_width: 75px;}
+.quo-number *{float: left;}
+.quo-number .add{border-right: 1px solid #cccccc;width: 18px; cursor: pointer;}
+.quo-number .cut{border-left: 1px solid #cccccc;width: 18px; cursor: pointer;}
+.quo-number input{width: 22px;border: none;padding: 0 5px; text-align: center;_border-color: #ffffff;_height: 16px;_line-height: 16px;}
+.quo-unit{float: left;}
+.quote-catalog-name .quo-explain{top: 38px;left: -6px;}
+.backchg{position: absolute;right: 10px;top: 35px;display: block;width: 118px; height: 36px;border: 1px solid #eeeeee;line-height: 36px; text-align: center;border-radius: 3px;}
+.rscutico{background-position: 0 -214px; position: absolute;left: 0;top: 13px; display:inline-block; margin-right:5px; margin-bottom:5px;  
+	width:15px; height:15px;cursor: pointer;}
+.rsaddico{background-position: 0 -198px;}
+
+/*number input重置*/
+.quote-item-list .ui-spinner{padding:0 20px; height: 25px;line-height: 25px;border: 1px solid #cccccc;border-radius: 0}
+.quote-item-list .ui-spinner-button{height: auto;}
+.quote-item-list .ui-button-text-only .ui-button-text{padding:0;}
+.quote-item-list .ui-spinner .ui-icon{margin-top: 3px;top: 0;}
+.quote-item-list .ui-state-default, .quote-item-list .ui-widget-content .ui-state-default, .quote-item-list .ui-widget-header .ui-state-default,
+ .quote-item-list .ui-state-hover{border: none;}
+ .quote-item-list .ui-spinner-up{right: 0;top: 0; height: 25px;border-left:1px solid #ccc;}
+.quote-item-list .ui-spinner-down{left: 0;top: 0;border-right:1px solid #ccc;}
+.quote-item-list .ui-spinner .ui-icon-triangle-1-s {background-position: -48px -128px; }
+.quote-item-list .ui-icon-triangle-1-n { background-position: -17px -128px;}
+.quote-item-list input.quote-num{width: 60px!important;}
+.quote-item-list .ui-spinner-input{margin: 0;}
+.quote-item-list .ui-corner-all,
+.quote-item-list .ui-corner-top,
+.quote-item-list .ui-corner-left,
+.quote-item-list .ui-corner-tl {
+	border-top-left-radius: 0;
+}
+.quote-item-list .ui-corner-all,
+.quote-item-list .ui-corner-top,
+.quote-item-list .ui-corner-right,
+.quote-item-list .ui-corner-tr {
+	border-top-right-radius: 0;
+}
+.quote-item-list .ui-corner-all,
+.quote-item-list .ui-corner-bottom,
+.quote-item-list .ui-corner-left,
+.quote-item-list .ui-corner-bl {
+	border-bottom-left-radius: 0;
+}
+.quote-item-list .ui-corner-all,
+.quote-item-list .ui-corner-bottom,
+.quote-item-list .ui-corner-right,
+.quote-item-list .ui-corner-br {
+	border-bottom-right-radius: 0;
+}

@@ -1,0 +1,34 @@
+.com-uploader input[type=file]{display:inline-block; outline:none; background:url("img/upload24.png") no-repeat 7px; cursor:pointer; border-radius:3px; width:0; padding:0 0 0 37px;}
+.com-uploader-file {vertical-align:middle; color:#00a0e9;}
+.com-uploader-file span {display:inline-block; vertical-align:middle;}
+.com-uploader-btn {border:none; background-color:transparent; color:#00a0e9; cursor:pointer; margin-right:5px; font-family:Microsoft Yahei, helvetica, verdana, sans-serif;}
+.com-uploader-error .com-uploader-content {color:#FF741F}
+.com-uploader-content img {max-height:100px; max-width:100px; overflow:hidden; box-shadow:1px 1px 5px #ccc}
+.com-uploader-progress span {padding-left:5px; display:inline-block; vertical-align:middle}
+
+/** 未上传 **/
+.com-uploader-normal .com-uploader-progress,
+.com-uploader-normal .com-uploader-content,
+.com-uploader-normal .com-uploader-handle,
+
+/** 上传中 **/
+.com-uploader-uploading .com-uploader-file,
+.com-uploader-uploading .com-uploader-content,
+.com-uploader-uploading .com-uploader-upload,
+.com-uploader-uploading .com-uploader-reload,
+.com-uploader-uploading .com-uploader-delete,
+
+/** 上传成功 **/
+.com-uploader-success .com-uploader-file,
+.com-uploader-success .com-uploader-progress,
+.com-uploader-success .com-uploader-upload,
+.com-uploader-success .com-uploader-cancel,
+
+/** 上传失败 **/
+.com-uploader-error .com-uploader-file,
+.com-uploader-error .com-uploader-progress,
+.com-uploader-error .com-uploader-upload,
+.com-uploader-error .com-uploader-cancel,
+.com-uploader-error .com-uploader-delete
+{display:none;}
+

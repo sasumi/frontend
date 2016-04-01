@@ -1,0 +1,28 @@
+.g-txt-list li,
+.g-addlike-icon,
+p.validate-fail,
+.g-select dt,
+.g-select-city,
+.g-room-catalog-list a,
+.g-project-progress dt i,
+.g-project-progress dd i,
+.g-effect-nav dt span,
+.g-slide-nav a,
+.g-slide-next span,
+.g-breadcrumb li,
+.g-share-list,
+.g-icon,
+.g-navigation-cap,
+.promises li,
+.promote-points,
+.tech-list,
+.g-page-mod-ti h2,
+.price-options dt{background-image:url("../img/g_icon_8.png")}
+
+.g-btn {padding:0 8px;}
+.g-search {height:36px; position:relative}
+.g-search .g-select {position:absolute; z-index:3; background-color:white;}
+.g-search-btn {margin-top:-35px;}
+
+.g-logo a {background-image:url("../img/logo_8.png")}
+.g-default-avatar {background-image:url("../img/default_avatar_png8.png")}

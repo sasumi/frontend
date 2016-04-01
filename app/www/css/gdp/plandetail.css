@@ -1,0 +1,12 @@
+.gdp-page-cap {background-image:url("../../img/gdp/cap_edit.png"); background-position:0 10px; margin-top:20px;}
+.back-btn {font-size:16px; float:right; margin:-35px 10px 0 0;;}
+.back-btn:before {content:">>"; color:#f56720; font-weight:bold; font-family:SimSun, serif; font-size:16px; line-height:26px; margin-left:5px; float:right;}
+
+.img-detail-wrap { position:relative;}
+.img-detail {text-align:center; padding:40px 0; width:100%; overflow:hidden;}
+.img-detail img {max-width:100%;}
+
+.img-list {overflow:hidden; margin:10px 0; border:1px solid #ddd; border-left:none; border-right:none; padding:10px 0;}
+.img-list li {float:left; margin-right:10px; border:4px solid transparent; cursor:pointer;}
+.img-list li.active {border-color:#f56720; cursor:default;}
+.img-list img {width:150px; height:150px; display:block;}

@@ -1,0 +1,558 @@
+@charset "UTF-8";
+
+
+/**banner图片S**/
+.hd-banner{
+	background-image: url("../../img/hd/tc999_banner.jpg?v20160324");
+	height: 8.0rem;
+}
+/**banner图片E**/
+.hd-top-arrow{
+	background: url("../../img/hd/hd_ico.png") no-repeat -2rem -1.875rem;
+	background-size: 7.05rem 3.125rem;
+	position: absolute;
+	top: -0.6rem;
+	left: 50%;
+	margin-left: -0.7rem;
+	width: 1.4rem;
+	height: 0.625rem;
+}
+/**标题S**/
+.hd-tlt{
+	background:none;
+	position: relative;
+	padding-bottom: 1.25rem;
+	padding-top: 1rem;
+}
+.hd-tlt:before{
+	content: "";
+	position: absolute;
+	bottom: 0.6rem;
+	left: 50%;
+	margin-left: -2.6rem;
+	border-top: 1px solid #dbdbdb;
+	width: 5.375rem;
+}
+.hd-tlt:after{
+	content: "+";
+	position: absolute;
+	bottom: 0.6rem;
+	left: 50%;
+	margin-left: -0.375rem;
+	background: #fff;
+	width: 0.75rem;
+	height: 0.3rem;
+	line-height: 1;
+	text-align: center;
+	font-size: 0.6rem;
+}
+.hd-banner + .hd-tlt{
+	padding-top: 0.625rem;
+}
+.hd-tlt h2{
+	font-size: 0.75rem;
+	font-weight: normal;
+}
+.hd-tlt .tip{
+	color: #ff5500;
+}
+/**标题E**/
+/**预约表S**/
+.regform{
+	background: #f1f1f1;
+	position: relative;
+	margin-top: 0.5rem;
+	padding-bottom: 0.3rem;
+}
+.regform .btn, a.btn, input.btn, a:hover.btn, a:active.btn, a.active.btn{
+	background-color: #5d3ea4;
+	border:0;
+	color: #ffffff;
+}
+.hd-regform .input-txt{
+	width:14rem;
+}
+/**预约表E**/
+a.litbtn, input.litbtn, .litbtn{
+	display: block;
+	width: 7.0rem;
+	margin: 0.5rem auto 0;
+}
+/**滑动户型图S**/
+.swiper-quality .room-tip{
+	background: rgba(0,0,0,0.7);
+	position: absolute;
+	bottom: 0.12rem;
+	left: 0;
+	width: 14rem;
+	min-height: 2.625rem;
+	padding: 0.25rem;
+	color: #fff;
+	font-size: 0.45rem;
+	border-radius: 0 0 0.25rem 0.25rem;
+}
+.swiper-quality .room-tip dt{
+	text-align: center;
+	font-size: 0.65rem;
+	padding-bottom: 0.3rem;
+}
+/**滑动户型图E**/
+.hd-brandjc{
+	margin-top: 0.4rem;
+}
+/**预估价格S**/
+.tc999-price{
+	margin-top: 0.5rem;
+	padding: 0.2rem 0.5rem;
+	background-color: #f1f1f1;
+	position: relative;
+}
+.tc999-price .stbg{
+	background-image: url("../../img/stbg.png");
+	background-size: 10.5rem 1.0rem;
+	background-repeat: no-repeat;
+	width: 12rem;
+	height: 1rem;
+	line-height: 1rem;
+	margin-top: 0.5rem;
+	padding-bottom: 0.8rem;
+}
+.tc999-price .stbg select{
+	background: transparent;
+	width: 2.625rem;
+	height: 1rem;
+	margin-right: 0.3rem;
+}
+.tc999-price .stbg select:nth-child(2), .tc999-price .stbg select:nth-child(3){
+	margin-left: 0.4rem;
+}
+.tc999-price p{
+	line-height: 2;
+}
+.tc999-price .weak-tip{
+	line-height: 1.2;
+}
+.tc999-price .tip{
+	color: #999999;
+	font-size: 0.55rem;
+}
+.tc999-price input{
+	margin-bottom: 0.625rem;
+}
+.tc999-price .room-num{
+	width: 2.0rem;
+}
+.tc999-price .price{
+	text-align: center;
+	border-top:1px solid #d1d1d1;
+}
+.tc999-price .price em{
+	color: #ff5500;
+	font-size: 0.9rem;
+}
+/**预估价格E**/
+/**个性化定制S**/
+.tc-dz-list li{
+	float: left;
+	margin-left: 0.5rem;
+	margin-top: 0.5rem;
+	width: 7.2rem;
+	box-shadow: 0 0 0.125rem #ccc;
+	position: relative;
+}
+.tc-dz-list li img{
+	width: 7.2rem;
+}
+.tc-dz-list li span{
+	position: absolute;
+	left: 0.375rem;
+	top: 0.375rem;
+	font-size: 0.35rem;
+	background-color: #ffffff;
+	padding: 0.15rem 0.2rem;
+	line-height: 1;
+}
+.tc-dz-list li h3{
+	padding: 0.1rem 0.25rem 0;
+	font-size: 0.6rem;
+	color: #282828;
+}
+.tc-dz-list .tip{
+	padding: 0 0.25rem;
+	height: 4.0rem;
+	color: #999999;
+	font-size: 0.55rem;
+}
+/**个性化定制E**/
+/**服务对象S**/
+.tc-service{
+	padding: 0 0.5rem;
+}
+.tc-service h3{
+	margin-top: 0.5rem;
+	color: #5d3ea4;
+	font-size: 0.65rem;
+	position: relative;
+	zoom: 1;
+	padding-left: 0.5rem;
+}
+.tc-service .arrow {
+	background: url("../../img/hd/hd_ico.png") no-repeat -1.45rem -1.875rem;
+	background-size: 7.05rem 3.125rem;
+	position: absolute;
+	left: 0;
+	top: 0.2rem;
+	width: 0.3rem;
+	height: 0.55rem;
+}
+/**服务对象E**/
+/**联系我们S**/
+.tc-contactus{
+	padding: 0 0.5rem;
+}
+.tc-contactus img{
+	margin-top: 1.25rem;
+	width:15rem;
+	vertical-align: middle;
+}
+.congtact-cont{
+	background-color: #333333;
+	padding:0.5rem;
+	color: #fff;
+}
+.congtact-cont dt{
+	font-size: 0.7rem;
+	padding-bottom: 0.25rem;
+}
+.congtact-cont dd{
+	padding-bottom: 0.3rem;
+}
+.congtact-cont dd, .congtact-cont dd a{
+	color: #cacaca;
+}
+.congtact-cont dd:nth-of-type(2), .congtact-cont dd:nth-of-type(3){
+	float: left;
+}
+.congtact-cont dd:nth-of-type(3){
+	padding-left: 1rem;
+}
+/**联系我们E**/
+
+/**基材S**/
+.tc01-jicai .hd-banner{
+	  background-image: url("../../img/hd/tc999_jc_banner.jpg");
+}
+.tc01-jicai .bd-tlt{
+	padding-bottom: 0.2rem;
+	font-size: 0.9rem;
+	color: #333333;
+	font-weight: bold;
+	text-align: center;
+	line-height: 1.5;
+}
+.tc01-jicai .jc-brand1{
+	padding: 0.5rem;
+}
+.tc01-jicai .jc-brand1 img{
+	float: right;
+	width: 7.4rem;
+	margin-right: -0.5rem;
+	margin-top: -0.4rem;
+}
+.tc01-jicai .jc-brand2{
+	padding: 0.5rem;
+}
+.tc01-jicai .jc-brand2 img{
+	width: 16rem;
+	height: auto;
+	margin-left: -0.5rem;
+}
+.tc01-jicai .jc-brand3{
+	background: #ede9de;
+	padding: 0.75rem 0.5rem 0.5rem 0.5rem;
+}
+.tc01-jicai .jc-brand3 img{
+	float: left;
+	width:7.5rem;
+	margin-left: -0.5rem;
+	margin-top: -0.5rem;
+}
+.tc01-jicai .jc-brand4{
+	padding: 0.5rem;
+}
+.tc01-jicai .jc-brand5{
+	padding: 0.5rem 0.5rem 4.5rem 0.5rem;
+	background: url("../../img/hd/tc999_jc_pic4.jpg") no-repeat;
+	background-size: cover;
+}
+.tc01-jicai .jc-brand5 .bd-tlt{
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+.tc01-jicai .jc-brand6{
+	padding: 0.5rem;
+	margin-top: 1rem;
+}
+.tc01-jicai .jc-brand6 img{
+	float: left;
+	width: 7.0rem;
+}
+.regform .hd-tlt h2{
+	background: transparent;
+}
+.regform .hd-tlt:after{
+	background: #f1f1f1;
+}
+/**基材E**/
+
+/**主材S**/
+.tc01-zhucai .hd-banner{
+	background-image: url("../../img/hd/tc999_zc_banner.jpg");
+}
+.tc-zc-cont h2{
+	font-size: 0.9rem;
+	font-weight: bold;
+}
+.tc-zc-cont .g-tab{
+	padding: 0 0 0.5rem 0.5rem;
+	background-color: #f1f1f1;
+}
+.tc-zc-cont .g-tab li{
+	float: left;
+	height: 1rem;
+	margin-top: 0.5rem;
+	line-height: 1;
+	cursor: pointer;
+}
+.tc-zc-cont .g-tab li span{
+	font-size: 0.7rem;
+	padding: 0.1rem;
+	margin-left: 0.15rem;
+	margin-top: 0.1rem;
+}
+.tc-zc-cont .g-tab li img{
+	width: 1rem;
+	margin-bottom: 0.15rem;
+	vertical-align: middle;
+}
+.tc-zc-cont .g-tab li.active{
+	color: #333333;
+}
+.tc-zc-cont .g-tab li.active span{
+	background-color: #ff5500;
+	color: #ffffff;
+	border-radius: 0.125rem;
+}
+.tc-zc-cont .intro{
+	padding: 0 0.5rem 0.2rem;
+	text-indent: 1.2rem;
+}
+.g-tab-con .active {display:block;}
+.g-tab-con .disactive {display:none;}
+.product-list{
+	line-height: 1.5;
+}
+.product-list h3{
+	padding-top: 0.2rem;
+	font-size: 0.65rem;
+	line-height: 1.2;
+	color: #000000;
+}
+.product-list h3 + em{
+	display: none;
+	color: #ff5500;
+	padding-bottom: 0.2rem;
+}
+.product-list h3 ~ p{
+	color: #999999;
+	font-size: 0.55rem;
+	line-height: 1.4;
+	word-break: break-all;
+}
+.product-list li{
+	float: left;
+	margin-left: 0.5rem;
+	margin-top: 0.5rem;
+	width: 7.25rem;
+	height: 11rem;
+}
+.product-list li img{
+	width: 7.25rem;
+	height: 7.25rem;
+	vertical-align: middle;
+}
+.tc-zc-cont .g-tab-con li:nth-child(2) .product-list li{
+	height: 12.5rem;
+}
+.tc-zc-cont .g-tab-con li:nth-child(3) .product-list li{
+	height: 11.5rem;
+}
+.tc-zc-cont .g-tab-con li:nth-child(4) .product-list li{
+	height: 12rem;
+}
+.tc-zc-cont .g-tab-con li:nth-child(6) .product-list li{
+	height: 11.5rem;
+}
+.tc-zc-cont .g-tab-con li:nth-child(7) .product-list li{
+	height: 12rem;
+}
+.tc-zc-cont .g-tab-con li:nth-child(9) .product-list li{
+	height: 11.5rem;
+}
+/**主材E**/
+
+/**空间配置S**/
+.tc01-kongjian .hd-banner{
+	background-image: url("../../img/hd/tc999_kj_banner.jpg");
+}
+.tc-kj-cont .g-tab{
+	width: 32.5rem;
+	height: 2.5rem;
+}
+.tc-kj-cont .g-tab li{
+	position: relative;
+	width: 2.5rem;
+	height: 2.5rem;
+	line-height: 2.5rem;
+	padding-left:2.0rem;
+	border-bottom: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	cursor: pointer;
+	font-size: 0.75rem;
+}
+.tc-kj-cont .g-tab li.active{
+	background: #ff5500;
+	color: #ffffff;
+}
+.tc-kj-cont .hd-tlt h2{
+	font-size: 0.9rem;
+	font-weight: bold;
+}
+.tc-kj-cont .hd-tlt + p{
+	padding: 0 0.5rem;
+}
+.tc-kj-cont .g-tab-con{
+	padding-bottom: 1rem;
+}
+.tc-kj-cont .room-photo{
+	width: 16rem;
+	height: auto;
+	margin-top: 0.625rem;
+}
+.tckj-room-ico{
+    background-image: url("../../img/hd/tc_room_icos.png");
+    background-repeat: no-repeat;
+    background-size: 1.6rem 18.9rem;
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    margin-top: -0.35rem;
+}
+.tckj-room-ico1{
+	width: 1.1rem;
+	height: 0.675rem;
+}
+.disactive .tckj-room-ico1{
+    background-position: -0.25rem -0.25rem;
+}
+.active .tckj-room-ico1{
+    background-position: -0.25rem -1.425rem;
+}
+.tckj-room-ico2{
+	width: 0.9rem;
+	height: 0.825rem;
+}
+
+.disactive .tckj-room-ico2{
+    background-position: -0.25rem -2.6rem;
+}
+.active .tckj-room-ico2{
+    background-position: -0.25rem -3.925rem;
+}
+.tckj-room-ico3{
+	width: 0.825rem;
+	height: 0.85rem;
+}
+.disactive .tckj-room-ico3{
+    background-position: -0.25rem -5.25rem;
+}
+.active .tckj-room-ico3{
+    background-position: -0.25rem -6.6rem;
+}
+.tckj-room-ico4{
+	width: 0.675rem;
+	height: 0.9rem;
+}
+.disactive .tckj-room-ico4{
+    background-position: -0.25rem -7.95rem;
+}
+.active .tckj-room-ico4{
+    background-position: -0.25rem -9.35rem;
+}
+.tckj-room-ico5{
+	width: 0.75rem;
+	height: 0.875rem;
+}
+.disactive .tckj-room-ico5{
+    background-position: -0.25rem -10.75rem;
+}
+.active .tckj-room-ico5{
+    background-position: -0.25rem -12.125rem;
+}
+.tckj-room-ico6{
+	width: 1.0rem;
+	height: 0.925rem;
+}
+.disactive .tckj-room-ico6{
+    background-position: -0.25rem -13.5rem;
+}
+.active .tckj-room-ico6{
+    background-position: -0.25rem -14.925rem;
+}
+.tckj-room-ico7{
+	width: 0.775rem;
+	height: 0.9rem;
+}
+.disactive .tckj-room-ico7{
+    background-position: -0.25rem -16.35rem;
+}
+.active .tckj-room-ico7{
+    background-position: -0.25rem -17.75rem;
+}
+
+.tc-item{
+	margin: 0 0.5rem;
+	padding: 0.75rem 3.0rem 0.5rem 3.25rem;
+	min-height: 2.25rem;
+	border-bottom: 1px solid #ccc;
+	position: relative;
+}
+.tc-item img{
+	position: absolute;
+	left: 0;
+	width: 2.5rem;
+	height: auto;
+	top: 50%;
+	transform:translateY(-50%);
+	-webkit-transform:translateY(-50%);
+}
+.tc-item h3{
+	font-size:0.8rem;
+}
+.tc-item .tip{
+	color: #a0a0a8;
+}
+.bdft{
+	color: #40c1ac;
+}
+.tc-item .amount{
+	position: absolute;
+	right: 0;
+	top: 50%;
+	color: #606066;
+	font-size: 0.55rem;
+	text-align: center;
+	transform:translateY(-50%);
+	-webkit-transform:translateY(-50%);
+}
+/**空间配置E**/

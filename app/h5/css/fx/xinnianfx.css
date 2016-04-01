@@ -1,0 +1,397 @@
+@charset "UTF-8";
+
+.ny-btns{
+	background-image: url("../../img/share/ny_btns.png");
+	background-repeat: no-repeat;
+	background-size: 22.5rem 11.25rem;
+}
+.ny-icos{
+	background-image: url("../../img/share/ny_icos.png");
+	background-repeat: no-repeat;
+	background-size: 12.0rem 5.0rem;
+}
+.ny-prize{
+	background-image: url("../../img/share/prize_bg.png");
+	background-repeat: no-repeat;
+	background-size: 13.0rem 9.0rem;
+}
+.nyfx-main{
+	width: 100%;
+	height: 21.45rem;
+	background-image: url("../../img/share/ny_bg1.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-color: #e5e8ed;
+	position: relative;
+	text-indent: -999rem;
+	z-index: 1;
+}
+.nyfx-main h2{
+}
+.rule-btn{
+	position: absolute;
+	right: 0.2rem;
+	top: 1.0rem;
+	width: 2.65rem;
+	height: 2.65rem;
+	cursor: pointer;
+}
+.shake-box{
+	position: relative;
+	background-image: url("../../img/share/ny_bg2.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin-top: 5.3rem;
+	width: 100%;
+	height: 15.25rem;
+	z-index: 2;
+}
+.nyfx-main .snow{
+	position: absolute;
+	left: 0.35rem;
+	bottom: 4.75rem;
+	background-position: -6.75rem 0;
+	width: 2.925rem;
+	height: 4.575rem;
+	z-index: 1;
+}
+.shake-ico{
+	position: absolute;
+	right: 2.6rem;
+	bottom: 1.15rem;
+	background-position: -9.925rem 0;
+	width: 1.65rem;
+	height: 2.475rem;
+	z-index: 2;
+	-webkit-animation:shake 1s ease infinite;
+	animation:shake 1s ease infinite;
+	-webkit-transform-origin: 0.85rem bottom;
+	transform-origin: 0.85rem bottom;
+}
+.shake-box .ny-btns, .shake-box .get-user, .shake-box .ny-prize{
+	display: none;
+}
+/**获得礼品后的状态S**/
+.prize-box{
+	background-image: url("../../img/share/ny_bg3.png");
+	height: 11.75rem;
+}
+.prize-box .shake-ico{
+	display: none;
+}
+.prize-box .snow{
+	background-position: -3.575rem 0;
+	bottom: 1rem;
+	z-index: 1;
+}
+.prize-box .ny-btns, .prize-box .get-user, .prize-box .ny-prize{
+	display: block;
+}
+.prize-box .ny-btns{
+	width: 6.925rem;
+	height: 3.2rem;
+	bottom: -3.2rem;
+}
+.star1, .star2{
+	z-index: 2;
+	display: none;
+	opacity: 0;
+	transform:scale(0);
+	-webkit-transform:scale(0);
+}
+.star1{
+	position: absolute;
+	left: 1.8rem;
+	bottom: 8.0rem;
+	background-position: 0 0;
+	width: 1.75rem;
+	height: 3.0rem;
+}
+.star2{
+	position: absolute;
+	right: 1.375rem;
+	bottom: 8.0rem;
+	background-position: -2.0rem 0;
+	width: 1.3rem;
+	height: 2.15rem;
+}
+.prize-box .star1, .prize-box .star2{
+	-webkit-animation:star-scale .6s ease;
+	animation:star-scale .6s ease;
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	display: block;
+}
+.prize-box .star1{
+	transform-origin:right bottom;
+	-webkit-transform-origin:right bottom;
+}
+.prize-box .star2{
+	transform-origin:left bottom;
+	-webkit-transform-origin:left bottom;
+}
+.also-draw{
+	position: absolute;
+	left: 0.75rem;
+	background-position: 0 0;
+}
+.also-draw.active{
+	background-position: 0 -3.45rem;
+}
+.also-draw.gray-btn, .also-draw.gray-btn.active{
+	background-position: 0 -6.9rem;
+}
+.i-share{
+	position: absolute;
+	right: 0.75rem;
+	background-position: -7.175rem 0;
+}
+.i-share.active{
+	background-position: -7.175rem -3.45rem;
+}
+.my-prize{
+	position: absolute;
+	left: 0.75rem;
+	background-position: -14.35rem 0;
+}
+.my-prize.active{
+	background-position: -14.35rem -3.45rem;
+}
+.get-user{
+	position: absolute;
+	top: 5.5rem;
+	right: 4.5rem;
+	z-index: 3;
+	text-indent: 0;
+}
+.ny-prize{
+	position: absolute;
+	top: 6.5rem;
+	left: 5.05rem;
+	height: 2.9rem;
+}
+.ny-prize.prize1{
+	background-position:0 0;
+	width: 6.325rem;
+}
+.ny-prize.prize2{
+	background-position:-6.55rem 0;
+	width: 5.7rem;
+}
+.ny-prize.prize3{
+	background-position:0 -3.025rem;
+	width: 5.625rem;
+}
+.ny-prize.prize4{
+	background-position:-5.85rem -3.025rem;
+	width: 5.625rem;
+}
+.ny-prize.prize5{
+	background-position:0 -6.05rem;
+	width: 5.625rem;
+}
+/**获得礼品后的状态E**/
+.nyfx-btm{
+	background-image: url("../../img/share/ny_bg3.jpg");
+	background-position: center bottom;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-color: #e5e8ed;
+	padding: 0.5rem 0;
+}
+.nyfx-btm h3{
+	background-image: url("../../img/share/ny_bg4.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	width:100%;
+	height: 2.75rem;
+	text-indent: -999rem;
+}
+.ny-ad img{
+	margin: 0.5rem auto 0;
+	display: block;
+	width: 15.0rem;
+}
+
+/**弹层S**/
+.xinnian-rule, .xinnian-share, .xinnian-register{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+.lay-cont{
+	background-image: url("../../img/share/ny_bg5.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 14.775rem;
+	height: 20.125rem;
+	position: relative;
+	margin: 2rem auto 0;
+}
+.lay-cont h3{
+	text-indent: -999rem;
+}
+.lay-cont .close{
+	position: absolute;
+	right: 1rem;
+	top: 1.45rem;
+	width: 1.2rem;
+	height: 1.2rem;
+	cursor: pointer;
+	text-indent: -999rem;
+}
+.rule-cont{
+	margin: 4rem 0 0 2rem;
+	width: 11.0rem;
+	height: 10rem;
+	overflow-y: scroll;
+	font-size: 0.5rem;
+}
+/**定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸**/
+.rule-cont::-webkit-scrollbar{
+    width: 0.2rem;
+    background: rgba(0,0,0,0);
+}
+/**定义滚动条轨道 内阴影+圆角**/
+.rule-cont::-webkit-scrollbar-track{
+    background: rgba(0,0,0,0);
+}
+/**定义滑块 内阴影+圆角**/
+.rule-cont::-webkit-scrollbar-thumb{
+   background: #e95520;
+   border-radius: 5rem;
+}
+.rule-cont p{
+	padding-bottom: 0.1rem;
+	padding-left: 25px;
+	position: relative;
+}
+.rule-cont p:first-child{
+	padding-left: 0;
+}
+.rule-cont p em{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 25px;
+	text-align: right;
+}
+.lock-scroll,
+.lock-scroll body{height:100%; overflow:hidden;}
+
+.share-cont{
+	background-image: url("../../img/share/ny_bg6.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 15.35rem;
+	height: 16.325rem;
+	margin: 0 auto;
+	text-indent: -999rem;
+}
+
+.register-cont{
+	background-image: url("../../img/share/ny_bg7.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 15.35rem;
+	height: 17.45rem;
+	margin: 0 auto;
+	position: relative;
+}
+.register-cont h3, .register-cont .close{
+	text-indent: -999rem;
+	font-size: 0;
+}
+.register-cont .close{
+	position: absolute;
+	right: 1.5rem;
+	top: 4.425rem;
+	width: 1.2rem;
+	height: 1.2rem;
+	cursor: pointer;
+}
+.register-cont input{
+	display: block;
+	outline: none;
+}
+.register-cont .mobile{
+	margin: 9.55rem 0 0 2.5rem;
+	width: 8.75rem;
+	height: 1.9rem;
+	line-height: 1.9rem;
+}
+.register-cont .submit{
+	margin: 0.375rem 0 0 4.4rem;
+	background-position: -7.175rem -6.9rem;
+	width: 5.225rem;
+	height: 2.45rem;
+	text-indent: -999rem;
+}
+
+
+
+/**摇一摇图标**/
+@keyframes shake
+{
+	15% {
+       -webkit-transform: rotate(-15deg);
+       transform: rotate(-15deg);
+	}
+	30% {
+       -webkit-transform: rotate(0deg);
+       transform: rotate(0deg);
+	}
+	45% {
+       -webkit-transform: rotate(-15deg);
+       transform: rotate(-15deg);
+	}
+	60% {
+       -webkit-transform: rotate(0deg);
+       transform: rotate(0deg);
+	}
+}
+@-webkit-keyframes shake
+{
+	15% {
+       -webkit-transform: rotate(-15deg);
+       transform: rotate(-15deg);
+	}
+	30% {
+       -webkit-transform: rotate(0deg);
+       transform: rotate(0deg);
+	}
+	45% {
+       -webkit-transform: rotate(-15deg);
+       transform: rotate(-15deg);
+	}
+	60% {
+       -webkit-transform: rotate(0deg);
+       transform: rotate(0deg);
+	}
+}
+
+/**星星**/
+@keyframes star-scale
+{
+	100% {
+    	opacity: 1;
+    	transform:scale(1);
+		-webkit-transform:scale(1);
+	}
+}
+@-webkit-keyframes star-scale
+{
+	100% {
+    	opacity: 1;
+    	transform:scale(1);
+		-webkit-transform:scale(1);
+	}
+}

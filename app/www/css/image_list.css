@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+.image-catalog-filter {display:inline-block;}
+.image-catalog-filter a {padding:1px 10px; border:1px solid #ccc; color:gray; display:inline-block;}
+.image-catalog-filter i {background:url("../img/g_icon_24.png") no-repeat -6px -896px; display:inline-block; width:10px; height:10px;}
+.image-catalog-filter a:hover {border-color:#ff5500; color:#ff5500}
+.image-catalog-filter a:hover i {background-position:-6px -855px;}
+.image-catalog-filter-sum {color:#aaa;}
+
+.image-catalog-nav {width:100%; margin-bottom:20px;}
+.image-catalog-nav caption {display:none}
+.image-catalog-nav td,
+.image-catalog-nav th {border:1px solid #eee}
+.image-catalog-nav th {font-weight:bold; font-size:14px; color:#444; vertical-align:middle; width:120px; text-align:center}
+.image-catalog-nav td {vertical-align:middle; padding:0 30px 10px 25px; background-color:#fff;}
+.image-catalog-nav .txt-list a {display:block; float:left; width:70px; margin-top:10px; font-family:simsun,serif;}
+.image-catalog-nav .txt-list .active {color:#ff5500;}
+
+.nav-overflow {position:relative}
+.nav-toggle-hide .nav-overflow {height:32px; overflow:hidden;}
+.nav-toggle-hide .nav-toggle{background-position:1px -1171px}
+.nav-toggle-open .nav-toggle{background-position:-1px -1573px; border-color:#ff5500}
+.nav-toggle {display:block; width:15px; height:15px; border:1px solid #ccc; position:absolute; right:20px; top:13px; cursor:pointer; background-position:1px -1171px}
+
+.color-dot {height:15px; width:15px; overflow:hidden; border-radius:15px; border:2px solid #eee; display:block; float:left; text-indent:-9999em; margin:10px 15px 0 0; font-size:0;}
+.color-dot-white {}
+.color-mixed i,
+.color-mixed s,
+.color-mixed b {display:block; height:5px; width:100%; background-color:#82c0d7; overflow:hidden; text-indent:-9999em}
+.color-mixed s { background-color:#d5818e;}
+.color-mixed b { background-color:#debd6e;}
+
+.image-catalog-nav .color-list a.active {border-color:#ff5500}
+
+.image-list { overflow:hidden;}
+.image-list li {float:left; margin:0 20px 20px 0; background-color:#fff}
+.image-list .row-last {margin-right:0;}
+.image-list .g-img {width:320px; height:240px;}
+.image-list .ti {text-align:center; display:block;}

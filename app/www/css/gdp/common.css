@@ -1,0 +1,36 @@
+html, body {background-color:#1f1f1f}
+#page {background:url("../../img/gdp/bg.png")}
+.g-body {padding-bottom:0;}
+.g-logo {width:120px; height:40px; margin:10px 0 0 0;}
+.g-logo a {background-image:url("../../img/gdp/logo.png")}
+
+.gdp-header {height:60px; overflow:hidden; background-color:white; box-shadow:0 3px 9px #ddd}
+.gdp-navigation {float:left; height:100%; font-size:16px; margin-left:50px;}
+.gdp-navigation li {width:170px; height:55px; float:left;}
+.gdp-navigation a {height:100%; line-height:70px; display:block; text-indent:15px;}
+#page-gdp-index .gdp-nav-index,
+#page-gdp-plan .gdp-nav-plan,
+#page-gdp-intro .gdp-nav-intro,
+#page-gdp-guide .gdp-nav-guide {border-left:1px solid #ffc693; border-bottom:6px solid #ff6600; font-weight:bold;}
+
+.gdp-login-info {float:right; font-size:16px; margin-top:20px;}
+.hot-line {margin-left:15px;}
+.gdp-page-cap {text-indent:50px; font-weight:bold; font-size:24px; border-bottom:2px solid #f56720; margin-top:30px; padding:20px 0 10px; background:url("../../img/gdp/cap_ico.png") no-repeat 0 0}
+.gdp-page-cap span {text-indent:0; font-weight:normal; display:block; font-size:16px; color:#666;}
+
+.gdp-sub-cap {font-size:40px; font-weight:bold; text-align:center; padding:60px 0 0;}
+
+.gdp-big-btn {width:320px; height:80px; background-color:#ff6600; font-size:30px; color:white; text-align:center;}
+.gdp-big-btn:hover {color:#ffaa5f;}
+.gdp-big-btn span { font-size:16px; font-weight:lighter; display:block; margin-top:-10px; font-family:Century Gothic, Microsoft Yahei, Courier new, Tahoma, Lucida Grande, serif;}
+
+.gdp-btn {border:1px solid #333; width:150px; height:50px; display:inline-block; vertical-align:middle; line-height:50px; text-align:center; font-size:16px; font-family:Microsoft Yahei, helvetica, verdana, sans-serif;}
+.gdp-btn:hover {border-color:#f56720; color:#f56720;}
+
+.gdp-img-nav {width:45px; height:63px; cursor:pointer; text-indent:-9999em; top:300px; background:url("../../img/gdp/nav.png") no-repeat 0 0; position:absolute;}
+.gdp-img-nav-left {background-position:0 0; left:0;}
+.gdp-img-nav-left-disabled {cursor:default; background-position:0 -62px;}
+.gdp-img-nav-right {background-position:-46px 0; right:0;}
+.gdp-img-nav-right-disabled {cursor:default; background-position:-46px -62px;}
+
+.pagination-0 {display:none;}

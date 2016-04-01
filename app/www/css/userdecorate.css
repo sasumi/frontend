@@ -1,0 +1,262 @@
+@charset "UTF-8";
+
+.scheico, .finishico, .foldbtn, .issbico, .mapico, .hs-formico, .bigglass, .orsuc-ico, .newftbg, .dwarr{background:url("../img/abico.png") no-repeat;_background:url("../img/abico_8.png") no-repeat;}
+.no-dec-head{font-size: 22px;text-align: center}
+.no-dec-head .dec-title{font-size: 22px;text-align: center}
+.no-dec-head .dec-icon-container{width: 760px;height:170px;margin-top:60px;}
+.no-dec-head li{float:left;width:240px;}
+.no-dec-head .dec-icon{width:240px;height:112px;border-right: 1px solid #eee;}
+.no-dec-head .dec-icon-end{border:none;}
+.no-dec-head .dec-icon-bg{background: url("../img/no_decorate.png");height: 112px; width: 112px;display: block;margin: 0 auto;}
+.no-dec-head .dec-icon1{background-position: 0 0}
+.no-dec-head .dec-icon2{background-position: 0 -120px;}
+.no-dec-head .dec-icon3{background-position: 0 -250px;}
+.no-dec-head .dec-desc1{font-size: 18px;color: #2e2e2e;}
+.no-dec-head .dec-desc2{font-size: 14px;color: #2e2e2e;}
+
+.no-dec-form{width: 300px;margin: 0 auto;}
+.no-dec-form p{margin-top:27px;}
+.no-dec-form .f-error{color: red;text-align: center;display: block;}
+.no-dec-form input{width:280px;}
+.no-dec-form .dec-sub-btn{width:300px;}
+.no-dec-form .dec-description{margin-top:5px;text-align: center;color:#999999;font-size: 12px;}
+
+.dec-head{width: 791px; height:160px;border-bottom:1px solid #eee;}
+.dec-head .h-left{float:left;width: 385px;height: 112px;margin:24px 15px;
+	border-right: 1px solid #eee;position:relative;zoom:1;display: inline;}
+.dec-head .h-left select{max-width: 150px;_width: 150px;}
+.layout-main{border:none;}
+.dec-head .l-des{position: absolute;bottom:0; font-size: 14px;}
+.dec-head .l-des p{line-height:25px; color: #333333;}
+.dec-head .l-des span{color: #666666;}
+.dec-head .g-select dt{font-size: 18px;font-weight: bold;}
+.dec-nav{}
+.userfit-select .g-select-hover{}
+.userfit-select .g-select dt{font-size: 12px;font-weight: normal;background-position: 120px -1163px;border: 1px solid #eeeeee;}
+.userfit-select .g-select dd{border: 1px solid #eeeeee;border-width: 0 1px 1px}
+
+
+.h-right{float: right;width: 360px;padding-top: 30px;}
+.h-right li{float: left;width:115px;text-align: center;}
+.h-right .user-photo{position: relative;zoom:1;margin: 0 auto; width: 70px; height: 70px; background-color: #eee; z-index: 1;_overflow: hidden;}
+.h-right .user-photo img{width: 70px; height: 70px;}
+.witlay{position: absolute;left: 0;top: 0; z-index: 2;width: 70px;height: 70px; background:url("../img/pholay.png");_background:url("../img/pholay_8.png");}
+.h-right li p{line-height: 25px;}
+.desname{width: 115px;height: 25px; text-align: center; overflow: hidden;}
+.desname, .desname strong{color: #333333;}
+
+/*表格类页面*/
+.waitico, .passico, .repico, .stampico{background:url("../img/abico.png") no-repeat;_background:url("../img/abico_8.png") no-repeat;}
+/*一期基础材料清单*/
+.riglistcont{margin-top: 20px;}
+.listtable{margin-top: 20px;width: 100%;border-top:1px solid #dfdfdf;border-right:1px solid #dfdfdf;font-size: 14px;}
+.listtable caption{height:50px;border:1px solid #dfdfdf;border-bottom: 0;padding-top: 10px;}
+.listtable td, .listtable th{padding: 10px 0; text-align: center;border-bottom:1px solid #e7e4e4; vertical-align:middle;}
+.listtable th{font-size: 14px;font-family: Microsoft Yahei; color: #333333; background-color: #f2f2f2;}
+.lit-logo{margin:0 auto;width: 93px; height: 31px; text-indent: -9999px;
+	background:url("../img/little_logo.png") no-repeat;
+	_background:url("../img/little_logo_8.png") no-repeat;}
+.riglistcont .listtable th{background-color: #eaeaea; font-size: 18px;font-family: Microsoft Yahei; font-weight: normal;}
+.riglistcont .listtable td, .riglistcont .listtable th{border-bottom:1px solid #dfdfdf;border-left:1px solid #dfdfdf;}
+/*主材清单*/
+.speclist{}
+.speclist .listtable td.rigtip{height:40px;line-height:40px;padding: 0;}
+.rigtip p{text-align: left;padding-left: 20px; background:#eaeaea url("../img/tltbg.png") no-repeat right top;font-size: 12px;}
+.speclist .listtable th{background-color:#ffffff;}
+.littleimg{margin:0 auto; width: 95px; text-align: center;}
+.littleimg img{max-width: 95px;max-height:60px; _width: 95px;_height:60px; vertical-align: middle;}
+.littleimg p{line-height: 22px;}
+.nonetip{color: #d0d0d0;}
+.rbor{border-right: 1px solid #dfdfdf;}
+
+/*验收报告*/
+.checklist{}
+.grabg{background-color:#f2f2f2;}
+
+/*房屋勘测表*/
+.check-result{}
+.house-info{ padding:0 0 0 20px; text-align:left; color:#333333;}
+.house-info dt{ padding-bottom:10px;font-size:18px; font-family:Microsoft Yahei;}
+.house-info dd{ float:left; width:420px; padding-right:10px; line-height:25px; font-size:14px;}
+.house-info dd span{color:#666666;}
+
+.cherestlt{ height:30px; line-height:30px; padding-left:10px; text-align:left;}
+.rsopenico{display:inline-block; margin-right:5px; margin-bottom:5px; border:1px solid #999999; width:13px; height:13px;text-align:center; line-height:13px; color:#999999; font-family:Arial; font-size:8px; vertical-align:middle;}
+.cherestlt h4{display:inline; font-size:18px;}
+
+.disposetable{ width:830px;margin:10px 30px;border-top:1px solid #DFDFDF;border-right:1px solid #DFDFDF;}
+.disposetable td{ line-height:30px;padding:0 20px; text-align:left;}
+.smfont{ background-color:#f2f2f2;width:160px;}
+.disposetable strong{ color:#333;}
+
+/*质检报告*/
+.chepholist{}
+.chepholist li{float: left;width: 110px;height: 110px;margin-left: 7px;display: inline;background-color: #eeeeee;overflow:hidden;}
+.chepholist li img{}
+.waitfix{display: block;z-index: 1;min-width: 70px;_width:70px;}
+.waitfixdw{position: relative;zoom:1;}
+.waitfix .waitstate{}
+.waitfix a{color: #ff5500;}
+.waitfix .popupbox{top: 28px;right: 8px;z-index: 6; width: 140px;height: 55px;padding:5px;border-radius:3px;
+color: #ffffff;font-size:12px; background-color: #585858;filter:alpha(opacity=95);opacity: 0.95;-moz-opacity:0.95; text-align: left;}
+.waitfixdw .popupbox{position: absolute;z-index: 5}
+.waitfix .popupbox .triang-up{position: absolute;top:-5px;right: 20px;}
+.waitfix .waitico, .waitfix .passico{display: inline-block;width: 13px;height: 13px;margin-right: 5px;vertical-align: middle;_overflow: hidden;}
+.waitfix .waitico{background-position: -3px -143px;}
+.waitfix .passico{background-position: -3px -156px;}
+.chekpassp{color: #0db26a;width: 60px;margin: 0 auto;}
+.layout-main .chekpassp{ text-align: center;}
+.layout-main .chekpassp .passico{display: inline-block;width: 11px;height: 10px; vertical-align: middle;background-position: -5px -159px;}
+.reportbox{border-top: 15px solid #ffffff;margin-top: -10px;
+padding:20px 260px;position: relative;zoom:1; text-align: left;font-family: Microsoft Yahei;height:auto;}
+.reportbox h3{position: absolute;left:130px;top: 18px;font-size: 18px;color: #333333;}
+.reportbox p{word-break:break-all;word-wrap:break-word;}
+.repico{display: inline-block;margin-right: 10px;width: 21px;height: 15px; vertical-align: middle; background-position: 0 -169px;_overflow: hidden;}
+.stampico{position: absolute;right: 60px;top: -18px;width: 196px;height: 155px; background-position: -21px -132px;}
+
+
+/*装修进度*/
+.dec-time-line .listtable{border-right: 0;}
+
+.schedule{padding: 20px 0;*padding-left: 130px;}
+.scheico{width: 70px; height: 70px;}
+.scheico1{ background-position: -234px -40px;}
+.scheico2{ background-position: -304px -40px;}
+.scheico3{ background-position: -374px -40px;}
+.scheico4{background-position: -444px -40px;}
+.scheico5{background-position: -234px -110px;}
+.scheico6{background-position: -304px -110px;}
+.scheico7{background-position: -374px -110px;}
+
+.flowcont{border-left: 2px solid #e2e2e2;padding-left: 30px;margin-left: 120px;width: 620px;min-height: 600px;}
+.eachflow{position: relative;zoom:1; min-height:135px;margin-top: 10px;_height: 135px;}
+
+.lc-icobox{position: absolute;left:-130px;top: 10px; text-align: center;}
+.lc-icobox p{color: #ff5500;line-height: 25px;}
+
+.finishico{display: block;position: absolute;left: -47px;top: 10px; width: 32px; height: 32px;background-position: -268px 0;}
+.finip{font-weight: bold;font-size: 14px; color: #333333;padding-top: 10px;}
+.fntime{padding-left: 30px;}
+.foldbtn{display: block;position: absolute;right:20px;top: 10px;width: 56px; height: 26px;}
+.foldbtn{ background-position: -356px 0;}
+.hideflow .foldbtn{ background-position: -300px 0;}
+.hideflow .packupcon{display: none;}
+.issbico{position: absolute;left: -37px;top: 0;
+	width: 10px; height: 11px;display: block;
+background-position: -4px -113px;_overflow: hidden;}
+.issuebox{border:1px solid #e2e2e2;padding:1px;position: relative;zoom:1;margin-top: 20px;}
+.isstipp{font-size: 14px;padding:2px 10px 15px;line-height: 25px;color: #333333;}
+.issintp{line-height: 25px;padding:0 10px;}
+.issintp strong{color: #333333; font-size: 14px;}
+.mapbox{margin-left:10px;margin-top:5px;width: 602px;height: 212px;}
+.isstime{background-color: #edeff4;height: 24px;line-height: 24px; text-align: right;padding-right: 10px;margin-top: 10px;}
+.mapico{display: inline-block;width: 12px; height: 16px; background-position: -413px 0; vertical-align: middle;;margin-left: 5px;}
+.hs-formico{display: block;margin: 15px auto 0;width: 38px; height: 40px;background-position: -426px 0;}
+.hs-formico2{background-position: -464px 0;}
+.hs-formico3{background-position: -502px 0;}
+.hs-form p{padding-top: 5px;}
+.hs-lay{background-color: #000000;filter:alpha(opacity=50);
+-moz-opacity:0.5;opacity: 0.5;width: 98px;height: 98px;
+	position: absolute;left: 0;top: 0;display: none; z-index: 2}
+.fmnp-show{position: absolute;top: 50%;left: 50%;margin:-15px 0 0 -40px; z-index: 3;display: none; text-align: center;}
+.bigglass{display: inline-block;margin-right:5px;width: 18px;height: 18px;background-position: -1px -125px; vertical-align: middle;}
+a.hs-form{position: relative;zoom:1;border:1px solid #cfcfcf; width: 98px; height: 98px;
+ text-align: center;display: block;cursor: pointer;margin-left: 15px;zoom:1;}
+a:hover.hs-form{color: #ffffff;_color: #333;}
+a:hover.hs-form .fmnp{display: none;_display: block;}
+a:hover.hs-form .fmnp-show, a:hover.hs-form .hs-lay{display: block;_display: none;}
+
+.endtipbox{background:url("../img/issbg.jpg") no-repeat left top;padding-top: 50px;height:120px;}
+.endtipbox p{padding:0 0 0 190px;}
+.endtipbox .isstime{position: absolute;left: 1px;bottom: 1px;width: 606px;}
+.stpholist{width: 490px;height:110px;float: left;overflow: hidden;;}
+.stpholist li{float: left;margin-left: 10px;margin-bottom:10px;display: inline; width: 110px;height: 110px;background-color: #eeeeee;overflow: hidden;}
+.stpholist li img{width: 110px;min-height: 110px;}
+.allphonum{float: left;width: 110px;height: 110px;background-color: #f2f2f2;text-align: center;position: relative;zoom:1;}
+.allphonum h3{font-size: 30px;padding-top: 15px;line-height: 35px;}
+.triang-down{display: block;position: absolute;left: 50px;bottom: 10px;}
+.blueft{color: #187598;}
+
+/*设计师方案*/
+.backchg{display:inline-block;width: 80px; height: 30px;
+	border: 1px solid #eeeeee; background-color: #ffffff; line-height: 30px; text-align: center;border-radius: 3px;margin-left: 10px;}
+.smfont{ background-color:#eee;width:160px;}
+.design-quote{margin: 20px 20px 0;}
+.design-quote .smfont{width: 80px;}
+.design-quote .fan{color: #333333;font-weight: bold; position: relative;zoom:1;}
+.newftbg{position: absolute;top: -14px;right:0;width: 27px;height: 27px;color: #ffffff;text-align: center;
+background-position: -540px 0; font-weight: normal;}
+.quote-help {display:inline-block; width:18px; line-height:18px; height:18px; background-color:white; border-radius:10px; text-align:center; margin-left:5px; border:1px solid #ccc; cursor:pointer; color:#ccc; vertical-align: middle;;}
+a:hover.quote-help {border-color:#ff5500; color:#ff5500;}
+.design-pro{margin:20px 20px 0;padding-bottom: 20px;}
+.dsgtopbx{position: relative;zoom:1; height: 18px;line-height: 18px; border-bottom: 2px solid #e5e5e5;padding-bottom: 10px;font-family: Microsoft Yahei;}
+.detabtlt{position: absolute;left: 170px;bottom: -2px;}
+.detabtlt li{float: left;width: 100px;margin-right: 20px; line-height:30px; font-size: 14px; font-weight: bold; text-align: center;display: inline;}
+.detabtlt li span{font-weight: normal; font-size: 12px;}
+.detabtlt li.cur{border-bottom: 2px solid #ff5500;}
+.detabtlt li.cur a{color: #ff5500;}
+.dteachcont{}
+.designlist{overflow: hidden;zoom:1;*position: relative;margin-right: -20px;}
+.designlist-all{height: auto;}
+.designlist li{ float: left;width: 240px;height:215px;border:1px solid #efefef;margin-right: 13px;margin-top: 15px; display: inline;position: relative;zoom:1;}
+.effectpic{width: 240px; height: 180px;display: table-cell;vertical-align:middle;text-align:center;
+*display: block;
+*font-size: 175px;
+*font-family:Arial;}
+.effectpic img{max-width: 240px;max-height: 180px;_width: 240px;_height: 180px; vertical-align: middle;}
+.effepp{height:25px; line-height: 25px; padding: 0 5px;}
+.designlist li .newftbg{top: 0;right: 0;}
+.des-more{background-color: #f2f2f2;border-radius: 100px; margin: 20px auto; width: 300px; height: 40px; line-height: 40px; text-align: center; cursor: pointer;_padding-top:10px;_height: 30px;}
+.dwarr{display: inline-block;width: 12px; height: 11px; background-position: -337px -26px; vertical-align: middle;margin-left: 5px;}
+.house-measure{margin: 20px 20px 0;padding-bottom: 20px;}
+.no-design{width: 300px;height: 105px;margin: 20px auto; padding-left:110px;padding-top: 30px; position: relative;zoom:1;}
+.no-design em{display: block;position: absolute;left: 0;top: 0;background: url("../img/content_empty.png");width: 104px;height: 76px;}
+.no-design strong{ font-size: 18px; color: #333333;font-family: Microsoft Yahei;font-weight: normal;}
+/*施工现场*/
+.dsg-jbst{margin: 20px 20px 0;}
+.dsg-jbst .detabtlt{left: 0;}
+.setjobbox{margin: 20px 20px 0;}
+.eacdjob{margin-top: 20px; padding-bottom: 30px;border-bottom: 1px solid #eeeeee;}
+.eacdjob h3{font-size: 18px;}
+.eacdjob h3 em{margin-right: 10px; color: #ff5500;}
+.eacdjob h3 span{margin-left: 10px;color: #999999;}
+.eacdjob .chepholist li{margin: 10px 10px 0 0;}
+.sjtipp{padding-top: 10px;}
+
+/*质检验收*/
+.repttype{padding:10px 0;}
+.repttype li{float: left;}
+.repttype a.reptytlt{padding: 5px 10px;}
+.repttype a.cur, .repttype a:hover.reptytlt{background-color: #ff5500;color: #ffffff;border-radius: 100px;}
+.repttype span{margin: 0 20px;}
+
+
+/*收藏报价*/
+.collecttlt{}
+.collecttlt li{ width: 263px;}
+.collecttlt a{width: 263px;}
+.col-scheme{}
+.col-scheme input{margin-right: 10px;}
+.col-scheme tfoot{ background-color: #f8f8f8;}
+.col-scheme .listtable td, .col-scheme .listtable th{text-align: left;padding-left:10px;}
+.hosstyle{margin: 0 auto; width: 80px;height: 80px;overflow: hidden;}
+.hosstyle img{width: 80px;}
+.no-designpri{padding-top: 10px;}
+.no-designpri .backchg{margin-top: 10px;margin-left: 0;}
+.btbt{display: inline;}
+.btbt a:hover{ font-weight: bold;}
+.issuepop{margin: 0 20px; background-color: #f8f8f8;position: relative;zoom:1;padding: 20px;color: #333333;}
+.issuepop .triang-up{top: -6px;left:20px;position: absolute;border-bottom: 6px solid #f8f8f8;}
+.dearp{font-weight: bold;}
+.issuepop .hosstyle{ float: left;margin-right: 20px;display: inline;}
+.weigfont{font-weight: bold;}
+.weigfont a{color: #333333;}
+
+/*预约成功*/
+.order-succeed{width: 340px;margin:150px 0px 0px 180px;position: relative;zoom:1;padding-left: 80px;}
+.order-succeed h3{font-size: 18px;}
+.order-succeed .ord-tip{padding:0 0 10px 0;line-height: 25px;font-family: Microsoft Yahei;font-size: 14px;}
+.orsuc-ico{width: 64px;height: 64px;
+	background-position: -445px -110px;position: absolute;left: 0;top: 5px;
+}
+

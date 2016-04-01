@@ -1,0 +1,489 @@
+@charset "utf-8";
+
+$color: #fffc0e;
+$green-color: #00542b;
+//rem单位转换函数
+@function pxtorem($px){
+    @return $px / 40px * 1rem;
+}
+
+.sj-content{
+    background-image: url("../../img/shuangjie/bg.jpg");
+    background-repeat: repeat;
+    background-size: pxtorem(200px) pxtorem(200px);
+    &:after{
+      display: block;
+      content: "";
+      width: 100%;
+      height: pxtorem(54px);
+      background-image: url("../../img/shuangjie/btmbg.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+}
+.sj-bg{
+    background-image: url("../../img/shuangjie/sj_bg.jpg");
+    background-repeat: no-repeat;
+    background-size: pxtorem(838px) pxtorem(434px);
+}
+@mixin notext(){
+  text-indent: -999rem;
+}
+@mixin psrt{
+  position: relative;
+}
+@mixin psabs{
+  position: absolute;
+}
+@mixin modmt{
+  margin-top: 1rem;
+}
+
+.sj-banner{
+    background-image: url("../../img/shuangjie/banner.jpg?v20151211");
+    height: pxtorem(413px);
+    @include psrt;
+    h2{
+      @include notext;
+    }
+    .ac-rule{
+      @include psabs;
+      right: pxtorem(38px);
+      top: pxtorem(55px);
+      width: pxtorem(100px);
+      height: pxtorem(25px);
+      @include notext;
+      cursor: pointer;
+      z-index: 6;
+    }
+    .ac-order{
+      @include psabs;
+      left: pxtorem(200px);
+      bottom: pxtorem(30px);
+      width: pxtorem(238px);
+      height: pxtorem(66px);
+      @include notext;
+      cursor: pointer;
+      z-index: 6;
+    }
+    svg{
+      @include psabs;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: pxtorem(400px);
+      z-index: 5;
+      path{
+        FILL: #ffffff;
+      }
+    }
+}
+.sj-mod0{
+  h2{
+    @include psrt;
+    color: $color;
+    font-size: pxtorem(26px);
+    font-weight: bold;
+    margin: 0 0.75rem;
+    padding-left: pxtorem(35px);
+    height: pxtorem(70px);
+    line-height: pxtorem(70px);
+    em{
+        @include psabs;
+        left: 0;
+        top: pxtorem(20px);
+        @extend .sj-bg;
+        background-position: pxtorem(-722px) 0;
+        width: pxtorem(30px);
+        height: pxtorem(30px);
+    }
+  }
+  .regform .input-txt{
+    margin-top: 0;
+  }
+}
+.sj-mod1{
+    background-image: url("../../img/shuangjie/modbg1.jpg?v20151211");
+    height: pxtorem(660px);
+    @include psrt;
+    h2{
+      @include notext;
+    }
+    span{
+      @include psabs;
+      color: #fff;
+      padding: 0 0.2rem;
+      background-color: $green-color;
+      font-size: 0.5rem;
+      -webkit-animation: scale-three 2.5s ease infinite;
+      animation: scale-three 2.5s ease infinite;
+      &.yh-tag1{
+        left: pxtorem(24px);
+        top: pxtorem(284px);
+      }
+      &.yh-tag2{
+        left: pxtorem(16px);
+        top: pxtorem(368px);
+        background-color: lighten($green-color, 10%);
+        -webkit-animation-delay: .3s;
+        animation-delay: .3s;
+      }
+      &.yh-tag3{
+        left: pxtorem(144px);
+        top: pxtorem(200px);
+        background-color: lighten($green-color, 10%);
+        -webkit-animation-delay: .4s;
+        animation-delay: .4s;
+      }
+      &.yh-tag4{
+        left: pxtorem(316px);
+        top: pxtorem(272px);
+      }
+      &.yh-tag5{
+        right: pxtorem(86px);
+        top: pxtorem(254px);
+        background-color: lighten($green-color, 10%);
+        -webkit-animation-delay: .2s;
+        animation-delay: .2s;
+      }
+      &.yh-tag6{
+        right: pxtorem(20px);
+        top: pxtorem(326px);
+        -webkit-animation-delay: .6s;
+        animation-delay: .6s;
+      }
+      &.yh-tag7{
+        right: pxtorem(62px);
+        top: pxtorem(366px);
+        background-color: lighten($green-color, 10%);
+        -webkit-animation-delay: .5s;
+        animation-delay: .5s;
+      }
+    }
+}
+.modtopbg{
+    display: block;
+    margin: 0 auto;
+    content: "";
+    background-image: url("../../img/shuangjie/modtopbg.jpg");
+    width: pxtorem(588px);
+    height: 0.5rem;
+    background-size: pxtorem(588px) 0.5rem;
+}
+.sj-mod2{
+    @include modmt;
+    &:before{
+      @extend .modtopbg;
+    }
+    h2{
+      @extend .sj-bg;
+      @include notext;
+      width: pxtorem(442px);
+      height: pxtorem(156px);
+      background-position: 0 0;
+      margin: pxtorem(10px) auto 0;
+    }
+    h3{
+        color: $color;
+        font-size: pxtorem(24px);
+        padding-left: 1rem;
+        margin-left: pxtorem(30px);
+        @include psrt;
+        strong{
+          font-size: pxtorem(26px);
+          padding-right: pxtorem(10px);
+        }
+        em{
+          @include psabs;
+          left: 0;
+          top: pxtorem(44px);
+          @extend .sj-bg;
+          background-position: pxtorem(-722px) 0;
+          width: pxtorem(30px);
+          height: pxtorem(30px);
+        }
+        &:before{
+          content: "";
+          display: block;
+          height: pxtorem(40px);
+        }
+        &:after{
+          content: "";
+          display: block;
+          height: pxtorem(20px);
+        }
+    }
+    img{
+      display: block;
+      margin: 0 auto;
+      width: pxtorem(575px);
+      height: pxtorem(270px);
+    }
+}
+.sj-mod3{
+    @include modmt;
+    @include psrt;
+    padding-bottom: pxtorem(120px);
+    &:before{
+      @extend .modtopbg;
+    }
+    h2{
+      @extend .sj-bg;
+      @include notext;
+      width: pxtorem(414px);
+      height: pxtorem(154px);
+      background-position: 0 pxtorem(-166px);
+      margin: pxtorem(10px) auto 0;
+    }
+    &:after{
+      margin-top: 0.5rem;
+      margin-left: pxtorem(30px);
+      content: "";
+      display: block;
+      width: pxtorem(575px);
+      height: pxtorem(476px);
+      background-image: url("../../img/shuangjie/tyg_photo.jpg");
+      background-size: cover;
+    }
+    .tyg-open-contact{
+      @include psabs;
+      left: 0;
+      bottom: 0;
+      color: #fff;
+      a{
+        color: #fff;
+      }
+      dt{
+        display: none;
+      }
+      .share-adress{
+        background-position: 0 pxtorem(-450px);
+      }
+      .share-hotline{
+        background-position: 0 pxtorem(-494px);
+      }
+    }
+}
+.sj-mod4{
+    @include modmt;
+    &:before{
+      @extend .modtopbg;
+    }
+    h2{
+      @extend .sj-bg;
+      @include notext;
+      width: pxtorem(414px);
+      height: pxtorem(154px);
+      background-position: pxtorem(-424px) pxtorem(-166px);
+      margin: pxtorem(10px) auto 0;
+    }
+}
+.sj-content .regform{
+    background: none;
+    input[name="name"]{
+      width:6rem;
+    }
+    input[name="mobile"]{
+      width:7rem;
+      margin-left: pxtorem(10px);
+    }
+    .btn{
+      display: block;
+      margin: 1rem auto 0;
+      @extend .sj-bg;
+      background-position: pxtorem(-452px) 0;
+      width: pxtorem(260px);
+      height: pxtorem(78px);
+      @include notext;
+    }
+}
+.sj-layer{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    z-index: 10;
+    .sj-layer-cont{
+      @include psabs;
+      left: 50%;
+      top: 50%;
+      -webkit-transform:translate(-50%, -45%);
+      transform:translate(-50%, -45%);
+      text-shadow:0 1px 2px rgba(0,0,0,.5);
+      &:before{
+        content: "";
+        @include psabs;
+        left: pxtorem(-7px);
+        top: pxtorem(-72px);
+        width: pxtorem(560px);
+        height: pxtorem(72px);
+        background-image: url("../../img/shuangjie/laytopbg.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+      .close{
+        @include psabs;
+        right: pxtorem(-25px);
+        top: pxtorem(-65px);
+        width: pxtorem(60px);
+        height: pxtorem(60px);
+        cursor: pointer;
+        @include notext;
+      }
+    }
+    .layer-cont{
+      width: pxtorem(483px);
+      height: pxtorem(760px);
+      overflow-y: scroll;
+      background-image: url("../../img/shuangjie/bg.jpg");
+      background-repeat: repeat;
+      background-size: pxtorem(200px) pxtorem(200px);
+      border-radius: 0 0 .5rem .5rem;
+      color: #fff;
+      padding: 0 pxtorem(25px) 1rem;
+      h2{
+        @extend .sj-bg;
+        background-position: 0 pxtorem(-336px);
+        width: pxtorem(266px);
+        height: pxtorem(54px);
+        @include notext;
+        margin-top: pxtorem(10px);
+      }
+      h3{
+        margin: 0.5rem 0;
+        @extend .sj-bg;
+        @include notext;
+        &.tc-tlt1{
+            background-position: pxtorem(-276px) pxtorem(-336px);
+            width: pxtorem(220px);
+            height: pxtorem(34px);
+        }
+        &.tc-tlt2{
+            background-position: pxtorem(-506px) pxtorem(-336px);
+            width: pxtorem(280px);
+            height: pxtorem(34px);
+        }
+        &.tc-tlt3{
+            background-position: 0 pxtorem(-400px);
+            width: pxtorem(164px);
+            height: pxtorem(34px);
+        }
+      }
+      img{
+        display: block;
+        margin: 0 auto;
+        width:pxtorem(436px);
+      }
+    }
+}
+.sj-layer-tc{
+   font-size: 0.5rem;
+   table{
+      th,td{
+        vertical-align: top;
+        padding-top: 1rem;
+      }
+      th{
+        width: pxtorem(150px);
+        font-weight: normal;
+        text-align: left;
+
+      }
+   }
+   p{
+      padding: 0 1rem;
+   }
+}
+.sj-layer-order{
+    h2{
+        margin-left: 0.8rem;
+    }
+    .sj-layer-cont{
+        top: pxtorem(340px);
+        -webkit-transform:translate(-50%, 0);
+        transform:translate(-50%, 0);
+    }
+    .layer-cont{
+        height: 9rem;
+        overflow-y: hidden;
+        h2{
+            background-position: pxtorem(-174px) pxtorem(-400px);
+            width: pxtorem(192px);
+            height: pxtorem(34px);
+        }
+    }
+    .regform{
+        background: none;
+        .input-txt{
+          width: 10rem;
+        }
+        .btn{
+          display: block;
+          margin: 1rem auto 0;
+          @extend .sj-bg;
+          background-position: pxtorem(-452px) 0;
+          width: pxtorem(260px);
+          height: pxtorem(78px);
+          @include notext;
+        }
+    }
+}
+.sj-layer-rule{
+  font-size: 0.5rem;
+  h4{
+    color: $color;
+    font-weight: bold;
+    font-size: 0.75rem;
+    text-align: center;
+  }
+  a{
+    color: #fff;
+  }
+  p{
+    &:after{
+      content: "";
+      display: block;
+      height: 0.2rem;
+    }
+    em{
+      margin-left: 0.7rem;
+      margin-right: 0.1rem;
+    }
+  }
+}
+.sj-ad{
+  display: block;
+  margin: 1rem auto 0;
+  width: pxtorem(575px);
+}
+
+.gotop{
+  -webkit-transform:scale(.6);
+  transform:scale(.6);
+  right: .3rem;
+  bottom: .3rem;
+  a{
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+/** 设备横屏时调用该段css代码 **/
+@media all and (orientation : landscape){
+  .sj-layer .layer-cont{
+    height: 6rem;
+    .input-txt{
+      padding: 0.2rem;
+      margin-top: 0.3rem;
+    }
+    .btn{
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+.ywj-msg-content{
+  font-size: 0.6rem;
+}

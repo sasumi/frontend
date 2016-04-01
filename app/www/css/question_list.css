@@ -1,0 +1,10 @@
+@import "question.css";
+
+.g-layout-main2 .question-list {margin-top:10px;}
+.often-question-list li {line-height:30px;}
+.often-question-list p {padding-top:10px;}
+
+.question-list .cnt,
+.question-list .time {float:right; margin-top:-20px; color:#999; display:inline-block;}
+.question-list .cnt {}
+.question-list .time {width:60px; text-align:right}

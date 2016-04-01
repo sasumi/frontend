@@ -1,0 +1,270 @@
+@charset "UTF-8";
+
+.hd-banner{
+	background-image: url("../../img/hd/jbh_banner.png");
+	height: 8.75rem;
+}
+.jbh-con{
+	position: relative;
+}
+.jbh-tlt{
+	text-indent: -9999px;
+}
+.jbh-con1{
+	background-image: url("../../img/hd/jbh_conbg1.png");
+	height: 16.325rem;
+}
+.jbh-con2{
+	background-image: url("../../img/hd/jbh_conbg2.png");
+	height: 13.575rem;
+}
+.jbh-con3{
+	background-image: url("../../img/hd/jbh_conbg3.png");
+	height: 13.55rem;
+}
+.jbh-con4{
+	background-image: url("../../img/hd/jbh_conbg4.png");
+	height: 9.8rem;
+}
+.jbh-con5{
+	background-image: url("../../img/hd/jbh_conbg5.png");
+	height: 10.25rem;
+}
+.jbh-be-partner dt{
+	text-indent: -999rem;
+}
+.jbh-be-partner dd{
+	position: absolute;
+	height: 0.9rem;
+	line-height: 0.9rem;
+	color: #68191a;
+	font-size: 0.5rem;
+}
+.jbh-bept-intro1{
+	left: 1.7rem;
+	top: 8.68rem;
+}
+.jbh-bept-intro2{
+	left: 0.75rem;
+	top: 10.65rem;
+}
+.jbh-bept-intro3{
+	right: 2.375rem;
+	top: 9rem;
+}
+.jbh-bept-intro4{
+	right: 0.25rem;
+	top: 10.8rem;
+}
+.jbh-site{
+	position: absolute;
+	bottom: 1.2rem;
+	right: 1rem;
+	width: 10.0rem;
+	color: #000000;
+	line-height: 1.3;
+}
+.jbh-site dt{}
+.jbh-site dt strong{
+	padding-right: 1.15rem;
+}
+.jbh-site dd{
+	font-size: 0.45rem;
+}
+.jbh-con2 .jbh-site{
+	bottom: 1rem;
+	left: 1.55rem;
+}
+.jbh-con3 .jbh-site{
+	bottom: 1rem;
+}
+.jbh-smtlt{
+	text-align: center;
+	position: absolute;
+	left: 1.875rem;
+	top: 6.125rem;
+	width: 4.3rem;
+	padding-bottom: 0.5rem;
+	color: #352953;
+	font-size: 1rem;
+	line-height: 1.2;
+	background: url("../../img/hd/jbh_dbline.gif") repeat-x center bottom;
+	background-size: 0.125rem 0.425rem;
+}
+.jbh-con3 img{
+	position: absolute;
+	left: 0.5rem;
+	top: 3.85rem;
+	width: 13.8rem;
+	height: 5.75rem;
+}
+.get-gift-tip{
+	position: absolute;
+	left: 0.5rem;
+	bottom: 4.05rem;
+}
+.get-gift-tip li{
+	display: inline-block;
+	width: 4.5rem;
+	height: 0.925rem;
+	line-height: 0.925rem;
+	font-size: 0.5rem;
+	font-weight: bold;
+	text-align: center;
+	color: #000000;
+}
+.zxjz-link {
+	position: absolute;
+	top: 3.0rem;
+	left: 1rem;
+	width: 14.25rem;
+	height: 6.75rem;
+	background: url("../../img/hd/jbh_zxjzad.jpg");
+	background-size: cover;
+	text-indent: -999rem;
+}
+.richscan{
+	display: inline-block;
+	width: 6.75rem;
+	height: 2rem;
+	padding-top: 7.3rem;
+	text-align: center;
+	font-size: 0.5rem;
+}
+.richscan-app{
+	margin-left: 1rem;
+}
+.richscan-weixin{
+	margin-left: 0.75rem;
+}
+
+.sjs-order-form{
+	padding-top: 1.0rem;
+	background: #f6f6f6;
+}
+.sjs-order-form .jbh-tlt, .jbh-fh-btn, .jbh-fh-btn em{
+	background-image: url("../../img/hd/jbh_group.png");
+	background-repeat: no-repeat;
+	background-size: 16.0rem 4.45rem;
+}
+.sjs-order-form .jbh-tlt{
+	background-position: 0 0;
+	width: 4.8rem;
+	height: 1.775rem;
+	margin: 0 auto;
+}
+.sjs-order-form form{
+	padding: 0.5rem 0;
+}
+.jbh-fh-btn{
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	background-position: 0 -2.025rem;
+	width: 16.0rem;
+	height: 2.425rem;
+	cursor: pointer;
+	text-indent: -999rem;
+	transform-origin: center top;
+}
+.jbh-fh-btn .cash1{
+	position: absolute;
+	left: 3.25rem;
+	top: 0.375rem;
+	width: 3rem;
+	height: 1.8rem;
+	background-position: -5.05rem 0;
+	-webkit-animation: cash_rotate 4s ease infinite;
+	-o-animation: cash_rotate 4s ease infinite;
+	animation: cash_rotate 4s ease infinite;
+}
+.jbh-fh-btn .cash2{
+	position: absolute;
+	left: 5.25rem;
+	top: -0.4rem;
+	width: 1.5rem;
+	height: 1.3rem;
+	background-position: -8.0rem 0;
+	-webkit-animation: cash_rotatet 4s ease .2s infinite;
+	-o-animation: cash_rotatet 4s ease .2s infinite;
+	animation: cash_rotatet 4s ease .2s infinite;
+}
+.copyright{
+	padding-bottom: 3.25rem;
+}
+.jbh-ad{
+	display: block;
+	width: 16rem;
+	margin: 0.5rem auto 0;
+}
+.jbh-ad img{
+	width: 16.0rem;
+	height: auto;
+}
+
+@keyframes cash_rotate{
+	20%{
+		transform: translate(-0.5rem, 0);
+		-webkit-transform: translate(-0.5rem, 0);
+	}
+	50%{
+		transform: translate(0, 0);
+		-webkit-transform: translate(0, 0);
+	}
+}
+@-webkit-keyframes cash_rotate{
+	20%{
+		transform: translate(-0.5rem, 0);
+		-webkit-transform: translate(-0.5rem, 0);
+	}
+	50%{
+		transform: translate(0, 0);
+		-webkit-transform: translate(0, 0);
+	}
+}
+@keyframes cash_rotatet{
+	20%{
+		transform: translate(0.5rem, 0);
+		-webkit-transform: translate(0.5rem, 0);
+	}
+	50%{
+		transform: translate(0, 0);
+		-webkit-transform: translate(0, 0);
+	}
+}
+@-webkit-keyframes cash_rotatet{
+	20%{
+		transform: translate(0.5rem, 0);
+		-webkit-transform: translate(0.5rem, 0);
+	}
+	50%{
+		transform: translate(0, 0);
+		-webkit-transform: translate(0, 0);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

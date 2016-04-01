@@ -1,0 +1,33 @@
+.pedia-slide-wrap { background-color:#333333;}
+
+.pedia-catalog-list {padding:20px; border:1px solid #eee; background-color:#fff;}
+.pedia-catalog-list h2 {font-size:14px; font-weight:bold; padding-bottom:5px; margin-bottom:5px; border-bottom:1px solid #eee; font-family:"Tahoma", "Arial", "Helvetica", "宋体", "SimSun", "STXihei", "华文细黑", sans-serif}
+.pedia-catalog-list ul {overflow:hidden; margin-bottom:20px;}
+.pedia-catalog-list li {float:left; width:85px; overflow:hidden; margin-right:21px;}
+.pedia-catalog-list li a {color:#666; display:block; height:25px; overflow:hidden;}
+.pedia-catalog-list li a:hover {color:#ff5500}
+
+.slide-left-btn,
+.slide-right-btn {display:inline-block; height:80px; width:40px; text-indent:-999em;background-color:#1f1f1f; float:left; margin-left:-40px; margin-top:70px;}
+.slide-left-btn:hover,
+.slide-right-btn:hover {background-color:#555;}
+.slide-right-btn {float:right; margin-left:auto; margin-right:-40px;}
+.slide-left-btn span,
+.slide-right-btn span {display:block; width:18px; height:33px; background:url("../img/g_icon_24.png") no-repeat 0 -722px; margin:21px auto 0 auto;}
+.slide-left-btn span {background-position:0 -761px;}
+
+.image-viewer-selector {margin:0 50px; padding:20px 0; }
+.image-view-selector-content-wrap {height:240px; overflow:hidden}
+.image-viewer-selector-list {display:block; margin-top:-2px;}
+.image-viewer-selector-list li {float:left; width:160px; border:10px solid #333; position:relative; text-align:center}
+.image-viewer-selector-list .g-img {width:160px; height:200px; display:block; margin:0 auto; box-shadow:1px 1px 6px black}
+.image-viewer-selector-list .ti {display:block; font-size:14px; padding:10px 0; color:white; text-shadow:1px 1px 1px black;}
+.image-viewer-selector-list a {display:block; width:100%; height:100%;}
+.image-viewer-selector-list a:hover .ti {color:#ff5500}
+.image-viewer-selector-list a:hover .g-img {box-shadow:1px 1px 6px #CB814B}
+
+.slide-nav {overflow:hidden; text-align:center; padding:15px 0 20px 0;}
+.slide-nav a {display:inline-block; margin:0 3px; width:12px; height:12px; background:url("../img/g_icon_24.png") no-repeat -2px -122px; overflow:hidden; text-indent:99999em}
+.slide-nav a:hover,
+.slide-nav a.active {background-position:-2px -83px}
+

@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+.rscutico{background: url("../img/abico.png") no-repeat; _background: url("../img/abico_8.png") no-repeat;}
+.quote{width: 1210px; padding:0;border: 0;box-shadow: none; margin-top:20px; font-size:14px}
+.quote select{padding: 5px 0;}
+.quote select, .quote input{color: #666; font-family:Microsoft Yahei, serif;}
+.quote select option{background-color: #fafafa;}
+.quote-item-list table{font-size: 16px;}
+span[rel=room-name]{font-weight: bold;color: #4F4F4F;}
+.quote-col-label thead th {height: 30px;line-height: 30px; color: #555; background-color:#eeeeee;border-top: 1px solid #e1e1e1;border-bottom: 1px solid #ffffff;font-size: 14px;padding:5px;}
+.quote-catalog-name {height:45px;margin-left: 0;font-size: 16px;color: #333333;position: relative;zoom:1;z-index: 2;background: none}
+.quote-catalog-name .quote-help {width:15px; line-height:15px; height:15px; margin-top:12px;}
+.rscutico{background-position: -585px -56px; position: absolute;left: 0;top: 13px; display:inline-block; width:15px; height:15px;cursor: pointer;}
+.rsaddico{background-position: -585px -40px;}
+.quote-catalog-sum {margin-top: -50px;margin-right: 0; font-size:16px; color:#444;}
+.quote-catalog-sum em {font-style:normal; color: #ff5500; font-size: 28px;}
+.quote-item-list table{border-bottom: 1px solid #ccc;margin-bottom: 0;}
+.quote-item-list .craft-sku-row td{border-bottom: 1px solid #eeeeee;padding:15px 0;}
+.quote-item-list thead th{color: #222}
+.quote-item-list thead th a{font-size: 14px;margin-left: 5px;}
+.quote-main-material-empty a.add-main-material-btn{margin-left: -10px;display: none;}
+.amendbtn{color: #ff5500;margin-left: 10px;}
+.quote-row-checker{margin-top: 7px;margin-left: 5px;width: 15px; height: 15px;}
+.quote-item-list th,
+.quote-item-list td{padding: 15px 5px;border-bottom: 1px solid #eee;}
+.quote-item-list th .sum{color: #ff5500;font-size: 20px;}
+
+.quote .col-name {width:400px;}
+.quote .col-spec {width:300px;}
+.quote .col-num {width:250px;}
+.quote .col-price{ }
+.quote select.quote-spec-sel{ min-width:190px; width:auto; /*width: 190px\0;*/ font-family:Microsoft Yahei, serif; font-size:16px; }
+.quote-item-list input.quote-num{ font-size:14px; margin-right:0; margin-top:-3px; width:60px !important; }
+.quote-toggle-btn{ font-family:Simsun, serif; font-size:15px; line-height:15px; line-height:17px \9; }
+.quote .row-disabled select.quote-spec-sel, .quote .row-disabled .ui-spinner{ border:0; background:transparent; }
+.quote .row-disabled .ui-spinner-button{ display:none }
+.quote-main-material a{ border:1px solid #e8e8e8; border-radius:3px; padding:4px 12px; }
+.quote-main-material-desc div{ line-height:1.2 }
+.quote var.quote-num{ padding:0; margin-left:-5px; display:inline-block; width:36px; }
+.quote var.spec{ padding:0; }
+
+body .PopupDialog-hd h3{ font-weight:bold; font-family:Microsoft Yahei, serif; }
+.PopupDialog-bd body{width: auto!important;min-width: auto;}
+.PopupDialog .PopupDialog-close{background-color: #333;color: #fff;border-radius: 0 0 0 100%;width: 30px; height: 40px; padding-left: 10px; line-height: 30px;top: 0;right: 0;}
+.quote-readonly select{background-color: transparent; border-width: 0;/*background-color: #eee\0;color: #ccc\0;border-width:1px\0;*/
+	-webkit-appearance: none; -ms-appearance: none; -moz-appearance: none; -o-appearance: none;appearance: none;}
+/*.quote .quote-readonly select::-ms-expand {
+    display: none;
+}*/
+.quote-readonly .cover-arrow{position: absolute;margin-left: -20px;width: 22px; height: 29px;background-color: #fff;}
+.quote-tr-hover .cover-arrow{background-color:#fafafa}
+.quote-readonly select option{background-color: transparent;}
+/*btn*/
+.qt-savebtn{text-align: center;}
+.qt-savebtn input{padding:0 30px; height: 38px;line-height: 38px; margin:0 10px; font-family: Microsoft Yahei,serif;font-size: 16px;font-weight: normal;}
+.qt-savebtn .g-btn-gray{background-color: #fff;border: 1px solid #cccccc;color: #666666;}
+
+/** 禁用功能 **/
+.quote-catalog-hover a.add-room-btn,
+.quote-catalog-hover a.add-house-btn,
+.quote-catalog-hover a.add-demo-category-btn,
+.quote-table-hover a.add-room-product-btn,
+.quote-table-hover a.update-room-btn,
+.quote-table-hover a.delete-room-btn,
+.quote-table-hover a.delete-room-btn,
+.quote-table-hover a.delete-category-btn,
+.quote-table-hover a.add-house-btn,
+.quote-table-hover a.add-demo-category-btn,
+.quote-table-hover a.add-house-item-btn,
+.quote-table-hover a.add-demo-category-item-btn,
+.quote-table-hover a.add-category-item-btn,
+.quote-tr-hover a.delete-category-item-btn,
+* .quote-tr-hover a.update-product-btn,
+.quote-sum,
+.quote-tr-hover a.delete-product-btn {display:none;}
+
+.info-tbl,
+.quote-cap,
+.quote-state,
+.quote-ext-config,
+.quote-other-cost-tbl,
+a.add-room-btn,
+a.delete-category-item-btn,
+a.delete-category-btn,
+a.add-category-item-btn,
+a.add-demo-category-btn,
+a.add-category-btn,
+a.delete-product-btn,
+a.delete-room-btn,
+a.update-room-btn,
+a.add-room-product-btn{display: none;}
