@@ -8,6 +8,7 @@
  * @constructor
  */
 define('ywj/tabswitcher', function(require){
+	var $ = require('jquery');
 	return function(tb, ctn, event, active_class, disable_class){
 		event = event || 'click';
 		active_class = active_class || 'active';

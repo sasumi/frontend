@@ -82,7 +82,9 @@ seajs.config({
 		"jquery/ui/timepicker": "jquery/ui/jquery-ui-timepicker-addon.js",
 		"jquery/ui/tooltip": "jquery/ui/jquery-ui-tooltip-addon.js",
 		"lazyload": "lazyload/lazyload.js",
-		"swiper": "swiper/swiper.min.js",
+		"shake": "shake/shake.js",
+		"swiper": "swiper/swiper-3.0.7.js",
+		"swiper2": "swiper/swiper-2.7.js",
 		"waterfall": "waterfall/waterfall.js",
 		"ueditor": FRONTEND_HOST+"/ueditor/ueditor.all.js",
 		"ueditor_admin_config": FRONTEND_HOST+"/ueditor/ueditor.admin.js"
@@ -90,9 +92,9 @@ seajs.config({
 	paths: {
 		"ywj": FRONTEND_HOST+"/ywj/component",
 		"ywjui": FRONTEND_HOST+"/ywj/ui",
-		"www": "app/www/js",
-
-		//ERP专用
+		"app":FRONTEND_HOST+"/app/component",
+		"www": FRONTEND_HOST+"/app/www/js",
+		"h5": FRONTEND_HOST+"/app/h5/js",
 		"ds": "http://ds.erp.com/static/js",
 		"css": "http://css.erp.com/static/js",
 		"pm": "http://pm.erp.com/static/js",

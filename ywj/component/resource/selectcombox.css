@@ -1,0 +1,15 @@
+.combox { position:relative;}
+.combox .combox-txt-inp {border:none; outline:none; padding-left:5px; position:absolute; background-color:white; font-family:"Tahoma", "Helvetica", "Microsoft YaHei New", "Microsoft YaHei", "宋体", "SimSun", "STXihei", "华文细黑", sans-serif}
+.combox>ul { position:absolute; z-index:1; background-color:white; border:1px solid #ccc; border-radius:3px; padding:3px; max-height:200px; overflow-x:hidden; overflow-y:auto;}
+.combox li {padding:3px 5px; border-bottom:1px dotted #eee; color:#333; white-space:nowrap; cursor:pointer;}
+.combox li:last-child {border-bottom-color:white;}
+.combox li:hover {color:white; background-color:#1e90ff; border-color:transparent}
+.combox li.combox-group-label {color:gray;}
+.combox li.combox-group-label:hover {background-color:transparent; color:gray; cursor:default}
+.combox ul ul li {padding-left:30px;}
+
+.combox .combox-match { background-color:#EFF3FF; border-bottom-color:white;}
+.combox .combox-match b {font-weight:bold; color:#ff6600;}
+.combox .combox-trigger {position:absolute; padding:3px 3px 0 3px; background-color:white; margin:3px 0 0 -23px; cursor:pointer;}
+.combox .combox-trigger:before {content:""; display:inline-block; height:0; width:0; border:5px solid transparent; border-top-color:gray;}
+.combox .combox-trigger:hover:before {border-top-color:black;}

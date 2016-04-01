@@ -7,10 +7,10 @@ a {color:#3B6DA6; text-decoration:none;}
 .SERVER-IDENTIFY-DEV #header:after,
 .SERVER-IDENTIFY-BETA #header:after,
 .SERVER-IDENTIFY-GAMMA #header:after,
-.SERVER-IDENTIFY-IDC #header:after {content:'开发环境'; color:gray; margin-top:10px; float:right; margin-right:10px; display:inline-block;}
-.SERVER-IDENTIFY-BETA #header:after {content:'测试环境'; color:green;}
-.SERVER-IDENTIFY-GAMMA #header:after {content:'预发布环境'; color:#ffc4a2 }
-.SERVER-IDENTIFY-IDC #header:after {content:'生产环境，慎重操作'; color:red; font-weight:bold;}
+.SERVER-IDENTIFY-IDC #header:after {content:'开发'; color:gray; margin-top:10px; float:right; margin-right:10px; display:inline-block;}
+.SERVER-IDENTIFY-BETA #header:after {content:'测试'; color:green;}
+.SERVER-IDENTIFY-GAMMA #header:after {content:'预发布'; color:#ffc4a2 }
+.SERVER-IDENTIFY-IDC #header:after {content:'生产环境'; color:red; font-weight:bold;}
 
 /** 权限控制 **/
 [href*="HAS_NO_AUTH_TO_DISPLAY"]{
@@ -46,7 +46,16 @@ input.long-txt {width:770px;}
 input.date_txt {background:url("img/date.png") no-repeat left center; padding-left:18px; font-weight:bolder; color:blue}
 .rich-txt {width:800px; height:400px}
 .small-txt {width:400px; height:50px; resize:vertical}
-.date-time-txt, .date-txt {background:url("img/date.png") no-repeat 97% center}
+.date-time-txt,
+.datetime-txt,
+.date-txt {background:url("img/date.png") no-repeat 97% center}
+input.date-time-txt,
+input.datetime-txt,
+input.date-txt {padding-right:10px;}
+.date-range-input {background-color:white; color:#ccc; overflow:hidden; display:inline-block; border:1px solid #bbb; border-bottom-color:#ddd; border-right-color:#ddd;  border-radius:3px;}
+.date-range-input .txt {border:none; border-radius:0;}
+.date-range-input .txt:first-child {background:none; padding-right:5px; width:120px}
+.date-range-input .txt:last-child { padding-right:10px}
 
 /** 按钮 **/
 .btn {border:none; display:inline-block; cursor:pointer; padding:3px 13px 5px; background-color:#7C97B9; color:white; border-radius:2px; vertical-align:middle; text-align:center}
@@ -73,7 +82,7 @@ input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier ne
 
 .data-empty {font-size:14px; padding:10px 0; text-align:center; color:gray;}
 
-#header {background:url("img/stripe_green_gray.jpg") #061318 ; color:#eee; height:30px; padding:5px; border-bottom:3px solid #eee}
+#header {background-color:#061318; color:#eee; height:30px; padding:5px; border-bottom:3px solid #eee}
 #col-aside {width:150px;}
 #logo {float:left; background:url("img/b_logo.png") no-repeat 2px 5px; text-indent:28px; font-weight:normal;}
 #logo a {color:#9ECFCF; font-size:18px; display:block; padding:5px;}
@@ -103,7 +112,7 @@ input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier ne
 .system-choice:hover dd {display:block;}
 
 /** 主导航 **/
-#main-nav {float:left; margin:4px 10px -10px 20px;}
+#main-nav {float:left; margin:4px 10px -10px 20px; background-color:#061318;}
 #main-nav li {float:left; margin-right:2px}
 #main-nav li.active a{color:white}
 #main-nav li.active,
@@ -128,6 +137,7 @@ li:hover .sub-nav {display:block;}
 .sub-nav dd:last-child a{border:none}
 .sub-nav-bigger {width:290px; padding-left:5px;}
 .sub-nav-bigger dd {float:left;}
+#main-nav .sub-nav-bigger a {padding-right:10px; padding-left:10px;}
 
 .operate-bar {padding:0 0 10px 0;}
 

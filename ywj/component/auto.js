@@ -42,9 +42,10 @@ define('ywj/auto', function(require){
 		});
 	};
 
-	var showPopup = function(conf, onSuccess, onError){
+	var showPopup = function(conf, onSuccess, onError, onShow){
 		require.async('ywj/popup', function(Pop){
 			var p = new Pop(conf);
+			p.onShow = onShow;
 			if(onSuccess){
 				p.listen('onSuccess', onSuccess);
 			}
@@ -127,23 +128,34 @@ define('ywj/auto', function(require){
 
 		//自动弹窗
 		$body.delegate('a[rel=popup]', 'click', function(){
-			if(!checkConfirm(this)){
-				return;
+			var $node = $(this);
+			var POPUP_ON_LOADING = 'data-popup-on-loading-flag';
+			var RET = this.tagName == 'A' ? false : null;
+
+			if($node.attr(POPUP_ON_LOADING) == 1){
+				showMsg('正在加载页面...', 'load', MSG_LOAD_TIME);
+				$('.ywj-msg-container-wrap').css('background', 'rgba(0,0,0,0.2)'); //style hack
+				return RET;
 			}
 
-			var node = $(this);
-			var src = net.mergeCgiUri(node.attr('href'), {'ref':'iframe'});
-			var width = parseFloat(node.data('width')) || DEF_POPUP_WIDTH;
-			var height = parseFloat(node.data('height')) || 0;
-			var title = node.attr('title') || node.html() || '';
-			var onSuccess = node.data('onsuccess');
+			if(!checkConfirm(this)){
+				return RET;
+			}
+
+			$node.attr(POPUP_ON_LOADING, 1);
+			var src = net.mergeCgiUri($node.attr('href'), {'ref':'iframe'});
+			var width = parseFloat($node.data('width')) || DEF_POPUP_WIDTH;
+			var height = parseFloat($node.data('height')) || 0;
+			var isShowInParent = $node.data('parent') || false;
+			var title = $node.attr('title') || $node.html() || '';
+			var onSuccess = $node.data('onsuccess');
 			if(onSuccess){
 				eval('var fn1 = window.'+onSuccess);
 				onSuccess = fn1;
 			} else {
 				onSuccess = function(){};
 			}
-			var onError = node.data('onerror');
+			var onError = $node.data('onerror');
 			if(onError){
 				eval('var fn2 = window.'+onError);
 				onError = fn2;
@@ -162,11 +174,12 @@ define('ywj/auto', function(require){
 				conf.height = height;
 			}
 			showPopup(conf, function(){
-				return onSuccess.apply(node, util.toArray(arguments));
-			}, onError);
-			if(this.tagName == 'A'){
-				return false;
-			}
+				return onSuccess.apply($node, util.toArray(arguments));
+			}, onError, function(){
+				hideMsg();
+				$node.attr(POPUP_ON_LOADING, 0);
+			});
+			return RET;
 		});
 
 		//自动MSG
@@ -179,18 +192,30 @@ define('ywj/auto', function(require){
 
 		//自动ajax链接
 		$body.delegate('a[rel=async]', 'click', function(){
-			if(!checkConfirm(this)){
-				return;
-			}
 			var _this = this;
-			var link = $(this);
-			var url = link.attr('href');
-			if(url){
+			var $link = $(this);
+			var SUBMITTING_KEY = 'data-submitting-flag';
+			var url = $link.attr('href');
+
+			if($link.attr(SUBMITTING_KEY) == 1){
 				showMsg('正在提交请求...', 'load', MSG_LOAD_TIME);
-				url = net.mergeCgiUri(url);
-				net.get(url, null, function(rsp){
-					hideMsg();
-					auto_process_async(_this, rsp);
+				return false;
+			}
+			if(!checkConfirm(this)){
+				return false;
+			}
+			if(url){
+				$link.attr(SUBMITTING_KEY, 1);
+				showMsg('正在提交请求...', 'load', MSG_LOAD_TIME);
+				net.request(url, null, {
+					onSuccess: function(rsp){
+						$link.attr(SUBMITTING_KEY, 0);
+						hideMsg();
+						auto_process_async(_this, rsp);
+					},
+					onError: function(){
+						$link.attr(SUBMITTING_KEY, 0);
+					}
 				});
 				return false;
 			}
@@ -379,10 +404,17 @@ define('ywj/auto', function(require){
 				slide.init();
 			});
 		}
+		if ($('*[rel=suggest-community]').length > 0) {
+			require.async('ywj/suggest_community', function (sgc) {
+				$('*[rel=suggest-community]').each(function(){
+					sgc($(this));
+				});
+			});
+		}
 
 		//时间组件触发
 		var _TIME_N_CHK = 'date-widget-bind';
-		$.each(['input.datetime-txt', 'input.date-txt', 'input[type=time]'], function(idx, s){
+		$.each(['input.date-time-txt','input.datetime-txt', 'input.date-txt', 'input[type=time]'], function(idx, s){
 			if($(s).size()){
 				require.async('ywj/timepicker');
 			}
@@ -393,19 +425,47 @@ define('ywj/auto', function(require){
 				}
 
 				var current_timestamp=$.now();
-				var enable_past_duration = parseInt($this.data("enable-past-duration"))*1000;
-				var enable_future_duration = parseInt($this.data("enable-future-duration"))*1000;
+
+				//过去时间限制
+				var enable_past_duration=$this.data("enable-past-duration");
+				var check_min_date_time=false;
+				if(enable_past_duration===undefined){
+					enable_past_duration=0;
+				}else{
+					check_min_date_time=true;
+					enable_past_duration = parseInt(enable_past_duration)*1000
+				}
+				//未来时间限制
+				var enable_future_duration=$this.data("enable-future-duration");
+				var check_max_date_time=false;
+				if(enable_future_duration==undefined){
+					enable_future_duration=0;
+				}else{
+					check_max_date_time=true;
+					enable_future_duration = parseInt(enable_future_duration)*1000
+				}
 				var min_date = new Date(current_timestamp+enable_past_duration) ;
 				var max_date = new Date(current_timestamp+enable_future_duration) ;
+
 				require.async('ywj/timepicker', function(){
-					if(s.indexOf('datetime') >= 0){
-						$this.datetimepicker({dateFormat:'yy-mm-dd', timeFormat:'HH:mm:ss',minDateTime:min_date,maxDateTime:max_date});
+					var format={};
+					if(check_min_date_time){
+						format.minDateTime=min_date;
+					}
+					if(check_max_date_time){
+						format.maxDateTime=max_date;
+					}
+					if(s.indexOf('date-time') >= 0 || s.indexOf('datetime') >= 0){
+						var datetime_format= $.extend(format,{dateFormat:'yy-mm-dd', timeFormat:'HH:mm:ss'});
+						$this.datetimepicker(datetime_format);
 					}
 					else if(s.indexOf('date') >= 0){
-						$this.datepicker({dateFormat:'yy-mm-dd',minDateTime:min_date,maxDateTime:max_date});
+						var date_format= $.extend(format,{dateFormat:'yy-mm-dd'});
+						$this.datepicker(date_format);
 					}
 					else if(s.indexOf('time') > 0){
-						$this.timepicker({timeFormat:'HH:mm',minDateTime:min_date,maxDateTime:max_date});
+						var time_format= $.extend(format,{timeFormat:'HH:mm'});
+						$this.timepicker(time_format);
 					}
 					if(!$this.data(_TIME_N_CHK)){
 						$this.data(_TIME_N_CHK, 1);
@@ -438,6 +498,7 @@ define('ywj/auto', function(require){
 	var handler = function(){
 		var FLAG_SUBMITTING = 'submitting';
 		var FLAG_ASYNC_BIND = 'async-bind';
+		var ON_BEFORE_SUBMIT = 'on-before-submit';
 
 		//自动表单
 		$('form[rel=async]').each(function(){
@@ -446,7 +507,15 @@ define('ywj/auto', function(require){
 			}
 
 			var $form = $(this);
+			var on_before_submit = $form.attr(ON_BEFORE_SUBMIT);
 			$form.on('submit', function(){
+				if (on_before_submit) {
+					eval('var fn = window.'+on_before_submit+';');
+					var rs = fn($form);
+					if (!rs) {
+						return false;
+					}
+				}
 				if($form.data(FLAG_SUBMITTING)){
 					return false;
 				}
@@ -466,14 +535,30 @@ define('ywj/auto', function(require){
 				span.innerHTML = '<iframe id="'+frameId+'" name="'+frameId+'" style="display:none"></iframe>';
 				document.body.appendChild(span);
 				var frame = document.getElementById(frameId);
+
+				var _response_flag_ = false;
 				frame._callback = function(rsp){
+					_response_flag_ = true;
 					setTimeout(function(){
-					$form.removeData(FLAG_SUBMITTING);
+						$form.removeData(FLAG_SUBMITTING);
 					}, 1500);
 					hideMsg();
 					$(frame).remove(); //避免webkit核心后退键重新提交数据
 					auto_process_async($form, rsp);
 				};
+
+				//debug mode
+				if(window['__DEBUG__']){
+					$(frame).load(function(){
+						var _this = this;
+						setTimeout(function(){
+							if(!_response_flag_){
+								_this.style.cssText = 'display:block; position:absolute; top:0; left:0; width:100%; height:100%; z-index:65534';
+							}
+						}, 100);
+					});
+				}
+
 				$form.attr('target', frameId);
 				$form.data(FLAG_SUBMITTING, '1');
 				showMsg('正在提交请求...', 'load', MSG_LOAD_TIME);
@@ -536,28 +621,28 @@ define('ywj/auto', function(require){
 
 		//自动富文本编辑器
 		$('textarea[rel=rich]').each(function(){
-			if($(this).data('rich-binded')){
+			var $txt = $(this);
+			if($txt.data('rich-binded')){
 				return;
 			}
-			$(this).data('rich-binded', 1);
-
-			var txt = $(this);
+			$txt.data('rich-binded', 1);
 			var id = util.guid();
-			var name = txt.attr('name');
-			var w = txt.width() || 400;
-			var h = txt.height() || 300;
-			txt.hide();
-
-			var script = '<script id="'+id+'" name="'+name+'" type="text/plain" style="width:'+w+'px; height:'+h+'px;"></script>';
-			$(script).insertAfter(txt);
-
+			var w = $txt.width() || 400;
+			var h = $txt.height() || 300;
+			$txt.hide();
+			var script = '<script id="'+id+'" type="text/plain" style="width:'+w+'px; height:'+h+'px;"></script>';
+			$(script).insertAfter($txt);
 			require.async('ueditor_admin_config', function(){
 				require.async('ueditor', function(){
 					var ue = UE.getEditor(id);
 					setTimeout(function(){
-						ue.setContent(txt.val());
+						ue.setContent($txt.val());
 						ue.setHeight(h+'px');
-						ue .addListener( "contentchange", function () {
+						ue.addListener("contentchange", function(ev){
+							var str = ue.getContent();
+							str = str.replace(/'/g, "\\'");
+							$txt.val(str);
+							console.log('content changed:', str, ' event:',ev);
 							window['EDITOR_CONTENT_CHANGED_FLAG'] = true;
 						} );
 					}, 1000);
@@ -592,6 +677,17 @@ define('ywj/auto', function(require){
 		if($('select[rel=province-selector]').size()){
 			require.async('ywj/areaselector');
 		}
+		//自动设计师选择
+		if($("*[rel=search-selector]").size()){
+			require.async('ywj/searchselector');
+		}
+
+		$('select[rel=select-combo-box]').each(function(){
+			var sel = this;
+			require.async('ywj/selectcombo', function(fn){
+				fn(sel);
+			});
+		});
 
 		//fixed位置
 		var $fixed_els = $('*[data-fixed]', $('body'));

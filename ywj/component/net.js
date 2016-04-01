@@ -15,7 +15,7 @@ define('ywj/net', function(require){
 	var getParam = function(param, url){
 		var r = new RegExp("(\\?|#|&)"+param+"=([^&#]*)(&|#|$)");
 		var m = (url || location.href).match(r);
-		return (!m?"":m[2]);
+		return (!m?null:m[2]);
 	};
 
 	/**
