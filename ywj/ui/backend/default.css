@@ -1,16 +1,16 @@
 @charset "UTF-8";
 @import "../common/reset.css";
-body {font-family:Microsoft Yahei, helvetica, verdana, sans-serif; font-size:12px; background:#f7f7f7 url("img/body-bg.png")}
+body {font-family:Microsoft Yahei, helvetica, verdana, sans-serif; font-size:13px; background:#f7f7f7 url("img/body-bg.png"); color:#444}
 a {color:#3B6DA6; text-decoration:none;}
 
 /** 环境标识 **/
-.SERVER-IDENTIFY-DEV #header:after,
-.SERVER-IDENTIFY-BETA #header:after,
-.SERVER-IDENTIFY-GAMMA #header:after,
-.SERVER-IDENTIFY-IDC #header:after {content:'开发'; color:gray; margin-top:10px; float:right; margin-right:10px; display:inline-block;}
-.SERVER-IDENTIFY-BETA #header:after {content:'测试'; color:green;}
-.SERVER-IDENTIFY-GAMMA #header:after {content:'预发布'; color:#ffc4a2 }
-.SERVER-IDENTIFY-IDC #header:after {content:'生产环境'; color:red; font-weight:bold;}
+/*.SERVER-IDENTIFY-DEV #header:after,*/
+/*.SERVER-IDENTIFY-BETA #header:after,*/
+/*.SERVER-IDENTIFY-GAMMA #header:after,*/
+/*.SERVER-IDENTIFY-IDC #header:after {content:'开发环境'; color:gray; margin-top:10px; float:right; margin-right:10px; display:inline-block;}*/
+/*.SERVER-IDENTIFY-BETA #header:after {content:'测试环境'; color:green;}*/
+/*.SERVER-IDENTIFY-GAMMA #header:after {content:'预发布环境'; color:#ffc4a2 }*/
+/*.SERVER-IDENTIFY-IDC #header:after {content:'生产环境，慎重操作'; color:red; font-weight:bold;}*/
 
 /** 权限控制 **/
 [href*="HAS_NO_AUTH_TO_DISPLAY"]{
@@ -37,32 +37,41 @@ html, body {padding:0; margin:0}
 /** 表单元素 **/
 select, input.chk, label{vertical-align:middle;}
 select {font-family:Microsoft Yahei, SimSun, Courier new, Tahoma, Lucida Grande, serif}
-select {padding:5px; border-radius:3px; border:1px solid #ccc; min-width:147px; height:28px}
+select {border-radius:3px; border:1px solid #ccc; min-width:163px; height:29px}
+select[multiple=multiple] {height:100px;}
 
 /** 表单输入元素 **/
-input.txt, textarea.txt {border:1px solid #bbb; min-width:135px; border-bottom-color:#ddd; border-right-color:#ddd; vertical-align:middle; padding:5px 5px; border-radius:3px; font-family:microsoft yahei, Arial, Helvetica, sans-serif; font-size:12px; background-color:white}
-input.txt[type=number] {min-width:80px; max-width:80px;}
+input.txt[required],
+textarea.txt[required],
+select[required] {border-color:#F7D1BD}
+input.txt, textarea.txt {border:1px solid #bbb; border-bottom-color:#ddd; border-right-color:#ddd; width:150px; vertical-align:middle; padding:5px 5px; border-radius:3px; font-family:microsoft yahei, Arial, Helvetica, sans-serif; font-size:13px; background-color:white}
+textarea.txt {width:300px;}
+input.txt[type=number] {width:80px;}
+input[type=checkbox],
+input[type=radio] {margin-right:2px; vertical-align:middle; position:relative; top:-1px;}
+input.txt[readonly] {background-color:#eee; color:#bbb; text-shadow:1px 1px 1px white}
 input.long-txt {width:770px;}
-input.date_txt {background:url("img/date.png") no-repeat left center; padding-left:18px; font-weight:bolder; color:blue}
-.rich-txt {width:800px; height:400px}
-.small-txt {width:400px; height:50px; resize:vertical}
-.date-time-txt,
-.datetime-txt,
-.date-txt {background:url("img/date.png") no-repeat 97% center}
-input.date-time-txt,
+textarea.small-txt {width:400px; height:50px; resize:vertical}
+textarea.medium-txt {width:600px; height:300px; resize:vertical}
+textarea.large-txt {width:800px; height:400px; resize:vertical}
 input.datetime-txt,
-input.date-txt {padding-right:10px;}
+input.date-txt {background-image:url("img/date.png"); background-repeat:no-repeat; background-position:97% center; padding-right:25px;}
 .date-range-input {background-color:white; color:#ccc; overflow:hidden; display:inline-block; border:1px solid #bbb; border-bottom-color:#ddd; border-right-color:#ddd;  border-radius:3px;}
-.date-range-input .txt {border:none; border-radius:0;}
-.date-range-input .txt:first-child {background:none; padding-right:5px; width:120px}
-.date-range-input .txt:last-child { padding-right:10px}
+.date-range-input .txt {border:none; border-radius:0}
+.date-range-input .txt:first-child {background:none; padding-right:5px;}
+
+option.option-disabled {color:#ccc; background-color:#eee}
 
 /** 按钮 **/
 .btn {border:none; display:inline-block; cursor:pointer; padding:3px 13px 5px; background-color:#7C97B9; color:white; border-radius:2px; vertical-align:middle; text-align:center}
+.btn[disabled],
+.btn[disabled]:hover,
 .btn-disabled {background-color:#ddd; color:#aaa; text-shadow:1px 1px 1px #eee;}
+body .btn-danger {background-color:#CEA481;}
 input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier new, Tahoma, Lucida Grande, serif; _padding:4px 13px 5px 13px; vertical-align:middle}
 .btn:hover {background-color:#50657E; text-decoration:none}
-.btn-disabled:hover {background-color:#ddd; cursor:default;}
+body .btn-disabled:hover {background-color:#ddd; cursor:default;}
+body .btn-danger:hover {background-color:#BB5F14}
 .small-btn {display:inline-block; margin:1px 3px; text-shadow:1px 1px 1px #ccc; padding-left:14px; cursor:pointer; color:#555; background:url("img/arrow_up_small.gif") no-repeat 0; vertical-align:middle}
 .small-btn:hover {color:black;}
 .small-add-btn {background-image:url("img/arrow_add_small.png")}
@@ -76,21 +85,20 @@ input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier ne
 .image-error img{visibility:hidden;}
 .image-error {background:url("img/img_error.png") no-repeat center}
 .delete-icon {background:url("img/delete.png") no-repeat; display:inline-block; width:11px; height:11px; text-indent:-999em; overflow:hidden}
+del {color:#ccc}
 
 #browser-warning {background-color:#ff8f4a; padding:8px 10px; text-align:center; color:white; font-size:14px; text-shadow:1px 1px 1px black;}
 #browser-warning a {color:white; text-decoration:underline}
 
-.data-empty {font-size:14px; padding:10px 0; text-align:center; color:gray;}
+.data-empty {font-size:14px; padding:10px 0; text-align:center; clear:both; color:gray;}
 
-#header {background-color:#061318; color:#eee; height:30px; padding:5px; border-bottom:3px solid #eee}
+#header {background:url("img/stripe_green_gray.jpg") #061318 ; color:#eee; height:30px; padding:5px; border-bottom:3px solid #eee}
 #col-aside {width:150px;}
 #logo {float:left; background:url("img/b_logo.png") no-repeat 2px 5px; text-indent:28px; font-weight:normal;}
 #logo a {color:#9ECFCF; font-size:18px; display:block; padding:5px;}
 #logo span {font-size:10px; color:#ddd}
 #logo .small {font-size:12px; font-weight:normal;}
 #footer {text-align:center; color:#bbb; padding:10px 0; clear:both;}
-#welcome {float:right; margin:10px 5px 0 10px;}
-#welcome a {color:white;}
 
 /** 侧边导航 **/
 .aside-nav {padding-bottom:20px; display:block}
@@ -102,6 +110,25 @@ input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier ne
 .aside-nav dd.active a {background-color:#837E97; color:white}
 .aside-nav .shortcut_nav a {padding:0 10px;overflow: hidden;width: 140px;}
 
+/** 登录用户信息 **/
+#welcome {}
+#welcome {position:absolute; top:15px; z-index:1; right:5px; height:25px}
+#welcome a {color:white;}
+#welcome .login-link {padding:10px 20px;}
+#welcome .user {position:relative; cursor:default; padding:10px 35px 10px 20px;}
+#welcome .user:before {content:"\f007"; display:inline-block; margin-right:5px; font-family:FontAwesome, serif;}
+#welcome .user:after {content:"\f0d7"; font-family:FontAwesome, serif; font-size:14px; display:block; position:absolute; right:-15px; top:10px;}
+#welcome:hover .user:after {content:"\f0d8"}
+#welcome .user-panel {display:none; width:300px; padding:15px; border-radius:3px; margin-top:-3px; right:0; box-shadow:1px 1px 10px #BBB; position: absolute; color:gray; background-color:rgba(255, 255, 255, 0.74); border:1px solid #bbb; z-index:10}
+#welcome .user-panel p {padding-bottom:3px;}
+#welcome .user-panel p span {white-space: nowrap}
+#welcome .user-panel a {color:#ff5500}
+#welcome .user-panel a:hover {text-decoration: underline}
+#welcome:hover .user-panel {display:block;}
+#welcome .g-img-error img {display:none}
+#welcome .g-img-error {background:url("img/default_avatar.png") no-repeat center #7C7C7C; background-size:contain}
+#welcome .avatar-wrap {width:90px; height:90px; overflow: hidden; float:left; margin-right:10px}
+
 /** 系统选择按钮 **/
 .system-choice {background-color:#545369; color:white; border-radius:3px; position:absolute; top:11px; right:9px;}
 .system-choice dt {background:url("img/button_grey_down.png") no-repeat 90% center; padding:2px 28px 2px 8px; color:#ccc; cursor:default}
@@ -112,7 +139,7 @@ input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier ne
 .system-choice:hover dd {display:block;}
 
 /** 主导航 **/
-#main-nav {float:left; margin:4px 10px -10px 20px; background-color:#061318;}
+#main-nav {float:left; margin:4px 10px -10px 20px;}
 #main-nav li {float:left; margin-right:2px}
 #main-nav li.active a{color:white}
 #main-nav li.active,
@@ -126,7 +153,7 @@ input.btn {padding:5px 15px 6px; font-family:Microsoft Yahei, SimSun, Courier ne
 
 /** 主导航 - 子菜单 **/
 li:hover .sub-nav {display:block;}
-.sub-nav {display:none; width:130px; position:absolute; z-index:1000; padding-top:5px; padding-bottom:5px; background-color: rgba(16, 16, 16, 0.8); box-shadow:2px 2px 4px #7B7B7B}
+.sub-nav {display:none; width:130px; position:absolute; z-index:99; padding-top:5px; padding-bottom:5px; background-color: rgba(16, 16, 16, 0.8); box-shadow:2px 2px 4px #7B7B7B}
 #main-nav .sub-nav a {margin:0 5px; padding-right:0;}
 .sub-nav dt:first-child {border:none}
 .sub-nav dt {color:gray; margin:0 10px; font-size:9px; cursor:default; clear:both; background:url("img/line.png") repeat-x 0 center;}
@@ -137,46 +164,51 @@ li:hover .sub-nav {display:block;}
 .sub-nav dd:last-child a{border:none}
 .sub-nav-bigger {width:290px; padding-left:5px;}
 .sub-nav-bigger dd {float:left;}
-#main-nav .sub-nav-bigger a {padding-right:10px; padding-left:10px;}
 
-.operate-bar {padding:0 0 10px 0;}
+.operate-bar {float:left; padding:10px 0;}
 
 /** 表单 **/
 .frm {margin:5px; padding:10px; background-color:#fff}
 .frm legend {font-size:18px; padding:2px 0 15px; text-shadow: 1px 1px 1px gray;}
+.frm-field-desc {color:#ccc}
 .frm-tip {color:gray; padding:0 10px;}
 .frm-tbl {width:100%; margin-bottom:10px;}
 .frm-tbl caption {text-align:left; font-weight:bold; font-size:16px; border-bottom:1px solid #ddd; color:#555; padding:5px 5px 15px 5px; margin-bottom:10px;}
 .frm-tbl {border-collapse:collapse; border-spacing:0;}
-.frm-tbl td.col-label {width:60px; vertical-align:top}
+.frm-tbl td.col-label {width:30px; vertical-align:top; white-space:nowrap;}
 .frm-tbl tr.odd {background-color:#FAFAFA;}
 .frm-tbl td {padding:5px 10px; line-height:20px;}
-.frm-tbl td label {margin-right:7px;}
+.frm-tbl td label {margin-right:10px; cursor:pointer;}
 .frm-tbl td.col-label label {margin-right:0}
 .col-action {padding-top:10px !important;}
 .col-label {text-align:right;}
 
 /** 表单tab **/
-.frm-tab {overflow:hidden; border-bottom:3px solid #ccc; margin-top:10px;}
-.frm-tab li {float:left; margin:0 0 0 10px; padding:5px 20px; background-color:#eee; border-radius:2px 2px 0 0; color:gray; cursor:pointer}
-.frm-tab a {color:#999; font-size:14px;}
+.frm-tab {overflow:hidden; border-bottom:3px solid #ccc; margin-top:10px; clear:both;}
+.frm-tab li {margin:0 0 0 10px; display:inline-block; background-color:#eee; border-radius:2px 2px 0 0; color:gray; cursor:pointer}
+.frm-tab a,
+.frm-tab span {font-size:12px; padding:3px 15px; display:inline-block;}
+.frm-tab a {color:#999;}
 .frm-tab .active {background-color:#ccc; color:black; text-shadow:1px 1px 1px white}
 .frm-tab .active a {color:#333;}
 .frm-tab-content {padding:10px 0;}
 .frm-tab-content .disactive {display:none}
 
 /** 图片缩略图 **/
-.image-thumb {display:block; width:80px; height:80px; position:relative; overflow:hidden; border:1px solid #eee; border-radius:5px; margin:10px 0 0; text-align:center}
-.image-thumb img {height:100%; vertical-align:middle;}
-.image-thumb .delete-link {display:none; position:absolute; bottom:0; text-align:center; width:100%; background-color:rgba(61, 83, 205, 0.31); color:white; text-shadow:1px 1px 1px gray; cursor:pointer}
-.image-thumb .delete-link:hover {background-color:rgba(61, 83, 205, 0.9)}
-.image-thumb:hover .delete-link {display:block}
-.image-thumb .view-source-link {display:none; position:absolute; top:0; right:0; text-align:center; width:100%; background-color:rgba(61, 83, 205, 0.31); color:white; text-shadow:1px 1px 1px gray; cursor:pointer}
-.image-thumb:hover .view-source-link {display:block;}
-.image-thumb .chk { position:absolute; bottom:0; right:0;}
+.image-thumb {display:block; width:250px; height:180px; position:relative; overflow:hidden; border:5px solid rgba(255, 255, 255, 0.6); background:white; box-shadow:1px 1px 3px #ccc}
+.data-tbl .image-thumb {width:32px; height:32px; box-shadow:none;}
+
+/** 图片缩略图列表 **/
+.image-thumb-list {overflow:hidden; clear:both;}
+.image-thumb-list li {float:left; list-style:none; margin:0 10px 10px 0; position:relative; background:#fff}
+.image-thumb-list li [data-flag=delete]{display:none; padding:2px 5px; position:absolute; top:0; right:0; background-color:#eee;}
+.image-thumb-list li [data-flag=source]{display:none; padding:2px 5px; position:absolute; background-color:#eee; bottom:0; right:0;}
+.image-thumb-list li:hover [data-flag=delete],
+.image-thumb-list li:hover [data-flag=source]{ display:block;}
 
 /** 文件上传 **/
-.file-thumb {display:block; height:40px; position:relative; overflow:hidden; border:1px dotted #eee; margin:10px 0 0; text-align:center;}
+div.uploader-file {width:auto;}
+.file-thumb {display:block; height:40px; position:relative; overflow:hidden; border:1px dotted #eee; margin:10px 0 0}
 .file-thumb .delete-link {display:none; position:absolute; bottom:0; text-align:center; width:100%; background-color:rgba(61, 83, 205, 0.31); color:white; text-shadow:1px 1px 1px gray; cursor:pointer}
 .file-thumb .delete-link:hover {background-color:rgba(61, 83, 205, 0.9)}
 .file-thumb:hover .delete-link {display:block}
@@ -190,12 +222,11 @@ li:hover .sub-nav {display:block;}
 .uploader .file-thumb {display:none;}
 .uploader-normal .uploader-btn,
 .upload-success .uploader-btn,
-.upload-error .uploader-btn {display:inline-block; background:url("img/upload24.png") no-repeat 7px #fff; color:#437cb0; cursor:pointer; border-radius:3px; padding:3px 8px 3px 37px;}
+.upload-error .uploader-btn {display:inline-block; background:url("img/upload24.png") no-repeat 7px; color:#437cb0; cursor:pointer; border-radius:3px; padding:3px 8px 3px 37px;}
 
 .upload-error .uploader-btn:hover,
 .upload-success .uploader-btn:hover,
 .uploader-normal .uploader-btn:hover {color:#5cabf3}
-
 .upload-success .image-thumb,
 .upload-success .file-thumb {display:block}
 
@@ -207,7 +238,7 @@ li:hover .sub-nav {display:block;}
 .upload-error .uploader-message {color:red; display:block}
 
 /** 检索 **/
-.search-frm {padding:10px; margin-bottom:10px; zoom:1; border:none;}
+.search-frm {float:right; zoom:1; border:none;}
 .search-frm:after {content:""; display:block; clear:both;}
 .search-frm:hover {box-shadow:0 0 3px #64B0D8;}
 .search-frm .frm-item {padding:5px 10px 5px 0; float:left; vertical-align:middle}
@@ -215,7 +246,7 @@ li:hover .sub-nav {display:block;}
 .search-frm input, .search-frm select {min-width:0;}
 
 /** 数据表格 **/
-.data-tbl {border-collapse:collapse; border-spacing:0; border:none; width:100%; _width:98%; background-color:#fff}
+.data-tbl {border-collapse:collapse; border-spacing:0; margin-bottom:10px; border:none; width:100%; clear:both; background-color:#fff}
 .data-tbl caption {display:none;}
 .data-tbl tr th {padding:5px; text-align:left; background-color:#D2D4D7; color:#666; white-space:nowrap;}
 .data-tbl td {padding:5px;}
@@ -225,6 +256,21 @@ li:hover .sub-nav {display:block;}
 .data-tbl tr.selected td {background-color:#f0f0f0}
 .data-tbl a {white-space:nowrap}
 .data-tbl tr:hover td {background-color:#F1F1F1}
+
+.table-export-btn {font-size:12px; font-weight:normal;}
+caption .table-export-btn {float:right; margin-right:5px;}
+
+/** order **/
+.order-by {display:inline-block; padding-right:20px; margin-right:2px; background:url("img/order_by.gif") no-repeat right center;}
+.order-by-asc {background-image:url("img/order_asc.gif")}
+.order-by-desc {background-image:url("img/order_desc.gif")}
+
+/** 信息表 **/
+.info-tbl {clear:both; min-width:400px; border-collapse:collapse; background-color:rgba(255,255,255,0.5); margin-bottom:10px; border-spacing:0; border:none;}
+.info-tbl caption {text-align:left; padding:10px; background-color:rgba(255,255,255,0.2)}
+.info-tbl th, .info-tbl td {text-align:left; padding:10px;}
+.info-tbl tbody tr {border-bottom:1px solid white;}
+.info-tbl tbody th {width:30px; white-space:nowrap; font-weight:normal}
 
 /** 分页 **/
 .pagination {padding:10px 0; display:inline-block; color:gray}
@@ -246,12 +292,12 @@ li:hover .sub-nav {display:block;}
 .pagination .page_size_input {width:55px; margin-left:5px;}
 
 /** 状态标签 **/
-.state-label {background-color:#83cca7; color:white; white-space:nowrap; text-shadow:1px 1px 1px gray;}
-span.state-label {padding:2px 8px; display:inline-block; font-size:10px; border-radius:5px; -webkit-transform:scale(0.9);}
-.state-label-disable {background-color:gray;}
-.state-label-success {background-color:#83cca7}
-.state-label-warn {background-color:#ffc396;}
-.state-label-error {background-color:red;}
+.state-flag {display:inline-block; padding:0 3px; border-radius:3px; font-size:12px;}
+.state-flag-draft {background-color:#C5C5C5; color:#6B6B6B;}
+.state-flag-normal {background-color:#62C9D0; color:white;}
+.state-flag-done {background-color:#009052; color:white;}
+.state-flag-warn {background-color:#FF713D; color:white;}
+.state-flag-disabled {color:#B1B1B1; text-shadow:1px 1px 1px white; outline:1px solid #ccc}
 
 .tag-label {display:inline-block; background-color:#ddd; color:#555; padding:1px 8px; margin:0 1px 2px 0; border-radius:4px;}
 
@@ -259,15 +305,41 @@ span.state-label {padding:2px 8px; display:inline-block; font-size:10px; border-
 .tab-lst li {float:left; padding:2px 15px;}
 .tab-lst li.current {background-color:#fff; border:1px solid #ccc; border-right-color:gray; border-bottom:none;}
 
+/** 信息表格 **/
+.info-tbl {width:100%;}
+.info-tbl {box-shadow:0px 0px 4px #ccc}
+.info-tbl td { background-color:#fff; border-bottom:1px solid #eee}
+.info-tbl tbody th {background-color:#fafafa; width:100px; border-bottom:1px solid #eee}
+
+/** 信息清单 **/
+.info-list {width:100%; padding:1px 0 0 1px; margin:10px 0;}
+.info-list:after {content:""; display:block; clear:both;}
+.info-list>dt, .info-list>dd {float:left; margin:-1px -1px 0 0; display:block; padding:5px 10px; width:60px; line-height:20px; background-color:white; border:1px solid #ccc;}
+.info-list>dt {color:gray;}
+.info-list>dd { width:220px; margin-right:10px; min-height:20px}
+
+/** 标签输入 **/
+.tags-input {padding:5px 0}
+.tags-input .txt {border-top:none; border-left:none; border-right:none; border-radius:0;}
+.tags-input .tags {margin-bottom:5px;}
+.tags-input .tags li {padding-right:10px;}
+.tags-input .del-tag {float:right; display:inline-block; margin:0 -5px 0 3px; color:#979B9C; cursor:pointer;}
+.tags-input .del-tag:hover {color:red;}
+
+/** 标签列表 **/
+.tags:after {display:block; content:""; clear:both;}
+.tags li {float:left; background-color:#B8EFF3; padding:0 5px; margin:0 4px 4px 0; border-radius:3px; color:#25759C}
+
+
 /** 下拉列表，结构： dl>dt>a+dd>a **/
 .drop-list {display:inline-block; vertical-align:middle; position:relative;}
 .drop-list a,
 .drop-list span {white-space:nowrap; cursor:pointer;}
 .drop-list dt {display:block; position:relative; cursor:pointer;}
 .drop-list dt a,
-.drop-list dt span {padding:3px 20px 3px 10px; white-space:nowrap; display:block;}
+.drop-list dt span {padding:0 20px 0 0; white-space:nowrap; display:block;}
 .drop-list dt.btn a {color:white;}
-.drop-list dt:after {content:''; display:block; position:absolute; width:0; height:0; border:4px solid transparent; border-top-color:#ccc; right:7px; top:12px;}
+.drop-list dt:after {content:''; display:block; position:absolute; width:0; height:0; border:4px solid transparent; border-top-color:#ccc; right:7px; top:8px;}
 .drop-list dt.btn:after {border-top-color:white;}
 .drop-list dd {display:none; position:absolute; box-shadow:1px 1px 5px #ddd; padding:5px 0; margin-right:10px; z-index:1; left:0; background-color:rgba(255, 255, 255, 0.95); border-radius:3px; min-width:80px;}
 .drop-list dd a,
@@ -276,7 +348,7 @@ span.state-label {padding:2px 8px; display:inline-block; font-size:10px; border-
 .drop-list dd span:hover {background-color:#ddd;}
 .drop-list-left dd {left:auto; right:0; margin-right:0}
 .drop-list:hover dd {display:block;}
-.drop-list:hover dt:after {border-color:transparent; border-bottom-color:gray; top:8px;}
+.drop-list:hover dt:after {border-color:transparent; border-bottom-color:gray; top:4px;}
 .drop-list:hover dt.btn:after {border-bottom-color:white;}
 
 /** 日历 **/

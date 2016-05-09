@@ -404,13 +404,6 @@ define('ywj/auto', function(require){
 				slide.init();
 			});
 		}
-		if ($('*[rel=suggest-community]').length > 0) {
-			require.async('ywj/suggest_community', function (sgc) {
-				$('*[rel=suggest-community]').each(function(){
-					sgc($(this));
-				});
-			});
-		}
 
 		//时间组件触发
 		var _TIME_N_CHK = 'date-widget-bind';
@@ -596,8 +589,8 @@ define('ywj/auto', function(require){
 			}
 			$(this).data('upload-image-binded', 1);
 			var _this = this;
-			require.async('ywj/simpleimageuploader', function(UP){
-				var a = new UP($(_this), {
+			require.async('ywj/uploader', function(UP){
+				new UP($(_this, {TYPE: 'image'}), {
 					UPLOAD_URL: window.UPLOAD_URL,
 					PROGRESS_URL: window.UPLOAD_PROGRESS_URL
 				});
@@ -611,8 +604,8 @@ define('ywj/auto', function(require){
 			}
 			$(this).data('upload-file-binded', 1);
 			var _this = this;
-			require.async('ywj/simplefileuploader', function(UP){
-				var a = new UP($(_this), {
+			require.async('ywj/uploader', function(UP){
+				new UP($(_this), {
 					UPLOAD_URL: window.UPLOAD_URL,
 					PROGRESS_URL: window.UPLOAD_PROGRESS_URL
 				});
@@ -678,18 +671,7 @@ define('ywj/auto', function(require){
 			require.async('ywj/areaselector');
 		}
 		//自动设计师选择
-		if($("*[rel=search-selector]").size()){
-			require.async('ywj/searchselector');
-		}
 
-		$('select[rel=select-combo-box]').each(function(){
-			var sel = this;
-			require.async('ywj/selectcombo', function(fn){
-				fn(sel);
-			});
-		});
-
-		//fixed位置
 		var $fixed_els = $('*[data-fixed]', $('body'));
 		if($fixed_els.size()){
 			$('<style>.fixed-top-element {position:absolute; top:0; left:0; width:100%; z-index:10}</style>').appendTo($('head'));
