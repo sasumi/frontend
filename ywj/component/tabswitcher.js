@@ -17,7 +17,7 @@ define('ywj/tabswitcher', function(require){
 		var tbs = $(tb).children();
 		var ctns = $(ctn).children();
 		tbs.each(function(idx){
-			$(this).on(event, function(ev){
+			$(this).on(event, function(){
 				tbs.each(function(i){
 					$(this)[i != idx ? 'removeClass' : 'addClass'](active_class);
 					$(this)[i != idx ? 'addClass' : 'removeClass'](disable_class);
@@ -29,7 +29,7 @@ define('ywj/tabswitcher', function(require){
 				if($('input[type=radio]', this).size()){
 					$('input[type=radio]', this).attr('checked', true);
 				}
-				if(event == 'click' && ev.target.type != 'radio'){
+				if(event == 'click'){
 					return false;
 				}
 			});

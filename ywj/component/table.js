@@ -15,16 +15,10 @@ define('ywj/table',function(require){
 	var appendRow = function(tpl, table){
 		var app = $(tpl).appendTo(table);
 		if($('input[rel=upload-image]', app).size()){
-			require.async('ywj/simpleimageuploader', function(U){
+			require.async('ywj/uploader', function(U){
 				new U($('input[rel=upload-image]', app), {
-					UPLOAD_URL: window['UPLOAD_URL']
-				});
-			});
-		}
-		if($('input[rel=upload-file]', app).size()){
-			require.async('ywj/simplefileuploader', function(U){
-				new U($('input[rel=upload-file]', app), {
-					UPLOAD_URL: window['UPLOAD_URL']
+					UPLOAD_URL: window.UPLOAD_URL,
+					PROGRESS_URL: window.UPLOAD_PROGRESS_URL
 				});
 			});
 		}

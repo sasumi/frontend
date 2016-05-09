@@ -10,19 +10,19 @@ define('ywj/popup', function(require){
 	var emptyFn = function(){};
 
 	$('<style type="text/css">'+[
-		'.PopupDialog {zoom:1; filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=2, OffY=2, Color=#cccccc);}',
-		'.PopupDialog * {margin:0; padding:0}',
-		'.PopupDialog {position:absolute; top:20px; left:20px; width:350px; border:1px solid #999; border-top-color:#bbb; border-left-color:#bbb; background-color:white; box-shadow:0 0 8px #aaa; border-radius:3px}',
-		'.PopupDialog-hd {height:28px; background-color:#fff; cursor:move; position:relative; border-radius:3px 3px 0 0}',
-		'.PopupDialog-hd h3 {font-size:13px; font-weight:normal; color:gray; padding-left:10px; line-height:28px;}',
-		'.PopupDialog-close {display:block; overflow:hidden; width:28px; height:28px; position:absolute; right:0; top:0; text-align:center; cursor:pointer; font-size:17px; font-family:Verdana; text-decoration:none; color:gray;}',
-		'.PopupDialog-close:hover {color:black;}',
-		'.PopupDialog-ft {background-color:#f3f3f3; white-space:nowrap; border-top:1px solid #e0e0e0; padding:5px 5px 5px 0; text-align:right; border-radius:0 0 3px 3px}',
-		'.PopupDialog-text {padding:20px;}',
-		'.PopupDialog-bd-frm {border:none; width:100%}',
-		'.PopupDialog-btn {display:inline-block; font-size:13px; cursor:pointer; box-shadow:1px 1px #fff; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); background:-moz-linear-gradient(19% 75% 90deg, #E0E0E0, #FAFAFA); background:-webkit-gradient(linear, left top, left bottom, from(#FAFAFA), to(#E0E0E0)); color:#4A4A4A; background-color:white; text-decoration:none; padding:0 15px; height:20px; line-height:20px; text-align:center; border:1px solid #ccd4dc; white-space:nowrap; border-radius:2px}',
-		'.PopupDialog-btn:hover {background-color:#eee}',
-		'.PopupDialog-btnDefault {}'].join('')
+			'.PopupDialog {zoom:1; filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=2, OffY=2, Color=#cccccc);}',
+			'.PopupDialog * {margin:0; padding:0}',
+			'.PopupDialog {position:absolute; top:20px; left:20px; width:350px; border:1px solid #bbb; border-top-color:#ccc; border-left-color:#ccc; background-color:white; box-shadow:0 0 20px #aaa; border-radius:2px}',
+			'.PopupDialog-hd {height:28px; background-color:#fff; cursor:move; position:relative; border-radius:2px 2px 0 0}',
+			'.PopupDialog-hd h3 {font-size:12px; font-weight:bolder; color:gray; padding-left:10px; line-height:28px;}',
+			'.PopupDialog-close {display:block; overflow:hidden; width:28px; height:28px; position:absolute; right:0; top:0; text-align:center; cursor:pointer; font-size:17px; font-family:Verdana; text-decoration:none; color:gray;}',
+			'.PopupDialog-close:hover {color:black;}',
+			'.PopupDialog-ft {background-color:#f3f3f3; white-space:nowrap; border-top:1px solid #e0e0e0; padding:5px 5px 5px 0; text-align:right; border-radius:0 0 3px 3px}',
+			'.PopupDialog-text {padding:20px;}',
+			'.PopupDialog-bd-frm {border:none; width:100%}',
+			'.PopupDialog-btn {display:inline-block; font-size:12px; cursor:pointer; box-shadow:1px 1px #fff; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); background:-moz-linear-gradient(19% 75% 90deg, #E0E0E0, #FAFAFA); background:-webkit-gradient(linear, left top, left bottom, from(#FAFAFA), to(#E0E0E0)); color:#4A4A4A; background-color:white; text-decoration:none; padding:0 15px; height:20px; line-height:20px; text-align:center; border:1px solid #ccd4dc; white-space:nowrap; border-radius:2px}',
+			'.PopupDialog-btn:hover {background-color:#eee}',
+			'.PopupDialog-btnDefault {}'].join('')
 		+ '</style>')
 		.appendTo($('head'))
 		.attr('id',YWJ_WIDGET_POPUP);
@@ -71,8 +71,8 @@ define('ywj/popup', function(require){
 				foot: 'PopupDialog-ft'
 			},
 			buttons: [
-			 //{name:'确定', handler:null},
-			 //{name:'关闭', handler:null, setDefault:true}
+				//{name:'确定', handler:null},
+				//{name:'关闭', handler:null, setDefault:true}
 			]
 		}, config);
 
@@ -275,6 +275,26 @@ define('ywj/popup', function(require){
 	};
 
 	/**
+	 * auto resize(height)
+	 * @param interval
+	 */
+	Popup.prototype.autoResize = function(interval){
+		var popHeight = 0;
+		var _this = this;
+		(function(){
+			var fr = $('iframe', _this.container)[0];
+			var w = fr.contentWindow;
+			var b = w.document.body;
+			var currentHeight = parseInt($(b).outerHeight());
+			if (currentHeight != popHeight) {
+				popHeight = currentHeight;
+				_this.updateHeight(currentHeight+10);
+			}
+			setTimeout(arguments.callee, interval);
+		})();
+	};
+
+	/**
 	 * 触发事件
 	 * @param key
 	 */
@@ -399,7 +419,7 @@ define('ywj/popup', function(require){
 		/**
 		 * 监听自定义事件
 		 * @param key
-         * @param callback
+		 * @param callback
 		 * @return {Boolean}
 		 */
 		Popup.listen = function(key, callback){
@@ -430,6 +450,16 @@ define('ywj/popup', function(require){
 				document.body.style.overflow = 'hidden';
 				window.frameElement.style.height = wr.documentHeight +'px';
 			});
+		};
+
+		/**
+		 * auto resize current popup
+		 * @param interval
+		 */
+		Popup.autoResizeCurrentPopup = function(interval){
+			interval = interval || 1000;
+			var pop = Popup.getCurrentPopup();
+			pop.autoResize(interval);
 		};
 
 		/**
@@ -477,8 +507,8 @@ define('ywj/popup', function(require){
 		} else if(this.config.content.src){
 			content += '<iframe allowtransparency="true" guid="'+this.guid+'" src="'+this.config.content.src+'" class="'+this.config.cssClass.iframe+'" frameborder=0></iframe>';
 		} else if(this.config.content.id){
-            content += $(this.config.content.id).html();
-        }else{
+			content += $(this.config.content.id).html();
+		}else{
 			content += '<div class="' + this.config.cssClass.container + '"></div>';
 		}
 		content += '</div>';
@@ -495,11 +525,11 @@ define('ywj/popup', function(require){
 
 		var html = ([
 			'<div class="PopupDialog-wrap">',
-				'<div class="PopupDialog-Modal-Mask" style="position:absolute; height:0; overflow:hidden; z-index:2; background-color:#ccc; width:100%"></div>',
-				'<div class="',this.config.cssClass.head+'">',
-				'<h3>',this.config.title,'</h3>',
-				(this.config.topCloseBtn ? '<span class="PopupDialog-close" tabindex="0" title="关闭窗口">x</span>' : ''),
-				'</div>',content,btn_html,
+			'<div class="PopupDialog-Modal-Mask" style="position:absolute; height:0; overflow:hidden; z-index:2; background-color:#ccc; width:100%"></div>',
+			'<div class="',this.config.cssClass.head+'">',
+			'<h3>',this.config.title,'</h3>',
+			(this.config.topCloseBtn ? '<span class="PopupDialog-close" tabindex="0" title="关闭窗口">x</span>' : ''),
+			'</div>',content,btn_html,
 			'</div>'
 		]).join('');
 		this.container.html(html);

@@ -10,12 +10,12 @@ define('ywj/net', function(require){
 	 * get param
 	 * @param param
 	 * @param url
-	 * @return {string}
+	 * @return {string|Null}
 	 */
 	var getParam = function(param, url){
 		var r = new RegExp("(\\?|#|&)"+param+"=([^&#]*)(&|#|$)");
 		var m = (url || location.href).match(r);
-		return (!m?null:m[2]);
+		return (!m? null :m[2]);
 	};
 
 	/**
@@ -102,7 +102,7 @@ define('ywj/net', function(require){
 				data.push(params);
 			}
 		});
-		return data.join('&').replace(/^[?|#|&]{0,1}(.*?)[?|#|&]{0,1}$/g, '$1');	//移除头尾的#&?
+		return data.join('&').replace(/^[?|#|&]{0,1}(.*?)[?|#|&]{0,1}$/g, '$1');
 	};
 
 	/**
@@ -142,6 +142,7 @@ define('ywj/net', function(require){
 		});
 		return url;
 	};
+
 
 	var _AJAX_CACHE_DATA_ = {};
 
@@ -228,6 +229,34 @@ define('ywj/net', function(require){
 		request(url, data, opt);
 	};
 
+	var postFormData = function(param, formData, sendImmediately){
+		param = $.extend({
+			url: '',
+			onLoad: function(){},
+			onError: function(){},
+			onProgress: function(){}
+		},param);
+
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.open('POST', param.url);
+		xhr.onload = param.onLoad;
+		xhr.onerror = param.onError;
+		xhr.upload.onprogress = function(event){
+			if(event.lengthComputable){
+				var percent = (event.loaded / event.total * 100 | 0);
+				if(percent > 0 && percent < 100){
+					param.onProgress(percent, event);
+				}
+			}
+		};
+		if(sendImmediately){
+			xhr.send(formData);
+		}
+		return xhr;
+	};
+
+
 	/**
 	 * 获取表单提交的数据
 	 * @description 不包含文件表单(后续HTML5版本可能会提供支持)
@@ -265,13 +294,14 @@ define('ywj/net', function(require){
 
 	return {
 		getParam: getParam,
-		setHash: setHash,
 		buildParam: buildParam,
+		setHash: setHash,
 		mergeStaticUri: mergeStaticUri,
 		mergeCgiUri: mergeCgiUri,
 		request: request,
 		get: get,
 		post: post,
+		postFormData: postFormData,
 		getFormData: getFormData
 	};
 });

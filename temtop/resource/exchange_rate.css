@@ -1,0 +1,20 @@
+.t-currency-panel {left:600px; top:600px; position:absolute; width:180px; padding:10px; background-color:white; border:1px solid #eee; box-shadow:2px 2px 10px #eee; border-radius:3px;}
+.t-currency-panel s,
+.t-currency-panel:before {content:" "; display:block; width:0; height:0; border:8px solid transparent; position:absolute; }
+.t-currency-panel:before {}
+.t-currency-panel table {border-collapse:collapse; border-spacing:0; width:100%;}
+.t-currency-panel td, .t-currency-panel th {padding:3px 5px; border:1px solid #eee; text-align:left;}
+
+.t-currency-panel .txt {width:50px; min-width:0; text-align:center;}
+
+.t-currency-panel-bottom:before {border-bottom-color:#ddd; margin:-27px 0 0 20px;}
+.t-currency-panel-bottom s {border-bottom-color:white; margin:-26px 0 0 20px; }
+
+.t-currency-panel-right:before {border-right-color:#ddd; left:-17px; top:50%;}
+.t-currency-panel-right s {border-right-color:white; left:-16px; top:50%}
+
+.t-currency-panel-left:before {border-left-color:#ddd; right:-17px; top:50%;}
+.t-currency-panel-left s {border-left-color:white; right:-16px; top:50%}
+
+.t-currency-panel-top:before {border-top-color:#ddd; bottom:-17px; margin-left:20px;}
+.t-currency-panel-top s {border-top-color:white; bottom:-16px; margin-left:20px;}

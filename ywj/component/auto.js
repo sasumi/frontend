@@ -1,41 +1,39 @@
 define('ywj/auto', function(require){
 	var util = require('ywj/util');
 	var net = require('ywj/net');
-	var $ = require('jquery');
 
-	var EVENT_BINDED = false;
-	var MSG_SHOW_TIME = (function(){
-		return $.extend({
-			err: 1,
-			succ: 1,
-			tip: 1
-		}, window['MSG_SHOW_TIME'] || {});
-	})();
+	var MSG_SUCCESS_SHOW_TIME = 1; //成功信息显示时间（秒）
+	var MSG_ERROR_SHOW_TIME = 2; //错误信息显示时间（秒）
 
 	var MSG_LOAD_TIME = 10000;
 	var DEF_POPUP_WIDTH = 600;
 
 	var top_doc;
 	var top_win;
-	try {
-		//约束在同一个系统里面.....
-		if(parent.document && location.host == parent.document.location.host){
-			top_doc = parent.document;
-			top_win = parent;
-		}
-	} catch(ex){
 
-	}
+	try {
+		top_doc = parent.document;
+		top_win = parent;
+	} catch(ex){}
 	top_doc = top_doc || document;
 	top_win = top_win || window;
 
+	/**
+	 * 显示信息
+	 * @param message
+	 * @param type
+	 * @param time
+	 */
 	var showMsg = function(message, type, time){
 		type = type || 'err';
 		require.async('ywj/msg', function(Msg){
-			Msg.show(message, type, time || MSG_SHOW_TIME[type]);
+			Msg.show(message, type, time || (type == 'err' ? MSG_ERROR_SHOW_TIME : MSG_SUCCESS_SHOW_TIME));
 		});
 	};
 
+	/**
+	 * 隐藏信息
+	 */
 	var hideMsg = function(){
 		require.async('ywj/msg', function(Msg){
 			Msg.hide();
@@ -45,7 +43,9 @@ define('ywj/auto', function(require){
 	var showPopup = function(conf, onSuccess, onError, onShow){
 		require.async('ywj/popup', function(Pop){
 			var p = new Pop(conf);
-			p.onShow = onShow;
+			if(onShow){
+				p.onShow = onShow;
+			}
 			if(onSuccess){
 				p.listen('onSuccess', onSuccess);
 			}
@@ -68,18 +68,20 @@ define('ywj/auto', function(require){
 		rsp = rsp || {};
 		rsp.message = rsp.message || '系统繁忙，请稍后(-1)';
 		rsp.code = rsp.code === undefined ? -1 : rsp.code;
+
+		rsp.node = node;
 		console.log('RSP:', rsp);
 
 		if(onrsp){
 			eval('var fn = window.'+onrsp+';');
-			fn.call(node, rsp);
+			fn.call(null, rsp);
 		} else if(onsucc){
 			if(rsp.code == 0){
 				showMsg(rsp.message,'succ');
 				setTimeout(function(){
 					eval('var fn = window.'+onsucc+';');
-					fn.call(node, rsp);
-				}, MSG_SHOW_TIME.succ*1000);
+					fn.call(null, rsp);
+				}, MSG_SUCCESS_SHOW_TIME*1000);
 			}
 			else {
 				showMsg(rsp.message);
@@ -96,7 +98,7 @@ define('ywj/auto', function(require){
 					} else {
 						top_win.location.reload();
 					}
-				}, MSG_SHOW_TIME.succ*1000);
+				}, MSG_SUCCESS_SHOW_TIME*1000);
 			}
 		}
 	};
@@ -119,11 +121,6 @@ define('ywj/auto', function(require){
 	 * 绑定事件
 	 */
 	var bindEvent = function(){
-		if(EVENT_BINDED){
-			return;
-		}
-		EVENT_BINDED = true;
-
 		var $body = $('body');
 
 		//自动弹窗
@@ -146,7 +143,6 @@ define('ywj/auto', function(require){
 			var src = net.mergeCgiUri($node.attr('href'), {'ref':'iframe'});
 			var width = parseFloat($node.data('width')) || DEF_POPUP_WIDTH;
 			var height = parseFloat($node.data('height')) || 0;
-			var isShowInParent = $node.data('parent') || false;
 			var title = $node.attr('title') || $node.html() || '';
 			var onSuccess = $node.data('onsuccess');
 			if(onSuccess){
@@ -186,7 +182,7 @@ define('ywj/auto', function(require){
 		$body.delegate('*[rel=msg]', 'click', function(){
 			var msg = $(this).data('msg') || $(this).attr('title');
 			if(msg){
-				showMsg(msg, 'tip');
+				showMsg(msg, 'msg');
 			}
 		});
 
@@ -221,48 +217,6 @@ define('ywj/auto', function(require){
 			}
 		});
 
-		$body.delegate('*[rel=anchor-slide]', 'click', function(){
-			var _this = $(this);
-			var time = _this.attr("slide-time") || 1000;
-			var direction = _this.attr("slide-direction") || "0";
-			var _rel = _this.attr("href").substr(1);
-			var $target = $("#"+_rel);
-			switch (direction){
-				case 1:
-					var _targetLeft = $target.offset().left;
-					$("html,body").animate({scrollLeft:_targetLeft},time);
-					break;
-				default :
-					var _targetTop = $target.offset().top;
-					$("html,body").animate({scrollTop:_targetTop},time);
-					break;
-			}
-			return false;
-		});
-
-		/**
-		 * 快捷键支持
-		 * @type {*|HTMLElement}
-		 */
-		var $accessory_key_dom = $('*[data-accessory-key]', $body);
-		if($accessory_key_dom.size()){
-			require.async('jquery/hotkeys', function(){
-				var exist_keys = {};
-				$accessory_key_dom.each(function(){
-					var $node = $(this);
-					var k = $node.data('accessory-key');
-					if(exist_keys[k]){
-						return;
-					}
-					exist_keys[k] = true;
-					$body.bind('keydown', k, function(){
-						$node[0].click();
-						return false;
-					});
-				});
-			});
-		}
-
 		/**
 		 * checkbox 选择框。根据rel=selector判定，操作对象范围由data-target决定,如果没有
 		 * 提供该值,则缺省为body
@@ -277,6 +231,74 @@ define('ywj/auto', function(require){
 				}
 				$('input[type=checkbox]', $(tag)).attr('checked', toState).trigger('change');
 			}
+		});
+
+		/**
+         * 页面批量操作按钮响应
+         * 通过把页面上的input checkbox组合成ids=1,2,3,4,5等链接，ajax提交到后台
+         * 可以通过data-target取对象范围
+         */
+        $body.delegate('*[rel=select_async]', 'click', function(){
+            var tag = $(this).data('target') || "body";
+            var checked = $(tag).find("input[type=checkbox]:checked");
+            var ids = [];
+            //console.log(tag);
+            if (!checked.size()){
+                showMsg('请选择操作项目', 'err');
+                return false;
+            }
+            $.each(checked,function(i,n){
+                ids.push($(n).val());
+            });
+
+            if(!checkConfirm(this)){
+                return;
+            }
+            var _this = this;
+            var link = $(this);
+            var url = link.attr('href');
+            if(url){
+                showMsg('正在提交请求...', 'load', MSG_LOAD_TIME);
+                url = net.mergeCgiUri(url, {ref:'json','ids':ids.join(",")});
+                net.get(url, null, function(rsp){
+                    hideMsg();
+                    auto_process_async(_this, rsp);
+                });
+                return false;
+            }
+        });
+
+		/**
+		 * 页面批量操作按钮响应
+		 * 通过把页面上的input checkbox组合成ids=1,2,3,4,5等链接，ajax提交到后台
+		 * 可以通过data-target取对象范围
+		 */
+		$body.delegate('*[rel=select_popup]', 'click', function(){
+			var tag = $(this).data('target') || "body";
+			var checked = $(tag).find("input[type=checkbox]:checked");
+			var ids = [];
+			//console.log(tag);
+
+			if (!checked.size()){
+				showMsg('请选择操作项目', 'err');
+				return false;
+			}
+			$.each(checked,function(i,n){
+				ids.push($(n).val());
+			});
+			//debugger;
+			var link = $(this);
+			var url = net.mergeCgiUri(link.attr('href'), {ref:'iframe','ids':ids.join(",")});
+			var ti = link.attr('title') || "弹窗";
+			var w = parseInt(link.data('width'), 10) || DEF_POPUP_WIDTH;
+			var h = parseInt(link.data('height'), 10) || 0;
+			showPopup({
+				title: ti,
+				content: {src:url},
+				width: w,
+				height: h
+			});
+			return false;
 		});
 
 		/**
@@ -346,10 +368,10 @@ define('ywj/auto', function(require){
 		//表格操作
 		(function(){
 			$body.delegate('*[rel=row-delete-btn]', 'click', function(){
-				var allow_empty = $(this).data('allow-empty') == '1';
 				var row = $(this).parentsUntil('tr').parent();
+				var allow_empty=$(this).data("allow-empty") || false;
 				require.async('ywj/table', function(T){
-					T.deleteRow(row, allow_empty);
+					T.deleteRow(row,allow_empty);
 				});
 			});
 
@@ -379,92 +401,47 @@ define('ywj/auto', function(require){
 			});
 		})();
 
-		if ($('*[rel=tooltip]').length > 0) {
-			require.async('ywj/tooltip', function () {
-				$('[rel=tooltip]').tooltip({
-						position: {
-							my: "center bottom-20",
-							at: "center top",
-							using: function (position, feedback) {
-								$(this).css(position);
-								$("<div>")
-									.addClass("ui-tooltip-arrow")
-									.addClass(feedback.vertical)
-									.addClass(feedback.horizontal)
-									.appendTo(this);
-							}
-						}
-					}
-				);
-			});
-		}
-
-		if ($('*[rel=img-slide]').length > 0) {
-			require.async('ywj/imgslide', function (slide) {
-				slide.init();
-			});
-		}
-
-		//时间组件触发
-		var _TIME_N_CHK = 'date-widget-bind';
-		$.each(['input.date-time-txt','input.datetime-txt', 'input.date-txt', 'input[type=time]'], function(idx, s){
-			if($(s).size()){
-				require.async('ywj/timepicker');
-			}
-			$body.delegate(s, 'focus', function(){
-				var $this = $(this);
-				if($this.data(_TIME_N_CHK)){
-					return;
-				}
-
-				var current_timestamp=$.now();
-
-				//过去时间限制
-				var enable_past_duration=$this.data("enable-past-duration");
-				var check_min_date_time=false;
-				if(enable_past_duration===undefined){
-					enable_past_duration=0;
-				}else{
-					check_min_date_time=true;
-					enable_past_duration = parseInt(enable_past_duration)*1000
-				}
-				//未来时间限制
-				var enable_future_duration=$this.data("enable-future-duration");
-				var check_max_date_time=false;
-				if(enable_future_duration==undefined){
-					enable_future_duration=0;
-				}else{
-					check_max_date_time=true;
-					enable_future_duration = parseInt(enable_future_duration)*1000
-				}
-				var min_date = new Date(current_timestamp+enable_past_duration) ;
-				var max_date = new Date(current_timestamp+enable_future_duration) ;
-
-				require.async('ywj/timepicker', function(){
-					var format={};
-					if(check_min_date_time){
-						format.minDateTime=min_date;
-					}
-					if(check_max_date_time){
-						format.maxDateTime=max_date;
-					}
-					if(s.indexOf('date-time') >= 0 || s.indexOf('datetime') >= 0){
-						var datetime_format= $.extend(format,{dateFormat:'yy-mm-dd', timeFormat:'HH:mm:ss'});
-						$this.datetimepicker(datetime_format);
-					}
-					else if(s.indexOf('date') >= 0){
-						var date_format= $.extend(format,{dateFormat:'yy-mm-dd'});
-						$this.datepicker(date_format);
-					}
-					else if(s.indexOf('time') > 0){
-						var time_format= $.extend(format,{timeFormat:'HH:mm'});
-						$this.timepicker(time_format);
-					}
-					if(!$this.data(_TIME_N_CHK)){
-						$this.data(_TIME_N_CHK, 1);
-						$this.trigger('focus');
-					}
+		//日期组件预加载
+		if($('input.date-time-txt').size() || $('input.date-txt').size()){
+			require.async('ywj/timepicker', function(){
+				var $dt = $('input.date-time-txt');
+				var $d = $('input.date-txt');
+				$dt.datetimepicker({
+					dateFormat: 'yy-mm-dd',
+					timeFormat: 'HH:mm:ss'
 				});
+				$d.datepicker({
+					dateFormat: 'yy-mm-dd'
+				});
+				$dt.data('date-widget-loaded', 1);
+				$d.data('date-widget-loaded', 1);
+			});
+		}
+
+		$.each(['input.date-time-txt', 'input.date-txt'], function(idx, s){
+			if($(s).size()){
+				require.async('ywj/timepicker', function(){
+					var opt = {dateFormat: 'yy-mm-dd'};
+					if(s.indexOf('time') >= 0){
+						opt.timeFormat = 'HH:mm:ss'
+					}
+					$(s).datetimepicker(opt);
+					$(s).data('date-widget-loaded', 1);
+				});
+			}
+			$body.delegate(s, 'click', function(){
+				if(!$(this).data('date-widget-loaded')){
+					var _this = this;
+					require.async('ywj/timepicker', function(){
+						var opt = {dateFormat: 'yy-mm-dd'};
+						if(s.indexOf('time') >= 0){
+							opt.timeFormat = 'HH:mm:ss'
+						}
+						$(_this).datetimepicker(opt);
+						$(_this).data('date-widget-loaded', 1);
+						$(_this).trigger('click');
+					});
+				}
 			});
 		});
 
@@ -491,7 +468,6 @@ define('ywj/auto', function(require){
 	var handler = function(){
 		var FLAG_SUBMITTING = 'submitting';
 		var FLAG_ASYNC_BIND = 'async-bind';
-		var ON_BEFORE_SUBMIT = 'on-before-submit';
 
 		//自动表单
 		$('form[rel=async]').each(function(){
@@ -500,16 +476,9 @@ define('ywj/auto', function(require){
 			}
 
 			var $form = $(this);
-			var on_before_submit = $form.attr(ON_BEFORE_SUBMIT);
 			$form.on('submit', function(){
-				if (on_before_submit) {
-					eval('var fn = window.'+on_before_submit+';');
-					var rs = fn($form);
-					if (!rs) {
-						return false;
-					}
-				}
 				if($form.data(FLAG_SUBMITTING)){
+					showMsg('网络较慢还在提交数据，请稍侯...', 'load', MSG_LOAD_TIME);
 					return false;
 				}
 
@@ -528,10 +497,9 @@ define('ywj/auto', function(require){
 				span.innerHTML = '<iframe id="'+frameId+'" name="'+frameId+'" style="display:none"></iframe>';
 				document.body.appendChild(span);
 				var frame = document.getElementById(frameId);
-
-				var _response_flag_ = false;
+				var _response = false;
 				frame._callback = function(rsp){
-					_response_flag_ = true;
+					_response = true;
 					setTimeout(function(){
 						$form.removeData(FLAG_SUBMITTING);
 					}, 1500);
@@ -539,22 +507,15 @@ define('ywj/auto', function(require){
 					$(frame).remove(); //避免webkit核心后退键重新提交数据
 					auto_process_async($form, rsp);
 				};
-
-				//debug mode
-				if(window['__DEBUG__']){
-					$(frame).load(function(){
-						var _this = this;
-						setTimeout(function(){
-							if(!_response_flag_){
-								_this.style.cssText = 'display:block; position:absolute; top:0; left:0; width:100%; height:100%; z-index:65534';
-							}
-						}, 100);
-					});
-				}
-
 				$form.attr('target', frameId);
 				$form.data(FLAG_SUBMITTING, '1');
-				showMsg('正在提交请求...', 'load', MSG_LOAD_TIME);
+
+				//1.5秒之后显示loading效果
+				setTimeout(function(){
+					if(!_response){
+						showMsg('正在提交请求...', 'load', MSG_LOAD_TIME);
+					}
+				}, 1500);
 			});
 		});
 
@@ -597,45 +558,41 @@ define('ywj/auto', function(require){
 			});
 		});
 
-		//上传文件
-		$('input[rel=upload-file]').each(function(){
-			if($(this).data('upload-file-binded')){
+		$('[rel=batch-uploader]').each(function(){
+			if($(this).data('upload-image-binded')){
 				return;
 			}
-			$(this).data('upload-file-binded', 1);
+			$(this).data('upload-image-binded', 1);
 			var _this = this;
-			require.async('ywj/uploader', function(UP){
-				new UP($(_this), {
-					UPLOAD_URL: window.UPLOAD_URL,
-					PROGRESS_URL: window.UPLOAD_PROGRESS_URL
-				});
+			require.async('ywj/batchuploader', function(BU){
+				BU(_this);
 			});
 		});
-
+		
 		//自动富文本编辑器
 		$('textarea[rel=rich]').each(function(){
-			var $txt = $(this);
-			if($txt.data('rich-binded')){
+			if($(this).data('rich-binded')){
 				return;
 			}
-			$txt.data('rich-binded', 1);
+			$(this).data('rich-binded', 1);
+
+			var txt = $(this);
 			var id = util.guid();
-			var w = $txt.width() || 400;
-			var h = $txt.height() || 300;
-			$txt.hide();
-			var script = '<script id="'+id+'" type="text/plain" style="width:'+w+'px; height:'+h+'px;"></script>';
-			$(script).insertAfter($txt);
+			var name = txt.attr('name');
+			var w = txt.width() || 400;
+			var h = txt.height() || 300;
+			txt.hide();
+
+			var script = '<script id="'+id+'" name="'+name+'" type="text/plain" style="width:'+w+'px; height:'+h+'px;"></script>';
+			$(script).insertAfter(txt);
+
 			require.async('ueditor_admin_config', function(){
 				require.async('ueditor', function(){
 					var ue = UE.getEditor(id);
 					setTimeout(function(){
-						ue.setContent($txt.val());
+						ue.setContent(txt.val());
 						ue.setHeight(h+'px');
-						ue.addListener("contentchange", function(ev){
-							var str = ue.getContent();
-							str = str.replace(/'/g, "\\'");
-							$txt.val(str);
-							console.log('content changed:', str, ' event:',ev);
+						ue .addListener( "contentchange", function () {
 							window['EDITOR_CONTENT_CHANGED_FLAG'] = true;
 						} );
 					}, 1000);
@@ -661,51 +618,9 @@ define('ywj/auto', function(require){
 			}
 		});
 
-		//节点禁止选择
-		$('*[data-unselectable]').each(function(){
-			util.setNodeSelectDisabled(this);
-		});
-
 		//自动地区选择
 		if($('select[rel=province-selector]').size()){
 			require.async('ywj/areaselector');
-		}
-		//自动设计师选择
-
-		var $fixed_els = $('*[data-fixed]', $('body'));
-		if($fixed_els.size()){
-			$('<style>.fixed-top-element {position:absolute; top:0; left:0; width:100%; z-index:10}</style>').appendTo($('head'));
-			//create shadow element
-			$fixed_els.each(function(){
-				var guid = util.guid();
-				$(this).data('fixed-shadow-id', guid);
-				$(this).data('org-top', $(this).position().top);
-				var shadow = $('<div id="'+guid+'"></div>');
-				shadow.css({
-					'display':'none',
-					'height': $(this).outerHeight()+'px',
-					'width': '100%'
-				});
-				shadow.insertAfter(this);
-			});
-
-			var hd = function(){
-				var scroll_top = $(window).scrollTop();
-				$fixed_els.each(function(){
-					var $shadow = $('#'+$(this).data('fixed-shadow-id'));
-					if($(this).data('org-top') < scroll_top){
-						$(this).addClass('fixed-top-element');
-						$(this).css('top', scroll_top);
-						$shadow.show();
-					} else {
-						$(this).css('top', 'auto');
-						$(this).removeClass('fixed-top-element');
-						$shadow.hide();
-					}
-				});
-			};
-			$(window).scroll(hd);
-			hd();
 		}
 	};
 

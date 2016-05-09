@@ -16,9 +16,12 @@ define('ywj/uploader', function(require){
 		return function(){};
 	}
 
-	seajs.use('ywjui/backend/uploader.css');
-	var PRIVATES = {};
+	seajs.use('ywj/resource/uploader.css');
 	var $ = require('jquery');
+	var Net = require('ywj/net');
+
+
+	var PRIVATES = {};
 	var _guid = 1;
 	var console = window.console || function(){};
 	var guid = function(){
@@ -26,11 +29,11 @@ define('ywj/uploader', function(require){
 	};
 
 	var str_escape = function(str){
-		return str
+		return str ? str
 			.replace('&', '&amp;')
 			.replace('<', '&lt;')
 			.replace('>', '&gt;')
-			.replace(' ', '&nbsp;');
+			.replace(' ', '&nbsp;') : str;
 	};
 
 	var TPL = '<div class="com-uploader com-uploader-normal">'+
@@ -61,17 +64,17 @@ define('ywj/uploader', function(require){
 
 	/**
 	 * percent check
-	 * @param uploader
+	 * @param UP
      * @param callback
 	 * @param interval
 	 */
-	var percent_check = function(uploader, callback, interval){
-		if(!uploader.config.PROGRESS_URL){
+	var percent_check = function(UP, callback, interval){
+		if(!UP.config.PROGRESS_URL){
 			console.warn('UPLOAD PROGRESS NO FOUND');
 			return;
 		}
 
-		var PRI = PRIVATES[uploader.id];
+		var PRI = PRIVATES[UP.id];
 		if(PRI.abort){
 			return;
 		}
@@ -79,18 +82,17 @@ define('ywj/uploader', function(require){
 		interval = interval || 100;
 		var xhr = navigator.appName == "Microsoft Internet Explorer" ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
 		xhr.withCredentials = true;
-		xhr.open('GET', uploader.config.PROGRESS_URL);
+		xhr.open('GET', UP.config.PROGRESS_URL);
 		xhr.onreadystatechange = function(){
 			if(PRI.abort){
 				return;
 			}
 			if(this.readyState == 4){
 				var rsp = this.responseText;
-				console.log('upload progress', rsp);
 				if(rsp < 100){
 					callback(rsp);
 					setTimeout(function(){
-						percent_check(uploader, callback, interval);
+						percent_check(UP, callback, interval);
 					}, interval);
 				} else {
 					callback(100);
@@ -100,12 +102,113 @@ define('ywj/uploader', function(require){
 		xhr.send(null);
 	};
 
+	var on_start = function(UP){
+		UP.onStart();
+	};
+
 	/**
-	 * uploader
+	 * abort uploading
+	 */
+	var on_abort = function(UP){
+		var PRI = PRIVATES[UP.id];
+		PRI.xhr.abort();
+		PRI.abort = true;
+		update_dom_state(UP, COM_CLASS_UPLOAD_NORMAL);
+		UP.onAbort();
+	};
+
+	var on_delete = function(UP){
+		UP.onDelete()
+	};
+
+	/**
+	 * update dom state
+	 * @param UP
+	 * @param to
+	 */
+	var update_dom_state = function(UP, to){
+		to = to || COM_CLASS_UPLOAD_NORMAL;
+		var PRI = PRIVATES[UP.id];
+		PRI.container.attr('class', COM_CLASS_CONTAINER + ' '+to);
+		PRI.progress.val(0);
+		PRI.progress_text.html('0%');
+	};
+
+	/**
+	 * on upload response
+	 * @param UP
+	 * @param rsp_str
+	 */
+	var on_response = function(UP, rsp_str){
+		console.log('response:', rsp_str);
+		var rsp = {};
+		try {
+			rsp = JSON.parse(rsp_str);
+		} catch(ex){
+			on_error(UP, ex.message);
+		}
+		if(rsp.code == '0'){
+			on_success(UP, rsp.message, rsp.data);
+		} else {
+			on_error(UP, rsp.message || '系统繁忙，请稍候重试');
+		}
+		UP.onResponse(rsp_str);
+	};
+
+	/**
+	 * 正在上传
+	 * @param UP
+	 * @param percent
+	 */
+	var on_uploading = function(UP, percent){
+		PRIVATES[UP.id].container.attr('class', COM_CLASS_CONTAINER + ' '+COM_CLASS_UPLOADING);
+		PRIVATES[UP.id].progress.val(percent);
+		PRIVATES[UP.id].progress_text.html(percent+'%');
+		UP.onUploading(percent);
+	};
+
+	/**
+	 * 上传成功
+	 * @param UP
+	 * @param message
+	 * @param data
+	 */
+	var on_success = function(UP, message, data){
+		PRIVATES[UP.id].container.attr('class', COM_CLASS_CONTAINER + ' '+COM_CLASS_UPLOAD_SUCCESS);
+		data.url = data.url || data.src;
+
+		var link = '<a href="'+data.url+'" title="查看" target="_blank">';
+
+		//img
+		if((!UP.config.TYPE && /\.(jpg|gif|png|jpeg)$/i.test(data.url)) || UP.config.TYPE == 'image'){
+			link += '<img src="'+data.url+'"/>'
+		}
+		link += '</a>';
+
+		PRIVATES[UP.id].container.find('.'+COM_CLASS_CONTENT).html(link);
+		PRIVATES[UP.id].input.val(data.value);
+		UP.onSuccess(message, data);
+	};
+
+	/**
+	 * 上传错误
+	 * @param UP
+	 * @param message
+	 */
+	var on_error = function(UP, message){
+		PRIVATES[UP.id].container.attr('class', COM_CLASS_CONTAINER + ' '+COM_CLASS_UPLOAD_FAIL);
+		var m = message || '上传失败，请稍候重试';
+		PRIVATES[UP.id].container.find('.'+COM_CLASS_CONTENT).html('<span title="'+m+'">'+m+'</span>');
+		UP.onError(message);
+	};
+
+	/**
+	 * Uploader
 	 * @param input
 	 * @param config
 	 */
-	var up = function(input, config){
+	var Uploader = function(input, config){
+		input = $(input);
 		var _this = this;
 		this.id = guid();
 		var PRI = {};
@@ -113,7 +216,6 @@ define('ywj/uploader', function(require){
 
 		this.config = $.extend({
 			TYPE: '', //文件类型配置：file,image，缺省自动检测文件后缀
-			UPLOAD_FILE_NAME: 'file',
 			UPLOAD_URL: '',
 			PROGRESS_URL: ''
 		}, config);
@@ -130,47 +232,32 @@ define('ywj/uploader', function(require){
 		PRI.content = PRI.container.find('.'+COM_CLASS_CONTENT);
 		PRI.file = PRI.container.find('input[type=file]');
 
-		var upload_url = _this.config.UPLOAD_URL;
 		var file_type = PRI.input.data('file-type');
 		if (file_type) {
-			upload_url += (upload_url.indexOf("&")>-1 ? '&':'?')+'file_type='+file_type;
+			_this.config.UPLOAD_URL += (_this.config.UPLOAD_URL.indexOf("&")>-1 ? '&':'?')+'file_type='+file_type;
 		}
 
 		//xhr
-		PRI.xhr = new XMLHttpRequest();
-		PRI.xhr.withCredentials = true;
-		PRI.xhr.open('POST', upload_url);
-		PRI.xhr.onload = function(){
-			console.log('onload', PRI.xhr);
-			if(PRI.xhr.status === 200){
-				_this.onResponse(PRI.xhr.responseText);
-			} else {
-				_this.onError('网络繁忙，请稍候重试(3)');
-			}
-		};
-		PRI.xhr.upload.onprogress = function(event){
-			//noinspection JSUnresolvedVariable
-			if(event.lengthComputable){
-				//noinspection JSUnresolvedVariable
-				var percent = (event.loaded / event.total * 100 | 0);
-				if(percent > 0 && percent < 100){
-					console.log('percent:', percent);
-					_this.onUploading(percent);
+		PRI.xhr = Net.postFormData({
+			url: _this.config.UPLOAD_URL,
+			onLoad: function(){
+				if(PRI.xhr.status === 200){
+					on_response(_this, PRI.xhr.responseText);
+				} else {
+					on_error(_this, '网络繁忙，请稍候重试(3)');
 				}
+			},
+			onProgress: function(percent){
+				on_uploading(_this, percent);
+			},
+			onError: function(e){
+				console.error(e);
 			}
-		};
-
-		//初始化
-		if(PRI.input.val()){
-			var url = PRI.input.data('url') || PRI.input.val();
-			var val = PRI.input.val() || PRI.input.data('url');
-			this.onSuccess(null, {url:url, value:val, name:val});
-		} else {
-			this.updateDomState(COM_CLASS_UPLOAD_NORMAL);
-		}
+		});
 
 		PRI.container.find('.com-uploader-delete').click(function(){
-			_this.updateDomState(COM_CLASS_UPLOAD_NORMAL);
+			update_dom_state(_this, COM_CLASS_UPLOAD_NORMAL);
+			on_delete(_this);
 		});
 
 		PRI.container.find('.com-uploader-reload').click(function(){
@@ -178,109 +265,63 @@ define('ywj/uploader', function(require){
 		});
 
 		PRI.container.find('.com-uploader-cancel').click(function(){
-			_this.updateDomState(COM_CLASS_UPLOAD_NORMAL);
-			_this.abort();
+			update_dom_state(_this, COM_CLASS_UPLOAD_NORMAL);
+			on_abort(_this);
 		});
 
 		PRI.file.on('change', function(){
 			if(!this.files[0]){
 				return;
 			}
-			_this.updateDomState(COM_CLASS_UPLOADING);
 			var formData = new FormData();
-			formData.append(_this.config.UPLOAD_FILE_NAME, this.files[0]);
-			PRI.xhr.open('POST', upload_url);
-			PRI.xhr.send(formData);
-			PRI.abort = false;
-			percent_check(_this, function(p){
-				if(p != 100){
-					return _this.onUploading(p);
-				}
-			});
+			for(var i=0; i<this.files.length; i++){
+				formData.append(PRI.input.attr('name'), this.files[i]);
+			}
+			PRI.file.val('');
+			_this.send(formData);
+		});
+
+		//初始化
+		if(PRI.input.val()){
+			var url = PRI.input.data('url') || PRI.input.val();
+			var val = PRI.input.val() || PRI.input.data('url');
+			on_success(_this, null, {url:url, value:val, more:[]});
+		} else {
+			update_dom_state(_this, COM_CLASS_UPLOAD_NORMAL);
+		}
+	};
+
+	Uploader.prototype.send = function(formData){
+		var PRI = PRIVATES[this.id];
+		PRI.xhr.open('POST', this.config.UPLOAD_URL, true);
+		PRI.xhr.send(formData);
+		PRI.abort = false;
+		var _this = this;
+
+		on_start(_this);
+		update_dom_state(_this, COM_CLASS_UPLOADING);
+		percent_check(_this, function(p){
+			if(p != 100){
+				return on_uploading(_this, p);
+			}
 		});
 	};
 
-	/**
-	 * abort uploading
-	 */
-	up.prototype.abort = function(){
-		var PRI = PRIVATES[this.id];
-		PRI.xhr.abort();
-		PRI.abort = true;
-		this.updateDomState(COM_CLASS_UPLOAD_NORMAL);
+	Uploader.prototype.getVar = function(key){
+		return PRIVATES[this.id][key];
 	};
 
-	/**
-	 * update dom state
-	 * @param to
-	 */
-	up.prototype.updateDomState = function(to){
-		to = to || COM_CLASS_UPLOAD_NORMAL;
-		var PRI = PRIVATES[this.id];
-		PRI.container.attr('class', COM_CLASS_CONTAINER + ' '+to);
-		PRI.progress.val(0);
-		PRI.progress_text.html('0%');
+	Uploader.prototype.selectFile = function(){
+		PRIVATES[this.id].file.trigger('click');
 	};
 
-	/**
-	 * on upload response
-	 * @param rsp_str
-	 */
-	up.prototype.onResponse = function(rsp_str){
-		console.log('response:', rsp_str);
-		var rsp = {};
-		try {
-			rsp = JSON.parse(rsp_str);
-		} catch(ex){
-			this.onError(ex.message);
-		}
-		if(rsp.code == '0'){
-			this.onSuccess(rsp.message, rsp.data);
-		} else {
-			this.onError(rsp.message || '系统繁忙，请稍候重试');
-		}
-	};
+	Uploader.prototype.onSuccess = function(message, data){};
+	Uploader.prototype.onAbort = function(){};
+	Uploader.prototype.onResponse = function(rsp_str){};
+	Uploader.prototype.onUploading = function(percent){};
+	Uploader.prototype.onDelete = function(message){};
+	Uploader.prototype.onError = function(message){};
+	Uploader.prototype.onStart = function(message){};
 
-	/**
-	 * 正在上传
-	 * @param percent
-	 */
-	up.prototype.onUploading = function(percent){
-		PRIVATES[this.id].container.attr('class', COM_CLASS_CONTAINER + ' '+COM_CLASS_UPLOADING);
-		PRIVATES[this.id].progress.val(percent);
-		PRIVATES[this.id].progress_text.html(percent+'%');
-	};
-
-	/**
-	 * 上传成功
-	 * @param message
-	 * @param data
-	 */
-	up.prototype.onSuccess = function(message, data){
-		PRIVATES[this.id].container.attr('class', COM_CLASS_CONTAINER + ' '+COM_CLASS_UPLOAD_SUCCESS);
-
-		var link = '<a href="'+data.url+'" title="查看" target="_blank">';
-
-		//img
-		if((!this.config.TYPE && /\.(jpg|gif|png|jpeg)$/i.test(data.url)) || this.config.TYPE == 'image'){
-			link += '<img src="'+data.url+'" alt="'+str_escape(data.name)+'"/>'
-		} else {
-			link += str_escape(data.name);
-		}
-
-		link += '</a>';
-		PRIVATES[this.id].container.find('.'+COM_CLASS_CONTENT).html(link);
-		PRIVATES[this.id].input.val(data.value);
-	};
-
-	/**
-	 * 上传错误
-	 * @param message
-	 */
-	up.prototype.onError = function(message){
-		PRIVATES[this.id].container.attr('class', COM_CLASS_CONTAINER + ' '+COM_CLASS_UPLOAD_FAIL);
-		PRIVATES[this.id].container.find('.'+COM_CLASS_CONTENT).html(message || '上传失败，请稍候重试');
-	};
-
-	return up;
+	return Uploader;
 });

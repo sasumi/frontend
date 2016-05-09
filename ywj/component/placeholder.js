@@ -26,24 +26,6 @@ define('ywj/placeholder', function(require){
 	return function(el, normalClass, focusClass, emptyClass){
 		el = $(el);
 		if(el[0].type == 'password'){
-			var self = el,
-				txt = self.attr('placeholder');
-			self.wrap($('<div></div>').css({position:'relative', zoom:'1', border:'none', background:'none', padding:'none', margin:'none'}));
-			var pos = self.position(),
-				h = self.outerHeight(true)+'px',
-				paddingLeft = self.css('padding-left');
-			var holder = $('<span></span>').text(txt).css({position:'absolute', left:pos.left, top:pos.top, height:h, lineHeight:h, paddingLeft:paddingLeft, color:'#999',fontSize:'14px'}).appendTo(self.parent());
-			self.focusin(function(e) {
-				holder.hide();
-			}).focusout(function(e) {
-				if(!self.val()){
-					holder.show();
-				}
-			});
-			holder.click(function(e) {
-				holder.hide();
-				self.focus();
-			});
 			return;
 		}
 
