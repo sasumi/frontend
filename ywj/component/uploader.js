@@ -19,21 +19,11 @@ define('ywj/uploader', function(require){
 	seajs.use('ywj/resource/uploader.css');
 	var $ = require('jquery');
 	var Net = require('ywj/net');
-
-
 	var PRIVATES = {};
 	var _guid = 1;
 	var console = window.console || function(){};
 	var guid = function(){
 		return '_su_file_'+_guid++;
-	};
-
-	var str_escape = function(str){
-		return str ? str
-			.replace('&', '&amp;')
-			.replace('<', '&lt;')
-			.replace('>', '&gt;')
-			.replace(' ', '&nbsp;') : str;
 	};
 
 	var TPL = '<div class="com-uploader com-uploader-normal">'+
@@ -167,6 +157,10 @@ define('ywj/uploader', function(require){
 		UP.onUploading(percent);
 	};
 
+	var get_ext = function(url){
+		return url.split('.').pop().toLowerCase();
+	};
+
 	/**
 	 * 上传成功
 	 * @param UP
@@ -180,8 +174,11 @@ define('ywj/uploader', function(require){
 		var link = '<a href="'+data.url+'" title="查看" target="_blank">';
 
 		//img
-		if((!UP.config.TYPE && /\.(jpg|gif|png|jpeg)$/i.test(data.url)) || UP.config.TYPE == 'image'){
+		if(UP.config.TYPE == 'image'){
 			link += '<img src="'+data.url+'"/>'
+		} else {
+			var ext = get_ext(data.src);
+			link += '<span class="com-uploader-file-icon com-uploader-file-icon-'+ext+'"></span>';
 		}
 		link += '</a>';
 
@@ -215,7 +212,7 @@ define('ywj/uploader', function(require){
 		PRIVATES[this.id] = PRI;
 
 		this.config = $.extend({
-			TYPE: '', //文件类型配置：file,image，缺省自动检测文件后缀
+			TYPE: 'image', //文件类型配置：file,image
 			UPLOAD_URL: '',
 			PROGRESS_URL: ''
 		}, config);
@@ -231,6 +228,8 @@ define('ywj/uploader', function(require){
 		PRI.progress_text = PRI.progress.next();
 		PRI.content = PRI.container.find('.'+COM_CLASS_CONTENT);
 		PRI.file = PRI.container.find('input[type=file]');
+
+		PRI.container.find('.com-uploader-file span').html('选择'+(this.config.TYPE == 'image' ? '图片' : '文件'));
 
 		var file_type = PRI.input.data('file-type');
 		if (file_type) {

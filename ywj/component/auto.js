@@ -218,22 +218,6 @@ define('ywj/auto', function(require){
 		});
 
 		/**
-		 * checkbox 选择框。根据rel=selector判定，操作对象范围由data-target决定,如果没有
-		 * 提供该值,则缺省为body
-		 * 读取data-flag = 1 为全选。如果本身是checkbox则根据本身的checked进行判定。
-		 */
-		$body.delegate('*[rel=selector]', 'click', function(){
-			var tag = $(this).data('target') || 'body';
-			if(tag){
-				var toState = $(this).data('flag') === undefined || $(this).data('flag') == '1';
-				if(this.type == 'checkbox'){
-					toState = this.checked;
-				}
-				$('input[type=checkbox]', $(tag)).attr('checked', toState).trigger('change');
-			}
-		});
-
-		/**
          * 页面批量操作按钮响应
          * 通过把页面上的input checkbox组合成ids=1,2,3,4,5等链接，ajax提交到后台
          * 可以通过data-target取对象范围
@@ -478,6 +462,7 @@ define('ywj/auto', function(require){
 			var $form = $(this);
 			$form.on('submit', function(){
 				if($form.data(FLAG_SUBMITTING)){
+					hideMsg();
 					showMsg('网络较慢还在提交数据，请稍侯...', 'load', MSG_LOAD_TIME);
 					return false;
 				}
@@ -545,24 +530,42 @@ define('ywj/auto', function(require){
 
 		//上传图片
 		$('input[rel=upload-image]').each(function(){
-			if($(this).data('upload-image-binded')){
+			if($(this).data('upload-image-bind')){
 				return;
 			}
-			$(this).data('upload-image-binded', 1);
+			$(this).data('upload-image-bind', 1);
 			var _this = this;
 			require.async('ywj/uploader', function(UP){
-				new UP($(_this, {TYPE: 'image'}), {
+				new UP($(_this), {
+					TYPE: 'image',
 					UPLOAD_URL: window.UPLOAD_URL,
 					PROGRESS_URL: window.UPLOAD_PROGRESS_URL
 				});
 			});
 		});
 
-		$('[rel=batch-uploader]').each(function(){
-			if($(this).data('upload-image-binded')){
+		//上传文件
+		$('input[rel=upload-file]').each(function(){
+			if($(this).data('upload-file-bind')){
 				return;
 			}
-			$(this).data('upload-image-binded', 1);
+			$(this).data('upload-file-bind', 1);
+			var _this = this;
+			require.async('ywj/uploader', function(UP){
+				new UP($(_this), {
+					TYPE: 'file',
+					UPLOAD_URL: window.UPLOAD_URL,
+					PROGRESS_URL: window.UPLOAD_PROGRESS_URL
+				});
+			});
+		});
+
+		//批量上传
+		$('[rel=batch-uploader]').each(function(){
+			if($(this).data('batch-upload-bind')){
+				return;
+			}
+			$(this).data('batch-upload-bind', 1);
 			var _this = this;
 			require.async('ywj/batchuploader', function(BU){
 				BU(_this);
@@ -571,10 +574,10 @@ define('ywj/auto', function(require){
 		
 		//自动富文本编辑器
 		$('textarea[rel=rich]').each(function(){
-			if($(this).data('rich-binded')){
+			if($(this).data('rich-bind')){
 				return;
 			}
-			$(this).data('rich-binded', 1);
+			$(this).data('rich-bind', 1);
 
 			var txt = $(this);
 			var id = util.guid();
@@ -621,6 +624,17 @@ define('ywj/auto', function(require){
 		//自动地区选择
 		if($('select[rel=province-selector]').size()){
 			require.async('ywj/areaselector');
+		}
+
+		/**
+		 * checkbox 选择框。根据rel=selector判定，操作对象范围由data-target决定,如果没有
+		 * 提供该值,则缺省为table内部
+		 * 读取data-flag = 1 为全选。如果本身是checkbox则根据本身的checked进行判定。
+		 */
+		if($('[rel=selector]').size()){
+			require.async('ywj/PartialCheckH5', function(PC){
+				PC('[rel=selector]');
+			});
 		}
 	};
 

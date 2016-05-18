@@ -7,6 +7,30 @@
 .com-uploader-content img {max-height:100px; max-width:100px; overflow:hidden; box-shadow:1px 1px 5px #ccc}
 .com-uploader-progress span {padding-left:5px; display:inline-block; vertical-align:middle}
 
+/** 文件类型 **/
+.com-uploader-file-icon { display:inline-block; width:48px; height:48px; background:url("file/file_type_icons-default.png") no-repeat}
+.com-uploader-file-icon-default { background-image:url("file/file_type_icons-pdf.png") }
+.com-uploader-file-icon-docx,
+.com-uploader-file-icon-doc { background-image:url("file/file_type_icons-doc.png") }
+.com-uploader-file-icon-xls,
+.com-uploader-file-icon-xlsx { background-image:url("file/file_type_icons-xls.png") }
+.com-uploader-file-icon-ppt,
+.com-uploader-file-icon-pptx { background-image:url("file/file_type_icons-ppt.png") }
+.com-uploader-file-icon-7z,
+.com-uploader-file-icon-gz,
+.com-uploader-file-icon-zip,
+.com-uploader-file-icon-rar { background-image:url("file/file_type_icons-zip.png") }
+.com-uploader-file-icon-txt { background-image:url("file/file_type_icons-txt.png") }
+.com-uploader-file-icon-html { background-image:url("file/file_type_icons-html.png") }
+.com-uploader-file-icon-css { background-image:url("file/file_type_icons-css.png") }
+.com-uploader-file-icon-jpg { background-image:url("file/file_type_icons-jpg.png") }
+.com-uploader-file-icon-jpeg { background-image:url("file/file_type_icons-jpg.png") }
+.com-uploader-file-icon-png { background-image:url("file/file_type_icons-png.png") }
+.com-uploader-file-icon-psd { background-image:url("file/file_type_icons-psd.png") }
+.com-uploader-file-icon-mov { background-image:url("file/file_type_icons-mov.png") }
+.com-uploader-file-icon-avi { background-image:url("file/file_type_icons-avi.png") }
+.com-uploader-file-icon-wav { background-image:url("file/file_type_icons-wav.png") }
+
 /** 未上传 **/
 .com-uploader-normal .com-uploader-progress,
 .com-uploader-normal .com-uploader-content,
