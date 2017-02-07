@@ -3,6 +3,7 @@
  */
 define('ywj/util', function(require){
 	var $ = require('jquery');
+	var lang = require('lang/$G_LANGUAGE');
 
 	/**
 	 * check item is in array
@@ -130,7 +131,30 @@ define('ywj/util', function(require){
 	 * @return {string}
 	 */
 	var getType = function(obj){
+		if(isElement(obj)){
+			return 'element';
+		}
 		return obj === null ? 'null' : (obj === undefined ? 'undefined' : Object.prototype.toString.call(obj).slice(8, -1).toLowerCase());
+	};
+
+	/**
+	 * isElement
+	 * @param obj
+	 * @returns {boolean}
+	 */
+	var isElement = function(obj){
+		try{
+			//Using W3 DOM2 (works for FF, Opera and Chrome)
+			return obj instanceof HTMLElement;
+		}
+		catch(e){
+			//Browsers not supporting W3 DOM2 don't have HTMLElement and
+			//an exception is thrown and we end up here. Testing some
+			//properties that all elements have. (works on IE7)
+			return (typeof obj === "object") &&
+				(obj.nodeType === 1) && (typeof obj.style === "object") &&
+				(typeof obj.ownerDocument === "object");
+		}
 	};
 
 	/**
@@ -161,6 +185,36 @@ define('ywj/util', function(require){
 			}
 			return arr;
 		}
+	};
+
+	/**
+	 * clone object without case-sensitive checking
+	 * @param target_data
+	 * @param source_data
+	 */
+	var cloneConfigCaseInsensitive = function(source_data, target_data){
+		if(isElement(target_data)){
+			console.warn('element clone operation');
+			return target_data;
+		}
+		if(getType(source_data) != 'object' || getType(target_data) != 'object'){
+			return target_data;
+		}
+
+		var tmp = source_data;
+		for(var tk in target_data){
+			var found = false;
+			for(var sk in source_data){
+				if(getType(tk) == 'string' && getType(sk) == 'string' && sk.toLowerCase() == tk.toLowerCase()){
+					tmp[sk] = cloneConfigCaseInsensitive(source_data[sk], target_data[tk]);
+					found = true;
+				}
+			}
+			if(!found){
+				tmp[tk] = target_data[tk];
+			}
+		}
+		return tmp;
 	};
 
 	/**
@@ -213,50 +267,50 @@ define('ywj/util', function(require){
 	};
 
 	/**
-	 * copy
-	 * @param text
-	 * @param compatible
-	 * @returns {boolean}
+	 * 中英文字符串截取（中文按照2个字符长度计算）
+	 * @param str
+	 * @param len
+	 * @param eclipse_text
+	 * @returns {*}
 	 */
-	var copy = function(text, compatible){
-		var selection, range, mark;
-		try {
-			range = document.createRange();
-			selection = document.getSelection();
-
-			mark = document.createElement('mark');
-			mark.textContent = text;
-			document.body.appendChild(mark);
-
-			range.selectNode(mark);
-			selection.addRange(range);
-
-			var successful = document.execCommand('copy');
-			if (!successful) {
-				throw new Error('copy command was unsuccessful');
-			}
-		} catch (err) {
-			console.error('unable to copy, trying IE specific stuff');
-			try {
-				window.clipboardData.setData('text', text);
-			} catch (err) {
-				console.error('unable to copy, falling back to prompt');
-				if(compatible){
-					window.prompt('请按键: Ctrl+C, Enter复制内容', text);
-				}
-			}
-		} finally {
-			if (selection) {
-				if (typeof selection.removeRange == 'function') {
-					selection.removeRange(range);
-				} else {
-					selection.removeAllRanges();
-				}
-			}
-			if (mark) {
-				document.body.removeChild(mark);
+	var cutString = function(str, len, eclipse_text){
+		if(eclipse_text === undefined){
+			eclipse_text = '...';
+		}
+		var r = /[^\x00-\xff]/g;
+		if(str.replace(r, "mm").length <= len){
+			return str;
+		}
+		var m = Math.floor(len / 2);
+		for(var i = m; i < str.length; i++){
+			if(str.substr(0, i).replace(r, "mm").length >= len){
+				return str.substr(0, i) + eclipse_text;
 			}
 		}
+		return str;
+	};
+
+	var copy = function(text, compatible){
+		var $t = $('<textarea readonly="readonly">').appendTo('body');
+		$t[0].style.cssText = 'position:absolute; left:-9999px;';
+		var y = window.pageYOffset || document.documentElement.scrollTop;
+		$t.focus(function(){
+			window.scrollTo(0, y);
+		});
+		$t.val(text).select();
+		var succeeded = false;
+		try {
+			succeeded = document.execCommand('copy');
+		} catch(err){
+			console.error(err);
+		}
+		$t.remove();
+		if(!succeeded && compatible){
+			window.prompt(lang('请按键: Ctrl+C, Enter复制内容'), text);
+			return true;
+		}
+		console.info('copy '+(succeeded ? 'succeeded' : 'fail'), text);
+		return succeeded;
 	};
 
 	/**
@@ -316,6 +370,21 @@ define('ywj/util', function(require){
 		}, 5000);
 	};
 
+	var between = function(val, min, max){
+		return val >= min && val <= max;
+	};
+
+	/**
+	 * 检测矩形是否在指定布局内部
+	 * @param rect
+	 * @param layout
+	 * @returns {*}
+	 */
+	var rectInLayout = function(rect, layout){
+		return between(rect.top + rect.height, layout.top, layout.top + layout.height) &&
+			between(rect.left + rect.width, layout.left, layout.left + layout.width);
+	};
+
 	/**
 	 * 节点不可选择
 	 * @param node
@@ -340,6 +409,26 @@ define('ywj/util', function(require){
 		isMobile = true;
 	}
 
+	var resolve_ext = function(src){
+		var f = /\/([^/]+)$/ig.exec(src);
+		if(f){
+			var t = /(\.[\w]+)/.exec(f[1]);
+			return t[1];
+		}
+		return null;
+	};
+
+	var resolve_file_name = function(src){
+		var f = /\/([^/]+)$/ig.exec(src);
+		if(f){
+			var t = /([\w]+)/.exec(f[1]);
+			if(t){
+				return t[1];
+			}
+		}
+		return null;
+	};
+
 	/**
 	 * generate GUID
 	 * @return string
@@ -355,10 +444,14 @@ define('ywj/util', function(require){
 		toArray: toArray,
 		inArray: inArray,
 		isArray: isArray,
+		isElement: isElement,
 		getType: getType,
+		cloneConfigCaseInsensitive: cloneConfigCaseInsensitive,
 		htmlEscape: htmlEscape,
 		htmlUnescape: htmlUnescape,
+		rectInLayout: rectInLayout,
 		pregQuote: pregQuote,
+		cutString: cutString,
 		setNodeSelectDisabled: setNodeSelectDisabled,
 		isEmptyObject: isEmptyObject,
 		isPlainObject: isPlainObject,
@@ -371,7 +464,9 @@ define('ywj/util', function(require){
 		getU8StrLen: getU8StrLen,
 		guid: guid,
 		copy: copy,
-		findParent:findParent,
+		resolveExt: resolve_ext,
+		resolveFileName: resolve_file_name,
+		findParent: findParent,
 		getFormData: getFormData,
 		preventClickDelegate: preventClickDelegate
 	};

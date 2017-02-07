@@ -1,5 +1,5 @@
-.ywj-msg-container-wrap {text-align:center; width:650px; left:50%; top:40%; margin-left:-250px; position:fixed; z-index: 65533; line-height:0; font-size:0;}
-
+.ywj-msg-container-wrap {text-align:center; width:800px; left:50%; top:45%; margin-left:-400px; position:fixed; z-index: 65533; line-height:0; font-size:0;}
+.ywj-msg-content {max-width:88%;}
 .ywj-msg-container {display:inline-block; clear:both; margin-bottom:-2px; line-height:1.6; overflow:hidden; font-family:Microsoft Yahei, serif; font-size: 18px; box-shadow:0 1px 50px #ddd; color:#000; background: #ffffff; border-radius:5px; padding:10px 50px; border:1px solid #eee;}
 .ywj-msg-icon-tip,
 .ywj-msg-icon-info,

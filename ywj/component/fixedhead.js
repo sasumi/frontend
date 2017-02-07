@@ -3,7 +3,7 @@ define('ywj/fixedhead', function (require) {
 	var FIXED_CLASS = 'fixed-top-element';
 	var tpl = '<div id="table-fixed-header" style="display:none;"><table></table></div>';
 
-	return function(fixed_els){
+	var foo = function(fixed_els){
 		var $body = $('body');
 		var $fixed_els = $(fixed_els);
 
@@ -29,20 +29,20 @@ define('ywj/fixedhead', function (require) {
 			//fix width
 			$(window).resize(function(){
 				var $org_ths = $tbl.find('th');
-				$table_header.width($tbl.width());
+				$table_header.width($tbl.outerWidth());
 				$header_wrap.css('left', $tbl.offset().left);
 				$header_wrap.find('th').each(function(k, v){
+					if(k == 0 && $org_ths.eq(k).find('input[type=checkbox]').size()){
+						return; //ignore first cell has checkbox. for auto adjust
+					}
 					$(this).removeAttr('width');
 					$(this).width($org_ths.eq(k).width());
 				});
 			}).trigger('resize');
-
-			//bind partial check
-			if($('[rel=selector]').size()){
-				require.async('ywj/PartialCheckH5', function(PC){
-					PC($('[rel=selector]', $header_wrap));
-				});
-			}
 		});
-	}
+	};
+	foo.nodeInit = function($node){
+		foo($node);
+	};
+	return foo;
 });

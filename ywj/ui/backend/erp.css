@@ -1,0 +1,174 @@
+
+/** 辅助 **/
+.nowrap {white-space:nowrap}
+.data-empty {font-size:14px; padding:10px 0; text-align:center; color:#ccc;}
+.well {background-color:#fff; border:1px solid #eee; border-radius:5px; padding:5px;}
+.text-center {text-align:center !important}
+.image-error img{visibility:hidden;}
+.image-error {background:url("img/img_error.png") no-repeat center}
+.delete-icon {background:url("img/delete.png") no-repeat; display:inline-block; width:11px; height:11px; text-indent:-999em; overflow:hidden}
+
+#browser-warning {background-color:#ff8f4a; padding:8px 10px; text-align:center; color:white; font-size:14px; text-shadow:1px 1px 1px black;}
+#browser-warning a {color:white; text-decoration:underline}
+
+/** layout **/
+#header {background-color:#2F2F34; position:relative; color:#eee; height:30px; padding:5px}
+#sidebar {float:left; width:220px}
+#container {padding:10px; min-height:100px}
+#col-aside {position:absolute; width:150px;}
+#col-main {margin-left:160px;}
+
+#logo {float:left; padding-right:5px; height:30px; font-size:1.8rem; margin:0;}
+#logo a {color:#fff; font-size:18px;}
+#logo span {font-size:10px; color:#ddd}
+#logo .small {font-size:12px; font-weight:normal;}
+#footer {text-align:center; color:#bbb; padding:10px 0; clear:both;}
+#welcome {float:right; margin:10px 100px 0 10px;}
+#welcome a {color:white;}
+
+/** 侧边导航 **/
+.aside-nav {padding-bottom:10px; display:block;  text-shadow:1px 1px 1px #aaa}
+.aside-nav dt {font-size:14px; font-weight:bold; text-shadow:1px 1px 1px #eee; padding:5px 10px; border-radius:2px; color:gray;}
+.aside-nav dt.active {background-color:#9FBE99}
+.aside-nav dd {margin:1px 0}
+.aside-nav dd a {display:block; padding:5px 10px}
+.aside-nav dd a:hover {background-color:#CFDDFF;}
+.aside-nav dd.active a {background-color:#837E97; color:white}
+
+/** 系统选择按钮 **/
+.system-choice {background-color:#545369; color:white; border-radius:3px; position:absolute; top:11px; right:9px;}
+.system-choice dt {background:url("img/button_grey_down.png") no-repeat 90% center; padding:2px 28px 2px 8px; color:#ccc; cursor:default}
+.system-choice dd {display:none;padding-bottom:3px;}
+.system-choice dd a {color:white; display:block; padding:2px 10px;}
+.system-choice dd.active a{background:url("img/blue-dot.png") no-repeat 90% center}
+.system-choice dd a:hover {background-color:gray;}
+.system-choice:hover dd {display:block;}
+
+/** 主导航 **/
+#main-nav {float:left; margin:4px 10px -10px 0; background-color:#2F2F34}
+#main-nav li {float:left; margin-right:2px}
+#main-nav li.active {background-color:#606A7E;}
+#main-nav li.active a{color:white}
+#main-nav li:hover {background-color:#606A7E;}
+#main-nav a {color:#eee; display:block; line-height:25px; padding:3px 15px;  text-transform:capitalize;}
+#main-nav a[href^=javascript] { cursor:default}
+.main-nav-has-children>a:after {content:""; display:block; width:0; height:0; border:4px solid transparent; border-top-color:gray; float:right; margin:12px 0 0 7px;}
+.main-nav-has-children:hover a:after {border-top-color:transparent; border-bottom-color:#eee; margin-top:7px;}
+
+/** 主导航 - 子菜单 **/
+li:hover .sub-nav {display:block;}
+.sub-nav {display:none; width:130px; position:absolute; z-index:1000; padding-bottom:10px; background-color:rgba(96, 106, 126, 0.95); box-shadow:2px 2px 4px #BBB}
+.sub-nav a {margin:0 5px; text-shadow:1px 1px 1px #343434}
+/*#main-nav .sub-nav dd:first-child{padding-top:5px;}*/
+.sub-nav dt:first-child {border:none}
+.sub-nav dt {color:gray; margin:0 10px; clear:both; min-height:22px;}
+.sub-nav dt:after {content:""; display:block; width:100%; border-top:1px solid gray; margin-top:-10px}
+.sub-nav dt span {background-color:#636F80; margin-left:7px; display:inline-block; padding:1px 3px; position:relative; z-index:2}
+.sub-nav dd:hover {background-color:#8090B2;}
+.sub-nav dd.active {background-color:#70788A;}
+.sub-nav dd {border-radius:0; padding:1px; margin:0;}
+.sub-nav dd:last-child {}
+.sub-nav dd:last-child a{border:none}
+.sub-nav-bigger {width:315px; padding-left:5px;}
+#main-nav .sub-nav-bigger dd {float:left; height:30px; overflow:hidden; width:100px;}
+#main-nav .sub-nav-bigger dd a {padding-left:0; padding-right:0;}
+
+.operate-bar {margin:10px 0;}
+
+/** 表单 **/
+.operate-row { text-align:center; padding:10px 0 5px;}
+.frm-tip {color:gray; padding:0 10px;}
+
+
+/** 图片缩略图 **/
+.image-thumb {display:block; width:80px; height:80px; position:relative; overflow:hidden; margin:10px 0 0; text-align:center}
+.image-thumb:hover {box-shadow:1px 1px 4px #ccc;}
+.image-thumb img {height:100%; vertical-align:middle;}
+.image-thumb .delete-link {display:none; position:absolute; bottom:0; text-align:center; width:100%; background-color:rgba(61, 83, 205, 0.31); color:white; text-shadow:1px 1px 1px gray; cursor:pointer}
+.image-thumb .delete-link:hover {background-color:rgba(61, 83, 205, 0.9)}
+.image-thumb:hover .delete-link {display:block}
+.image-thumb .view-source-link {display:none; position:absolute; top:0; right:0; text-align:center; width:100%; background-color:rgba(61, 83, 205, 0.31); color:white; text-shadow:1px 1px 1px gray; cursor:pointer}
+.image-thumb:hover .view-source-link {display:block;}
+.image-thumb .chk { position:absolute; bottom:0; right:0;}
+
+/** 上传 **/
+.uploader {width:150px;}
+.uploader input[type=file] {clip:rect(1px,1px,1px,1px); display:block; position:absolute;}
+.uploader progress {display:none;}
+.uploader-message {padding:5px 0 0 0; display:none}
+.uploader .image-thumb {display:none;}
+.uploader-normal .uploader-btn,
+.upload-success .uploader-btn,
+.upload-error .uploader-btn {display:inline-block; background:url("img/upload24.png") no-repeat 7px #fff; color:#437cb0; cursor:pointer; border-radius:3px; padding:3px 8px 3px 37px;}
+.upload-error .uploader-btn:hover,
+.upload-success .uploader-btn:hover,
+.uploader-normal .uploader-btn:hover {color:#5cabf3}
+.upload-success .image-thumb {display:block;}
+.uploading progress {display:block;}
+.uploading .uploader-btn {display:none}
+.uploading .uploader-message {color:gray; display:block;}
+.uploader-success .image-thumb {display:block;}
+.upload-error .uploader-message {color:red; display:block}
+
+/** 检索 **/
+.search-frm {padding:5px 0; line-height:36px;}
+.search-frm:after {content:""; display:block; clear:both;}
+.search-frm a {line-height:20px}
+.search-frm .frm-item {padding:5px 10px 5px 0; float:left; vertical-align:middle}
+.search-frm .frm-item label {display:inline-block; vertical-align:baseline}
+.search-frm input, .search-frm select {min-width:0;}
+.search-frm select {max-width:120px;}
+
+
+/** 日历 **/
+.calendar {border-collapse:collapse; border-spacing:0; font-size:13px; width:500px; margin:30px 0 0 30px; _margin-left:10px; float:left;}
+.calendar caption {font-size:24px; font-weight:bold; text-align:left; padding:0 0 10px; text-transform:uppercase;}
+.calendar td {padding:15px 10px; text-align:center; border:2px solid #fff; background-color:#eee; }
+.calendar th {font-weight:normal; text-align:center}
+.calendar tbody th {color:green;}
+.calendar thead th {text-transform:capitalize}
+.calendar .prev_month,
+.calendar .next_month {color:#aaa; background-color:white; font-weight:normal;}
+.calendar .today {color:white; background-color:#8C58C5; border-radius:7px}
+
+.category-select-list dl {float:left; width:130px; margin:3px 3px 0 0; border:1px dotted #ccc}
+.category-select-list dt {background-color:#eee; padding:3px 10px}
+.category-select-list dd {padding:5px 10px;}
+.category-select-list select {width:115px; height:150px; overflow:auto; min-width:0;}
+.category-select-list label {display:block;}
+
+.image-select-list li {float:left; width:80px; height: 80px; overflow: hidden; position: relative; margin:0 10px 5px 0; border:1px solid #eee; text-align: center}
+.image-select-list img {height: 80px; display: block; margin: 0 auto;}
+.image-select-list input[type=checkbox] {position: absolute; bottom:1px; right:1px; display: block;}
+.image-select-list a {display: none; position:absolute; top:0; right:0;}
+.image-select-list li:hover a {display:block;}
+
+/** server identify **/
+.server-DEV #logo:after,
+.server-GAMMA #logo:after,
+.server-IDC #logo:after,
+.server-BETA #logo:after {content:""; display:inline-block; font-size:12px; color:red; font-weight:normal}
+.server-DEV #logo:after {content:"Develop"; color:#ccc;}
+.server-GAMMA #logo:after {content:"Gamma"; color:orange}
+.server-IDC #logo:after {content:"IDC"; color:red;}
+.server-BETA #logo:after {content:"Beta"; color:green;}
+
+
+/** dialog patch **/
+.page-iframe body {overflow:hidden; background:none;}
+.page-iframe textarea {resize:none}
+.page-iframe body {overflow-y:auto;}
+.page-iframe #header,
+.page-iframe #col-aside,
+.page-iframe #footer {display:none}
+.page-iframe #col-main {margin-left:0}
+.page-iframe .frm-tbl caption {display:none}
+.page-iframe .frm {padding:0; background-color:transparent; border:none;}
+
+.page-iframe ::-webkit-scrollbar {width:7px; height:7px }
+.page-iframe ::-webkit-scrollbar-button:vertical { display:none }
+.page-iframe ::-webkit-scrollbar-track:vertical { background-color:black }
+.page-iframe ::-webkit-scrollbar-track-piece { background:#eee }
+.page-iframe ::-webkit-scrollbar-thumb:vertical { background-color:#8e8e8e; border-radius:5px }
+.page-iframe ::-webkit-scrollbar-thumb:vertical:hover { background-color:#3b3b3b }
+.page-iframe ::-webkit-scrollbar-corner:vertical { background-color:#535353 }

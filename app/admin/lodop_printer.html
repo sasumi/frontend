@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Lodop打印使用手册</title>
+	<link rel="stylesheet" href="css/article.css">
+	<script src=""></script>
+	<style>
+		.code-check-list,
+		.code-check-list ul,
+		.code-check-list ol { list-style-position:outside; margin-left:1em;}
+		.code-check-list li {margin-bottom:0.5em;}
+	</style>
+	<script src="http://s.temtop.com/seajs/sea.js?v2015"></script>
+	<script src="http://s.temtop.com/seajs/config.js?v20160510"></script>
+	<script src="http://s.temtop.com/jquery/jquery-1.8.3.min.js?v2015"></script>
+	<script src="http://s.temtop.com/ywj/component/imagescale.js?v20160901"></script>
+	<script>seajs.use('ywj/auto');</script>
+</head>
+<body>
+	<article>
+		<h1>Lodop打印使用手册</h1>
+
+		<p>本文提到的使用lodop打印都是基于seajs模块化组件 printer.js <a href="http://s.temtop.com/temtop/printer.js" target="_blank">详细地址</a></p>
+		<p>打印前需设置打印机,设置打印机，参考<a href="http://s.temtop.com/app/admin/printer_setup.ch.html">斑马条码打印机设置手册</a></p>
+		<ol class="code-check-list">
+			<li>
+				打印按钮
+				<code>
+					<xmp><span class="btn print-btn">打印</span></xmp>
+				</code>
+			</li>
+			<li>
+				js调用
+				<code>
+					seajs.use(["jquery","temtop/printer"],function($,printer){
+						//打印
+						$(".print-btn").click(function(){
+							printer.getPrinter('print-label', function(printer_index){
+								printer.printURL_new(printer_url, printer_index);
+							});
+						});
+					})
+				</code>
+				<h5>备注</h5>
+				<p><strong>printer_url:</strong> 表示打印的页面地址</p>
+				<p><strong>printer_index:</strong> 已设置的本地打印机的序号</p>
+			</li>
+		</ol>
+		<h3>打印尺寸</h3>
+		<p> 目前仓库系统是使用lodop打印最多的系统，这里列举下打印纸张的大小(长&times;宽 单位毫米mm)</p>
+		<p><strong>GLS： </strong> 110 &times 150 </p>
+		<p><strong>SKU条码： </strong> 100  &times 40 </p>
+		<p><strong>LETTER： </strong> 100  &times 200 </p>
+		<p><strong>WINIT(万邑通)： </strong> 80  &times 90 </p>
+		<p><strong>DHL面单(标签)： </strong> 100  &times 200 </p>
+		<p><strong>德国仓配货单： </strong> 100  &times 200 </p>
+
+
+		<p><strong>LETTER 和 德国仓配货单 都使用DHL提供的纸故纸张大小均为100  &times 200</strong></p>
+		<p><strong>其余为设置大小的打印使用A4纸打印(210mm×297mm)</strong></p>
+
+		<h3>设置打印的大小</h3>
+		<code>
+			case 'html': //winit
+			printer.printURL_new(print_info.url, printer_index, 1, 800, 900, callback);
+			break;
+
+			case 'letter': //letter
+			printer.printURL_new(print_info.url, printer_index, 1, 1000, 2000, callback);
+			break;
+
+			case 'png'://DHL
+			printer.printPng(print_info.url, printer_index, 1000, 2000, callback);
+
+			//不设置纸张大小 默认使用A4纸打印
+			Printer.printURL_new(back_print_url, printer_index);
+		</code>
+
+		自画面单，需设置页面的大小(页面大小略小于lodop的设置,以实际打印为准)
+		<code>
+			//letter
+			body{width:9cm;height:19cm;background-color:white;}
+		</code>
+
+	</article>
+	<script src="js/toc.js"></script>
+</body>
+</html>

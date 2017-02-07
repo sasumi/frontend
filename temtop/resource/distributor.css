@@ -1,0 +1,15 @@
+.distributor-selector { position:relative; display:inline-block;}
+.distributor-selector-name[readonly],
+.distributor-selector-name[disabled] {cursor:default}
+
+
+.distributor-selector-cancel,
+.distributor-selector-sel {color:#5272C2; margin:0 0 0 5px; display:inline-block; cursor:pointer;}
+
+.distributor-selector-cancel:after,
+.distributor-selector-sel:after {margin-left:2px;}
+
+.distributor-selector-sel:after {content:"选择"}
+.distributor-selector-sel:before {content:"\f046"; display:inline-block; font-family:FontAwesome, serif; }
+.distributor-selector-cancel:after {content:"取消";}
+.distributor-selector-cancel:before {content:"\f00d"; display:inline-block; font-family:FontAwesome, serif; }

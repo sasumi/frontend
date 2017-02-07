@@ -53,7 +53,7 @@ define('ywj/msg', function(require){
 		if(typeof(arg1) == 'string'){
 			cfg = {
 				'msg': arg1,
-				'type': type || 'tip',
+				'type': type || 'info',
 				'time': (time > 0 ? time*1000 : 2000)
 			};
 		}
@@ -141,6 +141,53 @@ define('ywj/msg', function(require){
 	 */
 	Msg.show = function(arg1, type, time){
 		return new Msg(arg1, type, time);
+	};
+
+	/**
+	 * show success message
+	 * @param msg
+	 * @param time
+	 * @returns {Msg}
+	 */
+	Msg.showSuccess = function(msg, time){
+		return new Msg(msg, 'succ', time);
+	};
+
+	/**
+	 * show error message
+	 * @param msg
+	 * @param time
+	 * @returns {Msg}
+	 */
+	Msg.showError = function(msg, time){
+		return new Msg(msg, 'err', time);
+	};
+
+	/**
+	 * show info message
+	 * @param msg
+	 * @param time
+	 * @returns {Msg}
+	 */
+	Msg.showInfo = function(msg, time){
+		return new Msg(msg, 'info', time);
+	};
+
+	/**
+	 * show loading message
+	 * @param msg
+	 * @param time
+     * @returns {Msg}
+	 */
+	Msg.showLoading = function(msg, time){
+		return new Msg(msg, 'load', time);
+	};
+
+	Msg.nodeClick = function(){
+		var msg = $(this).data('msg') || $(this).attr('title');
+		if(msg){
+			Msg.show(msg, 'info');
+		}
 	};
 
 	if(!top_win['__YWJ_MSG__']){

@@ -1,0 +1,7 @@
+.world-time-tbl {border-collapse:collapse; border-spacing:0; width:100%;}
+.world-time-tbl td,
+.world-time-tbl th {padding:3px 5px; border:1px solid #eee; text-align:left; white-space:nowrap; font-weight:normal;}
+.world-time-tbl th {background-color:#eee; text-shadow:1px 1px 1px white; color:gray;}
+.world-time-tbl th:first-child {border-right:1px solid white;}
+.world-time-tbl .txt {width:50px; min-width:0; text-align:center;}
+.world-time-tbl .current_zone td {font-weight:bold;}

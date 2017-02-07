@@ -1,4 +1,4 @@
-.com-uploader input[type=file]{display:inline-block; outline:none; background:url("upload24.png") no-repeat 7px; cursor:pointer; border-radius:3px; width:0; padding:0 0 0 37px;}
+.com-uploader .com-uploader-file input[type=file]{display:inline-block; outline:none; background:url("upload24.png") no-repeat 7px; cursor:pointer; border-radius:3px; width:0; padding:0 0 0 37px;}
 .com-uploader label {cursor:pointer;}
 .com-uploader-file {vertical-align:middle; color:#00a0e9;}
 .com-uploader-file span {display:inline-block; vertical-align:middle;}
@@ -7,6 +7,9 @@
 .com-uploader-content img {max-height:100px; max-width:100px; overflow:hidden; box-shadow:1px 1px 5px #ccc}
 .com-uploader-progress span {padding-left:5px; display:inline-block; vertical-align:middle}
 
+.com-uploader-handle { position:relative;}
+.com-uploader-handle input[type=file] {position:absolute; width:1px; height:1px; border-color:transparent; background-color:transparent; outline:none; overflow:hidden; padding:0; bottom:0; left:20px;}
+
 /** 文件类型 **/
 .com-uploader-file-icon { display:inline-block; width:48px; height:48px; background:url("file/file_type_icons-default.png") no-repeat}
 .com-uploader-file-icon-default { background-image:url("file/file_type_icons-pdf.png") }
@@ -14,6 +17,7 @@
 .com-uploader-file-icon-doc { background-image:url("file/file_type_icons-doc.png") }
 .com-uploader-file-icon-xls,
 .com-uploader-file-icon-xlsx { background-image:url("file/file_type_icons-xls.png") }
+.com-uploader-file-icon-pdf { background-image:url("file/file_type_icons-pdf.png") }
 .com-uploader-file-icon-ppt,
 .com-uploader-file-icon-pptx { background-image:url("file/file_type_icons-ppt.png") }
 .com-uploader-file-icon-7z,

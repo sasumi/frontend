@@ -11,17 +11,19 @@
  *
  */
 define('ywj/uploader', function(require){
+	seajs.use('ywj/resource/uploader.css');
+	var $ = require('jquery');
+	var Net = require('ywj/net');
+	var Util = require('ywj/util');
+	var PRIVATES = {};
+	var _guid = 1;
+	var console = window.console || function(){};
+
 	if(!window.Worker){
 		console.error('Simple file uploader no support');
 		return function(){};
 	}
 
-	seajs.use('ywj/resource/uploader.css');
-	var $ = require('jquery');
-	var Net = require('ywj/net');
-	var PRIVATES = {};
-	var _guid = 1;
-	var console = window.console || function(){};
 	var guid = function(){
 		return '_su_file_'+_guid++;
 	};
@@ -122,6 +124,20 @@ define('ywj/uploader', function(require){
 		PRI.container.attr('class', COM_CLASS_CONTAINER + ' '+to);
 		PRI.progress.val(0);
 		PRI.progress_text.html('0%');
+
+		//required
+		PRI.trigger_file.attr('required', false);
+		PRI.file.attr('required', false);
+		switch(to){
+			case COM_CLASS_UPLOAD_NORMAL:
+				PRI.file.attr('required', UP.required);
+				break;
+
+			case COM_CLASS_UPLOAD_FAIL:
+			case COM_CLASS_UPLOADING:
+				PRI.trigger_file.attr('required', UP.required);
+				break;
+		}
 	};
 
 	/**
@@ -130,7 +146,7 @@ define('ywj/uploader', function(require){
 	 * @param rsp_str
 	 */
 	var on_response = function(UP, rsp_str){
-		console.log('response:', rsp_str);
+		UP.onResponse(rsp_str);
 		var rsp = {};
 		try {
 			rsp = JSON.parse(rsp_str);
@@ -142,7 +158,8 @@ define('ywj/uploader', function(require){
 		} else {
 			on_error(UP, rsp.message || '系统繁忙，请稍候重试');
 		}
-		UP.onResponse(rsp_str);
+		console.log('response string:', rsp_str);
+		console.log('response json:', rsp);
 	};
 
 	/**
@@ -151,7 +168,7 @@ define('ywj/uploader', function(require){
 	 * @param percent
 	 */
 	var on_uploading = function(UP, percent){
-		PRIVATES[UP.id].container.attr('class', COM_CLASS_CONTAINER + ' '+COM_CLASS_UPLOADING);
+		update_dom_state(UP, COM_CLASS_UPLOADING);
 		PRIVATES[UP.id].progress.val(percent);
 		PRIVATES[UP.id].progress_text.html(percent+'%');
 		UP.onUploading(percent);
@@ -168,22 +185,24 @@ define('ywj/uploader', function(require){
 	 * @param data
 	 */
 	var on_success = function(UP, message, data){
-		PRIVATES[UP.id].container.attr('class', COM_CLASS_CONTAINER + ' '+COM_CLASS_UPLOAD_SUCCESS);
-		data.url = data.url || data.src;
-
-		var link = '<a href="'+data.url+'" title="查看" target="_blank">';
+		update_dom_state(UP, COM_CLASS_UPLOAD_SUCCESS);
+		var html = '<a href="'+data.src+'" title="查看" target="_blank">';
 
 		//img
 		if(UP.config.TYPE == 'image'){
-			link += '<img src="'+data.url+'"/>'
+			html += '<img src="'+data.thumb+'"/>'
 		} else {
 			var ext = get_ext(data.src);
-			link += '<span class="com-uploader-file-icon com-uploader-file-icon-'+ext+'"></span>';
+			html += '<span class="com-uploader-file-icon com-uploader-file-icon-'+ext+'"></span>';
 		}
-		link += '</a>';
-
-		PRIVATES[UP.id].container.find('.'+COM_CLASS_CONTENT).html(link);
+		html += '</a>';
+		if(data.name){
+			html += '<span class="com-uploader-name">'+Util.htmlEscape(data.name)+'</span>';
+		}
+		PRIVATES[UP.id].container.find('.'+COM_CLASS_CONTENT).html(html);
 		PRIVATES[UP.id].input.val(data.value);
+		PRIVATES[UP.id].input.data('src', data.src);
+		PRIVATES[UP.id].input.data('thumb', data.thumb);
 		UP.onSuccess(message, data);
 	};
 
@@ -193,7 +212,7 @@ define('ywj/uploader', function(require){
 	 * @param message
 	 */
 	var on_error = function(UP, message){
-		PRIVATES[UP.id].container.attr('class', COM_CLASS_CONTAINER + ' '+COM_CLASS_UPLOAD_FAIL);
+		update_dom_state(UP, COM_CLASS_UPLOAD_FAIL);
 		var m = message || '上传失败，请稍候重试';
 		PRIVATES[UP.id].container.find('.'+COM_CLASS_CONTENT).html('<span title="'+m+'">'+m+'</span>');
 		UP.onError(message);
@@ -206,7 +225,15 @@ define('ywj/uploader', function(require){
 	 */
 	var Uploader = function(input, config){
 		input = $(input);
+		if(input.attr('disabled') || input.attr('readonly')){
+			console.info('input readonly', input[0]);
+			return;
+		}
+
 		var _this = this;
+		var required = input.attr('required');
+		input.attr('required', '');
+
 		this.id = guid();
 		var PRI = {};
 		PRIVATES[this.id] = PRI;
@@ -220,23 +247,19 @@ define('ywj/uploader', function(require){
 		if(!this.config.UPLOAD_URL){
 			throw "NO UPLOAD_URL PARAMETER FOUND";
 		}
+		this.config.UPLOAD_URL = Net.mergeCgiUri(_this.config.UPLOAD_URL, {type:this.config.TYPE});
 
 		input.hide();
 		PRI.input = input;
+		PRI.required = required;
 		PRI.container = $(TPL).insertAfter(input);
 		PRI.progress = PRI.container.find('progress');
 		PRI.progress_text = PRI.progress.next();
 		PRI.content = PRI.container.find('.'+COM_CLASS_CONTENT);
 		PRI.file = PRI.container.find('input[type=file]');
-
 		PRI.container.find('.com-uploader-file span').html('选择'+(this.config.TYPE == 'image' ? '图片' : '文件'));
+		PRI.trigger_file = $('<input type="file"/>').appendTo(PRI.container.find('.com-uploader-handle'));
 
-		var file_type = PRI.input.data('file-type');
-		if (file_type) {
-			_this.config.UPLOAD_URL += (_this.config.UPLOAD_URL.indexOf("&")>-1 ? '&':'?')+'file_type='+file_type;
-		}
-
-		//xhr
 		PRI.xhr = Net.postFormData({
 			url: _this.config.UPLOAD_URL,
 			onLoad: function(){
@@ -272,19 +295,24 @@ define('ywj/uploader', function(require){
 			if(!this.files[0]){
 				return;
 			}
+			//add file
 			var formData = new FormData();
-			for(var i=0; i<this.files.length; i++){
-				formData.append(PRI.input.attr('name'), this.files[i]);
+			var i;
+			if(this.files){
+				for(i=0; i<this.files.length; i++){
+					formData.append($(this).attr('name'), this.files[i]);
+				}
 			}
-			PRI.file.val('');
+			$(this).val('');
 			_this.send(formData);
 		});
 
 		//初始化
 		if(PRI.input.val()){
-			var url = PRI.input.data('url') || PRI.input.val();
-			var val = PRI.input.val() || PRI.input.data('url');
-			on_success(_this, null, {url:url, value:val, more:[]});
+			var thumb = PRI.input.data('thumb') || PRI.input.val();
+			var src = PRI.input.data('src') || PRI.input.val();
+			var val = PRI.input.val();
+			on_success(_this, null, {src:src, thumb:thumb, value:val, more:[]});
 		} else {
 			update_dom_state(_this, COM_CLASS_UPLOAD_NORMAL);
 		}
@@ -292,6 +320,16 @@ define('ywj/uploader', function(require){
 
 	Uploader.prototype.send = function(formData){
 		var PRI = PRIVATES[this.id];
+
+		//add param
+		var param = PRI.input.data('param');
+		if(param){
+			var data = Net.parseParam(param);
+			for(var i in data){
+				formData.append(i, data[i]);
+			}
+		}
+
 		PRI.xhr.open('POST', this.config.UPLOAD_URL, true);
 		PRI.xhr.send(formData);
 		PRI.abort = false;
@@ -321,6 +359,18 @@ define('ywj/uploader', function(require){
 	Uploader.prototype.onDelete = function(message){};
 	Uploader.prototype.onError = function(message){};
 	Uploader.prototype.onStart = function(message){};
+
+	Uploader.TYPE_IMAGE = 'image';
+	Uploader.TYPE_FILE = 'file';
+
+	Uploader.nodeInit = function($node, param){
+		var type = param.type;
+		new Uploader($node, {
+			TYPE: type || Uploader.TYPE_IMAGE,
+			UPLOAD_URL: window.UPLOAD_URL,
+			PROGRESS_URL: window.UPLOAD_PROGRESS_URL
+		});
+	};
 
 	return Uploader;
 });

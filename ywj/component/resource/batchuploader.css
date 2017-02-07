@@ -3,14 +3,14 @@
 .batch-uploader li {float:left; margin:5px; padding:10px; width:100px; height:125px; border:1px solid #eee; background-color:#ffffff; text-align:center; position:relative;}
 
 .batch-uploader .com-uploader-normal .com-uploader-file { display:block; margin-top:50px;}
-.batch-uploader .com-uploader-content {height:105px; line-height:105px; overflow:hidden; display:block;}
+.batch-uploader .com-uploader-content {height:105px; line-height:105px; overflow:hidden;}
 .batch-uploader .com-uploader-content span {display:inline-block; word-break:break-all; line-height:20px; width:100%;}
 .batch-uploader .com-uploader-progress {height:105px;}
 .batch-uploader .com-uploader-progress progress {width:100%; margin-top:50px;}
 .batch-uploader .com-uploader-btn {font-size:12px;}
 .batch-uploader .com-uploader-delete {display:none;}
 
-.batch-uploader-drag-enter {background-color:#F7FCFF}
+.batch-uploader-drag-enter {background-color:#F7FCFF; box-shadow:0 0 10px #7CB9DE}
 .batch-uploader-delete-btn {display:block; position:absolute;  top:-5px; right:-5px; cursor:pointer; font-size:15px; font-family:Arial, sans-serif; }
 .batch-uploader-delete-btn:after {content:"x"; background-color:#ddd; width:15px; color:white; line-height:13px; height:15px; overflow:hidden; display:block; text-align:center; border-radius:10px;}
 .batch-uploader-delete-btn:hover:after {background-color:#00a0e9; color:white;}

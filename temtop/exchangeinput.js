@@ -2,6 +2,7 @@ define('temtop/exchangeinput',function(require){
 	var EX_DATA = null;
 	var CODE_RMB = 'RMB';
 	var OS = 5;
+	var CHANGING_INPUT = false;
 	var EXCHANGE_RATE_URL = window['EXCHANGE_RATE_URL'] || null;
 	if(!EXCHANGE_RATE_URL){
 		console.warn("EXCHANGE_RATE_URL required");
@@ -102,7 +103,7 @@ define('temtop/exchangeinput',function(require){
 
 		getExchangeRate(val, input_code, function (data) {
 			var html = '<s></s>' +
-				'<table><thead><tr><th>货币</th><th>兑换值</th><th style="display:none;">汇率</th></tr></thead><tbody>';
+				'<table class="t-currency-tbl"><thead><tr><th>货币</th><th>兑换值</th><th style="display:none;">汇率</th></tr></thead><tbody>';
 			for (var i in data) {
 				if (data[i]) {
 					html += '<tr><td>' + data[i].code + '</td>';
@@ -146,7 +147,9 @@ define('temtop/exchangeinput',function(require){
 					var $cur_inp = $(this);
 					var code = $cur_inp.data('code');
 					var v = exchangeVal($cur_inp.val(), code, input_code);
-					$el.val(v);
+					CHANGING_INPUT = true;
+					$el.val(v).trigger('change');
+					CHANGING_INPUT = false;
 					$inputs.each(function(){
 						if($cur_inp[0] != this){
 							v = exchangeVal($cur_inp.val(), code, $(this).data('code'));
@@ -186,10 +189,11 @@ define('temtop/exchangeinput',function(require){
 				$this.click(function () {
 					show_input_panel($this, $this.val(), code);
 				});
-
 				$.each(['click', 'keyup', 'focus', 'change'], function(k, ev){
 					$this[ev](function(){
-						show_input_panel($this, $this.val(), code);
+						if(!CHANGING_INPUT){
+							show_input_panel($this, $this.val(), code);
+						}
 					});
 				});
 			}

@@ -1,10 +1,10 @@
 .touch-icon {display:inline-block; height:12px; width:12px; text-indent:-999em; overflow:hidden; background:no-repeat 0 0; vertical-align:middle; cursor:pointer}
 
-.checkbox-icon {background-image:url("../img/checkbox-unchecked.png"); border-radius:2px;}
-.checkbox-checked {background-image:url("../img/checkbox-checked.png")}
-.checkbox-partial {background-image:url("../img/checkbox-partial.png")}
+.checkbox-icon {background-image:url("img/checkbox-unchecked.png"); border-radius:2px;}
+.checkbox-checked {background-image:url("img/checkbox-checked.png")}
+.checkbox-partial {background-image:url("img/checkbox-partial.png")}
 
-.collapse-icon {background-image:url("../img/collapse.png"); background-position:0 -12px; position:absolute; margin:8px 0 0 -14px;}
+.collapse-icon {background-image:url("img/collapse.png"); background-position:0 -12px; position:absolute; margin:8px 0 0 -14px;}
 .collapse-icon:hover {background-position:-12px -12px}
 .collapse-expand {background-position:0 0}
 .collapse-expand:hover {background-position:-12px 0}

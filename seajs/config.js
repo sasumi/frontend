@@ -20,6 +20,13 @@ seajs.onAfterResolve = function(callback){
  * @returns {*}
  */
 seajs.resolve = function(id, refUri){
+	id = id.replace(/(\$[^/|$]+)/g, function(m){
+		m = m.replace('$', '');
+		if(!window[m]){
+			console.error('package no found:'+id);
+		}
+		return window[m];
+	});
 	var url = __seajs_org_resolve__(id, refUri);
 	for(var i=0; i<__seajs_after_resolve_list.length; i++){
 		var new_url = __seajs_after_resolve_list[i].call(null, url);
@@ -31,7 +38,8 @@ seajs.resolve = function(id, refUri){
 };
 
 
-var FRONTEND_HOST = window.FRONTEND_HOST || '/frontend';
+var FRONTEND_HOST = window.FRONTEND_HOST || 'http://s.temtop.com';
+FRONTEND_HOST = FRONTEND_HOST.replace(/\/$/,'');
 
 //log patch
 if(!window['console']){
@@ -75,9 +83,9 @@ seajs.config({
 		"jquery": "jquery/jquery-1.8.3.min.js",
 		"jquery-1.11.2": "jquery/jquery-1.11.2.min.js",
 		"jquerycolor": "jquery/jquerycolor.js",
-		"jquery-cookie":"jquery/jquery.cookie.min.js",
 		"jquery/cookie":"jquery/jquery.cookie.min.js",
 		"jqueryanchor": "jquery/jqueryanchor.js",
+		"jquery/highlight": "jquery/jquery.highlight.js",
 		"jquery/ui": "jquery/ui/jquery-ui.min.js",
 		"jquery/ui/timepicker": "jquery/ui/jquery-ui-timepicker-addon.js",
 		"jquery/ui/tooltip": "jquery/ui/jquery-ui-tooltip-addon.js",
@@ -86,10 +94,12 @@ seajs.config({
 		"swiper": "swiper/swiper-3.0.7.js",
 		"swiper2": "swiper/swiper-2.7.js",
 		"waterfall": "waterfall/waterfall.js",
+		"highcharts": "highcharts/highcharts.js",
 		"ueditor": FRONTEND_HOST+"/ueditor/ueditor.all.js",
-		"ueditor_admin_config": FRONTEND_HOST+"/ueditor/ueditor.admin.js"
+		"ueditor_admin_config": FRONTEND_HOST+"/ueditor/ueditor.config.normal.js"
 	},
 	paths: {
+		"lang": FRONTEND_HOST+"/ywj/lang",
 		"ywj": FRONTEND_HOST+"/ywj/component",
 		"ywjui": FRONTEND_HOST+"/ywj/ui",
 		"app":FRONTEND_HOST+"/app/component",
@@ -103,7 +113,8 @@ seajs.config({
 		"material": "http://material.erp.com/static/js"
 	},
 	preload: [
-		!window.jQuery ? 'jquery' : ''
+		!window.jQuery ? 'jquery' : '',
+		'ywj/lang'
 	],
 
 	charset: 'utf-8'

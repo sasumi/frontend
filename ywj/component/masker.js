@@ -2,13 +2,9 @@
  * Created by sasumi on 3/12/2014.
  */
 define('ywj/masker', function(require){
+	require('ywj/resource/masker.css');
 	var $ = require('jquery');
-	var util = require('ywj/util');
-
-	//默认遮罩层样式配置
-	var MASKER_STYLE_ID = '__MASKER_STYLE__';
-	var MASKER_CLASS = 'YWJ_MAKSER';
-	var MASKER_STYLESHEET = '.'+MASKER_CLASS+'{position:absolute;top:0;left:0;width:100%;background-color:#ccc;z-index:100;opacity:0.5; filter: alpha(opacity=50);}';
+	var Util = require('ywj/util');
 
 	//遮罩层DOM
 	var MASKER_DOM;
@@ -20,8 +16,7 @@ define('ywj/masker', function(require){
 		 */
 		show: function (styleConfig) {
 			if (!MASKER_DOM) {
-				$('<style id="' + MASKER_STYLE_ID + '">' + MASKER_STYLESHEET + '</style>').appendTo($('head'));
-				MASKER_DOM = $('<div class="' + MASKER_CLASS + '"></div>').appendTo($('body'));
+				MASKER_DOM = $('<div class="YWJ_MASKER"></div>').appendTo($('body'));
 				if (styleConfig) {
 					$.each(styleConfig, function (key, val) {
 						MASKER_DOM.css(key, val);
@@ -29,9 +24,10 @@ define('ywj/masker', function(require){
 				}
 			}
 
-			var winRegion = util.getRegion();
+			var winRegion = Util.getRegion();
 			MASKER_DOM.css('height', winRegion.documentHeight);
 			MASKER_DOM.show();
+			setTimeout(function(){MASKER_DOM.addClass('YWJ_MASKER-in');}, 0)
 		},
 
 		/**
@@ -39,7 +35,8 @@ define('ywj/masker', function(require){
 		 */
 		hide: function () {
 			if (MASKER_DOM) {
-				MASKER_DOM.hide();
+				MASKER_DOM.removeClass('YWJ_MASKER-in');
+				setTimeout(function(){MASKER_DOM.hide();}, 200)
 			}
 		}
 	};

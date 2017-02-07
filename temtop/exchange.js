@@ -1,6 +1,5 @@
 define('temtop/exchange',function(require){
 	var EX_DATA = null;
-	var OS = 5;
 	var CODE_RMB = 'RMB';
 	var EXCHANGE_RATE_URL = window['EXCHANGE_RATE_URL'] || null;
 	if(!EXCHANGE_RATE_URL){
@@ -8,10 +7,10 @@ define('temtop/exchange',function(require){
 		return;
 	}
 
-	var $ = require('jquery');
-	var net = require('ywj/net');
-	var util = require('ywj/util');
 	require('temtop/resource/exchange_rate.css');
+	var $ = require('jquery');
+	var Net = require('ywj/net');
+	var Tip = require('ywj/tip');
 
 	/**
 	 * 计算转换表
@@ -62,7 +61,7 @@ define('temtop/exchange',function(require){
 		if(EX_DATA){
 			cb(cal(val, code));
 		} else {
-			net.get(EXCHANGE_RATE_URL, {}, function(rsp){
+			Net.get(EXCHANGE_RATE_URL, {}, function(rsp){
 				EX_DATA = rsp;
 				cb(cal(val, code));
 			});
@@ -73,28 +72,9 @@ define('temtop/exchange',function(require){
 		return Math.round(num*Math.pow(10, pos))/Math.pow(10, pos);
 	};
 
-	var $PANEL = null;
-	var panel_tm = null;
-	var PANEL_OUT_TIME = 200;
-
-	var show_panel = function($el, val, code){
-		var pos = $el.data('currency-position') || 'bottom';
-		clearTimeout(panel_tm);
-		if(!$PANEL){
-			$PANEL = $('<div style="display:none"></div>').appendTo('body');
-			$PANEL.mouseover(function(){
-				clearTimeout(panel_tm);
-			});
-			$PANEL.mouseout(function(){
-				hide_panel();
-			});
-		}
-
-		$PANEL.attr('class', 't-currency-panel t-currency-panel-'+pos);
-
+	var getHtml = function($el, val, code, callback){
 		getExchangeRate(val, code, function(data){
-			var html = '<s></s>'+
-				'<table><thead><tr><th>货币</th><th>兑换值</th><th style="display:none;">汇率</th></tr></thead><tbody>';
+			var html = '<table class="t-currency-tbl"><thead><tr><th>货币</th><th>兑换值</th><th style="display:none;">汇率</th></tr></thead><tbody>';
 			for(var i in data){
 				if(data[i]){
 					html += '<tr><td>'+data[i].code+'</td><td>'+roundFixed(data[i].value,2)+'</td>';
@@ -102,59 +82,22 @@ define('temtop/exchange',function(require){
 				}
 			}
 			html += '</tbody></table>';
-			$PANEL.html(html).show();
-
-			//update pos
-			var offset = $el.offset();
-			var style = {};
-			if(pos == 'bottom'){
-				style = {
-					left: offset.left,
-					top: offset.top + $el.outerHeight() + OS
-				};
-			} else if(pos == 'right'){
-				style = {
-					left: offset.left+$el.outerWidth()+OS,
-					top: offset.top - $PANEL.outerHeight()/2
-				}
-			} else if(pos == 'left'){
-				style = {
-					left: offset.left-$PANEL.outerWidth()-OS,
-					top: offset.top - $PANEL.outerHeight()/2
-				};
-			} else if(pos == 'top'){
-				style = {
-					left: offset.left,
-					top: offset.top - $PANEL.outerHeight() - OS
-				};
-			}
-			$PANEL.css(style);
+			return callback(html);
 		});
-	};
-
-	var hide_panel = function(){
-		if($PANEL){
-			clearTimeout(panel_tm);
-			panel_tm = setTimeout(function(){
-				$PANEL.hide();
-			}, PANEL_OUT_TIME);
-		}
 	};
 
 	var init_display = function(){
 		$('.t-price[data-currency-code]').each(function(){
 			var $this = $(this);
-			if($this.data('currency-code-bind')){
+			if($this.data('currency-bind')){
 				return;
 			}
-			$this.data('currency-code-bind', 1);
-
+			$this.data('currency-bind', 1);
 			var code = $this.data('currency-code').toUpperCase();
+			var val = $.trim($this.html().replace(',',''));
 			if(code){
-				$this.hover(function(){
-					show_panel($this, $.trim($this.html()), code);
-				}, function(){
-					hide_panel();
+				Tip.bindAsync($this, function(succCb, errCb){
+					getHtml($this, val, code, succCb);
 				});
 			}
 		});

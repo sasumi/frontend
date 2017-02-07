@@ -5,6 +5,7 @@ define('ywj/net', function(require){
 	var $ = require('jquery');
 	var util = require('ywj/util');
 	var msg = require('ywj/msg');
+	var lang = require('ywj/lang');
 
 	/**
 	 * get param
@@ -16,6 +17,36 @@ define('ywj/net', function(require){
 		var r = new RegExp("(\\?|#|&)"+param+"=([^&#]*)(&|#|$)");
 		var m = (url || location.href).match(r);
 		return (!m? null :m[2]);
+	};
+
+	/**
+	 * parse param string into object
+	 * @param str
+	 * @param delimiter
+	 * @returns {{}}
+	 */
+	var parseParam = function(str, delimiter){
+		delimiter = delimiter || '&';
+		var tmp = str.split(delimiter);
+		var ret = {};
+		for(var i=0; i<tmp.length; i++){
+			var t = tmp[i].split('=');
+			var k = t[0] ? decodeURIComponent(t[0]) : null;
+			var v = t[1] ? decodeURIComponent(t[1]) : null;
+			if(k && v != null){
+				ret[k] = v;
+			}
+		}
+		return ret;
+	};
+
+	var parseParamToFormData = function(str, delimiter){
+		var data = parseParam(str);
+		var formData = new FormData();
+		for(var i in data){
+			formData.append(i, data[i]);
+		}
+		return formData;
 	};
 
 	/**
@@ -107,7 +138,7 @@ define('ywj/net', function(require){
 
 	/**
 	 * 合并参数
-	 * @return
+	 * @return string
 	 **/
 	var mergeCgiUri = function(/**url, get1, get2...**/){
 		var args = util.toArray(arguments);
@@ -164,7 +195,7 @@ define('ywj/net', function(require){
 			frontCache: false,  //前端cache
 			jsonpCallback: '_callback',
 			onSuccess: function(){},
-			onError: function(){msg.show("后台有点忙，请稍后重试", 'err');}
+			onError: function(){msg.show(lang("后台有点忙，请稍后重试"), 'err');}
 		}, opt);
 
 		if(util.inArray(opt.format, ['json', 'jsonp', 'formsender'])){
@@ -194,8 +225,8 @@ define('ywj/net', function(require){
 				}
 				opt.onSuccess(rsp);
 			},
-			error: function(){
-				opt.onError();
+			error: function(e){
+				opt.onError(e.statusText || 'Error');
 			}
 		});
 	};
@@ -292,8 +323,44 @@ define('ywj/net', function(require){
 		return data_str.join('&');
 	};
 
+	/**
+	 * 文件下载
+	 * @param src 文件地址
+	 * @param save_name 保存名称
+	 * @param ext 保存扩展名，缺省自动解析文件地址后缀
+	 */
+	var download = function(src, save_name, ext){
+		ext = ext || util.resolveExt(src);
+		save_name = save_name || util.resolveFileName(src);
+		var link = document.createElement('a');
+		link.href = src;
+		link.download = save_name+ext;
+		document.body.appendChild(link);
+		link.click();
+		link.parentNode.removeChild(link);
+	};
+
+	/**
+	 * 高级文件下载
+	 * @param url 文件地址
+	 * @param success 下载完成的回调
+	 */
+	var downloadFile = function (url, success) {
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', url, true);
+		xhr.responseType = "blob";
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				if(success)success(xhr.response);
+			}
+		};
+		xhr.send(null);
+	}
+
 	return {
 		getParam: getParam,
+		parseParam: parseParam,
+		parseParamToFormData: parseParamToFormData,
 		buildParam: buildParam,
 		setHash: setHash,
 		mergeStaticUri: mergeStaticUri,
@@ -302,6 +369,8 @@ define('ywj/net', function(require){
 		get: get,
 		post: post,
 		postFormData: postFormData,
-		getFormData: getFormData
+		getFormData: getFormData,
+		download: download,
+		downloadFile: downloadFile
 	};
 });

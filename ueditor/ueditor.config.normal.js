@@ -20,7 +20,7 @@
             'inserttable', 'deletetable', 'insertparagraphbeforetable',
             'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|',
             'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-            'simpleupload',  'emotion', 'source'
+            'simpleupload', 'source'
         ]]
     };
 

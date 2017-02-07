@@ -2,32 +2,42 @@
  * Created by sasumi on 3/12/2014.
  */
 define('ywj/popup', function(require){
+	require('ywj/resource/popup.css');
 	var $ = require('jquery');
-	var util = require('ywj/util');
+	var Util = require('ywj/util');
 	var masker = require('ywj/masker');
+	var Msg = require('ywj/msg');
+	var Net = require('ywj/net');
 	var POP_COLLECT_KEY = '__POPUP_COLLECTION__';
 	var YWJ_WIDGET_POPUP = 'YWJ_WIDGET_POPUP';
+	var BTN_LOADING_CLASS = 'btn-loading';
+	var POPUP_SHOW_CLASS = 'PopupDialog-Ani-show';
+	var DEF_POPUP_WIDTH = 600;
+	var KEY_ESC = 27;
+
+	var STATUS_HIDE = 0;
+	var STATUS_SHOW = 1;
+
+	var lang = require('lang/$G_LANGUAGE');
 	var emptyFn = function(){};
+	var console = window['console'] || {
+			log: emptyFn,
+			info: emptyFn,
+			error: emptyFn
+		};
 
-	$('<style type="text/css">'+[
-			'.PopupDialog {zoom:1; filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=2, OffY=2, Color=#cccccc);}',
-			'.PopupDialog * {margin:0; padding:0}',
-			'.PopupDialog {position:absolute; top:20px; left:20px; width:350px; border:1px solid #bbb; border-top-color:#ccc; border-left-color:#ccc; background-color:white; box-shadow:0 0 20px #aaa; border-radius:2px}',
-			'.PopupDialog-hd {height:28px; background-color:#fff; cursor:move; position:relative; border-radius:2px 2px 0 0}',
-			'.PopupDialog-hd h3 {font-size:12px; font-weight:bolder; color:gray; padding-left:10px; line-height:28px;}',
-			'.PopupDialog-close {display:block; overflow:hidden; width:28px; height:28px; position:absolute; right:0; top:0; text-align:center; cursor:pointer; font-size:17px; font-family:Verdana; text-decoration:none; color:gray;}',
-			'.PopupDialog-close:hover {color:black;}',
-			'.PopupDialog-ft {background-color:#f3f3f3; white-space:nowrap; border-top:1px solid #e0e0e0; padding:5px 5px 5px 0; text-align:right; border-radius:0 0 3px 3px}',
-			'.PopupDialog-text {padding:20px;}',
-			'.PopupDialog-bd-frm {border:none; width:100%}',
-			'.PopupDialog-btn {display:inline-block; font-size:12px; cursor:pointer; box-shadow:1px 1px #fff; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); background:-moz-linear-gradient(19% 75% 90deg, #E0E0E0, #FAFAFA); background:-webkit-gradient(linear, left top, left bottom, from(#FAFAFA), to(#E0E0E0)); color:#4A4A4A; background-color:white; text-decoration:none; padding:0 15px; height:20px; line-height:20px; text-align:center; border:1px solid #ccd4dc; white-space:nowrap; border-radius:2px}',
-			'.PopupDialog-btn:hover {background-color:#eee}',
-			'.PopupDialog-btnDefault {}'].join('')
-		+ '</style>')
-		.appendTo($('head'))
-		.attr('id',YWJ_WIDGET_POPUP);
+	window['POPUP_COMPONENT_FLAG'] = true;
+	window[POP_COLLECT_KEY] = [];
 
-	window[POP_COLLECT_KEY] = {};
+	var IS_ON_SHOW_CALL_STACK = [];
+	var on_show_loop_check = function(pop){
+		if(pop.status == STATUS_SHOW && IS_ON_SHOW_CALL_STACK.length){
+			$.each(IS_ON_SHOW_CALL_STACK, function(k, v){
+				v();
+			});
+			IS_ON_SHOW_CALL_STACK = [];
+		}
+	};
 
 	/**
 	 * Popup class
@@ -37,27 +47,31 @@ define('ywj/popup', function(require){
 	 * @param {Object} config
 	 */
 	var Popup = function(config){
+		var _this = this;
 		this.container = null;
-		this.status = 0;
+		this.status = STATUS_HIDE;
 		this._eventBinded = false;
 
 		this._events = {};
 		this._eventParams = {};
 
-		this._readyCbList = [];
-		this.guid = util.guid();
+		this.guid = Util.guid();
 		this.onShow = emptyFn;
 		this.onClose = emptyFn;
+		this.isOnShow = function(callback){
+			IS_ON_SHOW_CALL_STACK.push(callback);
+			on_show_loop_check(_this);
+		};
 
 		this.config = $.extend({}, {
 			ID_PRE: 'popup-dialog-id-pre',
-			title: '对话框',				//标题
-			content: '测试',				//content.src content.id
+			title: lang('对话框'),				//标题
+			content: lang('测试'),				//content.src content.id
 			width: 400,						//宽度
 			moveEnable: true,				//框体可移动
 			moveTriggerByContainer: false,	//内容可触发移动
 			zIndex: 1000,					//高度
-			isModal: false,					//模态对话框
+			modal: true,					//模态对话框
 			topCloseBtn: true,				//是否显示顶部关闭按钮,如果显示顶部关闭按钮，则支持ESC关闭窗口行为
 			showMask: true,
 			keepWhileHide: false,			//是否在隐藏的时候保留对象
@@ -77,30 +91,7 @@ define('ywj/popup', function(require){
 		}, config);
 
 		//ADD TO MONITOR COLLECTION
-		window[POP_COLLECT_KEY][this.guid] = this;
-	};
-
-	/**
-	 * on content onReady
-	 * @param  callback
-	 */
-	Popup.prototype.onReady = function(callback) {
-		if(this._ready){
-			callback();
-		} else {
-			this._readyCbList.push(callback);
-		}
-	};
-
-	/**
-	 * call ready list
-	 */
-	Popup.prototype._callReadyList = function() {
-		this._ready = true;
-		$.each(this._readyCbList, function(k, fn){
-			fn();
-		});
-		this._readyCbList = [];
+		window[POP_COLLECT_KEY].push(this);
 	};
 
 	/**
@@ -130,14 +121,19 @@ define('ywj/popup', function(require){
 
 				//绑定对话框关闭事件
 				bindEscCloseEvent.call(_this);
+
 				_this._eventBinded = true;
 			}
 
 			//更新对话框z-index
 			updateDialogZIndex.call(_this);
 
+			//animate
+			_this.container.addClass(POPUP_SHOW_CLASS);
+			_this.status = STATUS_SHOW;
+
 			_this.onShow();
-			_this.status = 1;
+			on_show_loop_check(_this);
 		});
 	};
 
@@ -155,10 +151,6 @@ define('ywj/popup', function(require){
 	 * 聚焦到当前对话框第一个按钮
 	 */
 	Popup.prototype.focus = function() {
-		var a = $('A', this.container);
-		if(a[0]){
-			a.focus();
-		}
 	};
 
 	/**
@@ -185,61 +177,47 @@ define('ywj/popup', function(require){
 		if(this.onClose() === false){
 			return;
 		}
+		var _this = this;
+
+		//处理对话框隐藏效果
+		this.container.removeClass(POPUP_SHOW_CLASS);
 		this.container.hide();
 		this.status = 0;
 
-		var _this = this,
-			hasDialogLeft = false,
-			hasModalPanelLeft = false;
+		var Collections = window[POP_COLLECT_KEY];
 
-		if(!this.config.keepWhileHide){
-			var tmp = {};
-			$.each(window[POP_COLLECT_KEY], function(guid){
-				if(guid != _this.guid){
-					tmp[this.guid] = this;
+		//remove this dialog
+		if(!_this.config.keepWhileHide){
+			var tmp = [];
+			$.each(Collections, function(k, pop){
+				if(pop.guid != _this.guid){
+					tmp.push(pop);
 				}
 			});
-
-			window[POP_COLLECT_KEY] = tmp;
+			Collections = tmp;
 			_this.container.remove();
 			_this.container = null;
 		}
 
-		$.each(window[POP_COLLECT_KEY], function(k, dialog){
-			if(dialog.status){
-				hasDialogLeft = true;
+		//remove other dialog
+		var last_max_zIndex = -1;
+		var last_top_pop = null;
+		for(var i=Collections.length-1; i>=0; i--){
+			var pop = Collections[i];
+			if(pop.config.zIndex > last_max_zIndex){
+				last_top_pop = pop;
+				last_max_zIndex = pop.config.zIndex;
 			}
-			if(dialog.status && dialog.config.isModal){
-				hasModalPanelLeft = true;
-				dialog.setEnable();
-				dialog.focus();
-				return false;
-			}
-		});
-
-		//没有显示的对话框
-		if(!hasDialogLeft){
+		}
+		if(last_top_pop){
+			last_top_pop.setEnable();
+			last_top_pop.focus();
+		} else {
 			masker.hide();
 		}
 
-		//剩下的都是普通对话框
-		if(!hasModalPanelLeft){
-			var _lastTopPanel;
-			$.each(window[POP_COLLECT_KEY], function(k, dialog){
-				if(!dialog.status){
-					return;
-				}
-				dialog.setEnable();
-				if(!_lastTopPanel){
-					_lastTopPanel = dialog;
-				} else if(_lastTopPanel.config.zIndex <= dialog.config.zIndex){
-					_lastTopPanel = dialog;
-				}
-			});
-			if(_lastTopPanel){
-				_lastTopPanel.focus();
-			}
-		}
+		//reset collection
+		window[POP_COLLECT_KEY] = Collections;
 	};
 
 	/**
@@ -282,13 +260,17 @@ define('ywj/popup', function(require){
 		var popHeight = 0;
 		var _this = this;
 		(function(){
-			var fr = $('iframe', _this.container)[0];
-			var w = fr.contentWindow;
-			var b = w.document.body;
-			var currentHeight = parseInt($(b).outerHeight());
-			if (currentHeight != popHeight) {
-				popHeight = currentHeight;
-				_this.updateHeight(currentHeight+10);
+			try {
+				var fr = $('iframe', _this.container)[0];
+				var w = fr.contentWindow;
+				var b = w.document.body;
+				var currentHeight = parseInt($(b).outerHeight());
+				if (currentHeight != popHeight) {
+					popHeight = currentHeight;
+					_this.updateHeight(currentHeight+10);
+				}
+			} catch(ex){
+				return false;
 			}
 			setTimeout(arguments.callee, interval);
 		})();
@@ -300,7 +282,7 @@ define('ywj/popup', function(require){
 	 */
 	Popup.prototype.fire = function(key){
 		var _this = this;
-		var args = util.toArray(arguments).slice(1);
+		var args = Util.toArray(arguments).slice(1);
 		this._eventParams[key] = args;
 		if(this._events[key]){
 			$.each(this._events[key], function(k, fn){
@@ -315,7 +297,7 @@ define('ywj/popup', function(require){
 	 * @return {Popup}
 	 */
 	Popup.getPopupByGuid = function(guid){
-		var result;
+		var result = null;
 		$.each(window[POP_COLLECT_KEY], function(k, pop){
 			if(pop.guid == guid){
 				result = pop;
@@ -349,15 +331,21 @@ define('ywj/popup', function(require){
 			pop.close();
 		};
 
+		config = config || {};
+		if(config.with_icon && Util.isString(content)){
+			content = '<div class="PopupDialog-confirm-text">'+Util.htmlEscape(content)+'</div>';
+		}
+
 		var conf = $.extend({}, {
-			title: title||'确认',
+			title: title||lang('确认'),
 			content: content,
 			width: 350,
+			with_icon: false,
 			topCloseBtn: false,
-			isModal: true,
+			modal: true,
 			buttons: [
-				{name:'确定', handler:on_confirm, setDefault:true},
-				{name:'取消', handler:on_cancel}
+				{name:lang('确认'), handler:on_confirm, setDefault:true},
+				{name:lang('取消'), handler:on_cancel}
 			]
 		}, config);
 
@@ -382,14 +370,20 @@ define('ywj/popup', function(require){
 			}
 			pop.close();
 		};
+
+		config = config || {};
+		if(config.with_icon && Util.isString(content)){
+			content = '<div class="PopupDialog-confirm-text">'+Util.htmlEscape(content)+'</div>';
+		}
+
 		var conf = $.extend({
-			title: title||'提示',
+			title: title||lang('提示'),
 			content: content,
 			width: 350,
 			topCloseBtn: false,
-			isModal: true,
+			modal: true,
 			buttons: [
-				{name:'确定', handler:on_submit, setDefault:true}
+				{name:lang('确定'), handler:on_submit, setDefault:true}
 			]
 		}, config);
 		pop = new Popup(conf);
@@ -397,94 +391,222 @@ define('ywj/popup', function(require){
 		return pop;
 	};
 
+	/**
+	 * get top popup class
+	 * @param callback
+	 */
+	Popup.getTopPopupClass = function(callback){
+		var win = window;
+		var pop_in_parent = false;
+		try {
+			while(win != win.parent && win.parent['POPUP_COMPONENT_FLAG']){
+				win = win.parent;
+				pop_in_parent = true;
+			}
+		} catch(Ex){
+			console.info(Ex);
+		}
+
+		if(pop_in_parent){
+			win.seajs.use('ywj/popup', callback);
+		} else {
+			callback(Popup);
+		}
+	};
+
+	/**
+	 * 在顶部窗口实例化popup并显示
+	 * @param conf
+	 * @param callback
+	 */
+	Popup.showPopInTop = function(conf, callback){
+		callback = callback || function(){};
+		conf.modal = conf.modal === undefined ? true : !!conf.modal;
+		Popup.getTopPopupClass(function(Pop){
+			var p = new Pop(conf);
+			callback(p); //优先绑定callback，否则会出现onShow绑定失败
+			p.show();
+		});
+	};
+
+	Popup.nodeClick = function($node, param){
+		var POPUP_ON_LOADING = 'data-popup-on-loading-flag';
+		var RET = $node[0].tagName == 'A' ? false : null;
+		if($node.attr(POPUP_ON_LOADING) == 1){
+			return RET;
+		}
+		if($node.hasClass('btn')){
+			$node.addClass(BTN_LOADING_CLASS);
+		}
+		$node.attr(POPUP_ON_LOADING, 1);
+		var src = Net.mergeCgiUri($node.attr('href') || $node.data('href'), {'ref':'iframe'});
+		var width = parseFloat($node.data('width')) || DEF_POPUP_WIDTH;
+		var height = parseFloat($node.data('height')) || 0;
+		var title = $node.attr('title') || $node.html() || $node.data('title') || $node.val() || '';
+		var force_refresh = param['forcerefresh'];
+		var onSuccess = $node.data('onsuccess');
+
+		if(onSuccess){
+			eval('var fn1 = window.'+onSuccess);
+			onSuccess = fn1;
+		} else {
+			onSuccess = function(){};
+		}
+		var onError = $node.data('onerror');
+		if(onError){
+			eval('var fn2 = window.'+onError);
+			onError = fn2;
+		} else {
+			onError = function(){};
+		}
+
+		var conf = Util.cloneConfigCaseInsensitive({
+			title: title,
+			content: {src:src},
+			width: width,
+			moveEnable: true,
+			topCloseBtn: true,
+			buttons: []
+		}, param);
+
+		if(height){
+			conf.height = height;
+		}
+
+		Popup.showPopInTop(conf, function(p){
+			p.onShow = function(){
+				Msg.hide();
+				$node.attr(POPUP_ON_LOADING, 0).removeClass(BTN_LOADING_CLASS);
+			};
+			if(force_refresh){
+				p.onClose = function(){
+					location.reload();
+				}
+			}
+			p.listen('onSuccess', function(){return onSuccess.apply($node, Util.toArray(arguments));});
+			p.listen('onError', onError);
+		});
+		return RET;
+	};
+
 	//!!以下方法仅在iframe里面提供
 	var in_sub_win = false;
 	try {
 		in_sub_win = !!window.frameElement;
 	} catch(e){}
-	if(in_sub_win){
-		/**
-		 * 获取当前popup 事件
-		 * @param key
-		 * @param p1
-		 * @param p2
-		 */
-		Popup.fire = function(key, p1, p2){
-			var pop = Popup.getCurrentPopup();
-			if(pop){
-				pop.fire.apply(pop, arguments);
-			}
-		};
 
-		/**
-		 * 监听自定义事件
-		 * @param key
-		 * @param callback
-		 * @return {Boolean}
-		 */
-		Popup.listen = function(key, callback){
-			var pop = Popup.getCurrentPopup();
-			if(pop){
-				return pop.listen(key, callback);
-			}
-			return false;
-		};
+	/**
+	 * 获取当前popup 事件
+	 * @param key
+	 * @param p1
+	 * @param p2
+	 */
+	Popup.fire = function(key, p1, p2){
+		if(!in_sub_win){
+			console.warn('No in sub window');
+			return;
+		}
+		var pop = Popup.getCurrentPopup();
+		if(pop){
+			pop.fire.apply(pop, arguments);
+		}
+	};
 
-		/**
-		 * close all popup
-		 * @see Popup#close
-		 */
-		Popup.closeAll = function(){
-			$.each(window[POP_COLLECT_KEY], function(k, pop){
-				pop.close();
-			});
-		};
+	/**
+	 * 监听自定义事件
+	 * @param key
+	 * @param callback
+	 * @return {Boolean}
+	 */
+	Popup.listen = function(key, callback){
+		if(!in_sub_win){
+			console.warn('No in sub window');
+			return;
+		}
+		var pop = Popup.getCurrentPopup();
+		if(pop){
+			return pop.listen(key, callback);
+		}
+		return false;
+	};
 
-		/**
-		 * resize current popup
-		 * @deprecated only take effect in iframe mode
-		 */
-		Popup.resizeCurrentPopup = function(){
-			$(window).on('load', function(){
-				var wr = util.getRegion();
-				document.body.style.overflow = 'hidden';
-				window.frameElement.style.height = wr.documentHeight +'px';
-			});
-		};
+	/**
+	 * close all popup
+	 * @see Popup#close
+	 */
+	Popup.closeAll = function(){
+		if(!in_sub_win){
+			console.warn('No in sub window');
+			return;
+		}
+		$.each(window[POP_COLLECT_KEY], function(k, pop){
+			pop.close();
+		});
+	};
 
-		/**
-		 * auto resize current popup
-		 * @param interval
-		 */
-		Popup.autoResizeCurrentPopup = function(interval){
-			interval = interval || 1000;
-			var pop = Popup.getCurrentPopup();
-			pop.autoResize(interval);
-		};
+	/**
+	 * resize current popup
+	 * @deprecated only take effect in iframe mode
+	 */
+	Popup.resizeCurrentPopup = function(){
+		if(!in_sub_win){
+			console.warn('No in sub window');
+			return;
+		}
+		$(window).on('load', function(){
+			var wr = Util.getRegion();
+			document.body.style.overflow = 'hidden';
+			window.frameElement.style.height = wr.documentHeight +'px';
+		});
+	};
 
-		/**
-		 * get current page located popup object
-		 * @return mixed
-		 */
-		Popup.getCurrentPopup = function(){
-			var guid = window.frameElement.getAttribute('guid');
-			if(guid){
-				return parent[POP_COLLECT_KEY][guid];
-			}
+	/**
+	 * auto resize current popup
+	 * @param interval
+	 */
+	Popup.autoResizeCurrentPopup = function(interval){
+		if(!in_sub_win){
+			console.warn('No in sub window');
+			return;
+		}
+		interval = interval || 50;
+		var pop = Popup.getCurrentPopup();
+		pop.autoResize(interval);
+	};
+
+	/**
+	 * get current page located popup object
+	 * @return mixed
+	 */
+	Popup.getCurrentPopup = function(){
+		if(!in_sub_win){
+			console.warn('No in sub window');
 			return null;
-		};
-
-		/**
-		 * close current popup
-		 * @deprecated only take effect in iframe mode
-		 */
-		Popup.closeCurrentPopup = function(){
-			var curPop = this.getCurrentPopup();
-			if(curPop){
-				curPop.close();
+		}
+		var guid = window.frameElement.getAttribute('guid');
+		if(guid){
+			for(var i=0; i<parent[POP_COLLECT_KEY].length; i++){
+				if(parent[POP_COLLECT_KEY][i].guid == guid){
+					return parent[POP_COLLECT_KEY][i];
+				}
 			}
-		};
-	}
+		}
+		return null;
+	};
+
+	/**
+	 * close current popup
+	 */
+	Popup.closeCurrentPopup = function(){
+		if(!in_sub_win){
+			console.warn('No in sub window');
+			return;
+		}
+		var curPop = this.getCurrentPopup();
+		if(curPop){
+			curPop.close();
+		}
+	};
 
 	/**
 	 * 初始化对话框结构
@@ -495,7 +617,7 @@ define('ywj/popup', function(require){
 			onload();
 			return;
 		}
-		var id = this.config.ID_PRE + util.guid();
+		var id = this.config.ID_PRE + Util.guid();
 
 		//构建基础框架
 		this.container = $('<div class="'+this.config.cssClass.dialog+'" style="left:-9999px" id="'+id+'"></div>').appendTo($('body'));
@@ -503,7 +625,7 @@ define('ywj/popup', function(require){
 		//构建内容容器
 		var content = '<div class="'+this.config.cssClass.body+'">';
 		if(typeof(this.config.content) == 'string'){
-			content += '<p class="'+this.config.cssClass.textCon+'">'+this.config.content+'</p>';
+			content += '<div class="'+this.config.cssClass.textCon+'">'+this.config.content+'</div>';
 		} else if(this.config.content.src){
 			content += '<iframe allowtransparency="true" guid="'+this.guid+'" src="'+this.config.content.src+'" class="'+this.config.cssClass.iframe+'" frameborder=0></iframe>';
 		} else if(this.config.content.id){
@@ -528,7 +650,7 @@ define('ywj/popup', function(require){
 			'<div class="PopupDialog-Modal-Mask" style="position:absolute; height:0; overflow:hidden; z-index:2; background-color:#ccc; width:100%"></div>',
 			'<div class="',this.config.cssClass.head+'">',
 			'<h3>',this.config.title,'</h3>',
-			(this.config.topCloseBtn ? '<span class="PopupDialog-close" tabindex="0" title="关闭窗口">x</span>' : ''),
+			(this.config.topCloseBtn ? '<span class="PopupDialog-close" tabindex="0" title="关闭">&times;</span>' : ''),
 			'</div>',content,btn_html,
 			'</div>'
 		]).join('');
@@ -555,7 +677,6 @@ define('ywj/popup', function(require){
 			var b = w.document.body;
 			w.focus();
 		} catch(ex){
-			console.log(ex);
 			return false;
 		}
 
@@ -573,6 +694,7 @@ define('ywj/popup', function(require){
 		} else {
 			$(iframe).css('height', height);
 		}
+		return true;
 	};
 
 	/**
@@ -584,11 +706,10 @@ define('ywj/popup', function(require){
 			top:0,
 			left:0
 		};
+		return region;
 		try {
-			if(window.frameElement){
-				region.top = parent.document.documentElement.scrollTop || parent.pageYOffset || parent.document.body.scrollTop;
-				region.left = $('body', parent.document).scrollLeft();
-			}
+			region.top = document.documentElement.scrollTop || window.pageYOffset || parent.document.body.scrollTop;
+			region.left = $('body', parent.document).scrollLeft();
 		} catch(ex){
 			console.log(ex);
 		}
@@ -606,7 +727,7 @@ define('ywj/popup', function(require){
 		};
 		try {
 			if(window.frameElement) {
-				var pr = util.getRegion(parent);
+				var pr = Util.getRegion(parent);
 				region.visibleHeight = pr.visibleHeight;
 				region.visibleWidth = pr.visibleWidth;
 			}
@@ -633,7 +754,7 @@ define('ywj/popup', function(require){
 				left: $body.scrollLeft()
 			},
 			parentScroll = getParentScrollInfo(),
-			winRegion = util.getRegion(),
+			winRegion = Util.getRegion(),
 			parentRegion = getParentWinRegion(),
 			top = 0,
 			left = 0;
@@ -679,35 +800,28 @@ define('ywj/popup', function(require){
 		var hasOtherModalPanel = false;
 		var _this = this;
 
-		$.each(window[POP_COLLECT_KEY], function(guid){
-			//有其他的模态对话框
-			//调低当前对话框的z-index
-			//此动作产生的z-index可能会存在数量瓶颈，或者是与其他样式定义的z-index容器有冲突。
-			if(this != _this && this.status && this.config.isModal){
-				_this.config.zIndex = this.config.zIndex - 1;
+		$.each(window[POP_COLLECT_KEY], function(k, pop){
+			if(pop.config.modal && pop.status == STATUS_SHOW && _this != pop){
 				hasOtherModalPanel = true;
-				return false;
-			} else if(_this != this && this.status && !this.config.isModal){
-				if(this.config.zIndex > _this.config.zIndex){
-					_this.config.zIndex = this.config.zIndex + 1;
-				} else if(this.config.zIndex == _this.config.zIndex){
-					_this.config.zIndex += 1;
-				}
+			}
+			if(_this.config.modal){
+				_this.config.zIndex = Math.max(_this.config.zIndex, pop.config.zIndex+1);
+			} else {
+				_this.config.zIndex = Math.max(_this.config.zIndex, pop.config.zIndex);
 			}
 		});
 
 		_this.container.css('zIndex', _this.config.zIndex);
-		if(hasOtherModalPanel){
+
+		if(hasOtherModalPanel && !_this.config.modal){
 			_this.setDisable();
-		} else if(_this.config.isModal){
+		} else {
 			//设置除了当前模态对话框的其他对话框所有都为disable
-			$.each(window[POP_COLLECT_KEY], function(guid){
-				if(this != _this && this.status){
-					this.setDisable();
+			$.each(window[POP_COLLECT_KEY], function(k, pop){
+				if(pop != _this && pop.status == STATUS_SHOW){
+					pop.setDisable();
 				}
 			});
-			_this.focus();
-		} else {
 			_this.focus();
 		}
 	};
@@ -747,10 +861,10 @@ define('ywj/popup', function(require){
 		var _this = this;
 		var hasModalPanel = false;
 		$.each(window[POP_COLLECT_KEY], function(k, dialog){
-			if(dialog != _this && dialog.status && dialog.config.isModal){
+			if(dialog != _this && dialog.status == STATUS_SHOW && dialog.config.modal){
 				hasModalPanel = true;
 				return false;
-			} else if(dialog != _this && dialog.status){
+			} else if(dialog != _this && dialog.status == STATUS_SHOW){
 				if(dialog.config.zIndex >= _this.config.zIndex){
 					_this.config.zIndex = dialog.config.zIndex + 1;
 				}
@@ -773,11 +887,11 @@ define('ywj/popup', function(require){
 		var _lastPoint = {X:0, Y:0};
 		var _lastRegion = {top:0, left:0};
 		var _moving;
-		var letie8 = $.browser.msie && parseInt($.browser.version, 10) <= 8;
+		var ie8 = $.browser.msie && parseInt($.browser.version, 10) <= 8;
 
 		$(document).on('mousemove', function(event){
-			if(!_this.container || !_moving || (event.button !== 0 && !letie8)){
-				return false;
+			if(!_this.container || !_moving || (event.button !== 0 && !ie8)){
+				return;
 			}
 			var offsetX = parseInt(event.clientX - _lastPoint.X, 10);
 			var offsetY = parseInt(event.clientY - _lastPoint.Y, 10);
@@ -787,12 +901,12 @@ define('ywj/popup', function(require){
 		});
 
 		$('body').on('mousedown', function(event){
-			if(!_this.container || (event.button !== 0 && !letie8)){
+			if(!_this.container || (event.button !== 0 && !ie8)){
 				return;
 			}
-			var head = _this.config.moveTriggerByContainer ? _this.container : $('.'+_this.config.cssClass.head, _this.container);
+			var $head = _this.config.moveTriggerByContainer ? _this.container : $('.'+_this.config.cssClass.head, _this.container);
 			var tag = event.target;
-			if($.contains(head[0], tag)){
+			if($.contains($head[0], tag) || $head[0] == tag){
 				_moving = true;
 				_lastRegion = {
 					left: parseInt(_this.container.css('left'), 10),
@@ -800,6 +914,8 @@ define('ywj/popup', function(require){
 				};
 				_lastPoint = {X: event.clientX, Y: event.clientY};
 				return false;
+			} else {
+				_moving = false;
 			}
 		});
 
@@ -812,32 +928,66 @@ define('ywj/popup', function(require){
 	 * 绑定 ESC 关闭事件
 	 * 注意，所有的对话框只绑定一次ESC事件
 	 */
-	var ESC_BINDED;
+	var ESC_BIND;
 	var bindEscCloseEvent = function(){
-		if(ESC_BINDED){
+		var close = function(){
+			var lastDialog = null;
+			$.each(window[POP_COLLECT_KEY], function(k, dialog){
+				if(dialog.config.modal && dialog.status == STATUS_SHOW && dialog.config.topCloseBtn){
+					lastDialog = dialog;
+					return false;
+				} else if(dialog.status == STATUS_SHOW && dialog.config.topCloseBtn){
+					if(!lastDialog || lastDialog.config.zIndex <= dialog.config.zIndex){
+						lastDialog = dialog;
+					}
+				}
+			});
+			if(lastDialog){
+				lastDialog.close();
+			}
+		};
+
+		//绑定内部close事件
+		if(this.config.topCloseBtn){
+			var $iframe = $(this.container.find('iframe'));
+			if($iframe.size()){
+				try {
+					var _this = this;
+					$iframe.load(function(){
+						var d = this.contentDocument;
+						if(d){
+							$('.PopupDialog-close', _this.container).attr('title', lang("关闭(ESC)"));
+							$(d).keyup(function(e){
+								if(e.keyCode == KEY_ESC){
+									close();
+								}
+							});
+						}
+					});
+					var d = $iframe[0].contentDocument;
+					if(d){
+						$('.PopupDialog-close', _this.container).attr('title', lang("关闭(ESC)"));
+						$(d).keyup(function(e){
+							if(e.keyCode == KEY_ESC){
+								close();
+							}
+						});
+					}
+				} catch(e){
+					console.error(e);
+				}
+			}
+		}
+		if(ESC_BIND){
 			return;
 		}
-		ESC_BINDED = true;
+		ESC_BIND = true;
 
-		$(document).on('keyup',function(event){
-			if(event.keyCode == 27){
-				var lastDialog = null;
-				$.each(window[POP_COLLECT_KEY], function(k, dialog){
-					if(dialog.config.isModal && dialog.status && dialog.config.topCloseBtn){
-						lastDialog = dialog;
-						return false;
-					} else if(dialog.status && dialog.config.topCloseBtn){
-						if(!lastDialog || lastDialog.config.zIndex <= dialog.config.zIndex){
-							lastDialog = dialog;
-						}
-					}
-				});
-				if(lastDialog){
-					lastDialog.close();
-				}
+		$(document.body).keyup(function(event){
+			if(event.keyCode == KEY_ESC){
+				close();
 			}
 		});
 	};
-
 	return Popup;
 });

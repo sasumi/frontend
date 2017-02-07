@@ -1,50 +1,124 @@
 define('ywj/tip', function(require){
 	require('ywj/resource/tip.css');
-	var util = require('ywj/util');
+	var $ = require('jquery');
+	var Util = require('ywj/util');
+	var Net = require('ywj/net');
 
+	var OBJ_COLLECTION = {};
 	var PRIVATE_VARS = {};
+	var GUID_BIND_KEY = 'ywj-com-tip-guid';
+	var TRY_DIR_MAP = [11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+	var KEY_ESC = 27;
 
 	/**
 	 * 绑定事件
 	 */
 	var bindEvent = function(){
 		if(PRIVATE_VARS[this.guid].opt.closeBtn){
-			var btn = $('.ywj-tip-close', PRIVATE_VARS[this.guid].container);
+			var btn = $('.ywj-tip-close', this.getDom());
 			var _this = this;
 			btn.click(function(){
 				_this.hide();
+			});
+			$('body').keyup(function(e){
+				if(e.keyCode == KEY_ESC){
+					_this.hide();
+				}
 			});
 		}
 	};
 
 	/**
-	 * 更新位置信息
-	 * @param px
-	 * @param py
+	 * 自动计算方位
+	 * @returns {number}
 	 */
-	var updatePosition = function(px, py){
-		var vars = PRIVATE_VARS[this.guid];
-		var width = vars.container.outerWidth();
-		var height = vars.container.outerHeight();
+	var calDir = function(){
+		var $body = $('body');
+		var container = this.getDom();
+		var width = container.outerWidth();
+		var height = container.outerHeight();
+		var px = this.rel_tag.offset().left;
+		var py = this.rel_tag.offset().top;
+		var rh = this.rel_tag.outerHeight();
+		var rw = this.rel_tag.outerWidth();
 
+		var scroll_left = $body.scrollLeft();
+		var scroll_top = $body.scrollTop();
+
+		var viewRegion = Util.getRegion();
+
+		for(var i=0; i<TRY_DIR_MAP.length; i++){
+			var dir_offset = getDirOffset(TRY_DIR_MAP[i], width, height, rh, rw);
+			var rect = {
+				left:px+dir_offset[0],
+				top:py+dir_offset[1],
+				width: width,
+				height: height
+			};
+			var layout_rect = {
+				left:scroll_left,
+				top:scroll_top,
+				width: viewRegion.visibleWidth,
+				height: viewRegion.visibleHeight
+			};
+			if(Util.rectInLayout(rect, layout_rect)){
+				return TRY_DIR_MAP[i];
+			}
+		}
+		console.warn('no dir hit, use default:', 11);
+		return 11;
+	};
+
+	/**
+	 * 方位偏移
+	 * @param dir
+	 * @param width
+	 * @param height
+	 * @param rh
+	 * @param rw
+	 * @returns {*}
+	 */
+	var getDirOffset = function(dir, width, height, rh, rw){
 		var offset = {
-			11: [-width*0.25, 0],
-			0: [-width*0.5, 0],
-			1: [-width*0.75, 0],
-			2: [-width, -height*0.25],
-			3: [-width, -height*0.5],
-			4: [-width, -height*0.75],
-			5: [-width*0.75, -height],
-			6: [-width*0.5, -height],
-			7: [-width*0.25, -height],
-			8: [0, -height*0.75],
-			9: [0, -height*0.5],
-			10: [0, -height*0.25]
+			11: [-width*0.25+rw/2, rh],
+			0: [-width*0.5+rw/2, rh],
+			1: [-width*0.75+rw/2, rh],
+			2: [-width, -height*0.25+rh/2],
+			3: [-width, -height*0.5+rh/2],
+			4: [-width, -height*0.75+rh/2],
+			5: [-width*0.75+rw/2, -height],
+			6: [-width*0.5+rw/2, -height],
+			7: [-width*0.25+rw/2, -height],
+			8: [rw, -height*0.75 + rh/2],
+			9: [rw, -height*0.5 + rh/2],
+			10: [rw, -height*0.25 + rh/2]
 		};
-		var x = px + offset[vars.opt.dir][0];
-		var y = py + offset[vars.opt.dir][1];
+		return offset[dir];
+	};
 
-		vars.container.css({
+	/**
+	 * 更新位置信息
+	 */
+	var updatePosition = function(){
+		var vars = PRIVATE_VARS[this.guid];
+		var dir = vars.opt.dir;
+		var container = this.getDom();
+		var width = container.outerWidth();
+		var height = container.outerHeight();
+		var px = this.rel_tag.offset().left;
+		var py = this.rel_tag.offset().top;
+		var rh = this.rel_tag.outerHeight();
+		var rw = this.rel_tag.outerWidth();
+
+		if(dir == 'auto'){
+			dir = calDir.call(this);
+		}
+		container.attr('class', 'ywj-tip-container-wrap ywj-tip-'+dir);
+		var offset = getDirOffset(dir, width, height, rh, rw);
+		var x = px + offset[0];
+		var y = py + offset[1];
+
+		container.css({
 			left: parseInt(x,10),
 			top: parseInt(y,10)
 		});
@@ -53,92 +127,148 @@ define('ywj/tip', function(require){
 	/**
 	 * TIP组件
 	 * @param content
-	 * @param opt
+	 * @param rel_tag
+     * @param opt
 	 * @constructor
 	 */
-	var Tip = function(content, opt){
-		this.guid = util.guid();
+	var Tip = function(content, rel_tag, opt){
+		this.guid = Util.guid();
+		this.rel_tag = $(rel_tag);
 		PRIVATE_VARS[this.guid] = {};
 
 		opt = $.extend({
-			closeBtn: true, //是否显示关闭按钮
-			expired: 0,     //延期关闭时间,0表示不延期关闭
-			dir: 0,         //方向(时钟方位)
-			width: 250,     //宽度
-			relTag: null,   //关联对象
-			posX: 0,        //偏移X
-			posY: 0         //偏移Y
-		}, opt);
+			closeBtn: false, //是否显示关闭按钮
+			timeout: 0,
+			width: 'auto',
+			dir: 'auto'
+		}, opt || {});
 
-		opt.relTag = $(opt.relTag);
-
-		var html = '<div class="ywj-tip-container-wrap ywj-tip-'+opt.dir+'" style="display:none; width:'+opt.width+'px;">'+
-			'<s class="ywj-tip-arrow ywj-tip-arrow-pt"></s>'+
-			'<s class="ywj-tip-arrow ywj-tip-arrow-bg"></s>'+
-			(opt.closeBtn ? '<span class="ywj-tip-close">X</span>' : '')+
-			'<div class="ywj-tip-content">'+
-			content +
-			'</div>'+
+		var html =
+			'<div class="ywj-tip-container-wrap" style="display:none; width:'+opt.width+'">'+
+				'<s class="ywj-tip-arrow ywj-tip-arrow-pt"></s>'+
+				'<s class="ywj-tip-arrow ywj-tip-arrow-bg"></s>'+
+				(opt.closeBtn ? '<span class="ywj-tip-close">&#10005;</span>' : '')+
+				'<div class="ywj-tip-content">'+content+'</div>'+
 			'</div>';
 
 		PRIVATE_VARS[this.guid].opt = opt;
 		PRIVATE_VARS[this.guid].container = $(html).appendTo($('body'));
+		OBJ_COLLECTION[this.guid] = this;
 		bindEvent.call(this);
 	};
 
+	Tip.prototype.getDom = function(){
+		var vars = PRIVATE_VARS[this.guid];
+		return vars.container;
+	};
+
+	Tip.prototype.updateContent = function(html){
+		this.getDom().find('.ywj-tip-content').html(html);
+		updatePosition.call(this);
+	};
+
+	Tip.prototype.onShow = function(){};
 	Tip.prototype.show = function(){
 		var vars = PRIVATE_VARS[this.guid];
-		vars.container.show();
-
-		var x = vars.posX;
-		var y = vars.posY;
-
-		if(vars.opt.relTag){
-			var pos = vars.opt.relTag.offset();
-			var size = {width:vars.opt.relTag.width(), height:vars.opt.relTag.height()};
-			var offset = {
-				11: [size.width/2, size.height],
-				0: [size.width/2, size.height],
-				1: [size.width/2, size.height],
-				2: [0, size.height/2],
-				3: [0, size.height/2],
-				4: [0, size.height/2],
-				5: [size.width/2, 0],
-				6: [size.width/2, 0],
-				7: [size.width/2, 0],
-				8: [size.width, size.height/2],
-				9: [size.width, size.height/2],
-				10: [size.width, size.height/2]
-			};
-			x = pos.left + offset[vars.opt.dir][0];
-			y = pos.top + offset[vars.opt.dir][1];
-		}
-		updatePosition.call(this, x, y);
-
-		if(vars.opt.expired){
-			var _this = this;
+		var _this = this;
+		this.getDom().show().stop().animate({opacity:1}, 'fast');
+		updatePosition.call(this);
+		this.onShow();
+		if(vars.opt.timeout){
 			setTimeout(function(){
 				_this.hide();
-			}, vars.opt.expired*1000);
+			}, vars.opt.timeout);
 		}
 	};
 
 	Tip.prototype.hide = function(){
-		PRIVATE_VARS[this.guid].container.hide();
+		var _this = this;
+		this.getDom().stop().animate({opacity:0}, 'fast', function(){_this.getDom().hide()});
 	};
 
 	Tip.prototype.destroy = function(){
-		PRIVATE_VARS[this.guid].container.remove();
+		this.getDom().remove();
 	};
 
-	Tip.show = function(content, relTag, opt){
-		opt = opt || {};
-		opt.relTag = relTag;
-
-		var tip = new Tip(content, opt);
+	Tip.show = function(content, rel_tag, opt){
+		var tip = new Tip(content, rel_tag, opt);
 		tip.show();
 		return tip;
 	};
 
+	/**
+	 * 简单节点绑定
+	 * @param content
+	 * @param rel_tag
+	 * @param opt
+	 * @returns {*}
+	 */
+	Tip.bind = function(content, rel_tag, opt){
+		var guid = $(rel_tag).data(GUID_BIND_KEY);
+		var obj = OBJ_COLLECTION[guid];
+		if(!obj){
+			var tm;
+			var hide = function(){
+				tm = setTimeout(function(){
+					obj && obj.hide();
+				}, 10);
+			};
+
+			var show = function(){
+				clearTimeout(tm);
+				obj.show();
+			};
+
+			obj = new Tip(content, rel_tag, opt);
+			$(rel_tag).data(GUID_BIND_KEY, obj.guid);
+			obj.getDom().hover(show, hide);
+			$(rel_tag).hover(show, hide);
+		}
+		return obj;
+	};
+
+	/***
+	 * 绑定异步处理函数
+	 * @param rel_tag
+	 * @param opt
+	 * @param loader
+	 */
+	Tip.bindAsync = function(rel_tag, loader, opt){
+		var guid = $(rel_tag).data(GUID_BIND_KEY);
+		var obj = OBJ_COLLECTION[guid];
+		if(!obj){
+			var loading = false;
+			obj = Tip.bind('loading...', rel_tag, opt);
+			obj.onShow = function(){
+				if(!loading){
+					loading = true;
+					loader(function(html){
+						obj.updateContent(html);
+					}, function(error){
+						obj.updateContent(error);
+					});
+				}
+			};
+		}
+	};
+	
+	Tip.nodeInit = function($node, param){
+		var url = param.url;
+		var content = param.content;
+		if(url){
+			Tip.bindAsync($node, function(succ, err){
+				Net.get(url, null, function(rsp){
+					if(rsp && !rsp.code){
+						succ(rsp.data);
+					} else {
+						err(rsp.message);
+					}
+				});
+			});
+		} else {
+			Tip.bind(content, $node);
+		}
+	};
+	
 	return Tip;
 });

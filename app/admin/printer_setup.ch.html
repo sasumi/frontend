@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>斑马条码打印机设置手册</title>
+	<link rel="stylesheet" href="css/article.css">
+	<script src=""></script>
+	<style>
+		p.warning {color:orange;}
+		p.warning:before {content:"!"; display:inline-block; vertical-align:middle; padding:0; width:16px; height:16px; text-align:center; margin-right:5px; line-height:1; color:white; background-color:orange; border-radius:10px;}
+	</style>
+	<script src="http://s.temtop.com/seajs/sea.js?v2015"></script>
+	<script src="http://s.temtop.com/seajs/config.js?v20160510"></script>
+	<script src="http://s.temtop.com/jquery/jquery-1.8.3.min.js?v2015"></script>
+	<script src="http://s.temtop.com/ywj/component/imagescale.js?v20160901"></script>
+	<script>seajs.use('ywj/auto');</script>
+</head>
+<body>
+	<article>
+		<h1>斑马条码打印机设置手册</h1>
+		<blockquote>
+			本文适用于：
+			<ul>
+				<li>打印机型号：GK888d</li>
+				<li>
+					Temtop内部系统：<a href="http://erp.temtop.com" target="_blank">erp系统</a>，<a href="http://sales.temtop.com" target="_blank">分销系统</a>，
+					<a href="http://sz.wms.temtop.com">wms系统</a>，<a href="http://supply.temtop.com">供应商系统</a>
+				</li>
+				<li><strong>通过网络共享使用的打印机</strong></li>
+			</ul>
+		</blockquote>
+
+		<h2>打印机安装</h2>
+		<ol>
+			<li>连接打印机USB数据线到电脑</li>
+			<li>接通打印机电源适配线，检查打印机指示灯是否亮起</li>
+			<li>按照打印机说明，放置打印纸</li>
+			<li>打印测试页面，验证打印机是否正确安装</li>
+		</ol>
+
+		<h2>Lodop打印控件安装</h2>
+		<ol>
+			<li>
+				登录Lodop官网，下载系统适用Lodop打印控件：<a href="http://www.lodop.net/download.html" target="_blank">http://www.lodop.net/download.html</a>
+				<sub>一般如windows 7,8,10系统，可选择下载C-Lodop独立版程序进行安装，下载时需要区分当前系统是否为64位、32位系统：
+					<a href="http://www.lodop.net/download/CLodop_Setup_for_Win64NT_2.062.zip" target="_blank" title="点击下载"><img src="printer_setup/sp160906_164320.png" alt=""></a>
+					<a href="http://www.lodop.net/download/CLodop_Setup_for_Win32NT_https_2.062.zip" target="_blank" title="点击下载"><img src="printer_setup/sp160906_164400.png" alt=""></a>
+				</sub>
+				帮助：<a href="http://jingyan.baidu.com/article/09ea3edec9caa4c0aede392e.html" target="_blank">如何识别当前系统是32位还是64位操作系统？</a>
+			</li>
+			<li>安装所下载的Lodop安装程序</li>
+			<li>重启浏览器（Chrome谷歌浏览器）</li>
+		</ol>
+
+		<h2>打印机设置</h2>
+		<h3>步骤一</h3>
+		<p>打开windows控制面板，进入【设备和打印机】设置页面</p>
+		<p><img src="printer_setup/sp160905_145542.png" alt=""></p>
+
+		<h3>步骤二</h3>
+		<p>打开斑马打印机【打印首选项】</p>
+		<p><img src="printer_setup/prt_opt.png" alt=""></p>
+		<p><img src="printer_setup/sp160905_150542.png" alt=""></p>
+
+		<h3>步骤三</h3>
+		<p>选项页面设置以下项目</p>
+
+		<h4>Options（选项）</h4>
+		<ul>
+			<li>Darkness（浓度）：<var>14</var></li>
+			<li>Width（纸张宽度）：<var>7.62</var></li>
+			<li>Height（纸张高度）：<var>2.1</var>，如打印其他项目，请按照实际纸张高度进行设置</li>
+		</ul>
+		<p><img src="printer_setup/sp160905_151407.png" alt=""></p>
+
+		<h4>Dithering（抖动）</h4>
+		<ul>
+			<li>Dithering type（抖动类型）：<var>None（无）</var></li>
+		</ul>
+		<p><img src="printer_setup/sp160905_151435.png" alt=""></p>
+
+		<h3>页面顶部调整（部分打印机需要设置）</h3>
+		<p class="warning">如打印机出现打印条码（barcode）出现code跨页情况，可以微调页面顶部边距</p>
+		<p>
+			<img src="printer_setup/sp160913_105254.png" alt="">
+		</p>
+
+		<h3>步骤四</h3>
+		<p>保存设置，退出设置页面</p>
+
+		<h2>内部系统打印设置（ERP为例）</h2>
+		<p>
+			登录、打开网站打印机设置页面
+			<sub>ERP系统打印机设置页面地址为：<a href="">http://erp.temtop.com/index.php/common/printerset</a></sub>
+		</p>
+		<p>统一设置系统使用打印机为：斑马打印机（ZDesigner）</p>
+		<p><img src="printer_setup/sp160905_153658.png" alt=""></p>
+		<h2>各功能打印机设置参数</h2>
+		<h3>产品条码，面单打印机参数设置</h3>
+		<table class="data-table">
+			<thead>
+				<tr>
+					<td rowspan="2">名称</td>
+					<td colspan="2">选项-设置</td>
+					<td colspan="2">选项-纸张大小</td>
+					<td colspan="4">选项-非打印区域</td>
+					<td colspan="2">高级设置-位置调整</td>
+					<td>抖动</td>
+				</tr>
+				<tr>
+					<td>打印速度</td>
+					<td>打印浓度</td>
+					<td>宽度</td>
+					<td>高度</td>
+					<td>左</td>
+					<td>右</td>
+					<td>顶部</td>
+					<td>底部</td>
+					<td>间距长度</td>
+					<td>顶部偏移</td>
+					<td>抖动类型</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>产品条码</td>
+					<td>7.6</td>
+					<td>11</td>
+					<td>6cm</td>
+					<td>3cm</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0.3cm</td>
+					<td>0</td>
+					<td>无</td>
+				</tr>
+				<tr>
+					<td>GLS面单</td>
+					<td>7.6</td>
+					<td>11</td>
+					<td>10cm</td>
+					<td>15cm</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0.3cm</td>
+					<td>0</td>
+					<td>无</td>
+				</tr>
+				<tr>
+					<td>DHL/Letter/WARENSENDUNG</td>
+					<td>7.6</td>
+					<td>11</td>
+					<td>10cm</td>
+					<td>20cm</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0.3cm</td>
+					<td>0</td>
+					<td>无</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="warning">其余设置参数均使用默认参数即可。</p>
+		<h3>使用图片打印FBA产品条码参数设置</h3>
+		<ul>
+			<li>Direction:Vertical(纵向)</li>
+			<li>Photo size: Full page(整页)</li>
+			<li>Fit: Shrink to fit(自适应)</li>
+		</ul>
+		<h4><a href="http://s.temtop.com/app/admin/lodop_printer.html" target="_blank">lodop打印使用手册</a></h4>
+		<hr>
+		<a href="printer_test_bar.html" target="_blank">热敏头测试页</a>
+		<a href="printer_test_bc.html" target="_blank">条码图像测试</a>
+
+	</article>
+	<script src="js/toc.js"></script>
+</body>
+</html>

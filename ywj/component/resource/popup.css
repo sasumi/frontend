@@ -1,0 +1,19 @@
+.PopupDialog {zoom:1; filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=2, OffY=2, Color=#cccccc); margin-top:-20px; opacity:0; transition:margin-top 0.5s ease-out, opacity 0.3s ease-out;}
+.PopupDialog {position:absolute; top:20px; left:20px; width:350px; border:1px solid #bbb; border-top-color:#ccc; border-left-color:#ccc; background-color:white; box-shadow:0 0 20px #aaa; border-radius:2px}
+.PopupDialog-hd {height:28px; background-color:#fff; cursor:move; position:relative; border-radius:2px 2px 0 0}
+.PopupDialog-hd h3 {font-size:12px; font-weight:bolder; color:gray; padding-left:10px; line-height:28px;}
+.PopupDialog-close {display:block; overflow:hidden; width:28px; height:28px; position:absolute; right:0; top:0; text-align:center; cursor:pointer; font-size:17px; font-family:Verdana; text-decoration:none; color:gray; line-height:1.5}
+.PopupDialog-close:hover {color:black;}
+.PopupDialog-ft {background-color:#f3f3f3; white-space:nowrap; border-top:1px solid #e0e0e0; padding:5px 5px 5px 0; text-align:right; border-radius:0 0 3px 3px}
+.PopupDialog-text {padding:10px 15px 20px}
+.PopupDialog-bd-frm {border:none; width:100%}
+.PopupDialog-btn {display:inline-block; font-size:12px; cursor:pointer; box-shadow:1px 1px #fff; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); background:-moz-linear-gradient(19% 75% 90deg, #E0E0E0, #FAFAFA); background:-webkit-gradient(linear, left top, left bottom, from(#FAFAFA), to(#E0E0E0)); color:#4A4A4A; background-color:white; text-decoration:none; padding:0 15px; height:20px; line-height:20px; text-align:center; border:1px solid #ccd4dc; white-space:nowrap; border-radius:2px}
+.PopupDialog-btn:hover {background-color:#eee}
+.PopupDialog-btnDefault {}
+
+.PopupDialog-confirm-text {font-size:16px; padding:15px 15px 15px 55px;}
+.PopupDialog-confirm-text:before {content:"\f071"; font-family:FontAwesome, serif; color:orange; font-size:38px; display:inline-block; width:53px; position:absolute; margin:0 0 0 -48px}
+.PopupDialog-alert-text {}
+
+/** animate **/
+.PopupDialog-Ani-show {margin-top:0; opacity:1}

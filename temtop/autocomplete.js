@@ -4,15 +4,7 @@
 define('temtop/autocomplete', function(require){
     var $ = require('jquery');
     require('temtop/resource/autocomplete.css');
-    /*  var css =" .ac_results {padding: 0px; border: 1px solid #aaa;background-color: white;overflow: hidden; z-index: 99999;}\
-     .ac_results ul { width: 100%; list-style-position: outside;list-style: none;padding: 0; margin: 0;}\
-     .ac_results li { margin: 0px; padding: 2px 5px; cursor: default; display: block;font: menu;font-size: 12px; line-height: 16px; overflow: hidden; }\
-     .ac_odd { background-color: #eee; } \
-     .ac_over { background-color: blue;color: white; }\
-     ";*/
     $(function(){
-        //  $('<style type="text/css">'+css+'</style>').appendTo($('head'));
-        /************** autocomplete start *****************/
         $.fn.extend({
             _autocomplete_:function(){
                 var elem =$(this);
@@ -23,7 +15,7 @@ define('temtop/autocomplete', function(require){
                 return this.bind("selected", handler);
             }
         });
-        /**结果处理s**/
+
         var listItems,
             active = -1,
             data,
@@ -139,7 +131,6 @@ define('temtop/autocomplete', function(require){
             active=-1;//重置
             options['datas']=data;//重置数据
             if (!element) { //判断是否已经创建了
-                debugger
                 //  var hid_input = $("<input hidden='true'/>").appendTo(input.parent());
 
                 element = $("<div />")
@@ -264,7 +255,5 @@ define('temtop/autocomplete', function(require){
                 active = 0;
             }
         }
-
-        /************** autocomplete end *****************/
     });
 });

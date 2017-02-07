@@ -3,19 +3,17 @@
  */
 define('temtop/muloperate',function(require){
 	var $ = require('jquery');
-	var msg = require('ywj/msg');
-	var net = require('ywj/net');
-	var util = require('ywj/util');
-	var FLAG = 'multiple-operate';
+	var Msg = require('ywj/msg');
+	var Net = require('ywj/net');
+	var Util = require('ywj/util');
 	var BTN_DISABLED_CLASS = 'btn-disabled';
 	var SELECT_PROMPT = '请选择要操作的项目';
 
-	var bind = function($scope){
-		$('[data-'+FLAG+']').each(function(){
-			var $btn = $(this);
-			var scope = $btn.data(FLAG) || 'body input[type=checkbox]';
+	return {
+		nodeInit: function($btn){
+			var scope = $btn.data('muloperate-scope') || 'body input[type=checkbox]';
 			var SUBMIT_ABLE = false;
-			var IS_LINK = $btn[0].tagName == 'A';
+			var IS_LINK = $btn[0].tagName == 'A' && $btn.attr('href');
 			var ORIGINAL_HREF = IS_LINK ? $btn.attr('href') : '';
 			var $checkbox_list = $(scope).filter(function(){
 				return this.name && !$(this).attr('disabled');
@@ -31,28 +29,28 @@ define('temtop/muloperate',function(require){
 					}
 				});
 				$btn[has_checked ? 'removeClass' : 'addClass'](BTN_DISABLED_CLASS);
+				if($btn[0].tagName == 'INPUT' || $btn[0].tagName == 'BUTTON'){
+					$btn.attr('disabled', !has_checked);
+				}
 				SUBMIT_ABLE = has_checked;
 
 				if(IS_LINK){
-					var new_href = net.mergeCgiUri(ORIGINAL_HREF, data);
+					var new_href = Net.mergeCgiUri(ORIGINAL_HREF, data);
 					$btn.attr('href', new_href);
 				} else {
-					$btn.attr('data-multiple-value', net.buildParam('',data));
+					$btn.attr('data-muloperate-value', Net.buildParam('',data));
 				}
 			};
 
 			$btn.mousedown(function(){
 				if(!SUBMIT_ABLE){
-					util.preventClickDelegate();
-					msg.show(SELECT_PROMPT, 'info', 1);
+					Util.preventClickDelegate();
+					Msg.show(SELECT_PROMPT, 'info', 1);
 					return false;
 				}
 			});
 			$checkbox_list.change(update_state);
 			update_state();
-		});
+		}
 	};
-
-	$(bind);
-	return bind;
 });

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Temtop代码技术标准手册</title>
+	<link rel="stylesheet" href="css/article.css">
+	<script src=""></script>
+	<style>
+		.error {color:red;}
+		p.warning:before {content:"!"; display:inline-block; vertical-align:middle; padding:0; width:16px; height:16px; text-align:center; margin-right:5px; line-height:1; color:white; background-color:orange; border-radius:10px;}
+		.code-check-list,
+		.code-check-list ul,
+		.code-check-list ol { list-style-position:outside; margin-left:1em;}
+		.code-check-list li {margin-bottom:0.5em;}
+	</style>
+	<script src="http://s.temtop.com/seajs/sea.js?v2015"></script>
+	<script src="http://s.temtop.com/seajs/config.js?v20160510"></script>
+	<script src="http://s.temtop.com/jquery/jquery-1.8.3.min.js?v2015"></script>
+	<script src="http://s.temtop.com/ywj/component/imagescale.js?v20160901"></script>
+	<script>seajs.use('ywj/auto');</script>
+</head>
+<body>
+	<article>
+		<h1>Temtop代码技术标准手册</h1>
+		<blockquote>
+			编写本手册目的在于：
+			<ol>
+				<li>规范程序开发人员代码编写行为</li>
+				<li>减少发布环境编码缺陷</li>
+				<li>纳入技术开发人员绩效考核</li>
+			</ol>
+		</blockquote>
+
+		<h2>软件环境</h2>
+		<blockquote>当前公司开发环境主要为 <strong>Windows</strong>，因此当前列举环境标准主要以<strong>Windows</strong>为出发点，其他系统按照实际情况、标准进行制定</blockquote>
+		<ul>
+			<li>PHP版本：5.6+，编码趋向适应更高已发布PHP版本，如PHP7可作新代码环境试点环境</li>
+			<li>MySQL：5.6+，系统环境必须安装MySQL5.6+版本数据库，低于该版本数据库可能导致某些程序运行不正常</li>
+			<li>Apache：2.4+，或Nginx</li>
+			<li><strong>PhpStorm：9+</strong>，推荐使用PhpStorm作为主要开发工具，方便检查后面列举代码质量检查点</li>
+		</ul>
+
+		<h2>应用部署环境</h2>
+		<h3>开发/测试 环境部署要求</h3>
+		<p>开发环境指：技术开发人员单独用于独立项目编码运行环境，主要数据接口环境不影响外网数据正常运行。</p>
+		<ul>
+			<li>必须设置PHP配置选项：
+			<code>
+				display_errors=On
+				error_reporting = E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED
+			</code>
+			</li>
+		</ul>
+		<h3>生产环境部署要求</h3>
+		<p>生产环境部署配置请参考 <code>source/trunk/tools/config</code>目录下响应配置文件</p>
+
+		<h2>编码标准</h2>
+		<blockquote>
+			当前编码标准主要针对
+			<ol>
+				<li>PHP：5.6+版本语法</li>
+				<li>HTML：4.0+版本语法</li>
+				<li>CSS：2.0版本语法，不包含针对特定浏览器、场景进行HACK代码</li>
+				<li>Javascript:1.8+</li>
+			</ol>
+		</blockquote>
+		<h3>严格检查</h3>
+		<p>
+			严格检查标准表示，以下所列举（包含并不仅限于）代码检查项目，将作为代码质量考核标准首要项目。
+			技术开发人员在编码过程中，如提交涉及以下项目代码内容，将被作为 <strong class="error">代码严重缺陷</strong> 评估。
+		</p>
+		<ol class="code-check-list">
+			<li>
+				禁止在foreach循环中使用引用方式对元素进行修改
+				<code>
+					foreach ($list as $k => &$item) {}
+				</code>
+				原因： <a href="https://www.toptal.com/php/10-most-common-mistakes-php-programmers-make">https://www.toptal.com/php/10-most-common-mistakes-php-programmers-make</a>
+			</li>
+			<li>
+				<p>Controller、Class、Model等业务数值处理逻辑中使用 <code>number_format</code> 方法进行数字取位。</p>
+				<p><strong>除非真实需要处理数字表现加上千分位分隔符，否则千分位数字精度取位必须使用 <code>round()</code>或其他精度处理函数</strong></p>
+			</li>
+			<li>
+				禁止使用空置try···catch语句，消耗代码性能，浪费代码行数。
+				<code>
+					try {
+						....
+					} catch(Exception $e){
+						throw $e;
+					}
+				</code>
+			</li>
+			<li>
+				<strong>未定义变量、常量、函数、类名、方法（魔术方法特别对待）</strong>
+				<q>未定义变量除非出现在合适场景：如模板语法等人为制定特殊场景</q>
+				<code>
+					//场景1：常量当做字符串使用
+					$a = $row[name]; //fail
+					$a = $row['name']; //correct
+
+					$_ids=$select_code->asArray()->getPairData("item_id", item_id); //fail
+
+					//场景2：类名大小写与原类名不一致
+					$app = new APPlication(); //fail
+
+					//场景3：函数名大小写错误
+					$str = str_Replace('aa','b', $source); //fail
+					$len = strLen('aaaa'); //fail
+
+					//场景4：方法名大小写错误
+					$a = $obj->GeTmyName(); //fail
+				</code>
+			</li>
+			<li>
+				个人调试、废弃逻辑代码、功能测试、接口测试、定位问题、临时处理脚本或其他 <strong>无实际意义注释代码</strong>
+				<code>
+					//场景1：
+					//dump('xxx'); die;
+
+					//场景2：
+					//暂时不启用该功能
+					//$a = new A();
+					//$a->execute();
+
+					//场景3：
+					if("done"==$done){ //查看已经完成的
+						//$select->where("clearance_name<>'' and clearance_code<>'' and clearance_price>0");
+					}
+
+					//场景4：
+					//审核通过的状态下
+					//$select->where("status=?",Table_Prd_Product::STATUS_ACCESS);
+					//品类控制
+					//$select = ACL::addCatalogControl($select);
+					//个人级部门级控制
+					//$select = ACL::addDataControl($select,"purchase_userid","clearance@product");
+
+					//场景4：空白注释
+					//删除当前品类下的所有负责人
+					//
+					foreach ($user_cat as $user){
+				</code>
+			</li>
+			<li>
+				<strong>代码语法解析错误</strong>，这里主要针对IDE能够及时检测出代码格式错误（ERROR），包含以下几种场景
+				<ul>
+					<li><strong>PHP语法错误</strong></li>
+					<li>
+						<strong>HTML标签嵌套不合理</strong>，如：
+						<code>
+							&lt;table&gt;
+								&lt;div&gt;
+									&lt;tbody&gt;&lt;/tbody&gt;
+								&lt;/div&gt;
+							&lt;/table&gt;
+						</code>
+					</li>
+					<li>
+						<strong>CSS属性拼写错误</strong>，如：
+						<code>
+							a {magin-top:1em} //fail
+						</code>
+					</li>
+					<li>
+						<strong>CSS包含错误分号</strong>，如：
+						<code>
+							a {margin-top:1em}; //fail
+						</code>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<strong>单词拼写错误</strong>
+				<q>单词拼写检查不包含：特有名词（如winnt、temtop）、单词缩写（单词缩写规则请自行参考网上规则）、精简变量</q>
+			</li>
+			<li>
+				多个属性、常用值未定成为常量、公共变量
+				<p>多个属性一般指包含3个以上属性，某些简单实用场景：如is_del, is_update等可酌情考虑</p>
+				<code>
+					//场景1：订单类型可定义成为订单类常量
+					if($order_type == 'F'){
+						//...
+					} else if($order_type == 'O'){
+						//...
+					}
+
+					//场景2：status、state、type等具备多个固定值时，需要针对每个固定值定义常量，尤其禁止使用常量值进行运算、比较！！！
+					$sql = "SELECT * FROM order WHERE status > 1";
+
+					//场景3：需要针对固定文本定义全局文本数组，方便其他程序公用
+					if($order_type == ORDER_TYPE_NORMAL){
+						echo "正常";
+					}
+					if($order_type == ORDER_TYPE_DISCARD){
+						echo "废弃";
+					}
+					if($order_type == ORDER_TYPE_PUBLISH){
+						echo "发布";
+					}
+				</code>
+			</li>
+			<li>
+				代码公开访问目录遗留有 <strong>泄露风险文件</strong>，如包含：
+				<ul>
+					<li>源代码压缩包，如：<code>source.tar.gz</code></li>
+					<li>SQL数据文件，如：<code>bak.sql</code></li>
+					<li>临时处理数据文件，如：<code>userlist.txt</code></li>
+					<li>包含phpinfo()检测代码，如：<code>phpinfo.php</code></li>
+					<li>未测试隐藏入口脚本，如：<code>back.php</code></li>
+					<li>log日志文件，如：<code>www.a.com-error.log</code></li>
+					<li>敏感信息配置文件，如：<code>database.php，database.yaml</code></li>
+					<li>产品、技术相关敏感文档：如：<code>加密协议.doc</code></li>
+				</ul>
+			</li>
+		</ol>
+
+		<h3>告警检查</h3>
+		//待定
+
+		<h3>优化建议</h3>
+		//待定
+
+		<h2>相关链接</h2>
+		<nav>
+			<ul>
+				<li>PHPStorm配置：<code>source/trunk/tools/phpstorm10_temtop_settings.jar</code></li>
+				<li>Apache、PHP配置：<code>source/trunk/tools/config</code></li>
+				<li>Host配置：<code>source/trunk/tools/host</code></li>
+			</ul>
+		</nav>
+	</article>
+	<script src="js/toc.js"></script>
+</body>
+</html>

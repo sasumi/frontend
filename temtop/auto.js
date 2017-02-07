@@ -3,65 +3,14 @@ define('temtop/auto',function(require){
 	var net = require('ywj/net');
 	var $ = require('jquery');
     var util = require('ywj/util');
-	
+	var msg = require('ywj/msg');
+	var IV = require('ywj/imageviewer');
+
 	require('temtop/exchange');
 	require('temtop/exchangeinput');
-	require('temtop/muloperate');
-
-    var setDisabled = function(e){
-        $("input,select,checkbox,textarea", $('.mode_view')).attr("disabled","disabled").attr("readonly","readonly");
-    };
-
-    var setFixedHeader = function(){
-        var fixed_els = $('table[data-fixed-header]', $('body'));
-
-        if (!fixed_els.length){
-            return ;
-        }
-
-        var header_wrap = $('<div id="table-fixed-header" style="padding:0 10px;display:none;"/>');
-        var table_header = $('<table class="data-tbl"/>');
-
-        table_header.width(fixed_els.width()+4);
-        var thead = fixed_els.find("thead").clone();
-        thead.appendTo(table_header);
-        table_header.appendTo(header_wrap);
-        header_wrap.appendTo($("body"));
-
-        var headers = $("table[data-fixed-header] thead th");
-        var columns = $("#table-fixed-header thead th");
-
-        headers.each(function (i, n) {
-	        var m = $(columns[i]);
-	        if ($(n).css("min-width") != "0px" && $(n).css("min-width") != "auto") {
-		        m.css("min-width", $(n).css("min-width"));
-	        } else {
-		        m.css("width", $(n).css("width"));
-	        }
-        });
-
-	    fixed_els.each(function () {
-		    $(this).data('org-top', $(this).position().top);
-	    });
-
-	    $(window).scroll(function () {
-		    var scroll_top = $(window).scrollTop();
-		    fixed_els.each(function () {
-			    var $shadow = $('#table-fixed-header');
-
-                if($(this).data('org-top') < scroll_top){
-                    $shadow.addClass('fixed-top-element');
-                    $shadow.show();
-                } else {
-                    $shadow.removeClass('fixed-top-element');
-                    $shadow.hide();
-                }
-            });
-        }).trigger('scroll');
-    };
-
+	require('temtop/worldtime');
 	$(function(){
-        var printer = require("temtop/printer");
+		var $body = $('body');
 
         $("a[rel=dropdown]").each(function(){
             var $n = $(this);
@@ -76,49 +25,53 @@ define('temtop/auto',function(require){
             });
         });
 
-        $("img[preview=true]").on("mouseover", function (e) {
-	        var $preview_div = $("#previewDiv");
-	        if (!$preview_div.length) {
-		        $preview_div = $("<div id='previewDiv'></div>").appendTo('body');
-	        }
-	        var o = $(this).offset();
-	        var x = parseInt(o.left, 10) + parseInt($(this).closest('td').width(), 10) + 10;
-	        var y = parseInt(o.top, 10);
-	        var scroll_top = parseInt($('body').scrollTop(), 10);
+		//图片预览
+		var $_IMG_PREVIEW;
+		$("img[preview]").hover(function (e) {
+			var $this = $(this);
+			if (!$_IMG_PREVIEW) {
+				$_IMG_PREVIEW = $("<div>").appendTo($body);
+			}
+			var o = $this.offset();
+			var x = parseInt(o.left, 10) + parseInt($this.closest('td').width(), 10) + 10;
+			var y = parseInt(o.top, 10);
+			var scroll_top = parseInt($('body').scrollTop(), 10);
+			var winRegion = util.getRegion();
 
-	        var winRegion = util.getRegion();
+			$_IMG_PREVIEW.html('').show();
+			var img = new Image();
+			img.onload = function () {
+				var w = parseInt(img.width, 10);
+				var h = parseInt(img.height, 10);
+				var ow = w;
+				w = w > 300 ? 300 : w;
+				h = h * w / ow;
+				if ((y + h) > (winRegion.visibleHeight + scroll_top)) {
+					y = winRegion.visibleHeight + scroll_top - h;
+				}
+				var html = '<img src="' + $(this).attr('src') + '" width="' + w + '" style="display:block;"/>';
+				$_IMG_PREVIEW.html(html).css({
+					position: 'absolute',
+					boxShadow: '0px 0px 15px #bbb',
+					top: y + 'px',
+					left: x + 'px'
+				});
+			};
+			img.src = $this.data('src') || $this.attr("src");
+		}, function(){
+			$_IMG_PREVIEW && $_IMG_PREVIEW.hide();
+		});
 
-	        var img = new Image();
-	        img.onload = function () {
-		        var w = parseInt(img.width, 10);
-		        var h = parseInt(img.height, 10);
-		        var ow = w;
-		        w = w > 300 ? 300 : w;
-		        h = h * w / ow;
-		        if ((y + h) > (winRegion.visibleHeight + scroll_top)) {
-			        y = winRegion.visibleHeight + scroll_top - h;
-		        }
-                 var html = '<img src="'+$(this).attr('src')+'" width="'+w+'"/>';
-                 $preview_div.html(html).css({position:'absolute', top:y+'px', left:x+'px',border:'1px solid #ccc', display:'block'});
-             };
-            img.src = $(this).attr("src");
-        });
-
-        $("img[preview=true]").on("mouseout",function(e){
-            if ($("#previewDiv").length){
-                $("#previewDiv").hide();
-            }
-        });
-
-        setDisabled();
-        setFixedHeader();
-
-        $("a[rel=print]").click(function(){
-            //printer.checkInstall();
-            var url=$(this).attr("href");
-            printer.printURL(url);
-            return false;
-        });
+		//printer
+		if($("a[rel=print]").size()){
+			require.async("temtop/printer", function(printer){
+				$("a[rel=print]").click(function(){
+					var url=$(this).attr("href");
+					printer.printURL(url);
+					return false;
+				});
+			});
+		}
 
         /**
          * 筛选框 参数列表 【这些参数都是在前台 input 标签上添加】
@@ -128,7 +81,7 @@ define('temtop/auto',function(require){
          *  data-delay 延时响应事件 单位毫秒  默认为1000ms
          *  data-scroll 是否需要滚动条  默认为有滚动条
          */
-		$("body").delegate("input[rel=autocomplete]","focus",function(){
+		$body.delegate("input[rel=autocomplete]","focus",function(){
 			$(this)._autocomplete_();
 			$(this).on('selected', function(e,k,v) {
                 var onSuccess = $(this).data('onsuccess');
@@ -152,9 +105,12 @@ define('temtop/auto',function(require){
 		var CONTENT_HOVER_CLS = 'data-export-excel-content-hover';
 		$('[data-exporter="excel"]').each(function(){
 			var $this = $(this);
-			var $btn = $('<a href="" class="data-export-excel-btn" title="另存为Excel文件">另存为Excel文件</a>').insertBefore(this);
+			var $btn = $('<a href="" class="data-export-excel-btn" title="另存为Excel文件">另存为Excel</a>').insertBefore(this);
 			var file = $(this).data('exporter-file');
-
+			if(!file){
+				var t = new Date();
+				file = ''+t.getFullYear()+'-'+t.getUTCMonth()+'-'+t.getUTCDate()+'.xls';
+			}
 			var tm;
 			$btn.hover(function(){
 				clearTimeout(tm);
@@ -183,6 +139,7 @@ define('temtop/auto',function(require){
 			$ds.each(function(){
 				$(this).data('original-position', $(this).css('position'));
 				$(this).data('original-top', $(this).css('top'));
+
 			});
 
 			$(window).scroll(function(){
@@ -192,10 +149,12 @@ define('temtop/auto',function(require){
 					var toggle_class = $item.data('scroll-fixed-class');
 					var $prev_node = $item.prev();
 					var check_point = $prev_node.offset().top + $prev_node.outerHeight();
+					var width =$item.context.offsetWidth;
 					if(check_point < st){
 						$item.css({
 							position: 'fixed',
-							top: 0
+							top: 0,
+							width:width
 						}).addClass(toggle_class);
 					} else {
 						$item.css({
@@ -209,31 +168,176 @@ define('temtop/auto',function(require){
 
 		//电梯
 		if(net.getParam('ref') != 'iframe' && location.href.indexOf('/ref/iframe/') < 0){
-			var chk = function(){
-				var $bd = $('body');
-				var $ladder = $('.ladder');
-				var sh = $bd[0].scrollHeight;
-				var wh = $(window).height();
-				if(!$ladder.size()){
-					$bd.append('<ul class="ladder"><li><a href="#top" title="按Home键">顶部</a></li><li><a href="#bottom" title="按End键">底部</a></li></ul>');
-					$bd.prepend('<a id="top" name="top"></a>');
-					$bd.append('<a id="bottom" name="bottom"></a>');
-					$('<style type="text/css">'+
-						'.ladder {display:none; width:40px; overflow:hidden; position:fixed; right:10px; bottom:10px;}'+
-						'.ladder li {border:1px solid #ccc;}'+
-						'.ladder li:first-child {border-radius:3px 3px 0 0;}'+
-						'.ladder li:last-child {border-top:none; border-radius:0 0 3px 3px}'+
-						'.ladder a {display:block; text-align:center; padding:8px 0; background-color:rgba(255,255,255,0.6);}'+
-						'</style>').appendTo($('head'));
-					$ladder = $('.ladder');
-				}
-				if(sh > wh && $bd.css('overflow-y') != 'hidden') {
-					$ladder.show();
-				} else {
-					$ladder.hide();
-				}
-			};
-			$(window).resize(chk).trigger('resize');
+			require.async('ywj/liteladder');
 		}
-    });
+
+		//排序
+		(function(){
+			var order_html = '<span class="order-index">'+
+				'<span class="order-index-top"></span>'+
+				'<span class="order-index-up"></span>'+
+				'<span class="order-index-down"></span>'+
+				'<span class="order-index-bottom"></span>'+
+				'</span>';
+
+			var DISABLE_CLASS = 'order-index-disable';
+			var LOADING_CLASS = 'order-index-loading fa fa-spinner fa-pulse';
+
+			$('[data-order-action]').each(function(){
+				var $container = $(this);
+				var action = $container.data('order-action');
+				var $input_list = $('input[data-order-config]', $container);
+
+				var save = function(action, data){
+					net.get(action, data, function(rsp){
+						if(rsp.code == 0){
+							location.reload();
+						} else {
+							msg.show(rsp.message, 'err');
+						}
+					});
+				};
+
+				$input_list.each(function(k, v){
+					var $inp = $(this);
+					var order_config = $inp.data('order-config').split(',');
+					var $op = $(order_html).insertAfter($inp);
+
+					$op.find('span').each(function(k, v){
+						var $sp = $(this);
+						if(order_config[k] === ''){
+							$sp.addClass(DISABLE_CLASS);
+						} else if(!$sp.hasClass(DISABLE_CLASS)){
+							var dir = k > 1 ? 'after': 'before';
+							$sp.click(function(){
+								$op.find('span').addClass(DISABLE_CLASS);
+								$sp.removeClass(DISABLE_CLASS);
+								if(!$sp.hasClass(LOADING_CLASS)){
+									$sp.addClass(LOADING_CLASS);
+									save(action, {from: $inp.val(), to:order_config[k], dir: dir});
+								}
+							});
+						}
+					});
+					$inp.hide();
+				});
+			});
+		})();
+
+		//set disabled for view mode
+		(function(){
+			$("input,select,checkbox,textarea", $('.mode_view')).attr("disabled","disabled").attr("readonly","readonly");
+		})();
+
+		//表单必填
+		$('.frm-tbl :input[required]').each(function(){
+			$(this).closest('tr').addClass('field-required');
+		});
+
+		//表单数字输入自动选择
+		$('input[type=number]:not(readonly):not(disabled)').focus(function(){
+			this.select(this);
+		});
+
+		//表单只读
+		$('.frm.readonly :input').each(function(){
+			$(this).attr('readonly', 'readonly');
+			if((this.type == 'checkbox' && !$(this).attr('checked')) || this.nodeName == 'SELECT'){
+				$(this).attr('disabled', 'disabled');
+			}
+		});
+
+		//表单随机字符填充
+		var $html = $('html');
+		if($html.hasClass('server-DEV') || $html.hasClass('server-GAMMA') || $html.hasClass('server-BETA')){
+			require.async('temtop/RandomForm', function(cb){
+				cb('form[method=post]');
+			});
+		}
+
+		//看图
+		$body.delegate('.com-uploader-success .com-uploader-content a', 'click', function(){
+			IV.init($(this), $('.com-uploader-success .com-uploader-content a'));
+			return false;
+		});
+
+		//sku列表效果
+		$('.tt-sku-list').each(function(){
+			var OFFSET = 5;
+			var $list = $(this);
+			var list_top = $list.offset().top;
+			var h = $list.outerHeight();
+			var overflow = false;
+			$list.children().each(function(){
+				if($(this).offset().top - list_top > (h-OFFSET)){
+					overflow = true;
+					return false;
+				}
+			});
+			if(overflow){
+				var $more = $('<span class="tt-sku-list-more" title="查看更多"></span>').insertAfter($list);
+				var $panel;
+				var panel_tm;
+				var show_panel = function(){
+					clearTimeout(panel_tm);
+					if(!$panel){
+						$panel = $('<div class="tt-sku-list-more-panel"></div>').appendTo('body');
+						var html = '<table class="data-tbl"><tbody><tr>';
+						var k = 0;
+						$list.find('li').each(function(){
+							if(!(k % 3) && k){
+								html += '</tr><tr>';
+							}
+							html += '<td>'+$(this).html()+'</td>';
+							k++;
+						});
+						for(var i=0; i<(3-(k%3)) && k%3; i++){
+							html += '<td></td>';
+						}
+						html += '</tr></tbody></table>';
+						$panel.html(html);
+						$panel.find('.tt-sku-list').addClass('tt-sku-list-all');
+						$panel.hover(show_panel, hide_panel);
+					}
+					$panel.css({
+						left: $list.offset().left,
+						top:$list.offset().top,
+						opacity:0
+					}).stop().show().animate({
+						opacity:1
+					});
+				};
+
+				var hide_panel = function(){
+					if($panel){
+						panel_tm = setTimeout(function(){
+							$panel.stop().animate({
+								opacity:0
+							}, function(){
+								$panel.hide();
+							});
+						},100);
+					}
+				};
+				$list.hover(show_panel, hide_panel);
+				$more.hover(show_panel, hide_panel);
+			}
+		});
+
+		if ($("#temtop-notice").length > 0){
+			var $tn = $("#temtop-notice");
+			var html = '<div class="news-content"><div class="hd"><i class="fa fa-volume-up"></i> 最新消息</div><div class="bd"><ul>';
+
+			net.get('http://erp.temtop.com/index.php/notice/news', {system_type:$tn.data('system_type')}, function (r) {
+				if (r.code == 0) {
+					for (var i in r.data) {
+						var d = r.data[i];
+						html += '<li> <a href="'+d.url+'" target="_blank" title="'+d.title+'" class="subject">'+d.title+'</a> <span class="st">'+d.name+'&nbsp;'+d.addtime+'</span> </li>'
+					}
+					html += '</ul></div></div>';
+					$tn.append(html);
+				}
+			}, {format:'jsonp'});
+		}
+	});
 });
