@@ -10,6 +10,7 @@ define('ywj/checker', function(require){
 	return {
 		nodeInit: function($cur, param){
 			var target = param.target;
+			var hidetip = param.hidetip;
 			var quick_check = param.qc;
 
 			//缺省只针对table里面的checkbox有效
@@ -43,6 +44,9 @@ define('ywj/checker', function(require){
 			}
 
 			var show_tip = function($chk){
+				if(hidetip){
+					return;
+				}
 				var tmp = get_check_count();
 				var check_count = tmp[0],
 					total = tmp[1];

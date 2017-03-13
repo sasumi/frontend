@@ -96,7 +96,8 @@ seajs.config({
 		"waterfall": "waterfall/waterfall.js",
 		"highcharts": "highcharts/highcharts.js",
 		"ueditor": FRONTEND_HOST+"/ueditor/ueditor.all.js",
-		"ueditor_admin_config": FRONTEND_HOST+"/ueditor/ueditor.config.normal.js"
+		"ueditor_normal_config": FRONTEND_HOST+"/ueditor/ueditor.config.normal.js",
+		"ueditor_lite_config": FRONTEND_HOST+"/ueditor/ueditor.config.lite.js"
 	},
 	paths: {
 		"lang": FRONTEND_HOST+"/ywj/lang",

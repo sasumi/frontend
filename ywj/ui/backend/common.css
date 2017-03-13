@@ -152,8 +152,8 @@ button.btn-weak:hover,
 .btn-weak:hover {background-color:#ddd; color:#333;}
 
 /** button danger **/
-.btn-danger {background-color:#F3B580; color:#fff; border:1px solid #EAAC75;}
-.btn-danger:hover {background-color:#fff; color:#444;}
+.btn-danger {background-color:#F3B580; color:#fff; border:1px solid #EAAC75; color:#ff5500;}
+.btn-danger:hover {background-color:#fff; color:#ff5500;}
 
 /** button small **/
 input.btn-small,
@@ -262,13 +262,14 @@ caption .btn, caption .drop-list,
 
 .frm-tbl {border-collapse:collapse; border-spacing:0; width:100%; margin-bottom:10px;}
 .frm-tbl>tbody>tr>td.col-label,
-.frm-tbl>tbody>tr>th {width:60px; text-align:right; white-space:nowrap; vertical-align:middle; padding-left:1em; text-transform:capitalize; font-weight:normal;}
-.frm-tbl>tbody>tr>th.v-top { vertical-align:top; padding-top:0.5em;}
+.frm-tbl>tbody>tr>th {width:60px; text-align:right; white-space:nowrap; vertical-align:top; padding-top:0.5em; padding-left:1em; text-transform:capitalize; font-weight:normal;}
 .frm-tbl>tbody>tr>td.col-label label,
 .frm-tbl>tbody>tr>th label {margin-right:0}
 .frm-tbl>tbody>tr:nth-child(odd) {background-color:#FDFDFD}
 .frm-tbl>tbody>tr>td {padding:0.4em 1em; min-height:30px;}
 .frm-tbl>tbody>tr>td label {margin-right:7px;}
+.frm-tbl td.col-action {padding:1em 1em}
+.frm-tbl input[type=submit] {padding:0.2rem 1rem}
 .frm-tbl .f-captcha input.txt{width:100px;}
 .frm-tbl .f-captcha img{vertical-align: middle; cursor:pointer;}
 .frm-tbl .f-captcha .change-verify-img{vertical-align: middle;cursor:pointer}

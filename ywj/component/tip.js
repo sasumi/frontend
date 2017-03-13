@@ -3,7 +3,7 @@ define('ywj/tip', function(require){
 	var $ = require('jquery');
 	var Util = require('ywj/util');
 	var Net = require('ywj/net');
-
+	var Hooker = require('ywj/hooker');
 	var OBJ_COLLECTION = {};
 	var PRIVATE_VARS = {};
 	var GUID_BIND_KEY = 'ywj-com-tip-guid';
@@ -134,6 +134,7 @@ define('ywj/tip', function(require){
 	var Tip = function(content, rel_tag, opt){
 		this.guid = Util.guid();
 		this.rel_tag = $(rel_tag);
+		this.onShow = Hooker(true);
 		PRIVATE_VARS[this.guid] = {};
 
 		opt = $.extend({
@@ -167,13 +168,12 @@ define('ywj/tip', function(require){
 		updatePosition.call(this);
 	};
 
-	Tip.prototype.onShow = function(){};
 	Tip.prototype.show = function(){
 		var vars = PRIVATE_VARS[this.guid];
 		var _this = this;
 		this.getDom().show().stop().animate({opacity:1}, 'fast');
 		updatePosition.call(this);
-		this.onShow();
+		this.onShow.fire(this);
 		if(vars.opt.timeout){
 			setTimeout(function(){
 				_this.hide();
@@ -239,7 +239,7 @@ define('ywj/tip', function(require){
 		if(!obj){
 			var loading = false;
 			obj = Tip.bind('loading...', rel_tag, opt);
-			obj.onShow = function(){
+			obj.onShow(function(){
 				if(!loading){
 					loading = true;
 					loader(function(html){
@@ -248,7 +248,7 @@ define('ywj/tip', function(require){
 						obj.updateContent(error);
 					});
 				}
-			};
+			});
 		}
 	};
 	

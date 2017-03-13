@@ -440,6 +440,7 @@ define('ywj/util', function(require){
 
 	return {
 		isMobile: isMobile,
+		KEYS: {ENTER: 13, DOWN: 40, UP: 38, LEFT: 37, RIGHT: 39, ESC: 27, TAB: 9},
 		getRegion: getRegion,
 		toArray: toArray,
 		inArray: inArray,

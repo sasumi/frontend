@@ -4,7 +4,7 @@
 define('ywj/richeditor', function(require){
 	var Util = require('ywj/util');
 	return {
-		nodeInit: function($node){
+		nodeInit: function($node, param){
 			var txt = $node;
 			var id = Util.guid();
 			var name = txt.attr('name');
@@ -15,8 +15,10 @@ define('ywj/richeditor', function(require){
 			var script = '<script id="'+id+'" name="'+name+'" type="text/plain" style="width:'+w+'px; height:'+h+'px;"></script>';
 			$(script).insertAfter(txt);
 
-			require.async('ueditor_admin_config', function(){
+			var mode = param.mode || 'normal';
+			require.async('ueditor_'+mode+'_config', function(config){
 				require.async('ueditor', function(){
+					window.UEDITOR_CONFIG = config;
 					var ue = UE.getEditor(id);
 					setTimeout(function(){
 						ue.setContent(txt.val());

@@ -226,7 +226,7 @@ define('temtop/auto',function(require){
 
 		//set disabled for view mode
 		(function(){
-			$("input,select,checkbox,textarea", $('.mode_view')).attr("disabled","disabled").attr("readonly","readonly");
+			$("input[type!=hidden],select,checkbox,textarea", $('.mode_view')).attr("disabled","disabled").attr("readonly","readonly");
 		})();
 
 		//表单必填
@@ -241,7 +241,9 @@ define('temtop/auto',function(require){
 
 		//表单只读
 		$('.frm.readonly :input').each(function(){
-			$(this).attr('readonly', 'readonly');
+			if(this.type !='hidden'){
+				$(this).attr('readonly', 'readonly');
+			}
 			if((this.type == 'checkbox' && !$(this).attr('checked')) || this.nodeName == 'SELECT'){
 				$(this).attr('disabled', 'disabled');
 			}

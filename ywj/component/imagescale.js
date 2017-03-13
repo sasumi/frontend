@@ -89,6 +89,11 @@
 			var maxw = img.getAttribute('data-max-width');
 			var maxh = img.getAttribute('data-max-height');
 
+			if(!minw && !minh && !maxw && !maxh){
+				maxw = img.parentNode.offsetWidth;
+				maxh = img.parentNode.offsetHeight;
+			}
+
 			if(minw || minh || maxw || maxh){
 				img.style.height = 'auto';
 				img.style.width = 'auto';

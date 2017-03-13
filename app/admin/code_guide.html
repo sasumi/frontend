@@ -143,7 +143,19 @@
 				</code>
 			</li>
 			<li>
-				<strong>代码语法解析错误</strong>，这里主要针对IDE能够及时检测出代码格式错误（ERROR），包含以下几种场景
+				<strong>URL拼接方法不考虑字符：?与&amp;</strong>
+				<p>拼接URL时，不考虑原串是否包含?或者&amp;字符，可能会因为路由方式的改变，导致拼接逻辑错误。</p>
+				<p>
+					如：
+					<code>
+						var url = "&lt;?=url("shipping/getShippingMethodByWh@common")?&gt;"+"?id="+$(this).val();
+						$("#btn-batch_code").attr('href',"&lt;?=url("batch/getcode")?&gt;"+"/account/"+account);
+					</code>
+				</p>
+			</li>
+			<li>
+				<strong>代码语法解析错误</strong>
+				<p>这里主要针对IDE能够及时检测出代码格式错误（ERROR），包含以下几种场景</p>
 				<ul>
 					<li><strong>PHP语法错误</strong></li>
 					<li>

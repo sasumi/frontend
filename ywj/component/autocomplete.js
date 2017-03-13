@@ -1,0 +1,199 @@
+define('ywj/autocomplete', function(require){
+	require('ywj/resource/autocomplete.css');
+	var $ = require('jquery');
+	require('jquery/highlight');
+	var Util = require('ywj/util');
+	var Net = require('ywj/net');
+
+	var PANEL_CLASS = 'ywj-autocomplete-panel';
+	var PANEL_ERROR_CLASS = 'ywj-autocomplete-panel-error';
+	var PANEL_SUCCESS_CLASS = 'ywj-autocomplete-panel-success';
+	var PANEL_LOADING_CLASS = 'ywj-autocomplete-panel-loading';
+	var INPUT_LOADING = 'ywj-autocomplete-input-loading';
+	var PANEL_ITEM_FOCUS_CLASS = 'ywj-autocomplete-item-focus';
+
+	return {
+		nodeInit: function($node, param){
+			var cgi = param.source;
+			var onselect = param.onselect || function(){};
+			if(Util.isString(onselect)){
+				onselect = window[onselect];
+			}
+			var strict = param.strict === undefined ? true : !!param.strict;
+
+			var $shadow_inp = $node;
+			if(strict){
+				$shadow_inp = $('<input type="text" value="'+$node.val()+'" class="'+$node.attr('class')+'" placeholder="'+$node.attr('placeholder')+'">').insertBefore($node);
+				$node.css({
+					transition: 'none',
+					position: 'absolute',
+					width: 0,
+					height:0,
+					padding:0,
+					left: $shadow_inp.offset().left + $shadow_inp.outerWidth()/2,
+					top: $shadow_inp.offset().top + $shadow_inp.outerHeight(),
+					opacity: 0
+				});
+			}
+
+			var _stop_load_ = false;
+			$shadow_inp.on('keyup mouseup change', function(e){
+				if(!_stop_load_){
+					load_data(this.value);
+				}
+			});
+			$shadow_inp.on('keydown', function(e){
+				if(e.keyCode == Util.KEYS.UP){
+					move_cursor(true);
+					return false;
+				}else if(e.keyCode == Util.KEYS.DOWN){
+					move_cursor();
+					return false;
+				}else if(e.keyCode == Util.KEYS.ENTER){
+					if($PANEL.is(':visible') && $PANEL.find('.'+PANEL_ITEM_FOCUS_CLASS).size()){
+						select_item($PANEL.find('.'+PANEL_ITEM_FOCUS_CLASS), true);
+						hide_panel();
+						_stop_load_ = true;
+						setTimeout(function(){
+							_stop_load_ = false;
+						}, 100);
+						return false;
+					}
+				}
+			});
+
+			var LAST_DATA = [];
+			var $PANEL;
+			var create_panel = function(){
+				if(!$PANEL){
+					$PANEL = $('<dl class="'+PANEL_CLASS+'"><dt></dt></dl>').appendTo('body').css({
+						width: $shadow_inp.outerWidth()
+					});
+					$PANEL.delegate('dd', 'mousedown', function(){
+						select_item($(this), true);
+						hide_panel();
+					});
+					$('body').click(function(e){
+						var tag = e.target;
+						if(tag == $shadow_inp[0] || $.contains($PANEL[0], tag) || $PANEL[0] == tag){
+							//hits
+						} else {
+							select_item($PANEL.find('.'+PANEL_ITEM_FOCUS_CLASS), true);
+							hide_panel();
+						}
+					});
+				}
+				$PANEL.show().removeClass(PANEL_LOADING_CLASS)
+					.removeClass(PANEL_SUCCESS_CLASS)
+					.removeClass(PANEL_ERROR_CLASS)
+					.html('')
+					.css({
+						left: $shadow_inp.offset().left,
+						top: $shadow_inp.offset().top + $shadow_inp.outerHeight()
+					});
+				$shadow_inp.removeClass(INPUT_LOADING);
+			};
+
+			/**
+			 * 方向键移动
+			 * @param up_dir
+			 */
+			var _mc_tm;
+			var move_cursor = function(up_dir){
+				var idx = $PANEL.find('.'+PANEL_ITEM_FOCUS_CLASS).index()-1;
+				var size = $PANEL.find('dd').size();
+				$PANEL.find('dd').removeClass(PANEL_ITEM_FOCUS_CLASS);
+				var tag = 0;
+				if(up_dir){
+					tag = idx > 0 ? idx - 1 : size-1;
+				} else {
+					tag = idx >= (size-1) ? 0 : idx + 1;
+				}
+				var $dd = $PANEL.find('dd').eq(tag);
+				$dd.addClass(PANEL_ITEM_FOCUS_CLASS);
+				select_item($dd);
+
+				clearTimeout(_mc_tm);
+				_stop_load_ = true;
+				_mc_tm = setTimeout(function(){
+					_stop_load_ = false;
+				}, 500);
+			};
+
+			/**
+			 * 推送选择项
+			 * @param $dd
+			 * @param clear
+			 */
+			var select_item = function($dd, clear){
+				if(!$dd.size()){
+					return;
+				}
+				var data = LAST_DATA[$dd.index()-1];
+				$shadow_inp.val(data.value);
+				$node.val(data.value);
+				onselect(data, $node);
+
+				//avoid trigger body click event, cause flush again.
+				if(clear){
+					$PANEL.find('dd').removeClass(PANEL_ITEM_FOCUS_CLASS);
+				}
+			};
+
+			var show_panel = function(list, message, error){
+				create_panel();
+				if(error){
+					$PANEL.addClass(PANEL_ERROR_CLASS).html('<dt>'+Util.htmlEscape(message)+'</dt>');
+				} else {
+					LAST_DATA = list;
+					var html = '<dt>'+Util.htmlEscape(message)+'</dt>';
+					for(var i=0; i<list.length; i++){
+						html += '<dd tabindex="0">'+Util.htmlEscape(list[i].title)+'</dd>';
+					}
+					$PANEL.addClass(PANEL_SUCCESS_CLASS).html(html);
+					$PANEL.find('dd').eq(0).addClass(PANEL_ITEM_FOCUS_CLASS);
+					$PANEL.find('dd').highlight($.trim($shadow_inp.val()));
+				}
+			};
+
+			var show_loading = function(){
+				create_panel();
+				$PANEL.addClass(PANEL_LOADING_CLASS).html('<dt>loading...</dt>');
+				$shadow_inp.addClass(INPUT_LOADING);
+			};
+
+			var hide_panel = function(){
+				$PANEL && $PANEL.hide();
+				$shadow_inp.removeClass(INPUT_LOADING);
+			};
+
+			//前端缓存
+			var CACHE_MAP = {};
+			var tm = null;
+			var load_data = function(val){
+				clearTimeout(tm);
+				val = $.trim(val);
+				if(!val){
+					hide_panel();
+					return;
+				}
+				var cb = function(rsp){
+					if(rsp.code == 0){
+						show_panel(rsp.data, rsp.message);
+					} else {
+						show_panel(null, rsp.message, true);
+					}
+					CACHE_MAP[val] = rsp;
+				};
+				if(CACHE_MAP[val]){
+					cb(CACHE_MAP[val]);
+					return;
+				}
+				show_loading();
+				tm = setTimeout(function(){
+					Net.get(cgi, {keyword:$shadow_inp.val()}, cb, {frontCache: true});
+				}, 200);
+			};
+		}
+	};
+});

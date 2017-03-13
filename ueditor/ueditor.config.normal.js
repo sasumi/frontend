@@ -66,4 +66,17 @@
         getUEBasePath: getUEBasePath
     };
 
+	// requirejs support
+	if(typeof define === 'function'){
+		if(define.amd){
+			define([], function(){
+				'use strict';
+				return Swiper;
+			});
+		} else {
+			define('ueditor_normal_config', function(){
+				return window.UEDITOR_CONFIG;
+			});
+		}
+	}
 })();

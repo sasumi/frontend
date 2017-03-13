@@ -182,7 +182,7 @@ define('ywj/net', function(require){
 	 * @param url
 	 * @param data
 	 * @param opt
-	 * @return XHR
+	 * @return boolean
 	 */
 	var request = function(url, data, opt){
 		opt = $.extend({
@@ -206,7 +206,7 @@ define('ywj/net', function(require){
 		if(opt.frontCache){
 			if(_AJAX_CACHE_DATA_[url_id] !== undefined){
 				opt.onSuccess(_AJAX_CACHE_DATA_[url_id]);
-				return null;
+				return true;
 			}
 		}
 
@@ -242,7 +242,7 @@ define('ywj/net', function(require){
 		opt = $.extend({
 			onSuccess: onSuccess
 		},opt||{});
-		request(url, data, opt);
+		return request(url, data, opt);
 	};
 
 	/**
@@ -257,7 +257,7 @@ define('ywj/net', function(require){
 			method: 'post',
 			onSuccess: onSuccess
 		},opt||{});
-		request(url, data, opt);
+		return request(url, data, opt);
 	};
 
 	var postFormData = function(param, formData, sendImmediately){

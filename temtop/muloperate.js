@@ -6,6 +6,7 @@ define('temtop/muloperate',function(require){
 	var Msg = require('ywj/msg');
 	var Net = require('ywj/net');
 	var Util = require('ywj/util');
+	var BTN_CHECK_CLASS = 'btn';
 	var BTN_DISABLED_CLASS = 'btn-disabled';
 	var SELECT_PROMPT = '请选择要操作的项目';
 
@@ -28,7 +29,11 @@ define('temtop/muloperate',function(require){
 						data.push(this.name+'='+encodeURIComponent(this.value));
 					}
 				});
-				$btn[has_checked ? 'removeClass' : 'addClass'](BTN_DISABLED_CLASS);
+				if($btn.hasClass(BTN_CHECK_CLASS)){
+					$btn[has_checked ? 'removeClass' : 'addClass'](BTN_DISABLED_CLASS);
+				}
+				$btn[has_checked ? 'removeClass' : 'addClass']('muloperate-disabled');
+
 				if($btn[0].tagName == 'INPUT' || $btn[0].tagName == 'BUTTON'){
 					$btn.attr('disabled', !has_checked);
 				}
