@@ -145,8 +145,8 @@ define('ywj/net', function(require){
 		var url = args[0];
 		url = url.replace(/(.*?)[?|#|&]{0,1}$/g, '$1');	//移除尾部的#&?
 		args = args.slice(1);
-		$.each(args, function(){
-			var str = buildParam(this);
+		$.each(args, function(k, v){
+			var str = buildParam(v);
 			if(str){
 				url += (url.indexOf('?') >= 0 ? '&' : '?') + str;
 			}
@@ -260,6 +260,13 @@ define('ywj/net', function(require){
 		return request(url, data, opt);
 	};
 
+	/**
+	 * post表单数据
+	 * @param param
+	 * @param formData
+	 * @param sendImmediately
+	 * @returns {XMLHttpRequest|Window.XMLHttpRequest}
+	 */
 	var postFormData = function(param, formData, sendImmediately){
 		param = $.extend({
 			url: '',

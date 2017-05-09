@@ -1,7 +1,9 @@
 .ladder {display:none; width:38px; overflow:hidden; position:fixed; right:10px; bottom:10px; opacity:0.5; transition: opacity 0.5s ease-in-out;}
-.ladder li {border:1px solid #ccc;}
+.ladder li {border:1px solid #ccc; background-color:rgba(255,255,255,0.6); }
 .ladder li:first-child {border-radius:3px 3px 0 0;}
 .ladder li:last-child {border-top:none; border-radius:0 0 3px 3px}
-.ladder a {display:block; text-align:center; padding:8px 0; background-color:rgba(255,255,255,0.6); color:gray; font-size:16px;}
-.ladder a:hover{background-color:#E7F2FF}
+.ladder li:hover{background-color:#E7F2FF}
+.ladder a {display:block; text-align:center; padding:6px 0; color:gray; font-size:12px;}
+.ladder a.u {-ms-transform: rotate(270deg); -webkit-transform: rotate(270deg); transform: rotate(270deg);}
+.ladder a.d {-ms-transform: rotate(90deg); -webkit-transform: rotate(90deg); transform: rotate(90deg);}
 .ladder:hover { opacity:1;}

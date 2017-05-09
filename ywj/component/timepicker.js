@@ -35,7 +35,7 @@ define('ywj/timepicker', function(require){
 
 				case 'datetime':
 				case '':
-					opt = {timeFormat: 'HH:mm:ss'};
+					opt = {dateFormat: 'yy-mm-dd', timeFormat: 'HH:mm:ss'};
 					opt.maxTime = cover_date_str(param.max);
 					$node.datetimepicker(opt);
 					break;

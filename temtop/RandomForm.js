@@ -1,4 +1,12 @@
 define('temtop/RandomForm',function(require){
+	var $ = require('jquery');
+
+	var CSS = '.com-random-form .btn{display:none; white-space:nowrap;} '
+		+'.com-random-form .btn:first-child {display:inline-block;}'
+		+' .com-random-form:hover .btn {display:inline-block;}';
+
+	$('<style>'+CSS+'</style>').appendTo('head');
+
 	var r_str = function(length){
 		length = length || Math.ceil(3+Math.random()*10);
 		var consonants = 'bcdfghjklmnpqrstvwxyz'.split(''),
@@ -113,15 +121,15 @@ define('temtop/RandomForm',function(require){
 				return;
 			}
 
-			var $div = $('<div style="opacity:0.2; position:absolute; z-index:1;"></div>').insertBefore($frm.children(':first'));
+			var $div = $('<div style="opacity:0.2; position:absolute; z-index:1;" class="com-random-form"></div>').insertBefore($frm.children(':first'));
 			$div.hover(function(){$div.stop().animate({'opacity':'1'});}, function(){$div.stop().animate({'opacity':0.2});});
-			var start_move = false;
 
 			var $for_all = $('<span class="btn btn-weak" style="margin:0 2px 2px; color:orange"><i class="fa fa-list-ul"></i> All</span>').appendTo($div);
 			var $for_require_btn = $('<span class="btn btn-weak" style="margin:0 2px 2px; color:orange"><i class="fa fa-star"></i> Required</span>').appendTo($div);
 			var $reset = $('<span class="btn btn-weak" style="margin:0 2px 2px; color:orange;"><i class="fa fa-rotate-left"></i> Reset</span>').appendTo($div);
 			$div.css('left', $frm.offset().left + $frm.outerWidth() - $div.outerWidth());
 
+			var start_move = false;
 			var moving = false;
 			var offset = [];
 			var last_mouse_pos = [];
@@ -152,7 +160,8 @@ define('temtop/RandomForm',function(require){
 					});
 					return false;
 				}
-			});
+			}).trigger('mousemove');
+
 			$body.click(function(){
 				moving = false;
 			});

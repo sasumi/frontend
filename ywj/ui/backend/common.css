@@ -120,7 +120,7 @@ button,
 input.btn,
 [type=button],
 [type=reset],
-[type=submit] {background:linear-gradient(#f7f7f7,#dddddd); color:#555; text-align:center; border:1px solid #a6a6a6; min-width:50px; border-radius:1px; padding:0.1rem 0.5rem; cursor:pointer; text-transform:capitalize; display:inline-block; user-select:none; transition: all 0.30s ease-in-out;outline: none; box-sizing:content-box;}
+[type=submit] {background:linear-gradient(#f7f7f7,#dddddd); color:#555; text-align:center; border:1px solid #a6a6a6; min-width:50px; border-radius:1px; padding:0.2rem 0.5rem; cursor:pointer; text-transform:capitalize; display:inline-block; user-select:none; transition: all 0.30s ease-in-out;outline: none; box-sizing:content-box;}
 
 .btn:focus,
 button:focus,
@@ -176,7 +176,7 @@ button[disabled],
 input.btn-loading,
 input.btn-loading:hover,
 .btn-loading,
-.btn-loading:hover {background:url("img/btn-loading.gif") no-repeat center #859FBF; color:rgba(255, 255, 255, 0.42); border-color:transparent; cursor:default;}
+.btn-loading:hover {background-image:url("img/btn-loading.gif"); background-repeat:no-repeat; background-position:center; transition:none; cursor:default;}
 .btn-loading:focus {outline:none;}
 
 .small-btn {display:inline-block; margin:1px 3px; text-shadow:1px 1px 1px #ccc; cursor:pointer; white-space:nowrap; color:#555; vertical-align:middle}
@@ -281,7 +281,7 @@ caption .btn, caption .drop-list,
 .frm-tbl [required]:focus + .trigger {color:gray;}
 
 /** tab 组件 ul.tab>li[class=active]>a **/
-.tab {border-bottom:1px solid #ccc; margin-top:10px; min-height:33px;}
+.tab {border-bottom:1px solid #ccc; margin-top:10px; min-height:33px; clear:both;}
 .tab:after {content:""; display:block; clear:both;}
 .tab li {float:left; margin:5px 0 -1px 10px; text-align: center; color:gray; cursor:pointer;}
 .tab li a {min-width: 60px; color:gray; background-color:#eee; display:inline-block; border-radius:2px 2px 0 0; padding:4px 20px; border:1px solid #ccc;}
@@ -296,7 +296,9 @@ caption .btn, caption .drop-list,
 .data-tbl td {padding:0.5rem;}
 .data-tbl thead tr {border-bottom:1px solid #eee; background-color:rgba(238, 238, 238, 0.2)}
 .data-tbl thead th { white-space:nowrap;}
-.data-tbl tbody tr {border-bottom:1px dotted #ddd;}
+.data-tbl tbody tr {border-bottom:1px dotted #ddd; transition:background-color 0.20s ease-in-out;}
+.data-tbl tbody tr:hover {background-color:rgba(238, 238, 238, 0.52)}
+.data-tbl tbody tr:last-child {border-bottom:none;}
 .data-tbl caption {font-size:16px; text-align:left; text-transform:uppercase; padding:1rem 0; color:gray;;}
 .data-tbl .col-min-center {width:20px; white-space:nowrap; text-align:center}
 .data-tbl .col-min {width:20px; white-space:nowrap;}
@@ -338,22 +340,28 @@ span.state-label {padding:2px 8px; display:inline-block; font-size:10px; border-
 .drop-list {display:inline-block; vertical-align:middle; position:relative;}
 .drop-list a,
 .drop-list span {white-space:nowrap; cursor:pointer;}
-.drop-list dt {display:block; position:relative; cursor:pointer; padding:3px 20px 3px 10px; white-space:nowrap;}
+.drop-list dt {display:block; position:relative; cursor:pointer; padding-right:20px; white-space:nowrap;}
 .drop-list dt.btn a {color:white;}
-.drop-list dt:after {content:''; display:block; position:absolute; width:0; height:0; border:4px solid transparent; border-top-color:#ccc; right:7px; top:12px;}
-.drop-list dt.btn:after {border-top-color:white;}
+.drop-list dt:after {content:''; display:block; position:absolute; width:0; height:0; border:4px solid transparent; border-top-color:#ccc; right:7px; top:10px;}
+.drop-list dt.btn:after {border-top-color:gray; top:13px;}
 .drop-list dt.btn-weak:after {border-top-color:gray;}
-.drop-list dd {display:none; position:absolute; box-shadow:1px 1px 5px #ddd; padding:5px 0; margin-right:10px; z-index:1; left:0; background-color:rgba(255, 255, 255, 0.95); border-radius:3px; min-width:80px;}
+.drop-list.muloperate-disabled dt:after {border-top-color:#ccc;}
+.drop-list.muloperate-disabled dt.btn {color:#ccc; border-color:#ccc; cursor:default}
+.drop-list dd {display:none; position:absolute; box-shadow:1px 1px 5px #aaa; padding:5px 0; margin-right:10px; z-index:1; left:0; background-color:rgba(255, 255, 255, 0.95); border-radius:3px; min-width:80px;}
 .drop-list dd a,
-.drop-list dd span {display:block; padding:3px 10px;}
+.drop-list dd span {display:block; padding:3px 10px; border-bottom:1px dotted #eee}
+.drop-list dd a:last-child,
+.drop-list dd span:last-child {display:block; padding:3px 10px; border-bottom:none}
 .drop-list dd a:hover,
-.drop-list dd span:hover {background-color:#E2EDFF; text-shadow:1px 1px 1px white}
+.drop-list dd span:hover {background-color:rgba(226, 237, 255, 0.58); text-shadow:1px 1px 1px white}
 .drop-list .sep {display:block; padding:0; height:0; margin:3px 5px; border-top:1px solid #ddd;}
 .drop-list-left dd {left:auto; right:0; margin-right:0}
 .drop-list:hover dd {display:block;}
-.drop-list:hover dt:after {border-color:transparent; border-bottom-color:gray; top:8px;}
-.drop-list:hover dt.btn:after {border-bottom-color:white;}
-.drop-list:hover dt.btn-weak:after {border-bottom-color:gray;}
+.drop-list.muloperate-disabled:hover dd {display:none;}
+.drop-list:not(.muloperate-disabled):hover dt:after {border-color:transparent; border-bottom-color:gray; top:5px;}
+.drop-list:not(.muloperate-disabled):hover dt.btn:after {top:8px;}
+.drop-list:not(.muloperate-disabled)hover dt.btn:after {border-bottom-color:black;}
+.drop-list:not(.muloperate-disabled)hover dt.btn-weak:after {border-bottom-color:gray;}
 
 /** scrollbar **/
 ::-webkit-scrollbar {width:12px; height:12px }

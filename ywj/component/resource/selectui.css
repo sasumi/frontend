@@ -1,0 +1,23 @@
+.com-select-ui {display:inline-block; }
+.com-select-ui dd {display:none; position:absolute; z-index:2; padding-top:5px; max-height:300px; overflow-y:auto; box-shadow:1px 1px 10px #aaa; background-color:white; border-radius:3px; padding:5px 0}
+.com-select-ui dt {padding:0.4em 2.5em 0.4em 1em; border:1px solid #ddd; border-radius:2px; cursor:default; background-color:white; position:relative;}
+.com-select-ui li {}
+.com-select-ui dt:after {content:""; display:inline-block; height:0; width:0; border:4px solid transparent; border-top-color:gray; position:absolute; right:0.5em; top:12px}
+.com-select-ui-trigger dd {display:block;}
+.com-select-ui-trigger dt:after {border-top-color:transparent; border-bottom-color:gray; margin-top:-5px;}
+.com-select-ui ul {}
+.com-select-ui ul span {color:#ccc; padding:0 1em; font-size:12px; display:block; cursor:default;}
+.com-select-ui ul label {padding:0.5em 2em; display:block; position:relative;}
+.com-select-ui .active label,
+.com-select-ui ul label:hover {background-color:rgba(238, 238, 238, 0.51); text-shadow:1px 1px white;}
+.com-select-ui .active label:before {content:"✓"; margin-left:-1em; position:absolute;}
+
+.com-select-ui.com-select-ui-disabled:hover dd,
+.com-select-ui.com-select-ui-readonly:hover dd {display:none;}
+
+.com-select-ui-disabled dt {color:#ccc;}
+.com-select-ui-disabled dt:after {border-top-color:#ddd;}
+.com-select-ui-readonly dt:after {display:none;}
+
+.com-select-ui.com-select-ui-disabled:hover dt:after,
+.com-select-ui.com-select-ui-readonly:hover dt:after {border-top-color:#ccc; border-bottom-color:transparent; margin-top:4px;}

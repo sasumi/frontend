@@ -25,7 +25,10 @@ define('ywj/masker', function(require){
 			}
 
 			var winRegion = Util.getRegion();
-			MASKER_DOM.css('height', winRegion.documentHeight);
+			MASKER_DOM.css({
+				height:winRegion.documentHeight,
+				width: $('body').outerWidth()
+			});
 			MASKER_DOM.show();
 			setTimeout(function(){MASKER_DOM.addClass('YWJ_MASKER-in');}, 0)
 		},

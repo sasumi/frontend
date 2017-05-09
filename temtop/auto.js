@@ -253,7 +253,9 @@ define('temtop/auto',function(require){
 		var $html = $('html');
 		if($html.hasClass('server-DEV') || $html.hasClass('server-GAMMA') || $html.hasClass('server-BETA')){
 			require.async('temtop/RandomForm', function(cb){
-				cb('form[method=post]');
+				setTimeout(function(){
+					cb('form[method=post]');
+				}, 100);
 			});
 		}
 

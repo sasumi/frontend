@@ -2,6 +2,7 @@
  * Created by Administrator on 2017/1/13.
  */
 define('ywj/liteladder', function(require){
+	var $html = $('html')
 	var $body = $('body');
 	var chk = function(){
 		var $ladder = $('.ladder');
@@ -9,7 +10,8 @@ define('ywj/liteladder', function(require){
 		var wh = $(window).height();
 		if(!$ladder.size()){
 			require.async('ywj/resource/liteladder.css');
-			$ladder = $('<ul class="ladder"><li><a href="#top" data-up="1" title="按Home键" class="fa fa-angle-double-up"></a></li><li><a href="#bottom" data-down="1" class="fa fa-angle-double-down" title="按End键"></a></li></ul>').appendTo($body);
+			$ladder = $('<ul class="ladder"><li><a href="#top" data-up="1" title="Home" class="u">&Gt;</a></li>'+
+				'<li><a href="#bottom" data-down="1" class="d" title="End">&Gt;</a></li></ul>').appendTo($body);
 			$body.prepend('<a id="top" name="top"></a>');
 			$body.append('<a id="bottom" name="bottom"></a>');
 
@@ -30,9 +32,16 @@ define('ywj/liteladder', function(require){
 					moving = false;
 					return false;
 				}
-				$body.stop().animate({
-					scrollTop: ($(this).data('up')) ? 0 : ($body[0].scrollHeight)
-				}, 'fast');
+
+				if($.browser.mozilla){
+					$html.stop().animate({
+						scrollTop: ($(this).data('up')) ? 0 : ($body[0].scrollHeight)
+					}, 'fast');
+				}else{
+					$body.stop().animate({
+						scrollTop: ($(this).data('up')) ? 0 : ($body[0].scrollHeight)
+					}, 'fast');
+				}
 			});
 			$body.mouseup(function(e){
 				start_move = false;

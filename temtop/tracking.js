@@ -2,6 +2,7 @@ define('temtop/tracking',function(require){
 	var Util = require('ywj/util');
 	var FC_MAP = {
 		'GLS': '100005',
+		'UPS' : '100002',
 		'DEDHL': '07041',
 		'DEFBAEU' : '07041',
 		'DEFBA' : '07041'

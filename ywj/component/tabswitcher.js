@@ -9,7 +9,7 @@
  */
 define('ywj/tabswitcher', function(require){
 	var $ = require('jquery');
-	return function(tb, ctn, event, active_class, disable_class){
+	var tab = function(tb, ctn, event, active_class, disable_class){
 		event = event || 'click';
 		active_class = active_class || 'active';
 		disable_class = disable_class || 'disactive';
@@ -35,4 +35,15 @@ define('ywj/tabswitcher', function(require){
 			});
 		});
 	};
+
+	tab.nodeInit = function($node, param){
+		var content = param.content;
+		if(!content || !$(content).size()){
+			console.error('no tab content find:', content);
+			return false;
+		}
+		return tab($node, content);
+	};
+
+	return tab;
 });

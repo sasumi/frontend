@@ -14,6 +14,7 @@ define('ywj/uploader', function(require){
 	seajs.use('ywj/resource/uploader.css');
 	var $ = require('jquery');
 	var Net = require('ywj/net');
+	var lang = require('lang/$G_LANGUAGE');
 	var Util = require('ywj/util');
 	var PRIVATES = {};
 	var _guid = 1;
@@ -31,7 +32,7 @@ define('ywj/uploader', function(require){
 	var TPL = '<div class="com-uploader com-uploader-normal">'+
 					'<label class="com-uploader-file">'+
 						'<input type="file">'+
-						'<span>上传文件</span>'+
+						'<span>'+lang('上传文件')+'</span>'+
 					'</label>'+
 					'<div class="com-uploader-progress">'+
 						'<progress min="0" max="100" value="0">0%</progress>'+
@@ -39,10 +40,10 @@ define('ywj/uploader', function(require){
 					'</div>'+
 					'<div class="com-uploader-content"></div>'+
 					'<div class="com-uploader-handle">'+
-						'<input type="button" class="com-uploader-upload com-uploader-btn" value="开始上传"/>'+
-						'<input type="button" class="com-uploader-reload com-uploader-btn" value="重新上传"/>'+
-						'<input type="button" class="com-uploader-cancel com-uploader-btn" value="取消上传"/>'+
-						'<input type="button" class="com-uploader-delete com-uploader-btn" value="删除"/>'+
+						'<input type="button" class="com-uploader-upload com-uploader-btn" value="' +lang('开始上传')+'"/>'+
+						'<input type="button" class="com-uploader-reload com-uploader-btn" value="' +lang('重新上传')+'"/>'+
+						'<input type="button" class="com-uploader-cancel com-uploader-btn" value="' +lang('取消上传')+'"/>'+
+						'<input type="button" class="com-uploader-delete com-uploader-btn" value="' +lang('删除')+'"/>'+
 					'</div>'+
 				'</div>';
 
@@ -156,7 +157,7 @@ define('ywj/uploader', function(require){
 		if(rsp.code == '0'){
 			on_success(UP, rsp.message, rsp.data);
 		} else {
-			on_error(UP, rsp.message || '系统繁忙，请稍候重试');
+			on_error(UP, rsp.message || lang('后台有点忙，请稍后重试'));
 		}
 		console.log('response string:', rsp_str);
 		console.log('response json:', rsp);
@@ -186,7 +187,7 @@ define('ywj/uploader', function(require){
 	 */
 	var on_success = function(UP, message, data){
 		update_dom_state(UP, COM_CLASS_UPLOAD_SUCCESS);
-		var html = '<a href="'+data.src+'" title="查看" target="_blank">';
+		var html = '<a href="'+data.src+'" title="'+lang('查看')+'" target="_blank">';
 
 		//img
 		if(UP.config.TYPE == 'image'){
@@ -213,7 +214,7 @@ define('ywj/uploader', function(require){
 	 */
 	var on_error = function(UP, message){
 		update_dom_state(UP, COM_CLASS_UPLOAD_FAIL);
-		var m = message || '上传失败，请稍候重试';
+		var m = message || lang('上传失败，请稍候重试');
 		PRIVATES[UP.id].container.find('.'+COM_CLASS_CONTENT).html('<span title="'+m+'">'+m+'</span>');
 		UP.onError(message);
 	};
@@ -257,7 +258,7 @@ define('ywj/uploader', function(require){
 		PRI.progress_text = PRI.progress.next();
 		PRI.content = PRI.container.find('.'+COM_CLASS_CONTENT);
 		PRI.file = PRI.container.find('input[type=file]');
-		PRI.container.find('.com-uploader-file span').html('选择'+(this.config.TYPE == 'image' ? '图片' : '文件'));
+		PRI.container.find('.com-uploader-file span').html(lang('选择'+(this.config.TYPE == 'image' ? '图片' : '文件')));
 		PRI.trigger_file = $('<input type="file"/>').appendTo(PRI.container.find('.com-uploader-handle'));
 
 		PRI.xhr = Net.postFormData({
@@ -266,7 +267,7 @@ define('ywj/uploader', function(require){
 				if(PRI.xhr.status === 200){
 					on_response(_this, PRI.xhr.responseText);
 				} else {
-					on_error(_this, '网络繁忙，请稍候重试(3)');
+					on_error(_this, lang('后台有点忙，请稍后重试'));
 				}
 			},
 			onProgress: function(percent){

@@ -247,7 +247,7 @@ define('ywj/auto', function(require){
 	var handler = function(){
 		//表格空值填充
 		$('table[data-empty-fill]').each(function(){
-			var empty = $('tr td', this).size() == 0;
+			var empty = $('tbody td', this).size() == 0 || $('td', this).size() == $('thead td').size();
 			if(empty){
 				var cs = $('tr>td', this).size() || $('tr>th', this).size();
 				var con = $('tbody', this).size() ? $('tbody', this) : $(this);
@@ -257,13 +257,13 @@ define('ywj/auto', function(require){
 
 		//表单自动将get参数写到隐藏域中
 		$('form').each(function(){
-			if($(this).data('form-get-fixed')){
+			var action = this.getAttribute('action');
+			if($(this).data('form-get-fixed') || !action){
 				return;
 			}
 			$(this).data('form-get-fixed', 1);
 
-			if(!this.method || (this.method.toLowerCase() == 'get' && this.action.indexOf('?') >= 0)){
-				var action = this.action;
+			if(!this.method || (this.method.toLowerCase() == 'get' && action.indexOf('?') >= 0)){
 				var query_str = action.substring(action.lastIndexOf("?")+1, action.length);
 				var query_arr = query_str.split('&');
 				for(var i=0;i<query_arr.length;i++){

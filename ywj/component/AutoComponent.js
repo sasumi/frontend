@@ -55,13 +55,31 @@ define('ywj/AutoComponent', function(require){
 		return param;
 	};
 
+	/**
+	 * 优先绑定jQuery事件
+	 * @param $node
+	 * @param event
+	 * @param handler
+	 */
+	var bindUp = function($node, event, handler){
+		event = event.split(/\s+/);
+		$node.each(function(){
+			var len = event.length;
+			while(len -- ){
+				$node.bind(event[len], handler);
+				var evts = $._data($node[0], 'events')[event[len]];
+				evts.splice(0, 0, evts.pop());
+			}
+		})
+	};
+
 	$(function(){
 		//使用异步，一定程度可以缓解data-component组件如果在调用AutoComponent组件方法的时候，
 		//出现的互相嵌套等待的情况，但是这种情况是没太好的办法解耦。
 		setTimeout(function(){
 			var $body = $('body');
 			var _LS = {};
-			var nodeInit = function(){
+			var bindNode = function(){
 				$('[data-'+COMPONENT_FLAG_KEY+']').each(function(){
 					var $node = $(this);
 					if($node.data(COMPONENT_BIND_FLAG_KEY)){
@@ -79,34 +97,29 @@ define('ywj/AutoComponent', function(require){
 						for(var i=0; i<cs.length; i++){
 							var c = cs[i].replace(new RegExp('^'+DEFAULT_NS+'/'),'');
 							var param = all_data[c] || {};
-							if(args[i] && Util.isFunction(args[i].nodeInit)){
+							if(!args[i]){
+								continue;
+							}
+							if(Util.isFunction(args[i].nodeInit)){
 								args[i].nodeInit($node, param);
 							}
 						}
-					});
-				});
-			};
-
-			var eventDelegate = function(){
-				$body.delegate('[data-'+COMPONENT_FLAG_KEY+']', SUPPORT_EVENTS, function(e){
-					var event_type = e.type.toLowerCase();
-					event_type = event_type[0].toUpperCase() + event_type.slice(1);
-					var $node = $(this);
-					var all_data = getDataParam($node);
-					var cs = parseComponents($node.data(COMPONENT_FLAG_KEY));
-					require.async(cs, function(){
-						for(var i=0; i<cs.length; i++){
-							var com = arguments[i];
-							if(com && Util.isFunction(com['node'+event_type])){
-								var c = cs[i].replace(new RegExp('^'+DEFAULT_NS+'/'),'');
-								var param = all_data[c] || {};
-								var ret = com['node'+event_type]($node, param);
-								if(ret === false){
-									e.preventDefault();
-									return false;
+						bindUp($node, SUPPORT_EVENTS, function(e){
+							var ev = e.type;
+							var method = 'node'+ev[0].toUpperCase()+ev.slice(1);
+							for(var i=0; i<cs.length; i++){
+								if(!args[i]){
+									continue;
+								}
+								if(Util.isFunction(args[i][method])){
+									if(args[i][method]($node, param) === false){
+										e.stopImmediatePropagation(); //stop other jQuery event binding
+										e.preventDefault();
+										return false;
+									}
 								}
 							}
-						}
+						});
 					});
 				});
 			};
@@ -114,12 +127,9 @@ define('ywj/AutoComponent', function(require){
 			var m_tm = null;
 			$body.on('DOMSubtreeModified propertychange', function() {
 				clearTimeout(m_tm);
-				m_tm = setTimeout(function(){
-					nodeInit();
-				}, 100);
+				m_tm = setTimeout(function(){bindNode();}, 100);
 			});
-			nodeInit();
-			eventDelegate();
+			bindNode();
 
 			INIT_COMPLETED = true;
 			$.each(INIT_CALLBACK, function(k, v){

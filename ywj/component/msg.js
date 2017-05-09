@@ -183,8 +183,8 @@ define('ywj/msg', function(require){
 		return new Msg(msg, 'load', time);
 	};
 
-	Msg.nodeClick = function(){
-		var msg = $(this).data('msg') || $(this).attr('title');
+	Msg.nodeClick = function($node, param){
+		var msg = param.content || $node.data('msg') || $(this).attr('title');
 		if(msg){
 			Msg.show(msg, 'info');
 		}

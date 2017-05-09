@@ -167,7 +167,7 @@ define('ywj/popup', function(require){
 	 * set dialog operate disable
 	 **/
 	Popup.prototype.setDisable = function() {
-		$('.PopupDialog-Modal-Mask', this.container).css({height: this.container.height(), opacity:0.4});
+		$('.PopupDialog-Modal-Mask', this.container).css({height: this.container.height(), opacity:0.4, display:'block'});
 	};
 
 	/**
@@ -706,13 +706,6 @@ define('ywj/popup', function(require){
 			top:0,
 			left:0
 		};
-		return region;
-		try {
-			region.top = document.documentElement.scrollTop || window.pageYOffset || parent.document.body.scrollTop;
-			region.left = $('body', parent.document).scrollLeft();
-		} catch(ex){
-			console.log(ex);
-		}
 		return region;
 	};
 

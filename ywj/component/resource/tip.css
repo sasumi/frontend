@@ -1,5 +1,5 @@
 .ywj-tip-container-wrap {position:absolute; z-index:11; opacity:0;}
-.ywj-tip-content {border:1px solid #cacaca; border-radius:2px; background-color:#fff; padding:10px; box-shadow:0 0 10px rgba(105, 105, 105, 0.4); max-width:500px;}
+.ywj-tip-content {border:1px solid #cacaca; border-radius:2px; background-color:#fff; padding:10px; box-shadow:0 0 10px rgba(105, 105, 105, 0.4); max-width:500px; word-break:break-all}
 .ywj-tip-arrow {display:block; width:0; height:0; border:7px solid transparent; position:absolute; z-index:1}
 .ywj-tip-close {display:block; overflow:hidden; width:15px; height:20px; position:absolute; right:7px; top:10px; text-align:center; cursor:pointer; font-size:13px; color:gray;}
 .ywj-tip-close:hover {color:black;}
