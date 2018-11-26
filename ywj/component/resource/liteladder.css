@@ -7,3 +7,7 @@
 .ladder a.u {-ms-transform: rotate(270deg); -webkit-transform: rotate(270deg); transform: rotate(270deg);}
 .ladder a.d {-ms-transform: rotate(90deg); -webkit-transform: rotate(90deg); transform: rotate(90deg);}
 .ladder:hover { opacity:1;}
+
+@media print {
+	.ladder {display:none;}
+}

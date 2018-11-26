@@ -63,9 +63,11 @@ define('ywj/imageviewer', function(require){
 	};
 
 	var update_container = function($container){
+		var st = $container.closest('body').scrollTop() || $container.closest('html').scrollTop();
+		var sl = $container.closest('body').scrollLeft() || $container.closest('html').scrollLeft();
 		$container.css({
-			top: $container.parent()[0].scrollTop,
-			left: $container.parent()[0].scrollLeft,
+			top: st,
+			left: sl,
 			width: get_stage_region().width,
 			height: get_stage_region().height
 		});

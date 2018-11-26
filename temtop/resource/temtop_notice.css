@@ -1,0 +1,14 @@
+.temtop-notice-list .con {display:none; padding:0 1em 1em; max-height:200px; overflow-y:auto; position:relative;}
+.temtop-notice-list .con>table {width:100%;}
+.temtop-notice-list .ti {font-size:14px; font-weight:bold; color:#424242}
+.temtop-notice-list .tm {float:right; color:gray;}
+.temtop-notice-list .more {float:right; font-size:14px;}
+.temtop-notice-list .more:after {content:"\f08e"; font-family:FontAwesome, serif; margin-left:0.25em;}
+.temtop-notice-list .u {float:right; margin-right:0.5em; color:gray;}
+.temtop-notice-list li:hover { background-color:rgba(238, 238, 238, 0.44);}
+.temtop-notice-list li.active:hover { background-color:transparent;}
+.temtop-notice-list li:hover .more {display:inline;}
+.temtop-notice-list li {border-bottom:1px dotted #ddd; padding:0.5em 1em; overflow:hidden; cursor:pointer;}
+.temtop-notice-list li.active {cursor:default;}
+.temtop-notice-list .active .con {display:block; }
+.temtop-notice-list li:last-child {border:none;}

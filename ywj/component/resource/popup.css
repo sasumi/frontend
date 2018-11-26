@@ -1,8 +1,13 @@
 .PopupDialog {zoom:1; filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=2, OffY=2, Color=#cccccc); margin-top:-20px; opacity:0; transition:margin-top 0.5s ease-out, opacity 0.3s ease-out;}
-.PopupDialog {position:absolute; top:20px; left:20px; width:350px; border:1px solid #bbb; border-top-color:#ccc; border-left-color:#ccc; background-color:white; box-shadow:0 0 20px #aaa; border-radius:2px}
-.PopupDialog-hd {height:28px; background-color:#fff; cursor:move; position:relative; border-radius:2px 2px 0 0}
-.PopupDialog-hd h3 {font-size:12px; font-weight:bolder; color:gray; padding-left:10px; line-height:28px;}
-.PopupDialog-close {display:block; overflow:hidden; width:28px; height:28px; position:absolute; right:0; top:0; text-align:center; cursor:pointer; font-size:17px; font-family:Verdana; text-decoration:none; color:gray; line-height:1.5}
+.PopupDialog {position:absolute; top:20px; left:20px; width:500px; border:1px solid #bbb; border-top-color:#ccc; border-left-color:#ccc; background-color:white; box-shadow:0 0 20px #aaa; border-radius:2px}
+.PopupDialog-hd {height:28px; background-color:#fff; position:relative; border-radius:2px 2px 0 0}
+.PopupDialog-hd h3 {font-size:12px; font-weight:bolder; color:gray; padding:0 0 0 10px; margin:0; line-height:28px;}
+
+.PopupDialog-hd-op { position:absolute; right:0; top:0; text-align:right;}
+.PopupDialog-refresh {display:inline-block; overflow:hidden; width:28px; height:28px; cursor:pointer; font-size:17px; color:gray;}
+.PopupDialog-refresh:before {content:"↻"; display:block; transform:rotate(90deg); line-height:12px;}
+.PopupDialog-refresh:hover {color:black;}
+.PopupDialog-close {display:inline-block; overflow:hidden; width:28px; height:28px; text-align:center; cursor:pointer; font-size:17px; font-family:Verdana; color:gray; line-height:1.5}
 .PopupDialog-close:hover {color:black;}
 .PopupDialog-ft {background-color:#f3f3f3; white-space:nowrap; border-top:1px solid #e0e0e0; padding:5px 5px 5px 0; text-align:right; border-radius:0 0 3px 3px}
 .PopupDialog-text {padding:10px 15px 20px}
@@ -17,4 +22,3 @@
 
 /** animate **/
 .PopupDialog-Ani-show {margin-top:0; opacity:1}
-

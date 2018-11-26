@@ -131,12 +131,12 @@ define('ywj/uploader', function(require){
 		PRI.file.attr('required', false);
 		switch(to){
 			case COM_CLASS_UPLOAD_NORMAL:
-				PRI.file.attr('required', UP.required);
+				PRI.file.attr('required', PRI.required);
 				break;
 
 			case COM_CLASS_UPLOAD_FAIL:
 			case COM_CLASS_UPLOADING:
-				PRI.trigger_file.attr('required', UP.required);
+				PRI.trigger_file.attr('required', PRI.required);
 				break;
 		}
 	};
@@ -187,10 +187,10 @@ define('ywj/uploader', function(require){
 	 */
 	var on_success = function(UP, message, data){
 		update_dom_state(UP, COM_CLASS_UPLOAD_SUCCESS);
-		var html = '<a href="'+data.src+'" title="'+lang('查看')+'" target="_blank">';
+		var html = '<a class="com-uploader-type-'+UP.config.TYPE+'" href="'+data.src+'" title="'+lang('查看')+'" target="_blank">';
 
 		//img
-		if(UP.config.TYPE == 'image'){
+		if(UP.config.TYPE == Uploader.TYPE_IMAGE){
 			html += '<img src="'+data.thumb+'"/>'
 		} else {
 			var ext = get_ext(data.src);
@@ -240,7 +240,7 @@ define('ywj/uploader', function(require){
 		PRIVATES[this.id] = PRI;
 
 		this.config = $.extend({
-			TYPE: 'image', //文件类型配置：file,image
+			TYPE: Uploader.TYPE_IMAGE, //文件类型配置
 			UPLOAD_URL: '',
 			PROGRESS_URL: ''
 		}, config);
@@ -258,7 +258,7 @@ define('ywj/uploader', function(require){
 		PRI.progress_text = PRI.progress.next();
 		PRI.content = PRI.container.find('.'+COM_CLASS_CONTENT);
 		PRI.file = PRI.container.find('input[type=file]');
-		PRI.container.find('.com-uploader-file span').html(lang('选择'+(this.config.TYPE == 'image' ? '图片' : '文件')));
+		PRI.container.find('.com-uploader-file span').html(lang('选择'+(this.config.TYPE == Uploader.TYPE_IMAGE ? '图片' : '文件')));
 		PRI.trigger_file = $('<input type="file"/>').appendTo(PRI.container.find('.com-uploader-handle'));
 
 		PRI.xhr = Net.postFormData({
@@ -279,6 +279,7 @@ define('ywj/uploader', function(require){
 		});
 
 		PRI.container.find('.com-uploader-delete').click(function(){
+			PRI.input.val('');
 			update_dom_state(_this, COM_CLASS_UPLOAD_NORMAL);
 			on_delete(_this);
 		});

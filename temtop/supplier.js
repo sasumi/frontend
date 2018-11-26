@@ -35,22 +35,26 @@ define('temtop/supplier',function(require){
 			}
 
 			var $sel = $('<span class="supplier-selector-sel"></span>').appendTo($con);
+            var $address_id = $("#address_id");
 			$sel.click(function(){
 				var p = new Pop({
 					title: lang('选择供应商'),
 					content: {src: Net.mergeCgiUri(SUPPLIER_URL, {id:$input.val()})},
 					width: 800
 				});
-				p.listen('onSuccess', function(id, name, days,profit,userid){
+				p.listen('onSuccess', function(id, name, days,profit,userid,type,addressList=''){
 					$input.val(id);
 					$name.val(name).attr('title', name);
+                    $address_id.find('option').remove();
+                    $address_id.append(addressList);
 					if(param.supplier_days_fill){
 						$(param.supplier_days_fill).val(days);
 					}
-					console.log(param.userupdatenode);
-					console.log(userid);
 					if(param.userupdatenode && $(param.userupdatenode).size()){
-						$(param.userupdatenode).val(userid);
+						$(param.userupdatenode).val(userid).trigger("change");
+					}
+					if(param.type && $(param.type).size()){
+						$(param.type).val(type).trigger("change");
 					}
 				});
 				p.show();

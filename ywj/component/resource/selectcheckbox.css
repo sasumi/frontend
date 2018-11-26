@@ -1,0 +1,8 @@
+.select-cb {display:inline-block; position:relative; height:26px;width:100px;top:8px;}
+.select-cb dt {white-space:nowrap; border:1px solid #bbb; border-right-color:#ddd; border-bottom-color:#ddd; border-radius:2px;height:26px;line-height:26px;position:relative;top:-6px;padding-left:5px; cursor:default;}
+.select-cb dt:after {content:""; width:0; height:0; display:inline-block; border:4px solid transparent; border-top-color:#000; position:absolute; right:5px; top:10px}
+.select-cb:hover dt:after {border-top-color:gray;}
+.select-cb dd { display:none; position:absolute; box-shadow:1px 1px 10px #ccc; background-color:#ffffff;margin-top:-2px;padding-left:5px;max-height:300px;overflow-y:auto;}
+.select-cb dd label {display:block; border-bottom:1px solid #eee; padding:0 1em; white-space:nowrap;cursor:pointer;}
+.select-cb dd input[type=checkbox] {margin-right:3px;cursor:pointer;}
+.select-cb:hover dd {display:block;}

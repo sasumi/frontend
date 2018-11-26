@@ -135,6 +135,8 @@ define('ywj/tip', function(require){
 		this.guid = Util.guid();
 		this.rel_tag = $(rel_tag);
 		this.onShow = Hooker(true);
+		this.onHide = Hooker(true);
+		this.onDestory = Hooker(true);
 		PRIVATE_VARS[this.guid] = {};
 
 		opt = $.extend({
@@ -143,13 +145,13 @@ define('ywj/tip', function(require){
 			width: 'auto',
 			dir: 'auto'
 		}, opt || {});
-
+		console.log(opt.width);
 		var html =
-			'<div class="ywj-tip-container-wrap" style="display:none; width:'+opt.width+'">'+
+			'<div class="ywj-tip-container-wrap" style="display:none; width:'+opt.width+'px;">'+
 				'<s class="ywj-tip-arrow ywj-tip-arrow-pt"></s>'+
 				'<s class="ywj-tip-arrow ywj-tip-arrow-bg"></s>'+
 				(opt.closeBtn ? '<span class="ywj-tip-close">&#10005;</span>' : '')+
-				'<div class="ywj-tip-content">'+content+'</div>'+
+				'<div class="ywj-tip-content" style="max-width:'+opt.width+'px;">'+content+'</div>'+
 			'</div>';
 
 		PRIVATE_VARS[this.guid].opt = opt;
@@ -184,10 +186,12 @@ define('ywj/tip', function(require){
 	Tip.prototype.hide = function(){
 		var _this = this;
 		this.getDom().stop().animate({opacity:0}, 'fast', function(){_this.getDom().hide()});
+		this.onHide.fire(this);
 	};
 
 	Tip.prototype.destroy = function(){
 		this.getDom().remove();
+		this.onDestory.fire(this);
 	};
 
 	Tip.show = function(content, rel_tag, opt){
@@ -264,9 +268,9 @@ define('ywj/tip', function(require){
 						err(rsp.message);
 					}
 				});
-			});
+			},param);
 		} else {
-			Tip.bind(content, $node);
+			Tip.bind(content, $node, param);
 		}
 	};
 	

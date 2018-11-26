@@ -3,8 +3,8 @@
  */
 define('ywj/net', function(require){
 	var $ = require('jquery');
-	var util = require('ywj/util');
-	var msg = require('ywj/msg');
+	var Util = require('ywj/util');
+	var Msg = require('ywj/msg');
 	var lang = require('ywj/lang');
 
 	/**
@@ -117,16 +117,23 @@ define('ywj/net', function(require){
 	 */
 	var buildParam = function(/**params1, params2...*/){
 		var data = [];
-		var args = util.toArray(arguments);
+		var args = Util.toArray(arguments);
 
 		$.each(args, function(k, val){
 			var params = val;
-			if(util.isArray(params)){
+			if(Util.isArray(params)){
 				data.push(params.join('&'));
 			} else if(typeof(params) == 'object'){
 				for(var i in params){
+					if(typeof (params[i]) == 'undefined' || params[i] == null){
+						continue;
+					}
 					if(fixType(params[i])){
 						data.push(i+'='+encodeURIComponent(params[i]));
+					} else {
+						$.each(params[i], function(k, v){
+							data.push(i+'['+encodeURIComponent(k)+']='+encodeURIComponent(v)); //PHP 格式数组
+						});
 					}
 				}
 			} else if(typeof(params) == 'string') {
@@ -141,7 +148,7 @@ define('ywj/net', function(require){
 	 * @return string
 	 **/
 	var mergeCgiUri = function(/**url, get1, get2...**/){
-		var args = util.toArray(arguments);
+		var args = Util.toArray(arguments);
 		var url = args[0];
 		url = url.replace(/(.*?)[?|#|&]{0,1}$/g, '$1');	//移除尾部的#&?
 		args = args.slice(1);
@@ -161,7 +168,7 @@ define('ywj/net', function(require){
 	 * @return
 	 */
 	var mergeStaticUri = function(/**url, get1, get2...**/){
-		var args = util.toArray(arguments);
+		var args = Util.toArray(arguments);
 		var url = args[0];
 		args = args.slice(1);
 		$.each(args, function(){
@@ -195,10 +202,14 @@ define('ywj/net', function(require){
 			frontCache: false,  //前端cache
 			jsonpCallback: '_callback',
 			onSuccess: function(){},
-			onError: function(){msg.show(lang("后台有点忙，请稍后重试"), 'err');}
+			onAbort: function(){},
+			onError: function(statusText){
+				console.error('request error, statusText:',statusText, url, data, opt);
+				Msg.show(lang("后台有点忙，请稍后重试"), 'err');
+			}
 		}, opt);
 
-		if(util.inArray(opt.format, ['json', 'jsonp', 'formsender'])){
+		if(Util.inArray(opt.format, ['json', 'jsonp', 'formsender'])){
 			url = mergeCgiUri(url, {ref: opt.format});
 		}
 
@@ -226,7 +237,11 @@ define('ywj/net', function(require){
 				opt.onSuccess(rsp);
 			},
 			error: function(e){
-				opt.onError(e.statusText || 'Error');
+				if(e.statusText === 'abort'){
+					opt.onAbort();
+				} else {
+					opt.onError(e.statusText || 'Error');
+				}
 			}
 		});
 	};
@@ -337,8 +352,8 @@ define('ywj/net', function(require){
 	 * @param ext 保存扩展名，缺省自动解析文件地址后缀
 	 */
 	var download = function(src, save_name, ext){
-		ext = ext || util.resolveExt(src);
-		save_name = save_name || util.resolveFileName(src);
+		ext = ext || Util.resolveExt(src);
+		save_name = save_name || Util.resolveFileName(src);
 		var link = document.createElement('a');
 		link.href = src;
 		link.download = save_name+ext;
@@ -364,6 +379,43 @@ define('ywj/net', function(require){
 		xhr.send(null);
 	}
 
+	var postByForm = function(url, data){
+		var iframe = document.createElement("iframe");
+		var iframe_id = 'POST_BY_FORM_UUID_'+Util.guid();
+		document.body.appendChild(iframe);
+		iframe.style.display = "none";
+		iframe.contentWindow.name = iframe_id;
+
+		var form = document.createElement("form");
+		form.style.cssText = 'display:block; width:1px; height:1px; opacity:0; position:absolute; left:0; top:0;';
+		form.target = iframe_id;
+		form.action = url;
+		form.method = 'POST';
+
+		var map = data;
+		if(Util.isString(data)){
+			if(data.indexOf('=') > 0){
+				map = parseParam(data);
+			} else {
+				map = {data: data}; //JSON string
+			}
+		}
+		for(var k in map){
+			var input = document.createElement("input");
+			input.type = "hidden";
+			input.name = k;
+			input.value = Util.isString(map[k]) ? map[k] : JSON.stringify(map[k]);
+			form.appendChild(input);
+		}
+		document.body.appendChild(form);
+		form.submit();
+		form.onload = function(){
+			console.log('onload');
+			form.parentNode.removeChild(form);
+			iframe.parentNode.removeChild(iframe);
+		};
+	};
+
 	return {
 		getParam: getParam,
 		parseParam: parseParam,
@@ -376,6 +428,7 @@ define('ywj/net', function(require){
 		get: get,
 		post: post,
 		postFormData: postFormData,
+		postByForm: postByForm,
 		getFormData: getFormData,
 		download: download,
 		downloadFile: downloadFile

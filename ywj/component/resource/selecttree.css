@@ -1,0 +1,11 @@
+.select-tree { position:absolute; top:200px; left:100px; background-color:white; max-height:300px; overflow-y:auto; padding:0.5em; box-shadow:1px 1px 10px #ccc; box-sizing:border-box}
+.select-tree li { position:relative;}
+.select-tree ul {padding-left:1em; display:none;}
+.select-tree .expand>ul {display:block;}
+.select-tree .expand>s:before {content:"\f147"}
+.select-tree .ti { cursor:pointer; margin-left:15px;}
+.select-tree .active>.ti,
+.select-tree .ti:hover {color:#0b93d5}
+.select-tree s {display:block; position:absolute; left:0; top:0; text-decoration:none; cursor:pointer; color:#aaa}
+.select-tree s:hover {color:#0b93d5}
+.select-tree s:before {content:"\f196"; font-family:FontAwesome, serif}

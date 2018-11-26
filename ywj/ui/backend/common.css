@@ -28,16 +28,25 @@ input[type=text],
 input[type=password],
 input[type=search],
 input[type=date],
+input[type=month],
 input[type=datetime],
+input[type=time],
 input[type=datetime-local],
 input[type=number],
 input[type=url],
 textarea,
-input[type=email] {border:1px solid #bbb; border-bottom-color:#ddd; border-right-color:#ddd; border-radius:2px; padding:0.1em 0.5em;}
+input[type=email] {border:1px solid #bbb; border-bottom-color:#ddd; border-right-color:#ddd; border-radius:2px; padding:0.1em 0.5em; box-sizing:border-box}
 input[type=number] {text-align:center; width:50px; padding-left:0.25em; padding-right:0.25em;}
-input[type=date] {width:125px; background:url("img/calendar.png") no-repeat 95% center}
+input[type=month],
+input[type=date] {width:140px; background:url("img/calendar.png") no-repeat 95% center}
+input[type=datetime-local] {width:180px; background:url("img/calendar.png") no-repeat 95% center}
+input[type=datetime-local][step] {width:210px;}
 input[type=date]:hover,
-input[type=date]:focus {background:none;}
+input[type=month]:hover,
+input[type=datetime-local]:hover,
+input[type=date]:focus,
+input[type=month]:focus,
+input[type=datetime-local]:focus {background:none;}
 input[type=file] {padding:4px;}
 
 /** text glow **/
@@ -45,27 +54,33 @@ input[type=text],
 input[type=password],
 input[type=search],
 input[type=date],
+input[type=month],
 input[type=datetime],
 input[type=datetime-local],
+input[type=time],
 input[type=number],
 input[type=url],
 textarea,
+select,
 input[type=email] {
 	transition: box-shadow 0.30s ease-in-out;
 	outline: none;
 }
+
 input[type=text]:focus,
 input[type=password]:focus,
 input[type=search]:focus,
 input[type=date]:focus,
+input[type=month]:focus,
 input[type=datetime]:focus,
 input[type=datetime-local]:focus,
+input[type=time]:focus,
 input[type=number]:focus,
 input[type=url]:focus,
 textarea:focus,
+select:focus,
 input[type=email]:focus {
-	border-color:white;
-	box-shadow: 0 0 5px #6F91BB;
+	box-shadow: 0 0 10px #ddd;
 }
 
 /** text disabled **/
@@ -73,8 +88,10 @@ input[type=text][disabled],
 input[type=password][disabled],
 input[type=search][disabled],
 input[type=date][disabled],
+input[type=month][disabled],
 input[type=datetime][disabled],
 input[type=datetime-local][disabled],
+input[type=time][disabled],
 input[type=number][disabled],
 input[type=url][disabled],
 input[type=email][disabled],
@@ -85,8 +102,10 @@ input[type=text][readonly],
 input[type=password][readonly],
 input[type=search][readonly],
 input[type=date][readonly],
+input[type=month][readonly],
 input[type=datetime][readonly],
 input[type=datetime-local][readonly],
+input[type=time][readonly],
 input[type=number][readonly],
 input[type=url][readonly],
 input[type=email][readonly],
@@ -95,8 +114,10 @@ textarea[readonly],
 .readonly input[type=password],
 .readonly input[type=search],
 .readonly input[type=date],
+.readonly input[type=month],
 .readonly input[type=datetime],
 .readonly input[type=datetime-local],
+.readonly input[type=time],
 .readonly input[type=number],
 .readonly input[type=url],
 .readonly input[type=email],
@@ -107,8 +128,10 @@ input[type=text][readonly][disabled],
 input[type=password][readonly][disabled],
 input[type=search][readonly][disabled],
 input[type=date][readonly][disabled],
+input[type=month][readonly][disabled],
 input[type=datetime][readonly][disabled],
 input[type=datetime-local][readonly][disabled],
+input[type=time][readonly][disabled],
 input[type=number][readonly][disabled],
 input[type=url][readonly][disabled],
 input[type=email][readonly][disabled],
@@ -120,7 +143,7 @@ button,
 input.btn,
 [type=button],
 [type=reset],
-[type=submit] {background:linear-gradient(#f7f7f7,#dddddd); color:#555; text-align:center; border:1px solid #a6a6a6; min-width:50px; border-radius:1px; padding:0.2rem 0.5rem; cursor:pointer; text-transform:capitalize; display:inline-block; user-select:none; transition: all 0.30s ease-in-out;outline: none; box-sizing:content-box;}
+[type=submit] {background:linear-gradient(#f7f7f7,#dddddd); color:#555; white-space:nowrap; text-align:center; border:1px solid #a6a6a6; min-width:50px; border-radius:1px; padding:0.1em 0.5em; cursor:pointer; display:inline-block; user-select:none; transition: all 0.30s ease-in-out;outline: none; box-sizing:border-box;}
 
 .btn:focus,
 button:focus,
@@ -191,8 +214,12 @@ input.btn-loading:hover,
 .small-delete-btn:before {content:"\f00d"}
 
 /** select **/
-select {border-radius:2px; width:186px; border:1px solid #bbb; border-right-color:#ddd; border-bottom-color:#ddd; padding:0.06rem 0.5rem 0.46rem; color:#555}
+select {border-radius:2px; width:186px; border:1px solid #bbb; border-right-color:#ddd; border-bottom-color:#ddd; padding:0.06rem 0.5rem 0.35rem 0.25rem}
 option {padding:0 6px}
+select[placeholder="valid"] {color:gray;}
+select[placeholder] option,
+select[placeholder] optgroup {color:#333;}
+select[placeholder] option[value=''] {color:gray;}
 
 /** select disabled + readonly **/
 select[disabled] {border:1px solid #ddd; border-left-color:#ccc; border-top-color:#ccc; background-image:none;}
@@ -209,7 +236,8 @@ input[type=radio][readonly],
 .readonly input[type=radio] {border:none;}
 
 /** textarea **/
-textarea {width:auto; min-width:135px;}
+textarea {width:auto; min-width:135px; min-height:27px;}
+.code-zebra {padding:.5em; line-height:1.5; background:white; background-size:auto 3em; background-origin:content-box; background-image:linear-gradient(rgba(0,0,0,.03) 50%, transparent 0);}
 input.long-txt {width:770px;}
 .rich-txt {width:800px; height:400px}
 .small-txt {width:400px; height:50px; resize:vertical}
@@ -269,7 +297,7 @@ caption .btn, caption .drop-list,
 .frm-tbl>tbody>tr>td {padding:0.4em 1em; min-height:30px;}
 .frm-tbl>tbody>tr>td label {margin-right:7px;}
 .frm-tbl td.col-action {padding:1em 1em}
-.frm-tbl input[type=submit] {padding:0.2rem 1rem}
+.frm-tbl input[type=submit] {padding:0.3em 1rem}
 .frm-tbl .f-captcha input.txt{width:100px;}
 .frm-tbl .f-captcha img{vertical-align: middle; cursor:pointer;}
 .frm-tbl .f-captcha .change-verify-img{vertical-align: middle;cursor:pointer}
@@ -297,7 +325,8 @@ caption .btn, caption .drop-list,
 .data-tbl thead tr {border-bottom:1px solid #eee; background-color:rgba(238, 238, 238, 0.2)}
 .data-tbl thead th { white-space:nowrap;}
 .data-tbl tbody tr {border-bottom:1px dotted #ddd; transition:background-color 0.20s ease-in-out;}
-.data-tbl tbody tr:hover {background-color:rgba(238, 238, 238, 0.52)}
+.data-tbl tbody tr:hover,
+.data-tbl tbody tr.yc-row-checked {background-color:rgba(238, 238, 238, 0.52)}
 .data-tbl tbody tr:last-child {border-bottom:none;}
 .data-tbl caption {font-size:16px; text-align:left; text-transform:uppercase; padding:1rem 0; color:gray;;}
 .data-tbl .col-min-center {width:20px; white-space:nowrap; text-align:center}
@@ -305,6 +334,15 @@ caption .btn, caption .drop-list,
 .data-tbl .col-op,
 .data-tbl .col-idx,
 .data-tbl .col-chk {width:20px; white-space:nowrap; text-align:center}
+
+.grid-data-tbl th,
+.grid-data-tbl td {border:1px solid #eee;}
+
+/** 滚动数据表格 **/
+.scroll-tbl tbody { display:block; max-height:300px; overflow-y:scroll; overflow-x:hidden;}
+.scroll-tbl thead,
+.scroll-tbl tbody tr {display:table;width:100%;table-layout:fixed;}
+.scroll-tbl thead {width:calc(100% - 7px)}
 
 /** 分页 **/
 .pagination {margin:1rem 0; color:#cccccc; text-align:right; display:block;}
@@ -349,7 +387,7 @@ span.state-label {padding:2px 8px; display:inline-block; font-size:10px; border-
 .drop-list.muloperate-disabled dt.btn {color:#ccc; border-color:#ccc; cursor:default}
 .drop-list dd {display:none; position:absolute; box-shadow:1px 1px 5px #aaa; padding:5px 0; margin-right:10px; z-index:1; left:0; background-color:rgba(255, 255, 255, 0.95); border-radius:3px; min-width:80px;}
 .drop-list dd a,
-.drop-list dd span {display:block; padding:3px 10px; border-bottom:1px dotted #eee}
+.drop-list dd span {display:block; padding:3px 10px; border-bottom:1px dotted #eee; text-align:left;}
 .drop-list dd a:last-child,
 .drop-list dd span:last-child {display:block; padding:3px 10px; border-bottom:none}
 .drop-list dd a:hover,
@@ -363,7 +401,6 @@ span.state-label {padding:2px 8px; display:inline-block; font-size:10px; border-
 .drop-list:not(.muloperate-disabled)hover dt.btn:after {border-bottom-color:black;}
 .drop-list:not(.muloperate-disabled)hover dt.btn-weak:after {border-bottom-color:gray;}
 
-/** scrollbar **/
 ::-webkit-scrollbar {width:12px; height:12px }
 ::-webkit-scrollbar-button:vertical { display:none }
 ::-webkit-scrollbar-track:vertical { background-color:black }
@@ -371,14 +408,8 @@ span.state-label {padding:2px 8px; display:inline-block; font-size:10px; border-
 ::-webkit-scrollbar-thumb:vertical { background-color:#8e8e8e; border-radius:5px}
 ::-webkit-scrollbar-thumb:vertical:hover { background-color:#3b3b3b }
 ::-webkit-scrollbar-corner:vertical { background-color:#535353 }
-
-::-webkit-scrollbar {width:12px; height:12px }
-::-webkit-scrollbar-button:vertical { display:none }
-::-webkit-scrollbar-track:vertical { background-color:black }
-::-webkit-scrollbar-track-piece { background:#ffffff }
-::-webkit-scrollbar-thumb:vertical { background-color:#8e8e8e; border-radius:5px}
-::-webkit-scrollbar-thumb:vertical:hover { background-color:#3b3b3b }
-::-webkit-scrollbar-corner:vertical { background-color:#535353 }
+::-webkit-scrollbar-thumb:horizontal{ background-color:#8e8e8e; border-radius:5px}
+::-webkit-scrollbar-thumb:horizontal:hover { background-color:#3b3b3b }
 
 body ::-webkit-scrollbar {width:7px; height:7px }
 body ::-webkit-scrollbar-button:vertical { display:none }
@@ -387,6 +418,16 @@ body ::-webkit-scrollbar-track-piece { background:#eee }
 body ::-webkit-scrollbar-thumb:vertical { background-color:#8e8e8e; border-radius:5px }
 body ::-webkit-scrollbar-thumb:vertical:hover { background-color:#3b3b3b }
 body ::-webkit-scrollbar-corner:vertical { background-color:#535353 }
+body ::-webkit-scrollbar-thumb:horizontal{ background-color:#8e8e8e; border-radius:5px}
+body ::-webkit-scrollbar-thumb:horizontal:hover { background-color:#3b3b3b }
+
+.page-iframe ::-webkit-scrollbar {width:7px; height:7px }
+.page-iframe ::-webkit-scrollbar-button:vertical { display:none }
+.page-iframe ::-webkit-scrollbar-track:vertical { background-color:black }
+.page-iframe ::-webkit-scrollbar-track-piece { background:#eee }
+.page-iframe ::-webkit-scrollbar-thumb:vertical { background-color:#8e8e8e; border-radius:5px }
+.page-iframe ::-webkit-scrollbar-thumb:vertical:hover { background-color:#3b3b3b }
+.page-iframe ::-webkit-scrollbar-corner:vertical { background-color:#535353 }
 
 /** reset highcharts text **/
 .highcharts-container text { font-family:Microsoft Yahei, SimSun, Courier new, Tahoma, Lucida Grande, serif;}

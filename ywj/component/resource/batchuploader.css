@@ -12,7 +12,7 @@
 
 .batch-uploader-drag-enter {background-color:#F7FCFF; box-shadow:0 0 10px #7CB9DE}
 .batch-uploader-delete-btn {display:block; position:absolute;  top:-5px; right:-5px; cursor:pointer; font-size:15px; font-family:Arial, sans-serif; }
-.batch-uploader-delete-btn:after {content:"x"; background-color:#ddd; width:15px; color:white; line-height:13px; height:15px; overflow:hidden; display:block; text-align:center; border-radius:10px;}
+.batch-uploader-delete-btn:after {content:"×"; background-color:#ddd; width:15px; color:white; line-height:17px; height:15px; overflow:hidden; display:block; text-align:center; border-radius:10px;}
 .batch-uploader-delete-btn:hover:after {background-color:#00a0e9; color:white;}
 
 .batch-uploader-add-new .batch-uploader-delete-btn {display:none;}

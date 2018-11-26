@@ -15,7 +15,7 @@ define('temtop/printer', function(require){
 	var LOCAL_SCRIPT = 'http://localhost:8000/CLodopfuncs.js?priority=1';
 	var LODOP_TOKEN = '';
 	var TXT_INSTALL_TIPS = lang("本功能使用了CLodop云打印服务,请点击这里") + "<a href='http://www.lodop.net/download.html' target='_blank'>" + lang("下载") + "</a>";
-	var TXT_NO_READY = "C-Lodop没准备好，请稍后再试！";
+	var TXT_NO_READY = lang("C-Lodop没准备好，请稍后再试！");
 	var CHECK_TIMEOUT = 5000;
 
 	/**
@@ -183,7 +183,7 @@ define('temtop/printer', function(require){
 	};
 
 	var showInstall = function(){
-		Pop.showAlert("Install", TXT_INSTALL_TIPS + "。或者按Ctrl+P直接打印</a>");
+		Pop.showAlert("Install", TXT_INSTALL_TIPS + "。"+lang('或者按Ctrl+P直接打印')+"</a>");
 	};
 
 	/**
@@ -212,7 +212,7 @@ define('temtop/printer', function(require){
 	 * @param intCopies
 	 */
 	var printURL = function(url, printer_index, intOrient, width, height, callback, intCopies){
-		console.info('print url:%c'+url, 'color:blue;text-decoration:underline');
+		console.info('print url:%c'+url, 'color:blue;text-decoration:underline',url, printer_index, intOrient, width, height, callback, intCopies);
 		if(!url){
 			console.error('no url found');
 			return;
@@ -387,7 +387,8 @@ define('temtop/printer', function(require){
 				var src = Net.mergeCgiUri(PRINTER_SET_CGI, {'ref': 'iframe', 'act':tag});
 				Pop.showPopInTop({
 					title: lang('打印机设置'),
-					content: {src: src}
+					content: {src: src},
+					width:800
 				}, function(p){
 					p.listen('onSuccess', function(printer_index){
 						on_success(printer_index, lodop);
@@ -418,6 +419,8 @@ define('temtop/printer', function(require){
 		printBase64Img: printBase64Img,
 		nodeClick: function($node, param){
 			var tag = param.tag;
+			var width = parseInt(param.width, 10);
+			var height = parseInt(param.height, 10);
 			var url = param.url || $node.attr('href');
 			if(!tag){
 				console.error('printer require tag');
@@ -425,7 +428,7 @@ define('temtop/printer', function(require){
 			}
 
 			getPrinter(tag, function(printer_index){
-				printURL(url, printer_index);
+				printURL(url, printer_index, null, width, height);
 			});
 			if($node[0].tagName == 'A'){
 				return false;

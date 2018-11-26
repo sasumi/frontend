@@ -80,6 +80,12 @@ define('temtop/auto',function(require){
          *  data-min  最小几个字符开始筛选  默认为1 最小为1 小于1的都默认为1
          *  data-delay 延时响应事件 单位毫秒  默认为1000ms
          *  data-scroll 是否需要滚动条  默认为有滚动条
+		 *  data format
+		 *  "data" => [
+		 *               ['name' => 'aaa' , 'disabled' => 1 ],
+		 *               ['name' => 'aaa1' , 'disabled' => 0],
+		 *            ]
+		 *
          */
 		$body.delegate("input[rel=autocomplete]","focus",function(){
 			$(this)._autocomplete_();
@@ -252,15 +258,11 @@ define('temtop/auto',function(require){
 		//表单随机字符填充
 		var $html = $('html');
 		if($html.hasClass('server-DEV') || $html.hasClass('server-GAMMA') || $html.hasClass('server-BETA')){
-			require.async('temtop/RandomForm', function(cb){
-				setTimeout(function(){
-					cb('form[method=post]');
-				}, 100);
-			});
+			require.async('temtop/dev');
 		}
 
 		//看图
-		$body.delegate('.com-uploader-success .com-uploader-content a', 'click', function(){
+		$body.delegate('.com-uploader-success .com-uploader-content a.com-uploader-type-image', 'click', function(){
 			IV.init($(this), $('.com-uploader-success .com-uploader-content a'));
 			return false;
 		});
@@ -289,13 +291,13 @@ define('temtop/auto',function(require){
 						var html = '<table class="data-tbl"><tbody><tr>';
 						var k = 0;
 						$list.find('li').each(function(){
-							if(!(k % 3) && k){
+							if(!(k % 2) && k){
 								html += '</tr><tr>';
 							}
 							html += '<td>'+$(this).html()+'</td>';
 							k++;
 						});
-						for(var i=0; i<(3-(k%3)) && k%3; i++){
+						for(var i=0; i<(2-(k%2)) && k%2; i++){
 							html += '<td></td>';
 						}
 						html += '</tr></tbody></table>';
@@ -327,21 +329,5 @@ define('temtop/auto',function(require){
 				$more.hover(show_panel, hide_panel);
 			}
 		});
-
-		if ($("#temtop-notice").length > 0){
-			var $tn = $("#temtop-notice");
-			var html = '<div class="news-content"><div class="hd"><i class="fa fa-volume-up"></i> 最新消息</div><div class="bd"><ul>';
-
-			net.get('http://erp.temtop.com/index.php/notice/news', {system_type:$tn.data('system_type')}, function (r) {
-				if (r.code == 0) {
-					for (var i in r.data) {
-						var d = r.data[i];
-						html += '<li> <a href="'+d.url+'" target="_blank" title="'+d.title+'" class="subject">'+d.title+'</a> <span class="st">'+d.name+'&nbsp;'+d.addtime+'</span> </li>'
-					}
-					html += '</ul></div></div>';
-					$tn.append(html);
-				}
-			}, {format:'jsonp'});
-		}
 	});
 });

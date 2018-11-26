@@ -62,6 +62,8 @@ define('ywj/AutoComponent', function(require){
 	 * @param handler
 	 */
 	var bindUp = function($node, event, handler){
+		$node.bind(event, handler);
+		return;
 		event = event.split(/\s+/);
 		$node.each(function(){
 			var len = event.length;
@@ -96,23 +98,24 @@ define('ywj/AutoComponent', function(require){
 						var args = arguments;
 						for(var i=0; i<cs.length; i++){
 							var c = cs[i].replace(new RegExp('^'+DEFAULT_NS+'/'),'');
-							var param = all_data[c] || {};
 							if(!args[i]){
 								continue;
 							}
 							if(Util.isFunction(args[i].nodeInit)){
-								args[i].nodeInit($node, param);
+								args[i].nodeInit($node, all_data[c] || {});
 							}
 						}
 						bindUp($node, SUPPORT_EVENTS, function(e){
+							var all_data = getDataParam($node);
 							var ev = e.type;
 							var method = 'node'+ev[0].toUpperCase()+ev.slice(1);
 							for(var i=0; i<cs.length; i++){
 								if(!args[i]){
 									continue;
 								}
+								var c = cs[i].replace(new RegExp('^'+DEFAULT_NS+'/'),'');
 								if(Util.isFunction(args[i][method])){
-									if(args[i][method]($node, param) === false){
+									if(args[i][method]($node, all_data[c] || {}) === false){
 										e.stopImmediatePropagation(); //stop other jQuery event binding
 										e.preventDefault();
 										return false;

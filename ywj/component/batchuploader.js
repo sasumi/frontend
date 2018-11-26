@@ -16,7 +16,11 @@ define('ywj/batchuploader', function(require){
 	};
 
 	var delete_btn_html = '<span class="batch-uploader-delete-btn"></span>';
-	var new_tab_html = '<li class="batch-uploader-add-new"><label><input type="file" name="files[]" multiple="multiple"/>'+delete_btn_html+'<span class="batch-uploader-add-new-btn"></span></label></li>';
+	var new_tab_html =
+		'<li class="batch-uploader-add-new">'+
+		'<label><input type="file" name="files[]" multiple="multiple"/>'+delete_btn_html+
+		'<span class="batch-uploader-add-new-btn"></span>'+
+		'</label></li>';
 
 	var on_item_uploading = function(u, percent){
 		this.onItemUploading(u, percent);
@@ -52,8 +56,9 @@ define('ywj/batchuploader', function(require){
 		var $new = $('<li>'+delete_btn_html+'<input type="hidden" name="'+name+'" value="'+value+'" data-thumb="'+thumb+'" data-src="'+src+'" data-param="'+param+'"></li>')
 			.insertBefore($container.find('.batch-uploader-add-new'));
 		var $inp = $new.find('input');
-		var u = new UP($inp, UP_CONFIG);
+		var u = new UP($inp, $.extend(UP_CONFIG, {TYPE: bu_scope.type}));
 		bind_interface(u, bu_scope);
+		$new.attr('id',u.id);
 		return u;
 	};
 
@@ -117,10 +122,12 @@ define('ywj/batchuploader', function(require){
 		}
 	};
 
-	var BU = function(sel){
+	var BU = function(sel, param){
+		param = param || {};
 		var _this = this;
 		var $container = $(sel);
 		var $list = $("<ul>").appendTo($container);
+		_this.type = param.type || UP.TYPE_IMAGE;
 
 		//multiple file upload require file name specified
 		if(!$container.data('name')){
@@ -131,7 +138,7 @@ define('ywj/batchuploader', function(require){
 			var $inp = $(this);
 			var $li = $('<li>'+delete_btn_html+'</li>').appendTo($list);
 			$inp.appendTo($li);
-			bind_interface(new UP($inp, UP_CONFIG), _this);
+			bind_interface(new UP($inp, $.extend(UP_CONFIG, {TYPE: _this.type})), _this);
 		});
 
 		$(new_tab_html).appendTo($list).find('input').change(function(){
@@ -187,7 +194,6 @@ define('ywj/batchuploader', function(require){
 	BU.prototype.empty = function(){
 		this.container.find('li:not([class=batch-uploader-add-new])').remove();
 	};
-	BU.nodeInit = function($node){new BU($node);};
 
 	BU.prototype.onItemSuccess = function(u, message, rsp){};
 	BU.prototype.onItemError = function(u, message){};
@@ -196,6 +202,8 @@ define('ywj/batchuploader', function(require){
 	BU.prototype.onItemStart = function(u){};
 	BU.prototype.onItemDelete = function(u){};
 	BU.prototype.onAllFinish = function(){};
-
+	BU.nodeInit = function($node, param){
+		new BU($node, param);
+	};
 	return BU;
 });

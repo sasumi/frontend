@@ -1,0 +1,66 @@
+.com-fileuploader .com-fileuploader-file input[type=file]{display:inline-block; outline:none;overflow: hidden; background:url("upload24.png") no-repeat 7px; cursor:pointer; border-radius:3px; width:0; padding:0 0 0 37px;}
+.com-fileuploader-content {padding-right:1em;}
+.com-fileuploader label {cursor:pointer;}
+.com-fileuploader-file {vertical-align:middle; color:#00a0e9;}
+.com-fileuploader-file span {display:inline-block; vertical-align:middle;}
+input[type=text].com-fileuploader-file-name {margin:0 0.5em; border:none; border-bottom:1px solid #ccc; border-radius:0}
+input[type=text][readonly].com-fileuploader-file-name {color:gray; text-shadow:1px 1px 1px white;}
+.com-fileuploader-btn {border:none; background-color:transparent; color:#00a0e9; cursor:pointer; margin-right:0.7em; font-family:Microsoft Yahei, helvetica, verdana, sans-serif;}
+.com-fileuploader-error .com-fileuploader-content {color:#FF741F}
+.com-fileuploader-progress span {padding-left:5px; display:inline-block; vertical-align:middle}
+
+.com-fileuploader-handle { position:relative; display:inline-block; padding-left:1em;}
+.com-fileuploader-handle input[type=file] {position:absolute; width:1px; height:1px; border-color:transparent; background-color:transparent; outline:none; overflow:hidden; padding:0; bottom:0; left:20px;}
+
+/** 文件类型 **/
+.com-fileuploader-file-icon { display:inline-block; width:24px; height:24px; background:url("file/file_type_icons-default.png") no-repeat; background-size:contain; vertical-align:middle}
+.com-fileuploader-file-icon-default { background-image:url("file/file_type_icons-pdf.png") }
+.com-fileuploader-file-icon-docx,
+.com-fileuploader-file-icon-doc { background-image:url("file/file_type_icons-doc.png") }
+.com-fileuploader-file-icon-xls,
+.com-fileuploader-file-icon-xlsx { background-image:url("file/file_type_icons-xls.png") }
+.com-fileuploader-file-icon-pdf { background-image:url("file/file_type_icons-pdf.png") }
+.com-fileuploader-file-icon-ppt,
+.com-fileuploader-file-icon-pptx { background-image:url("file/file_type_icons-ppt.png") }
+.com-fileuploader-file-icon-7z,
+.com-fileuploader-file-icon-gz,
+.com-fileuploader-file-icon-zip,
+.com-fileuploader-file-icon-rar { background-image:url("file/file_type_icons-zip.png") }
+.com-fileuploader-file-icon-txt { background-image:url("file/file_type_icons-txt.png") }
+.com-fileuploader-file-icon-html { background-image:url("file/file_type_icons-html.png") }
+.com-fileuploader-file-icon-css { background-image:url("file/file_type_icons-css.png") }
+.com-fileuploader-file-icon-jpg { background-image:url("file/file_type_icons-jpg.png") }
+.com-fileuploader-file-icon-jpeg { background-image:url("file/file_type_icons-jpg.png") }
+.com-fileuploader-file-icon-png { background-image:url("file/file_type_icons-png.png") }
+.com-fileuploader-file-icon-psd { background-image:url("file/file_type_icons-psd.png") }
+.com-fileuploader-file-icon-mov { background-image:url("file/file_type_icons-mov.png") }
+.com-fileuploader-file-icon-avi { background-image:url("file/file_type_icons-avi.png") }
+.com-fileuploader-file-icon-wav { background-image:url("file/file_type_icons-wav.png") }
+
+/** 未上传 **/
+.com-fileuploader-normal .com-fileuploader-progress,
+.com-fileuploader-normal .com-fileuploader-content,
+.com-fileuploader-normal .com-fileuploader-handle,
+
+	/** 上传中 **/
+.com-fileuploader-uploading .com-fileuploader-file,
+.com-fileuploader-uploading .com-fileuploader-content,
+.com-fileuploader-uploading .com-fileuploader-download,
+.com-fileuploader-uploading .com-fileuploader-upload,
+.com-fileuploader-uploading .com-fileuploader-reload,
+.com-fileuploader-uploading .com-fileuploader-delete,
+
+	/** 上传成功 **/
+.com-fileuploader-success .com-fileuploader-file,
+.com-fileuploader-success .com-fileuploader-progress,
+.com-fileuploader-success .com-fileuploader-upload,
+.com-fileuploader-success .com-fileuploader-cancel,
+
+	/** 上传失败 **/
+.com-fileuploader-error .com-fileuploader-file,
+.com-fileuploader-error .com-fileuploader-progress,
+.com-fileuploader-error .com-fileuploader-upload,
+.com-fileuploader-error .com-fileuploader-cancel,
+.com-fileuploader-error .com-fileuploader-download,
+.com-fileuploader-error .com-fileuploader-delete
+{display:none;}

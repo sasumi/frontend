@@ -1,3 +1,8 @@
+/**
+ * 自动完成输入框
+ * CGI返回格式：{code:0, message, data:[{title:'标题', value:'值', disabled:true},...]}
+ * 组件会考量required、strict参数
+ */
 define('ywj/autocomplete', function(require){
 	require('ywj/resource/autocomplete.css');
 	var $ = require('jquery');
@@ -10,20 +15,30 @@ define('ywj/autocomplete', function(require){
 	var PANEL_SUCCESS_CLASS = 'ywj-autocomplete-panel-success';
 	var PANEL_LOADING_CLASS = 'ywj-autocomplete-panel-loading';
 	var INPUT_LOADING = 'ywj-autocomplete-input-loading';
+	var INPUT_MISS_MATCH = 'ywj-autocomplete-input-miss-match';
 	var PANEL_ITEM_FOCUS_CLASS = 'ywj-autocomplete-item-focus';
+	var PANEL_ITEM_DISABLED_CLASS = 'ywj-autocomplete-item-disabled';
 
 	return {
 		nodeInit: function($node, param){
 			var cgi = param.source;
+			if(!cgi){
+				console.warn('NO CGI SOURCE FOUND USING AUTOCOMPLETE COMPONENT');
+				return;
+			}
+
 			var onselect = param.onselect || function(){};
 			if(Util.isString(onselect)){
 				onselect = window[onselect];
 			}
 			var strict = param.strict === undefined ? true : !!param.strict;
+			var required = $node.attr('required');
+			var disabled = $node.attr('disabled');
 
 			var $shadow_inp = $node;
 			if(strict){
-				$shadow_inp = $('<input type="text" value="'+$node.val()+'" class="'+$node.attr('class')+'" placeholder="'+$node.attr('placeholder')+'">').insertBefore($node);
+				disabled = disabled?'disabled="'+disabled+'"':'';
+				$shadow_inp = $('<input type="text" value="'+$node.val()+'" '+disabled+' class="'+$node.attr('class')+'" placeholder="'+($node.attr('placeholder') || '')+'">').insertBefore($node);
 				$node.css({
 					transition: 'none',
 					position: 'absolute',
@@ -34,15 +49,18 @@ define('ywj/autocomplete', function(require){
 					top: $shadow_inp.offset().top + $shadow_inp.outerHeight(),
 					opacity: 0
 				});
+
+				$node.change(function(){
+					$shadow_inp.val($(this).val());
+				});
+
+				$shadow_inp.blur(function(){
+					$node.trigger('blur');
+				});
 			}
 
 			var _stop_load_ = false;
-			$shadow_inp.on('keyup mouseup change', function(e){
-				if(!_stop_load_){
-					load_data(this.value);
-				}
-			});
-			$shadow_inp.on('keydown', function(e){
+			$shadow_inp.on('keydown keyup change mouseup', function(e){
 				if(e.keyCode == Util.KEYS.UP){
 					move_cursor(true);
 					return false;
@@ -51,15 +69,21 @@ define('ywj/autocomplete', function(require){
 					return false;
 				}else if(e.keyCode == Util.KEYS.ENTER){
 					if($PANEL.is(':visible') && $PANEL.find('.'+PANEL_ITEM_FOCUS_CLASS).size()){
-						select_item($PANEL.find('.'+PANEL_ITEM_FOCUS_CLASS), true);
-						hide_panel();
-						_stop_load_ = true;
-						setTimeout(function(){
-							_stop_load_ = false;
-						}, 100);
+						if(select_item($PANEL.find('.'+PANEL_ITEM_FOCUS_CLASS), true)){
+							hide_panel();
+							_stop_load_ = true;
+							setTimeout(function(){
+								_stop_load_ = false;
+							}, 100);
+						}
 						return false;
 					}
+				} else {
+					if(!_stop_load_){
+						load_data(this.value);
+					}
 				}
+				$node.val($shadow_inp.val());
 			});
 
 			var LAST_DATA = [];
@@ -70,20 +94,24 @@ define('ywj/autocomplete', function(require){
 						width: $shadow_inp.outerWidth()
 					});
 					$PANEL.delegate('dd', 'mousedown', function(){
-						select_item($(this), true);
-						hide_panel();
+						if(select_item($(this), true)){
+							hide_panel();
+						}
 					});
 					$('body').click(function(e){
 						var tag = e.target;
 						if(tag == $shadow_inp[0] || $.contains($PANEL[0], tag) || $PANEL[0] == tag){
 							//hits
 						} else {
-							select_item($PANEL.find('.'+PANEL_ITEM_FOCUS_CLASS), true);
-							hide_panel();
+							if($PANEL.is(':visible') && select_item($PANEL.find('.'+PANEL_ITEM_FOCUS_CLASS), true)){
+								hide_panel();
+							}
 						}
 					});
 				}
-				$PANEL.show().removeClass(PANEL_LOADING_CLASS)
+				$PANEL.html('')
+					.show()
+					.removeClass(PANEL_LOADING_CLASS)
 					.removeClass(PANEL_SUCCESS_CLASS)
 					.removeClass(PANEL_ERROR_CLASS)
 					.html('')
@@ -91,7 +119,7 @@ define('ywj/autocomplete', function(require){
 						left: $shadow_inp.offset().left,
 						top: $shadow_inp.offset().top + $shadow_inp.outerHeight()
 					});
-				$shadow_inp.removeClass(INPUT_LOADING);
+				$shadow_inp.removeClass(INPUT_LOADING).removeClass(INPUT_MISS_MATCH);
 			};
 
 			/**
@@ -126,10 +154,21 @@ define('ywj/autocomplete', function(require){
 			 * @param clear
 			 */
 			var select_item = function($dd, clear){
+				clearTimeout(_mc_tm);
+				_stop_load_ = true;
+				_mc_tm = setTimeout(function(){
+					_stop_load_ = false;
+				}, 500);
+
 				if(!$dd.size()){
-					return;
+					return false;
 				}
 				var data = LAST_DATA[$dd.index()-1];
+				if(data.disabled){
+					console.log('disabled');
+					return false;
+				}
+
 				$shadow_inp.val(data.value);
 				$node.val(data.value);
 				onselect(data, $node);
@@ -138,6 +177,7 @@ define('ywj/autocomplete', function(require){
 				if(clear){
 					$PANEL.find('dd').removeClass(PANEL_ITEM_FOCUS_CLASS);
 				}
+				return true;
 			};
 
 			var show_panel = function(list, message, error){
@@ -146,13 +186,27 @@ define('ywj/autocomplete', function(require){
 					$PANEL.addClass(PANEL_ERROR_CLASS).html('<dt>'+Util.htmlEscape(message)+'</dt>');
 				} else {
 					LAST_DATA = list;
-					var html = '<dt>'+Util.htmlEscape(message)+'</dt>';
-					for(var i=0; i<list.length; i++){
-						html += '<dd tabindex="0">'+Util.htmlEscape(list[i].title)+'</dd>';
+					if(!LAST_DATA || !LAST_DATA.length){
+						show_empty();
+					} else {
+						var html = '<dt>'+Util.htmlEscape(message)+'</dt>';
+						for(var i=0; i<list.length; i++){
+							html += '<dd '+(list[i].disabled ? '' : 'tabindex="0"')+' class="'+(list[i].disabled ? PANEL_ITEM_DISABLED_CLASS : '')+'">';
+							html += Util.htmlEscape(list[i].title);
+							html += '</dd>';
+						}
+						$PANEL.addClass(PANEL_SUCCESS_CLASS).html(html);
+						$PANEL.find('dd').eq(0).addClass(PANEL_ITEM_FOCUS_CLASS);
+						$PANEL.find('dd').highlight($.trim($shadow_inp.val()));
 					}
-					$PANEL.addClass(PANEL_SUCCESS_CLASS).html(html);
-					$PANEL.find('dd').eq(0).addClass(PANEL_ITEM_FOCUS_CLASS);
-					$PANEL.find('dd').highlight($.trim($shadow_inp.val()));
+				}
+			};
+
+			var show_empty = function(){
+				create_panel();
+				$PANEL.addClass(PANEL_ERROR_CLASS).html('<dt>没有匹配结果</dt>');
+				if(strict){
+					$shadow_inp.addClass(INPUT_MISS_MATCH);
 				}
 			};
 

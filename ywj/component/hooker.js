@@ -35,11 +35,12 @@ define('ywj/hooker', function(require){
 			if(!HK_MAP.length){
 				return null;
 			}
-			LAST_ARGS = LAST_ARGS.length ? LAST_ARGS : Util.toArray(arguments);
+			var args = Util.toArray(arguments);
+			LAST_ARGS = args;
 			setTimeout(function(){
 				var TMP_MAP = [];
 				for(var i=0; i<HK_MAP.length; i++){
-					var ret = HK_MAP[i].callback.apply(null, LAST_ARGS);
+					var ret = HK_MAP[i].callback.apply(null, args);
 					if(HK_MAP[i].recursive){
 						TMP_MAP.push(HK_MAP[i]);
 					}

@@ -24,11 +24,14 @@ define('temtop/RandomForm',function(require){
 		return word;
 	};
 
-	var r_word = function(count, word_length){
+	var r_word = function(count, word_length, max_length){
 		count = count || Math.floor(1+Math.random()*2);
 		var sen = [];
 		for(var i=0; i<count; i++){
 			sen.push(r_str(word_length));
+		}
+		if(max_length){
+			return sen.join(' ').substr(0, max_length);
 		}
 		return sen.join(' ');
 	};
@@ -85,7 +88,7 @@ define('temtop/RandomForm',function(require){
 				$el.val(dobj.getUTCFullYear()+'-'+str_pad(dobj.getMonth(), 2, '0')+'-'+str_pad(dobj.getUTCDate(), 2, '0'));
 			}
 			else if($el.attr('type') == 'text'){
-				$el.val(r_word());
+				$el.val(r_word(0, 0, $el.attr('maxlength')));
 			} else if($el.attr('type') == 'number'){
 				$el.val(r_num());
 			} else if($el[0].nodeName == 'TEXTAREA'){
@@ -95,6 +98,12 @@ define('temtop/RandomForm',function(require){
 				$el.attr('checked', Math.floor(Math.random()-0.5) ? true : false);
 			} else if($el[0].nodeName == 'SELECT'){
 				$el[0].selectedIndex = Math.floor(Math.random()*$el.find('option').size());
+			}
+			else if($el[0].type == 'radio'){
+				var $radios = $('input[type=radio][name='+$el.attr('name')+']');
+				$radios.removeAttr('checked');
+				var r = Math.max(Math.round(Math.random() * $radios.size(), 10), $radios.size()-1);
+				$radios.eq(r).attr('checked', 'checked');
 			}
 			else if($el[0].type == 'email'){
 				$el.val((r_word(1)+'@'+r_word(1)+'.com').toLowerCase());
@@ -143,6 +152,7 @@ define('temtop/RandomForm',function(require){
 			});
 			$body.mouseup(function(e){
 				start_move = false;
+				moving = false;
 			});
 			$body.mousemove(function(e){
 				if(start_move){

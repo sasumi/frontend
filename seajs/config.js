@@ -97,7 +97,8 @@ seajs.config({
 		"highcharts": "highcharts/highcharts.js",
 		"ueditor": FRONTEND_HOST+"/ueditor/ueditor.all.js",
 		"ueditor_normal_config": FRONTEND_HOST+"/ueditor/ueditor.config.normal.js",
-		"ueditor_lite_config": FRONTEND_HOST+"/ueditor/ueditor.config.lite.js"
+		"ueditor_lite_config": FRONTEND_HOST+"/ueditor/ueditor.config.lite.js",
+		"qrcode": "qrcode/jquery.qrcode.min.js",
 	},
 	paths: {
 		"lang": FRONTEND_HOST+"/ywj/lang",

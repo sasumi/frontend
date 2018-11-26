@@ -29,6 +29,10 @@ define('ywj/util', function(require){
 			.replace(/>/g, '&gt;');
 	};
 
+	var selectorEscape = function(str){
+		return (window.CSS && CSS.escape) ? CSS.escape(str) : str.replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&");
+	};
+
 	var htmlUnescape = function(str){
 		return String(str)
 			.replace(/&quot;/g, '"')
@@ -124,6 +128,81 @@ define('ywj/util', function(require){
 	 */
 	var isArray = function(obj){
 		return getType(obj) == 'array';
+	};
+
+	/**
+	 * array_column
+	 * @param arr
+	 * @param col_name
+	 * @returns {Array}
+	 */
+	var arrayColumn = function(arr, col_name){
+		var data = [];
+		for(var i in arr){
+			data.push(arr[i][col_name]);
+		}
+		return data;
+	};
+
+	var arrayIndex = function(arr, val){
+		for(var i in arr){
+			if(arr[i] == val){
+				return i;
+			}
+		}
+		return null;
+	};
+
+	/**
+	 * array group
+	 * @param arr
+	 * @param by_key
+	 * @param limit limit one child
+	 * @returns {*}
+	 */
+	var arrayGroup = function(arr, by_key, limit) {
+		if(!arr || !arr.length) {
+			return arr;
+		}
+		var tmp_rst = {};
+		$.each(arr, function(_, item){
+			var k = item[by_key];
+			if(!tmp_rst[k]){
+				tmp_rst[k] = [];
+			}
+			tmp_rst[k].push(item);
+		});
+		if(!limit){
+			return tmp_rst;
+		}
+		var rst = [];
+		for(var i in tmp_rst){
+			rst[i] = tmp_rst[i][0];
+		}
+		return rst;
+	};
+
+	/**
+	 * 修正checkbox required行为属性
+	 * @param scope
+	 */
+	var fix_checkbox_required = function(scope){
+		var $scope = $(scope || 'body');
+		var FLAG = 'fix-checkbox-required-bind';
+		$(':checkbox[required]',$scope).each(function(){
+			var $chk = $(this);
+			if(!$chk.data(FLAG)){
+				$chk.data(FLAG, 1);
+				$chk.change(function(){
+					var $all_chks = $scope.find(':checkbox[name='+selectorEscape($chk.attr('name'))+']');
+					if($all_chks.is(':checked')){
+						$all_chks.removeAttr('required');
+					} else {
+						$all_chks.attr('required', 'required');
+					}
+				});
+			}
+		});
 	};
 
 	/**
@@ -278,6 +357,37 @@ define('ywj/util', function(require){
 	};
 
 	/**
+	 * 获取当前窗口节点在顶部窗口位置
+	 * @param $node
+	 * @returns {{left: number, top: number}}
+	 */
+	var getNodeRegionInTop = function($node){
+		var win = window;
+		var rect = {left:0, top:0};
+		var body = document.body;
+		try {
+			var r = $node[0].getBoundingClientRect();
+			rect.left += r.left + ($(body).scrollLeft() || $(body.parentNode).scrollLeft());
+			rect.top += r.top + ($(body).scrollTop() || $(body.parentNode).scrollTop());
+
+			while(win.frameElement){
+				var fr = window.frameElement.getBoundingClientRect();
+				rect.left += fr.left;
+				rect.top += fr.top;
+				win = win.parent;
+				var sl = $(win.document.body).scrollLeft() || $(win.document.body.parentNode).scrollLeft();
+				var st = $(win.document.body).scrollTop() || $(win.document.body.parentNode).scrollTop();
+
+				rect.left += sl;
+				rect.top += st;
+			}
+		} catch(ex){
+			console.error(ex);
+		}
+		return rect;
+	};
+
+	/**
 	 * 中英文字符串截取（中文按照2个字符长度计算）
 	 * @param str
 	 * @param len
@@ -323,6 +433,59 @@ define('ywj/util', function(require){
 		console.info('copy ' + (succeeded ? 'succeeded' : 'fail'), text);
 		return succeeded;
 	};
+
+	function copyFormatted(html){
+		// Create container for the HTML
+		// [1]
+		var container = document.createElement('div');
+		container.innerHTML = html;
+
+		// Hide element
+		// [2]
+		container.style.position = 'fixed';
+		container.style.pointerEvents = 'none';
+		container.style.opacity = 0;
+
+		// Detect all style sheets of the page
+		var activeSheets = Array.prototype.slice.call(document.styleSheets)
+			.filter(function(sheet){
+				return !sheet.disabled
+			});
+
+		// Mount the iframe to the DOM to make `contentWindow` available
+		// [3]
+		document.body.appendChild(container);
+
+		// Copy to clipboard
+		// [4]
+		window.getSelection().removeAllRanges();
+
+		var range = document.createRange();
+		range.selectNode(container);
+		window.getSelection().addRange(range);
+
+		// [5.1]
+		document.execCommand('copy');
+
+		// [5.2]
+		for(var i = 0; i < activeSheets.length; i++) activeSheets[i].disabled = true
+
+		// [5.3]
+		document.execCommand('copy');
+
+		// [5.4]
+		for(var i = 0; i < activeSheets.length; i++) activeSheets[i].disabled = false
+
+		// Remove the iframe
+		// [6]
+		document.body.removeChild(container)
+	}
+
+	var round = function(num, digits){
+		digits = digits === undefined ? 2 : digits;
+		var multiple = Math.pow(10, digits);
+		return Math.round(num * multiple) / multiple;
+	}
 
 	/**
 	 * 获取指定容器下的表单元素的值
@@ -392,8 +555,30 @@ define('ywj/util', function(require){
 	 * @returns {*}
 	 */
 	var rectInLayout = function(rect, layout){
-		return between(rect.top + rect.height, layout.top, layout.top + layout.height) &&
-			between(rect.left + rect.width, layout.left, layout.left + layout.width);
+		return between(rect.top, layout.top, layout.top + layout.height) && between(rect.left, layout.left, layout.left + layout.width) //左上角
+			&& between(rect.top+rect.height, layout.top, layout.top + layout.height) && between(rect.left+rect.width, layout.left, layout.left + layout.width); //右下角
+	};
+
+	/**
+	 * 矩形相交（包括边重叠情况）
+	 * @param rect1
+	 * @param rect2
+	 * @returns {boolean}
+	 */
+	var rectAssoc = function(rect1, rect2){
+		if(rect1.left <= rect2.left){
+			return (rect1.left + rect1.width) >= rect2.left && (
+				between(rect2.top, rect1.top, rect1.top+rect1.height) ||
+				between(rect2.top+rect2.height, rect1.top, rect1.top+rect1.height) ||
+				rect2.top >= rect1.top && rect2.height >= rect1.height
+			);
+		} else {
+			return (rect2.left + rect2.width) >= rect1.left && (
+				between(rect1.top, rect2.top, rect2.top+rect2.height) ||
+				between(rect1.top+rect1.height, rect2.top, rect2.top+rect2.height) ||
+				rect1.top >= rect2.top && rect1.height >= rect2.height
+			);
+		}
 	};
 
 	/**
@@ -414,6 +599,23 @@ define('ywj/util', function(require){
 		}
 	};
 
+	var resetNode = function($node){
+		var html = $node[0].outerHTML;
+		if($node.prev().size()){
+			var $prev = $node.prev();
+			$node.remove();
+			$(html).insertAfter($prev);
+		} else if($node.next().size()){
+			var $next = $node.next();
+			$node.remove();
+			$(html).insertBefore($next);
+		} else {
+			var $parent = $($node[0].parentNode);
+			$node.remove();
+			$parent.html(html);
+		}
+	};
+
 	/**
 	 * 移动终端侦测
 	 * @type {boolean}
@@ -428,7 +630,7 @@ define('ywj/util', function(require){
 		var f = /\/([^/]+)$/ig.exec(src);
 		if(f){
 			var t = /(\.[\w]+)/.exec(f[1]);
-			return t[1];
+			return t ? t[1] : '';
 		}
 		return null;
 	};
@@ -455,19 +657,44 @@ define('ywj/util', function(require){
 
 	return {
 		isMobile: isMobile,
-		KEYS: {ENTER: 13, DOWN: 40, UP: 38, LEFT: 37, RIGHT: 39, ESC: 27, TAB: 9},
+		KEYS: {
+			ENTER: 13,
+			DOWN: 40,
+			UP: 38,
+			LEFT: 37,
+			RIGHT: 39,
+			ESC: 27,
+			TAB: 9,
+			BACKSPACE: 8,
+			COMMA: 188,
+			ESCAPE: 27,
+			HOME: 36,
+			PAGE_DOWN: 34,
+			PAGE_UP: 33,
+			PERIOD: 190
+		},
 		getRegion: getRegion,
+		getNodeRegionInTop: getNodeRegionInTop,
 		toArray: toArray,
+		round: round,
+		between: between,
 		inArray: inArray,
 		isArray: isArray,
+		arrayColumn: arrayColumn,
+		arrayIndex: arrayIndex,
+		arrayGroup: arrayGroup,
 		isElement: isElement,
 		getType: getType,
 		cloneConfigCaseInsensitive: cloneConfigCaseInsensitive,
 		htmlEscape: htmlEscape,
+		selectorEscape: selectorEscape,
 		htmlUnescape: htmlUnescape,
 		rectInLayout: rectInLayout,
+		rectAssoc:rectAssoc,
 		pregQuote: pregQuote,
+		resetNode: resetNode,
 		cutString: cutString,
+		fixCheckboxRequired: fix_checkbox_required,
 		setNodeSelectDisabled: setNodeSelectDisabled,
 		isEmptyObject: isEmptyObject,
 		isPlainObject: isPlainObject,
@@ -481,6 +708,7 @@ define('ywj/util', function(require){
 		getU8StrLen: getU8StrLen,
 		guid: guid,
 		copy: copy,
+		copyFormatted:copyFormatted,
 		resolveExt: resolve_ext,
 		resolveFileName: resolve_file_name,
 		findParent: findParent,

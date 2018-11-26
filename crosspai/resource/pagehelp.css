@@ -1,0 +1,10 @@
+.pagehelp-link {text-decoration: underline double; cursor:pointer;}
+.pagehelp-link:hover {background-color:#e8f0ff;}
+
+.pagehelp-title {font-size:15px; border-bottom:1px solid #ddd; margin-bottom:3px; padding-bottom:0.2em; font-weight:bold;}
+.pagehelp-content {color:#444; min-width:200px; max-height:250px; max-width:500px; overflow:hidden; line-height:1.6}
+.pagehelp-content:hover { overflow:auto;}
+.pagehelp-content p {margin:0.5em 0;}
+.pagehelp-source-link {float:right; margin-top:-30px; color:gray;}
+.pagehelp-source-link:after {content:"\f08e"; font-family:FontAwesome, serif; margin-left:3px;}
+.page_help{float:right;margin:-24px 10px 0 0;color: #4267c5; }

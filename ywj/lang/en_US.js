@@ -3,11 +3,15 @@ define('lang/en_US', function(require){
 	window['LANG_PACKAGE']['en_US'] = {
 		'后台有点忙，请稍后重试': 'system busy, please try latter...',
 		'无数据': 'no data found',
+		'服务器返回空': 'System busy...',
+		'数据错误，请联系系统管理员': 'Data error, Please contact the system administrator...',
 		'关闭(ESC)': 'close(ESC)',
 		'正在提交请求...': 'submitting...',
 		'确认': 'confirm',
 		'取消': 'cancel',
 		'本功能使用了CLodop云打印服务,请点击这里': 'this function require CLodop print service, click here',
+		'C-Lodop没准备好，请稍后再试！':'C-Lodop is not ready,please try again later',
+		'或者按Ctrl+P直接打印' :'Or press button CTRL + P and print directly',
 		'下载': 'download',
 		'网络较慢还在提交数据，请稍侯...': 'the network is slow, please wait ...',
 		'系统繁忙，请稍后(-1)': 'system busy now, please wait ...',
@@ -37,7 +41,10 @@ define('lang/en_US', function(require){
 		'查看': 'view',
 		'上传失败，请稍候重试': 'upload fail, please try again',
 		'选择文件': 'select image',
-		'选择图片': 'select file'
+		'选择图片': 'select file',
+		'密码长度至少6位':'The password must be more than 6 characters long',
+		'更新完成':'update completed'
+
 	};
 	return require('ywj/lang');
 });

@@ -4,9 +4,18 @@
 define('ywj/richeditor', function(require){
 	var Util = require('ywj/util');
 	return {
+		getEditorByNode: function($node){
+			var editor_id = $node.data('editor-id');
+			if(editor_id){
+				return UE.getEditor(editor_id);
+			}
+			return null;
+		},
+
 		nodeInit: function($node, param){
 			var id = Util.guid();
 			var name = $node.attr('name');
+			$node.data('editor-id', id);
 			var w = $node.width() || 400;
 			var h = $node.height() || 300;
 			//remove required attribute, avoid browser forcus on a hidden textarea
@@ -20,6 +29,9 @@ define('ywj/richeditor', function(require){
 				require.async('ueditor', function(){
 					window.UEDITOR_CONFIG = config;
 					var ue = UE.getEditor(id);
+					$node.change(function(){
+						ue.setContent($node.val());
+					});
 					setTimeout(function(){
 						ue.setContent($node.val());
 						ue.setHeight(h+'px');

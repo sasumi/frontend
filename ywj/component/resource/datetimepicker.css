@@ -1,0 +1,24 @@
+
+.com-dtp {width:250px;}
+.com-dtp table {border-collapse:collapse; border-spacing:0; width:100%;}
+.com-dtp thead {}
+.com-dtp th {text-align:center; font-weight:bold; padding:0.2em;}
+.com-dtp tbody td {text-align:center; padding:0.3em 0.7em; cursor:pointer; border-radius:4px;}
+.com-dtp tbody td:hover { background-color:#eee;}
+.com-dtp tbody td.active {background-color:#1f69b380; color:white;}
+.com-dtp tfoot td {text-align:left; padding:0.2em 0.7em;}
+.com-dtp-date-old,
+.com-dtp-date-new {color:#ccc}
+.com-dpt-prev-btn:after,
+.com-dpt-next-btn:after {content:">"; display:inline-block; padding:0.2em 0.7em; color:gray; cursor:pointer;}
+.com-dpt-prev-btn:after {content:"<"}
+.com-dpt-prev-btn:hover:after,
+.com-dpt-next-btn:hover:after {background-color:#eee; border-radius:4px;}
+.com-dpt-year,
+.com-dpt-month {cursor:pointer; padding:0.3em 0.5em; display:inline-block; border-radius:4px;}
+.com-dpt-month {margin-left:-5px;}
+.com-dpt-year:hover,
+.com-dpt-month:hover { background-color:#eee;}
+.com-dpt-time input {width:35px; padding:0; border:none; border-bottom:1px solid #eee;}
+.com-dpt-today {float:right; cursor:pointer; display:inline-block; padding:0.3em 0.5em; color:#1f69b3}
+.com-dpt-today:hover { background-color:#eee; border-radius:4px;}

@@ -6,7 +6,7 @@ define('ywj/liteladder', function(require){
 	var $body = $('body');
 	var chk = function(){
 		var $ladder = $('.ladder');
-		var sh = $body[0].scrollHeight;
+		var sh = $body[0].scrollHeight || $html[0].scrollHeight;
 		var wh = $(window).height();
 		if(!$ladder.size()){
 			require.async('ywj/resource/liteladder.css');
@@ -32,16 +32,10 @@ define('ywj/liteladder', function(require){
 					moving = false;
 					return false;
 				}
-
-				if($.browser.mozilla){
-					$html.stop().animate({
-						scrollTop: ($(this).data('up')) ? 0 : ($body[0].scrollHeight)
-					}, 'fast');
-				}else{
-					$body.stop().animate({
-						scrollTop: ($(this).data('up')) ? 0 : ($body[0].scrollHeight)
-					}, 'fast');
-				}
+				var $tag = !$body[0].scrollTop ? $html : $body;
+				$tag.stop().animate({
+					scrollTop: ($(this).data('up')) ? 0 : $tag[0].scrollHeight
+				}, 'fast');
 			});
 			$body.mouseup(function(e){
 				start_move = false;

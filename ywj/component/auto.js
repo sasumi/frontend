@@ -159,6 +159,28 @@ define('ywj/auto', function(require){
 			}
 		});
 
+		//select placeholder 效果
+		(function(){
+			var patch_select_title = function($sel, empty){
+				if(empty){
+					$sel.removeAttr('title');
+				} else {
+					$sel.attr('title', $sel.children().first().text()+'：'+$($sel[0].options[$sel[0].selectedIndex]).text())
+				}
+			};
+			var update_select_holder = function($sel){
+				var val = $sel[0].options[$sel[0].selectedIndex].getAttribute('value');
+				var empty = val === '' || val === null;
+				$sel.attr('placeholder', empty ? 'valid' : 'invalid');
+				patch_select_title($sel, empty);
+			};
+			$('select[placeholder]').change(function(){
+				update_select_holder($(this));
+			}).each(function(){
+				update_select_holder($(this));
+			});
+		})();
+
 		//表格操作
 		(function(){
 			$body.delegate('*[rel=row-delete-btn]', 'click', function(){
@@ -184,12 +206,11 @@ define('ywj/auto', function(require){
 			});
 
 			$body.delegate('*[rel=row-append-btn]', 'click', function(e){
-				var tmp = $(this).parentsUntil('table');
-				var table = tmp.parent();
-				var tbl = $('tbody', table);
+				var $table = $(this).closest('table');
+				var $tbl = $('tbody', $table).eq(0);
 				var tpl = $(this).data('tpl');
 				require.async('ywj/table', function(T){
-					T.appendRow($('#'+tpl).text(), tbl);
+					T.appendRow($('#'+tpl).text(), $tbl);
 				});
 				e.stopPropagation();
 			});
@@ -249,7 +270,7 @@ define('ywj/auto', function(require){
 		$('table[data-empty-fill]').each(function(){
 			var empty = $('tbody td', this).size() == 0 || $('td', this).size() == $('thead td').size();
 			if(empty){
-				var cs = $('tr>td', this).size() || $('tr>th', this).size();
+				var cs = Math.max($('tr>td', this).size(),$('tr>th', this).size());
 				var con = $('tbody', this).size() ? $('tbody', this) : $(this);
 				$('<tr class="row-empty"><td colspan="'+(cs || 1)+'"><div class="data-empty"> '+lang("无数据")+'</div></td></tr>').appendTo(con);
 			}

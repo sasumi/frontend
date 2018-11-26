@@ -48,7 +48,7 @@ input.date-txt {width:85px;}
 .date-range-wrap .date-txt:last-child {float:right; padding-left:2px;}
 
 /** 按钮 **/
-.btn {border:1px solid #6684A9; font-family:Microsoft Yahei, verdana, helvetica, sans-serif; font-size:12px; display:inline-block; box-shadow:1px 1px 4px #ddd; cursor:pointer; padding:2px 14px 4px; letter-spacing:1px; background-color:#6684A9; color:white; border-radius:1px; vertical-align:middle; transition:all 0.30s ease-in-out;}
+.btn {border:1px solid #6684A9; font-family:Microsoft Yahei, verdana, helvetica, sans-serif; font-size:12px; display:inline-block; box-shadow:1px 1px 4px #ddd; cursor:pointer; padding:2px 14px 4px; letter-spacing:1px; background-color:#6684A9; background-position:center; color:white; border-radius:1px; vertical-align:middle; transition:all 0.30s ease-in-out;}
 .btn:focus {outline:none;}
 input.btn {padding:4px 16px 5px; _padding:3px 14px 4px; vertical-align:middle}
 .btn:hover {background-color:#6F91BB; text-decoration:none; color:white;}
@@ -100,6 +100,8 @@ input.btn-loading:hover,
 #logo {float:left; margin:5px 0 0 5px; padding-right:5px; height:20px}
 #logo a {color:#fff; font-size:18px;}
 #logo span {font-size:10px; color:#ddd}
+#logo .text-logo{color:#fff; font-size:18px;}
+#logo .img-logo{display:none;}
 #logo .small {font-size:12px; font-weight:normal;}
 #footer {text-align:center; color:#bbb; padding:10px 0; clear:both;}
 #welcome {float:right; margin:10px 100px 0 10px;}
@@ -114,15 +116,6 @@ input.btn-loading:hover,
 .aside-nav dd a:hover {background-color:#CFDDFF;}
 .aside-nav dd.active a {background-color:#837E97; color:white}
 
-/** 系统选择按钮 **/
-.system-choice {background-color:#545369; color:white; border-radius:3px; position:absolute; top:11px; right:9px;}
-.system-choice dt {background:url("img/button_grey_down.png") no-repeat 90% center; padding:2px 28px 2px 8px; color:#ccc; cursor:default}
-.system-choice dd {display:none;padding-bottom:3px;}
-.system-choice dd a {color:white; display:block; padding:2px 10px;}
-.system-choice dd.active a{background:url("img/blue-dot.png") no-repeat 90% center}
-.system-choice dd a:hover {background-color:gray;}
-.system-choice:hover dd {display:block;}
-
 /** 主导航 **/
 #main-nav {float:left; margin:4px 10px -10px 0; background-color:#2F2F34}
 #main-nav li {float:left; margin-right:2px}
@@ -136,7 +129,7 @@ input.btn-loading:hover,
 
 /** 主导航 - 子菜单 **/
 li:hover .sub-nav {display:block;}
-.sub-nav {display:none; width:130px; position:absolute; z-index:1000; padding-bottom:10px; background-color:rgba(96, 106, 126, 0.95); box-shadow:2px 2px 4px #BBB}
+.sub-nav {display:none; width:auto; min-width:130px; position:absolute; z-index:1000; padding-bottom:10px; background-color:rgba(96, 106, 126, 0.95); box-shadow:2px 2px 4px #BBB}
 .sub-nav a {margin:0 5px; text-shadow:1px 1px 1px #343434}
 /*#main-nav .sub-nav dd:first-child{padding-top:5px;}*/
 .sub-nav dt:first-child {border:none}
@@ -279,7 +272,14 @@ h3.caption {text-align:left; font-weight:normal; font-size:16px; border-bottom:1
 .data-tbl .col-op,
 .data-tbl .col-idx,
 .data-tbl .col-chk {white-space:nowrap; text-align:center; padding-left:10px; padding-right:10px; width:10px;}
-.data-tbl .col-op * {text-align:left;}
+.data-tbl .col-op {text-align:left;}
+
+/** 滚动数据表格 **/
+.scroll-tbl tbody { display:block; max-height:300px; overflow-y:scroll; overflow-x:hidden;}
+.scroll-tbl thead,
+.scroll-tbl tbody tr {display:table;width:100%;table-layout:fixed;}
+.scroll-tbl thead {width:calc(100% - 7px)}
+.scroll-tbl.data-tbl td {border-top-color:transparent}
 
 /** 分页 **/
 .pagination {padding:20px 0; display:block; color:gray; text-align:center;}
@@ -334,6 +334,8 @@ span.state-label {padding:2px 8px; display:inline-block; font-size:10px; border-
 .drop-list:hover dt:after {border-color:transparent; border-bottom-color:gray; top:8px;}
 .drop-list:hover dt.btn:after {border-bottom-color:white;}
 .drop-list:hover dt.btn-weak:after {border-bottom-color:gray;}
+
+select[data-component=SelectCheckbox] {height:25px;}
 
 /** 日历 **/
 .calendar {border-collapse:collapse; border-spacing:0; font-size:13px; width:500px; margin:30px 0 0 30px; _margin-left:10px; float:left;}

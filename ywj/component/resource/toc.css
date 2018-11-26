@@ -1,0 +1,10 @@
+.com-toc {position:absolute; padding:0 20px; margin:20px 0 0 20px; background-color:#fff;}
+.com-toc, .com-toc ul{list-style:none;}
+.com-toc a {font-size:14px; color:gray;}
+.com-toc a:hover {color:#1f69b3;}
+.com-toc ul {margin-left:1.5em; display:none;}
+.com-toc>li {padding:5px 5px 5px 10px; border-left:3px solid #eee; margin-bottom:2px;}
+.com-toc>li.active {border-left-color:#1f69b3; background-color:#eeeeeea1;}
+.com-toc>li.active>a {font-weight:bold; color:#1976d2}
+.com-toc>li.active>ul {display:block;}
+.com-toc-top {display:block; padding:5px 5px 5px 10px; border-bottom:2px solid white; background-color:#eee; font-weight:bold;}

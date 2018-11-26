@@ -1,4 +1,4 @@
-.com-uploader .com-uploader-file input[type=file]{display:inline-block; outline:none; background:url("upload24.png") no-repeat 7px; cursor:pointer; border-radius:3px; width:0; padding:0 0 0 37px;}
+.com-uploader .com-uploader-file input[type=file]{display:inline-block; outline:none; background:url("upload24.png") no-repeat 7px; cursor:pointer; border-radius:3px; width:0; padding:0 0 0 37px;overflow:hidden;}
 .com-uploader label {cursor:pointer;}
 .com-uploader-file {vertical-align:middle; color:#00a0e9;}
 .com-uploader-file span {display:inline-block; vertical-align:middle;}

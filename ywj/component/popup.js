@@ -2,7 +2,7 @@
  * Created by sasumi on 3/12/2014.
  */
 define('ywj/popup', function(require){
-	require('ywj/resource/popup.css');
+	require('ywj/resource/popup.css?2018');
 	var $ = require('jquery');
 	var Util = require('ywj/util');
 	var masker = require('ywj/masker');
@@ -68,11 +68,12 @@ define('ywj/popup', function(require){
 			title: lang('对话框'),				//标题
 			content: lang('测试'),				//content.src content.id
 			width: 400,						//宽度
-			moveEnable: true,				//框体可移动
+			moveEnable: undefined,				//框体可移动
 			moveTriggerByContainer: false,	//内容可触发移动
 			zIndex: 1000,					//高度
 			modal: true,					//模态对话框
 			topCloseBtn: true,				//是否显示顶部关闭按钮,如果显示顶部关闭按钮，则支持ESC关闭窗口行为
+			topRefreshBtn: false,           //是否显示顶部刷新按钮
 			showMask: true,
 			keepWhileHide: false,			//是否在隐藏的时候保留对象
 			cssClass: {
@@ -148,6 +149,20 @@ define('ywj/popup', function(require){
 	};
 
 	/**
+	 * 更新对话框宽度
+	 * @param width
+	 */
+	Popup.prototype.updateWidth = function(width){
+		var _width = this.container.width();
+		var _left = this.container.offset().left;
+		var new_left = _left + (_width - width) / 2;
+		this.container.css({
+			width: width,
+			left: new_left
+		});
+	};
+
+	/**
 	 * 聚焦到当前对话框第一个按钮
 	 */
 	Popup.prototype.focus = function() {
@@ -168,6 +183,15 @@ define('ywj/popup', function(require){
 	 **/
 	Popup.prototype.setDisable = function() {
 		$('.PopupDialog-Modal-Mask', this.container).css({height: this.container.height(), opacity:0.4, display:'block'});
+	};
+
+	/**
+	 * refresh dialog
+	 */
+	Popup.prototype.refresh = function(){
+		if(this.config.content.src){
+			this.container.find('iframe').attr('src', this.config.content.src);
+		}
 	};
 
 	/**
@@ -464,8 +488,9 @@ define('ywj/popup', function(require){
 			title: title,
 			content: {src:src},
 			width: width,
-			moveEnable: true,
+			moveEnable: undefined,
 			topCloseBtn: true,
+			topRefreshBtn: false,
 			buttons: []
 		}, param);
 
@@ -649,8 +674,11 @@ define('ywj/popup', function(require){
 			'<div class="PopupDialog-wrap">',
 			'<div class="PopupDialog-Modal-Mask" style="position:absolute; height:0; overflow:hidden; z-index:2; background-color:#ccc; width:100%"></div>',
 			'<div class="',this.config.cssClass.head+'">',
-			'<h3>',this.config.title,'</h3>',
-			(this.config.topCloseBtn ? '<span class="PopupDialog-close" tabindex="0" title="关闭">&times;</span>' : ''),
+				'<h3>',this.config.title,'</h3>',
+				'<div class="PopupDialog-hd-op">',
+					((this.config.topRefreshBtn && this.config.content.src) ? '<span class="PopupDialog-refresh" title="refresh" tabindex="0"></span>' : ''),
+					(this.config.topCloseBtn ? '<span class="PopupDialog-close" tabindex="0" title="关闭">&times;</span>' : ''),
+				'</div>',
 			'</div>',content,btn_html,
 			'</div>'
 		]).join('');
@@ -687,6 +715,7 @@ define('ywj/popup', function(require){
 			if(!b.style.width){
 				b.style.width = this.config.width+'px';
 			}
+			b.style.minWidth = b.style.width;
 			var h1 = w.innerHeight || ((d.documentElement && d.documentElement.clientHeight) ? d.documentElement : d.body).clientHeight;
 			var tag = (d.documentElement && d.documentElement.scrollHeight) ? d.documentElement : d.body;
 			var h2 = tag.scrollHeight;
@@ -702,11 +731,10 @@ define('ywj/popup', function(require){
 	 * @returns {{top: number, left: number}}
 	 */
 	var getParentScrollInfo = function(){
-		var region = {
+		return {
 			top:0,
 			left:0
 		};
-		return region;
 	};
 
 	/**
@@ -829,6 +857,10 @@ define('ywj/popup', function(require){
 			_this.close();
 		});
 
+		$('.PopupDialog-refresh', this.container).on('click', function(){
+			_this.refresh();
+		});
+
 		$('a.PopupDialog-btn',this.container).each(function(i){
 			$(this).click(function(){
 				var hd = _this.config.buttons[i].handler || function(){_this.close();};
@@ -873,14 +905,20 @@ define('ywj/popup', function(require){
 	 * 绑定对话框移动事件
 	 */
 	var bindMoveEvent = function(){
-		if(!this.config.moveEnable){
+		//如果对象配置中未设置可移动，则检测全局是否配置，如果全局未配置，默认为可移动。
+		var move_enable = this.config.moveEnable !== undefined ? !!this.config.moveEnable : (Popup.moveEnable === undefined ? true : !!Popup.moveEnable);
+		if(!move_enable){
 			return;
 		}
+
 		var _this = this;
 		var _lastPoint = {X:0, Y:0};
 		var _lastRegion = {top:0, left:0};
 		var _moving;
 		var ie8 = $.browser.msie && parseInt($.browser.version, 10) <= 8;
+
+		//upd css
+		_this.container.find('.'+_this.config.cssClass.head).css('cursor', 'move');
 
 		$(document).on('mousemove', function(event){
 			if(!_this.container || !_moving || (event.button !== 0 && !ie8)){

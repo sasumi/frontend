@@ -4,9 +4,8 @@
 define('ywj/async', function(require){
 	var Net = require('ywj/net');
 	var Util = require('ywj/util');
-
-	var MSG_SUCCESS_SHOW_TIME = 1; //成功信息显示时间（秒）
-	var MSG_ERROR_SHOW_TIME = 2; //错误信息显示时间（秒）
+	var MSG_SUCCESS_SHOW_TIME = window.MSG_SUCCESS_SHOW_TIME || 1; //成功信息显示时间（秒）
+	var MSG_ERROR_SHOW_TIME =window.MSG_ERROR_SHOW_TIME || 2; //错误信息显示时间（秒）
 	var MSG_LOAD_TIME = 10000;
 
 	var BTN_LOADING_CLASS = 'btn-loading';
@@ -51,6 +50,7 @@ define('ywj/async', function(require){
 	var auto_process_async = function(node, rsp, param){
 		var onrsp = node.attr('onresponse') || param.onresponse;
 		var onsucc = node.attr('onsuccess') || param.onsuccess;
+		var onerr = node.attr('onerror') || param.onerror;
 		rsp = rsp || {};
 		rsp.message = rsp.message || lang('系统繁忙，请稍后(-1)');
 		rsp.message = lang(rsp.message);
@@ -61,17 +61,24 @@ define('ywj/async', function(require){
 		if(onrsp){
 			eval('var fn = window.'+onrsp+';');
 			fn.call(null, rsp);
-		} else if(onsucc){
-			if(rsp.code == 0){
-				showMsg(rsp.message,'succ');
-				setTimeout(function(){
-					eval('var fn = window.'+onsucc+';');
-					fn.call(null, rsp);
-				}, MSG_SUCCESS_SHOW_TIME*1000);
-			}
-			else {
-				showMsg(rsp.message);
-			}
+		}
+
+		//specify success handler
+		else if(onsucc && rsp.code == 0){
+			showMsg(rsp.message,'succ');
+			setTimeout(function(){
+				eval('var fn = window.'+onsucc+';');
+				fn.call(null, rsp);
+			}, MSG_SUCCESS_SHOW_TIME*1000);
+		}
+
+		//specify error handler
+		else if(onerr && rsp.code != 0){
+			showMsg(rsp.message,'err');
+			setTimeout(function(){
+				eval('var fn = window.'+onerr+';');
+				fn.call(null, rsp);
+			}, MSG_SUCCESS_SHOW_TIME*1000);
 		}
 
 		//reload page on success
@@ -110,7 +117,7 @@ define('ywj/async', function(require){
 
 				//追加额外数据结构
 				if(!$form.data(FLAG_ASYNC_BIND)){
-					if($form.attr('method').toLowerCase() == 'get'){
+					if(!$form.attr('method') || $form.attr('method').toLowerCase() == 'get'){
 						$('<input type="hidden" name="ref" value="formsender" />').appendTo($form);
 					} else {
 						$form.attr('action', Net.mergeCgiUri($form.attr('action'), {ref: 'formsender'}));
@@ -131,8 +138,8 @@ define('ywj/async', function(require){
 						//防手抖
 						setTimeout(function(){$form.removeData(FLAG_SUBMITTING);}, 100);
 						hideMsg();
-						$(frame).remove(); //避免webkit核心后退键重新提交数据
-						auto_process_async($form, {code:1, data:{}, message:'服务器返回空'}, param);
+						$(frame).parent().remove(); //避免webkit核心后退键重新提交数据
+						auto_process_async($form, {code:1, data:{}, message:lang('数据错误，请联系系统管理员')}, param);
 					}
 				};
 				frame._callback = function(rsp){
@@ -141,7 +148,7 @@ define('ywj/async', function(require){
 					//防手抖
 					setTimeout(function(){$form.removeData(FLAG_SUBMITTING);}, 100);
 					hideMsg();
-					$(frame).remove(); //避免webkit核心后退键重新提交数据
+					$(frame).parent().remove(); //避免webkit核心后退键重新提交数据
 					auto_process_async($form, rsp, param);
 				};
 				$form.attr('target', frameId);

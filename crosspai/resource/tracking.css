@@ -1,0 +1,30 @@
+.whalepie-tracking-link {color:#259; cursor:pointer;}
+.whalepie-tracking-link:before {content:"\f02a"; font-family:FontAwesome, serif; margin-right:0.25em; vertical-align:middle}
+.whalepie-tracking-link-sending:before {content:"\f1d9"}
+.whalepie-tracking-link-finished:before {content:"\f00c"}
+
+.whalepie-tracking-loading {display:block; text-align:center; color:gray; padding:10px 0;}
+.whalepie-tracking-loading:before {content:""; display:inline-block; width:36px; height:36px; vertical-align:middle; background:url("load_slow.gif") no-repeat; background-size:contain; margin-right:5px;}
+
+.whalepie-tracking-wrap {box-sizing:border-box; line-height:1.6}
+.whalepie-tracking-no { font-size:16px; font-weight:bold; }
+.whalepie-tracking-no-found { color:red; }
+.whalepie-tracking-base-info { overflow:hidden; margin-bottom:1em; padding:5px 10px; background-color:#eee; border-radius:2px;}
+.whalepie-tracking-base-info li {float:left; margin-right:2em;}
+.whalepie-tracking-title {font-size:16px;}
+.whalepie-tracking-list-wrap { max-height:300px; overflow:hidden; position:relative;}
+.whalepie-tracking-list-wrap:hover {overflow:auto;}
+.whalepie-tracking-list {border-left:1px dotted #ccc; padding-left:1em; margin:1em;}
+.whalepie-tracking-list li {border-top:1px solid #fff; padding:0.25em 0; display:flex;}
+.whalepie-tracking-list li:before {content:""; border-radius:10px;  display:block; position:absolute; width:7px; height:7px; border:1px solid #aaa; background-color:#fff; transform:rotate(45deg); margin:7px 0 0 -19px;}
+.whalepie-tracking-list li.same-date:before {border-color:#ddd;}
+.whalepie-tracking-list span { display:inline-block; vertical-align:top; flex:1;}
+.whalepie-tracking-list .date {max-width:6em; min-width:6em;}
+.whalepie-tracking-list .country {max-width:70px; min-width:70px; overflow:hidden; color:#1f69b3}
+.whalepie-tracking-list .time {max-width:3em; min-width:3em; color:green;}
+.whalepie-tracking-list .status {max-width:5.5em; min-width:5.5em; color:gray;background-color:white}
+.whalepie-tracking-list li:first-child {font-weight:bold;}
+.whalepie-tracking-list li:first-child,
+.whalepie-tracking-list .same-date {border:none;}
+.whalepie-tracking-list .same-date .date {visibility:hidden}
+.whalepie-tracking-list .same-country-date .country{visibility:hidden}

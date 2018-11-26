@@ -3,6 +3,7 @@
  */
 define('ywj/checker', function(require){
 	require('ywj/resource/checktip.css');
+	var ROW_CHECKED_CLASS = 'yc-row-checked';
 	var $ = require('jquery');
 	var $TIP;
 	var tm;
@@ -142,6 +143,10 @@ define('ywj/checker', function(require){
 			});
 
 			$chk_list.change(function(){
+				var $table_row = $(this).closest('tr');
+				if($table_row.size()){
+					$table_row[this.checked ? 'addClass' : 'removeClass'](ROW_CHECKED_CLASS);
+				}
 				update_trigger();
 				show_tip($(this));
 			});
