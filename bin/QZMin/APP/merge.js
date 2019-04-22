@@ -62,7 +62,7 @@ function process(/* object */project) {
 			log("min target file...");log("");
 		}
 		
-		var _mfv = !level ? _bf : jsmin("/*\n" + CONF.comment + "\n*/", _bf, level);
+		var _mfv = !level ? _bf : jsmin(_bf, level, "/*\n" + CONF.comment + "\n*/");
 
 		log("Write file for release... done.  File length: " + _mfv.length + " byte.");
 		var _isAPath = /(:|^\/)/.test(project.target);

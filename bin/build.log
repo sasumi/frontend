@@ -1,0 +1,72 @@
+processing ...
+[Merge Type]:merge
+[ALL] project in process  -----------------------------------------
+>> ../src/component/addselect.js     loaded... 4790 byte.
+>> ../src/component/areaselector.js     loaded... 309571 byte.
+>> ../src/component/async.js     loaded... 5786 byte.
+>> ../src/component/auto.js     loaded... 8536 byte.
+>> ../src/component/autocomplete.js     loaded... 7119 byte.
+>> ../src/component/AutoComponent.js     loaded... 4139 byte.
+>> ../src/component/autoresize.js     loaded... 1139 byte.
+>> ../src/component/backtrace.js     loaded... 355 byte.
+>> ../src/component/batchuploader.js     loaded... 6193 byte.
+>> ../src/component/checker.js     loaded... 4758 byte.
+>> ../src/component/chosen.js     loaded... 45307 byte.
+>> ../src/component/confirm.js     loaded... 536 byte.
+>> ../src/component/copy.js     loaded... 2399 byte.
+>> ../src/component/counter.js     loaded... 1515 byte.
+>> ../src/component/datetimepicker.js     loaded... 6338 byte.
+>> ../src/component/edit.js     loaded... 2687 byte.
+>> ../src/component/FileSaver.js     loaded... 7753 byte.
+>> ../src/component/fileuploader.js     loaded... 11204 byte.
+>> ../src/component/fixdate.js     loaded... 704 byte.
+>> ../src/component/fixedhead.js     loaded... 1480 byte.
+>> ../src/component/FormReset.js     loaded... 272 byte.
+>> ../src/component/highlight.js     loaded... 235 byte.
+>> ../src/component/hooker.js     loaded... 1519 byte.
+>> ../src/component/imagescale.js     loaded... 3614 byte.
+>> ../src/component/imageviewer.js     loaded... 11336 byte.
+>> ../src/component/imgslide.js     loaded... 8348 byte.
+>> ../src/component/ladder.js     loaded... 3616 byte.
+>> ../src/component/lang.js     loaded... 668 byte.
+>> ../src/component/liteladder.js     loaded... 2033 byte.
+>> ../src/component/masker.js     loaded... 1018 byte.
+>> ../src/component/msg.js     loaded... 4056 byte.
+>> ../src/component/muloperate.js     loaded... 2181 byte.
+>> ../src/component/net.js     loaded... 10074 byte.
+>> ../src/component/NoviceGuide.js     loaded... 3799 byte.
+>> ../src/component/number.js     loaded... 1638 byte.
+>> ../src/component/partialcheck.js     loaded... 2638 byte.
+>> ../src/component/password.js     loaded... 7708 byte.
+>> ../src/component/PasteImage.js     loaded... 3817 byte.
+>> ../src/component/placeholder.js     loaded... 1481 byte.
+>> ../src/component/popup.js     loaded... 24962 byte.
+>> ../src/component/qrcode.js     loaded... 2082 byte.
+>> ../src/component/richeditor.js     loaded... 1338 byte.
+>> ../src/component/ScrollFix.js     loaded... 1119 byte.
+>> ../src/component/SelectCheckbox.js     loaded... 2123 byte.
+>> ../src/component/selectcombo.js     loaded... 7131 byte.
+>> ../src/component/SelectMultiple.js     loaded... 3155 byte.
+>> ../src/component/SelectTree.js     loaded... 4400 byte.
+>> ../src/component/selectui.js     loaded... 2836 byte.
+>> ../src/component/simform.js     loaded... 957 byte.
+>> ../src/component/slide.js     loaded... 4143 byte.
+>> ../src/component/table.js     loaded... 1110 byte.
+>> ../src/component/tabswitcher.js     loaded... 1337 byte.
+>> ../src/component/timepicker.js     loaded... 4018 byte.
+>> ../src/component/tip.js     loaded... 6682 byte.
+>> ../src/component/tmpl.js     loaded... 1012 byte.
+>> ../src/component/toast.js     loaded... 4183 byte.
+>> ../src/component/toc.js     loaded... 2608 byte.
+>> ../src/component/uploader.js     loaded... 10060 byte.
+>> ../src/component/util.js     loaded... 19009 byte.
+>> ../src/component/validator.js     loaded... 7019 byte.
+
+merge target files...
+
+Write file for release... done.  File length: 613704 byte.
+
+[ALL] builded success ------------------------------------
+
+
+done.
