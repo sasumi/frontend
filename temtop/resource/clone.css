@@ -1,5 +1,0 @@
-.com-clone-icon {position:absolute; cursor:pointer; text-align:center; z-index:1; width:20px; height:20px; margin:3px 2px 0 0; opacity:0.2; transition:all 0.1s linear; font-size:16px;}
-.com-clone-icon:hover {opacity:1;}
-.com-clone-icon:before {content:"\f14b"; font-family:FontAwesome, serif}
-
-.clone-input-highlight {box-shadow:1px 1px 8px #ffd8c5}
