@@ -13,8 +13,8 @@ HelloWorld示例：
     <head>
         <title>Hello World</title>
         <!-- 引入SeaJS库、配置文件 -->
-        <script src="seajs/seajs.js"></script>
-        <script src="seajs/config.js"></script>
+        <script src="src/seajs/seajs.js"></script>
+        <script src="src/seajs/config.js"></script>
     </head>
     <body>
         <!-- 使用HTML方式调用 -->
