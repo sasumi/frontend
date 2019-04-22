@@ -11,9 +11,9 @@
     <head>
         <title>...</title>
         <!-- 引入SeaJS库 -->
-        <script src="seajs/seajs.js"></script>
+        <script src="src/seajs/seajs.js"></script>
         <!-- 引入SeaJS配置文件 -->
-        <script src="seajs/config.js"></script>
+        <script src="src/seajs/config.js"></script>
         <script>
              //方式一：定义组件MyComs命名空间存储目录
 			seajs.config({paths: {"MyComs": '/static/js'}, charset: 'utf-8'});
