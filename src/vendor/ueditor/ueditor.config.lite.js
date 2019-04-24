@@ -20,9 +20,22 @@
         ]]
     };
 
-    function getUEBasePath(docUrl, confUrl) {
-        return getBasePath(docUrl || self.document.URL || self.location.href, confUrl || getConfigFilePath());
-    }
+	function pregQuote(str){
+		return (str + '').replace(/([\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:])/g, "\\$1");
+	}
+
+	function getUEBasePath(docUrl, confUrl) {
+		var hs = document.getElementsByTagName('script');
+		var CURRENT_FILE_NAME = 'ueditor.config.lite.js';
+
+		for(var i in hs){
+			var src = hs[i].getAttribute('src');
+			if(src && src.match(pregQuote(CURRENT_FILE_NAME))){
+				return src.replace(new RegExp(pregQuote(CURRENT_FILE_NAME)+'*', 'ig'), '');
+			}
+		}
+		return getBasePath(docUrl || self.document.URL || self.location.href, confUrl || getConfigFilePath());
+	}
 
     function getConfigFilePath() {
         var configPath = document.getElementsByTagName('script');

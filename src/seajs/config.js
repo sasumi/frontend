@@ -90,31 +90,33 @@
 		return url;
 	});
 
-	var vendor_source_path = FRONTEND_SOURCE_PATH + 'vendor/';
+	var vendor_source_path = FRONTEND_SOURCE_PATH + 'vendor';
 	seajs.config({
 		alias: {
-			'jquery': vendor_source_path + 'jquery/jquery-1.8.3.min.js',
-			'jquery-1.11.2': vendor_source_path + 'jquery/jquery-1.11.2.min.js',
-			'jquerycolor': vendor_source_path + 'jquery/jquerycolor.js',
-			'jquery/cookie': vendor_source_path + 'jquery/jquery.cookie.min.js',
-			'jqueryanchor': vendor_source_path + 'jquery/jqueryanchor.js',
-			'jquery/highlight': vendor_source_path + 'jquery/jquery.highlight.js',
-			'jquery/ui': vendor_source_path + 'jquery/ui/jquery-ui.min.js',
-			'jquery/ui/timepicker': vendor_source_path + 'jquery/ui/jquery-ui-timepicker-addon.js',
-			'jquery/ui/tooltip': vendor_source_path + 'jquery/ui/jquery-ui-tooltip-addon.js',
-			'lazyload': vendor_source_path + 'lazyload/lazyload.js',
-			'shake': vendor_source_path + 'shake/shake.js',
-			'swiper': vendor_source_path + 'swiper/swiper-3.0.7.js',
-			'swiper2': vendor_source_path + 'swiper/swiper-2.7.js',
-			'waterfall': vendor_source_path + 'waterfall/waterfall.js',
-			'highcharts': vendor_source_path + 'highcharts/highcharts.js',
+			'jquery': vendor_source_path + '/jquery/jquery-1.8.3.min.js',
+			'jquery-1.11.2': vendor_source_path + '/jquery/jquery-1.11.2.min.js',
+			'jquerycolor': vendor_source_path + '/jquery/jquerycolor.js',
+			'jquery/cookie': vendor_source_path + '/jquery/jquery.cookie.min.js',
+			'jqueryanchor': vendor_source_path + '/jquery/jqueryanchor.js',
+			'jquery/highlight': vendor_source_path + '/jquery/jquery.highlight.js',
+			'jquery/ui': vendor_source_path + '/jquery/ui/jquery-ui.min.js',
+			'jquery/ui/timepicker': vendor_source_path + '/jquery/ui/jquery-ui-timepicker-addon.js',
+			'jquery/ui/tooltip': vendor_source_path + '/jquery/ui/jquery-ui-tooltip-addon.js',
+			'lazyload': vendor_source_path + '/lazyload/lazyload.js',
+			'shake': vendor_source_path + '/shake/shake.js',
+			'swiper': vendor_source_path + '/swiper/swiper-3.0.7.js',
+			'swiper2': vendor_source_path + '/swiper/swiper-2.7.js',
+			'waterfall': vendor_source_path + '/waterfall/waterfall.js',
+			'highcharts': vendor_source_path + '/highcharts/highcharts.js',
 			'ueditor': vendor_source_path + '/ueditor/ueditor.all.js',
 			'ueditor_normal_config': vendor_source_path + '/ueditor/ueditor.config.normal.js',
 			'ueditor_lite_config': vendor_source_path + '/ueditor/ueditor.config.lite.js',
-			'qrcode': vendor_source_path + 'qrcode/jquery.qrcode.min.js',
+			'qrcode': vendor_source_path + '/qrcode/jquery.qrcode.min.js',
 		},
 		paths: {
 			'ywj': FRONTEND_SOURCE_PATH + 'component',
+			'jquery': FRONTEND_SOURCE_PATH+'vendor/jquery',
+			'lang': FRONTEND_SOURCE_PATH+'lang'
 		},
 		preload: [
 			!window.jQuery ? 'jquery' : '',
