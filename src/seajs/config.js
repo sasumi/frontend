@@ -111,7 +111,7 @@
 			'ueditor': vendor_source_path + '/ueditor/ueditor.all.js',
 			'ueditor_normal_config': vendor_source_path + '/ueditor/ueditor.config.normal.js',
 			'ueditor_lite_config': vendor_source_path + '/ueditor/ueditor.config.lite.js',
-			'qrcode': vendor_source_path + '/qrcode/jquery.qrcode.min.js',
+			'qrcode': vendor_source_path + '/qrcode/jquery.qrcode.min.js'
 		},
 		paths: {
 			'ywj': FRONTEND_SOURCE_PATH + 'component',
