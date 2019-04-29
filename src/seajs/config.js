@@ -58,7 +58,7 @@
 		for(var i in ss){
 			var src = ss[i].getAttribute('src');
 			if(src && src.indexOf('/seajs/config.js') > 0){
-				return src.replace(/\/seajs\/config\.js*/i, '') + '/';
+				return src.replace(/\/seajs\/config\.js.*/i, '') + '/';
 			}
 		}
 		console.warn('No frontend host found, use top path.');
