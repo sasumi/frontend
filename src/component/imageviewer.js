@@ -7,7 +7,7 @@ define('ywj/imageviewer', function(require){
 	var $ = require('jquery');
 	var Util = require('ywj/util');
 	var AC = require('ywj/AutoComponent');
-	var LOADING_SRC = 'http://s.temtop.com/ywj/component/resource/ring.gif';
+	var LOADING_SRC = seajs.data.base + 'component/resource/ring.gif';
 	var ID = 'image-viewer-container';
 	var NAV_DISABLE_CLASS = 'iv-nav-disabled';
 	var SCROLL_DIABLE_CLASS = 'iv-list-nav-disabled';
