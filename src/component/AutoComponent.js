@@ -114,8 +114,9 @@ define('ywj/AutoComponent', function(require){
 									continue;
 								}
 								var c = cs[i].replace(new RegExp('^'+DEFAULT_NS+'/'),'');
+								var param = all_data[c] || all_data[c.toLowerCase()] || {};
 								if(Util.isFunction(args[i][method])){
-									if(args[i][method]($node, all_data[c] || {}) === false){
+									if(args[i][method]($node, param) === false){
 										e.stopImmediatePropagation(); //stop other jQuery event binding
 										e.preventDefault();
 										return false;
