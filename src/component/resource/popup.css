@@ -7,7 +7,7 @@
 .PopupDialog-refresh {display:inline-block; overflow:hidden; width:28px; height:28px; cursor:pointer; font-size:17px; color:gray;}
 .PopupDialog-refresh:before {content:"↻"; display:block; transform:rotate(90deg); line-height:12px;}
 .PopupDialog-refresh:hover {color:black;}
-.PopupDialog-close {display:inline-block; overflow:hidden; width:28px; height:28px; text-align:center; cursor:pointer; font-size:17px; font-family:Verdana; color:gray; line-height:1.5}
+.PopupDialog-close {display:inline-block; overflow:hidden; width:28px; height:28px; text-align:center; cursor:pointer; font-size:17px; font-family:Verdana, serif; color:gray; line-height:1.5}
 .PopupDialog-close:hover {color:black;}
 .PopupDialog-ft {background-color:#f3f3f3; white-space:nowrap; border-top:1px solid #e0e0e0; padding:5px 5px 5px 0; text-align:right; border-radius:0 0 3px 3px}
 .PopupDialog-text {padding:10px 15px 20px}

@@ -1,7 +1,7 @@
 define('ywj/msg', function(require){
 	var $ = require('jquery');
 	var util = require('ywj/util');
-	var msg_css_url = seajs.resolve('ywj/resource/msg.css');
+	var msg_css_url = seajs.resolve('ywj/resource/msg.css?20190503');
 	var top_doc;
 	var top_win;
 
@@ -61,13 +61,15 @@ define('ywj/msg', function(require){
 		this.config = $.extend({
 			'msg': '',
 			'type': 0,
-			'time': 2000,
-			'auto': true,
-			'callback': closeCallback
+			'time': 2000,   //显示时间
+			'autoClose': true, //是否自动关闭（仅当配置显示时间时才有效）
+			'closeButton': false, //是否显示关闭按钮
+			'showImmediately': true, //是否立即显示，即 new Msg之后立即显示
+			'callback': closeCallback //关闭时回调
 		}, cfg);
 
-		//auto
-		if(this.config.auto){
+		//showImmediately
+		if(this.config.showImmediately){
 			this.show();
 		}
 	};
@@ -81,12 +83,19 @@ define('ywj/msg', function(require){
 		}
 
 		$WRAPPER.show();
-		this.container = $(
+
+		var main_html =
 			'<div class="ywj-msg-container" id="'+this.guid+'" style="display:none">'+
 				'<span class="ywj-msg-icon-'+this.config.type+'"><i></i></span>'+
 				'<span class="ywj-msg-content">'+this.config.msg+'</span>'+
-			'</div>').appendTo($WRAPPER);
+				(this.config.closeButton ? '<span class="ywj-msg-close">x</span>' : '')+
+			'</div>';
+		this.container = $(main_html).appendTo($WRAPPER);
 		$('<div></div>').appendTo($WRAPPER);
+
+		//keep message while mouse on
+		this.container.on('mousemove', function(){_this._mouse_on = true; console.log('mouse on');});
+		this.container.on('mouseout', function(){_this._mouse_on = false; console.log('mouse leave');});
 
 		this.container.show();
 		var _this = this;
@@ -94,10 +103,15 @@ define('ywj/msg', function(require){
 			_this.container.addClass('ywj-msg-ani-in');
 		}, 10);
 
-		if(this.config.time && this.config.auto){
-			setTimeout(function(){
-				_this.hide();
-			}, this.config.time);
+		if(this.config.time && this.config.autoClose){
+			var check_n_close = function(){
+				if(!_this._mouse_on){
+					_this.hide();
+				} else {
+					setTimeout(check_n_close, _this.config.time);
+				}
+			};
+			setTimeout(check_n_close, this.config.time);
 		}
 	};
 
