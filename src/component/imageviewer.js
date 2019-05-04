@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2016/7/7.
- */
 define('ywj/imageviewer', function(require){
 	require('ywj/resource/imageviewer.css');
 	var Scale = require('ywj/imagescale');
@@ -10,16 +7,8 @@ define('ywj/imageviewer', function(require){
 	var LOADING_SRC = seajs.data.base + 'component/resource/ring.gif';
 	var ID = 'image-viewer-container';
 	var NAV_DISABLE_CLASS = 'iv-nav-disabled';
-	var SCROLL_DIABLE_CLASS = 'iv-list-nav-disabled';
+	var SCROLL_DISABLE_CLASS = 'iv-list-nav-disabled';
 	var HEIGHT_OFFSET = 120;
-
-	var KEY_ENTER = 13;
-	var KEY_DOWN = 40;
-	var KEY_UP = 38;
-	var KEY_LEFT = 37;
-	var KEY_RIGHT = 39;
-	var KEY_ESC = 27;
-	var KEY_TAB = 9;
 
 	var win;
 	var loader_tm;
@@ -50,9 +39,7 @@ define('ywj/imageviewer', function(require){
 	//update
 	(new Image()).src = LOADING_SRC;
 
-	var Viewer = function(){
-
-	};
+	var Viewer = function(){};
 
 	var get_stage_region = function(){
 		var r = Util.getRegion(win);
@@ -269,18 +256,18 @@ define('ywj/imageviewer', function(require){
 		});
 
 		$list_wrap.on('scroll', function(){
-			$list_left[$list_wrap.scrollLeft() == 0 ? 'addClass' : 'removeClass'](SCROLL_DIABLE_CLASS);
+			$list_left[$list_wrap.scrollLeft() == 0 ? 'addClass' : 'removeClass'](SCROLL_DISABLE_CLASS);
 			var w = $list_wrap.width();
 			var max_left = $list.find('ul').outerWidth() - w;
 			if($list.find('ul').outerWidth() <= w || $list_wrap.scrollLeft() == max_left){
-				$list_right.addClass(SCROLL_DIABLE_CLASS);
+				$list_right.addClass(SCROLL_DISABLE_CLASS);
 			} else {
-				$list_right.removeClass(SCROLL_DIABLE_CLASS);
+				$list_right.removeClass(SCROLL_DISABLE_CLASS);
 			}
 		});
 
 		$list_left.click(function(){
-			if($(this).hasClass(SCROLL_DIABLE_CLASS)){
+			if($(this).hasClass(SCROLL_DISABLE_CLASS)){
 				return false;
 			}
 			var region = get_stage_region();
@@ -293,7 +280,7 @@ define('ywj/imageviewer', function(require){
 		});
 
 		$list_right.click(function(){
-			if($(this).hasClass(SCROLL_DIABLE_CLASS)){
+			if($(this).hasClass(SCROLL_DISABLE_CLASS)){
 				return false;
 			}
 			var max_left = $list.find('ul').outerWidth() - $list_wrap.width();
@@ -328,25 +315,25 @@ define('ywj/imageviewer', function(require){
 				return;
 			}
 			switch(e.keyCode){
-				case KEY_ESC:
+				case Util.KEYS.ESC:
 					$close.trigger('click');
 					e.stopPropagation();
 					e.preventDefault();
 					return false;
 
-				case KEY_LEFT:
+				case Util.KEYS.LEFT:
 					$prev.trigger('click');
 					break;
 
-				case KEY_RIGHT:
+				case Util.KEYS.RIGHT:
 					$next.trigger('click');
 					break;
 
-				case KEY_UP:
+				case Util.KEYS.UP:
 					$zoom_out.trigger('click');
 					break;
 
-				case KEY_DOWN:
+				case Util.KEYS.DOWN:
 					$zoom_in.trigger('click');
 					break;
 			}
