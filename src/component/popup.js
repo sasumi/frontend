@@ -283,7 +283,7 @@ define('ywj/popup', function(require){
 	Popup.prototype.autoResize = function(interval){
 		var popHeight = 0;
 		var _this = this;
-		(function(){
+		var loop = function(){
 			try {
 				var fr = $('iframe', _this.container)[0];
 				var w = fr.contentWindow;
@@ -294,10 +294,12 @@ define('ywj/popup', function(require){
 					_this.updateHeight(currentHeight+10);
 				}
 			} catch(ex){
+				console.warn('Popup auto resize exception', ex);
 				return false;
 			}
-			setTimeout(arguments.callee, interval);
-		})();
+			setTimeout(loop, interval);
+		};
+		setTimeout(loop, interval);
 	};
 
 	/**
