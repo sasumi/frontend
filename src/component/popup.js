@@ -310,11 +310,13 @@ define('ywj/popup', function(require){
 		var _this = this;
 		var args = Util.toArray(arguments).slice(1);
 		this._eventParams[key] = args;
+		var result = [];
 		if(this._events[key]){
 			$.each(this._events[key], function(k, fn){
-				fn.apply(_this, args);
+				result.push(fn.apply(_this, args));
 			});
 		}
+		return result;
 	};
 
 	/**
@@ -534,9 +536,7 @@ define('ywj/popup', function(require){
 			return;
 		}
 		var pop = Popup.getCurrentPopup();
-		if(pop){
-			pop.fire.apply(pop, arguments);
-		}
+		return pop.fire.apply(pop, arguments);
 	};
 
 	/**
