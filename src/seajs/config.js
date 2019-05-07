@@ -1,4 +1,7 @@
 (function(){
+	window['G_LANGUAGE'] = window['G_LANGUAGE'] ||
+		(navigator.language || navigator.userLanguage).replace('-', '_') || 'zh_CN';
+
 	/**
 	 * patch on after resolve function
 	 * @private
@@ -120,8 +123,8 @@
 		},
 		preload: [
 			!window.jQuery ? 'jquery' : '',
-			'ywj/AutoComponent',
-			'ywj/lang'
+			'ywj/lang',
+			'ywj/AutoComponent'
 		],
 		charset: 'utf-8'
 	});
