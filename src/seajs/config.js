@@ -120,6 +120,7 @@
 		},
 		preload: [
 			!window.jQuery ? 'jquery' : '',
+			'ywj/AutoComponent',
 			'ywj/lang'
 		],
 		charset: 'utf-8'
