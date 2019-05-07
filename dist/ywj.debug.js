@@ -5083,9 +5083,12 @@ define('ywj/ladder', function(require){
  * Created by Administrator on 2016/5/27.
  */
 define('ywj/lang', function(require){
-	if(!window['G_LANGUAGE']){
-		window['G_LANGUAGE'] = 'zh_CN';
-	}
+	//auto detected browser language
+	window['G_LANGUAGE'] = window['G_LANGUAGE']
+		|| (navigator.language || navigator.userLanguage).replace('-', '_')
+		|| 'zh_CN';
+
+	console.info('Language detected:', window['G_LANGUAGE']);
 
 	var tmp = {};
 

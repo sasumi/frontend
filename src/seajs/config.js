@@ -1,7 +1,4 @@
 (function(){
-	window['G_LANGUAGE'] = window['G_LANGUAGE'] ||
-		(navigator.language || navigator.userLanguage).replace('-', '_') || 'zh_CN';
-
 	/**
 	 * patch on after resolve function
 	 * @private
