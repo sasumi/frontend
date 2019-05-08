@@ -231,11 +231,11 @@ define('ywj/uploader', function(require){
 			return;
 		}
 
-		var _this = this;
 		var required = input.attr('required');
 		input.attr('required', '');
 
 		this.id = guid();
+
 		var PRI = {};
 		PRIVATES[this.id] = PRI;
 
@@ -248,7 +248,7 @@ define('ywj/uploader', function(require){
 		if(!this.config.UPLOAD_URL){
 			throw "NO UPLOAD_URL PARAMETER FOUND";
 		}
-		this.config.UPLOAD_URL = Net.mergeCgiUri(_this.config.UPLOAD_URL, {type:this.config.TYPE});
+		this.config.UPLOAD_URL = Net.mergeCgiUri(this.config.UPLOAD_URL, {type:this.config.TYPE});
 
 		input.hide();
 		PRI.input = input;
@@ -261,6 +261,7 @@ define('ywj/uploader', function(require){
 		PRI.container.find('.com-uploader-file span').html(lang('选择'+(this.config.TYPE == Uploader.TYPE_IMAGE ? '图片' : '文件')));
 		PRI.trigger_file = $('<input type="file"/>').appendTo(PRI.container.find('.com-uploader-handle'));
 
+		var _this = this;
 		PRI.xhr = Net.postFormData({
 			url: _this.config.UPLOAD_URL,
 			onLoad: function(){

@@ -1117,9 +1117,9 @@ define('ywj/backtrace', function(require){
  * Created by Administrator on 2016/5/6.
  */
 define('ywj/batchuploader', function(require){
-	seajs.use('ywj/resource/batchuploader.css');
 	var console = window['console'];
 
+	require('ywj/resource/batchuploader.css');
 	var $ = require('jquery');
 	var Util = require('ywj/util');
 	var UP = require('ywj/uploader');
@@ -1161,6 +1161,14 @@ define('ywj/batchuploader', function(require){
 		this.onItemStart(u);
 	};
 
+	/**
+	 * add new uploader instance
+	 * @param bu_scope
+	 * @param value
+	 * @param src
+	 * @param thumb
+	 * @returns {*}
+	 */
 	var add_new = function(bu_scope, value, src, thumb){
 		value = value || '';
 		src = src || '';
@@ -1171,7 +1179,7 @@ define('ywj/batchuploader', function(require){
 		var $new = $('<li>'+delete_btn_html+'<input type="hidden" name="'+name+'" value="'+value+'" data-thumb="'+thumb+'" data-src="'+src+'" data-param="'+param+'"></li>')
 			.insertBefore($container.find('.batch-uploader-add-new'));
 		var $inp = $new.find('input');
-		var u = new UP($inp, $.extend(UP_CONFIG, {TYPE: bu_scope.type}));
+		var u = new UP($inp, bu_scope.param);
 		bind_interface(u, bu_scope);
 		$new.attr('id',u.id);
 		return u;
@@ -1238,25 +1246,28 @@ define('ywj/batchuploader', function(require){
 	};
 
 	var BU = function(sel, param){
-		param = param || {};
-		var _this = this;
+		this.param = $.extend({}, UP_CONFIG, param, {
+			TYPE: UP.TYPE_IMAGE
+		});
+
 		var $container = $(sel);
 		var $list = $("<ul>").appendTo($container);
-		_this.type = param.type || UP.TYPE_IMAGE;
 
 		//multiple file upload require file name specified
 		if(!$container.data('name')){
 			$container.data('name', 'random_file_names_'+(Math.random()+'').replace(/^D/, '')+'[]');
 		}
 
+		var _this = this;
 		$container.find('input').each(function(){
 			var $inp = $(this);
 			var $li = $('<li>'+delete_btn_html+'</li>').appendTo($list);
 			$inp.appendTo($li);
-			bind_interface(new UP($inp, $.extend(UP_CONFIG, {TYPE: _this.type})), _this);
+			bind_interface(new UP($inp, _this.param), _this);
 		});
 
-		$(new_tab_html).appendTo($list).find('input').change(function(){
+		var $new_tab = $(new_tab_html).appendTo($list);
+		$new_tab.find('input').change(function(){
 			for(var i=0; i<this.files.length; i++){
 				var u = add_new(_this);
 				var formData = new FormData();
@@ -5083,13 +5094,6 @@ define('ywj/ladder', function(require){
  * Created by Administrator on 2016/5/27.
  */
 define('ywj/lang', function(require){
-	//auto detected browser language
-	window['G_LANGUAGE'] = window['G_LANGUAGE']
-		|| (navigator.language || navigator.userLanguage).replace('-', '_')
-		|| 'zh_CN';
-
-	console.info('Language detected:', window['G_LANGUAGE']);
-
 	var tmp = {};
 
 	return function(text){
@@ -10252,11 +10256,11 @@ define('ywj/uploader', function(require){
 			return;
 		}
 
-		var _this = this;
 		var required = input.attr('required');
 		input.attr('required', '');
 
 		this.id = guid();
+
 		var PRI = {};
 		PRIVATES[this.id] = PRI;
 
@@ -10269,7 +10273,7 @@ define('ywj/uploader', function(require){
 		if(!this.config.UPLOAD_URL){
 			throw "NO UPLOAD_URL PARAMETER FOUND";
 		}
-		this.config.UPLOAD_URL = Net.mergeCgiUri(_this.config.UPLOAD_URL, {type:this.config.TYPE});
+		this.config.UPLOAD_URL = Net.mergeCgiUri(this.config.UPLOAD_URL, {type:this.config.TYPE});
 
 		input.hide();
 		PRI.input = input;
@@ -10282,6 +10286,7 @@ define('ywj/uploader', function(require){
 		PRI.container.find('.com-uploader-file span').html(lang('选择'+(this.config.TYPE == Uploader.TYPE_IMAGE ? '图片' : '文件')));
 		PRI.trigger_file = $('<input type="file"/>').appendTo(PRI.container.find('.com-uploader-handle'));
 
+		var _this = this;
 		PRI.xhr = Net.postFormData({
 			url: _this.config.UPLOAD_URL,
 			onLoad: function(){

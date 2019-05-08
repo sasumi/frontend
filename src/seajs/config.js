@@ -1,4 +1,11 @@
 (function(){
+	//auto detected browser language
+	window['G_LANGUAGE'] = window['G_LANGUAGE']
+		|| (navigator.language || navigator.userLanguage).replace('-', '_')
+		|| 'zh_CN';
+
+	console.info('Language detected:', window['G_LANGUAGE']);
+
 	/**
 	 * patch on after resolve function
 	 * @private
