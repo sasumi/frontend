@@ -7367,16 +7367,16 @@ define('ywj/popup', function(require){
 	Popup.showConfirm = function(title, content, onConfirm, onCancel, config){
 		var pop;
 		var on_confirm = function(){
-			if(onConfirm){
-				onConfirm();
+			var confirm_result = onConfirm ? onConfirm() : true;
+			if(confirm_result !== false){
+				pop.close();
 			}
-			pop.close();
 		};
 		var on_cancel = function(){
-			if(onCancel){
-				onCancel();
+			var cancel_result = onCancel ? onCancel() : true;
+			if(cancel_result !== false){
+				pop.close();
 			}
-			pop.close();
 		};
 
 		config = config || {};
@@ -7413,10 +7413,10 @@ define('ywj/popup', function(require){
 	Popup.showAlert = function(title, content, onSubmit, config){
 		var pop;
 		var on_submit = function(){
-			if(onSubmit){
-				onSubmit();
+			var submit_result = onSubmit ? onSubmit() : true;
+			if(submit_result !== false){
+				pop.close();
 			}
-			pop.close();
 		};
 
 		config = config || {};
