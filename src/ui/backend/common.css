@@ -198,9 +198,9 @@ button[disabled],
 /** button loading **/
 input.btn-loading,
 input.btn-loading:hover,
-.btn-loading,
-.btn-loading:hover {background-image:url("img/btn-loading.gif"); background-repeat:no-repeat; background-position:center; transition:none; cursor:default;}
-.btn-loading:focus {outline:none;}
+body .btn-loading,
+body .btn-loading:hover {background-image:url("img/btn-loading.gif"); background-repeat:no-repeat; background-position:center; transition:none; cursor:default;}
+body .btn-loading:focus {outline:none;}
 
 .small-btn {display:inline-block; margin:1px 3px; text-shadow:1px 1px 1px #ccc; cursor:pointer; white-space:nowrap; color:#555; vertical-align:middle}
 .small-btn:hover {color:black;}
