@@ -19,7 +19,7 @@ define('ywj/ScrollFix', function (require) {
 			$node.css({width: $node.width()});
 
 			var upd_pos = function(){
-				var st = $body.scrollTop();
+				var st = $body.scrollTop() || $win.scrollTop();
 				var chk_top = $holder.position().top;
 				$node.width($holder.outerWidth() - ORG_W_OFFSET);
 				if(st > chk_top){
