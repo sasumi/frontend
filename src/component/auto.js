@@ -14,7 +14,7 @@ define('ywj/auto', function(require){
 				if(empty){
 					$sel.removeAttr('title');
 				} else {
-					$sel.attr('title', $sel.children().first().text()+'：'+$($sel[0].options[$sel[0].selectedIndex]).text())
+					$sel.attr('title', $sel.children().first().text());
 				}
 			};
 			var update_select_holder = function($sel){
