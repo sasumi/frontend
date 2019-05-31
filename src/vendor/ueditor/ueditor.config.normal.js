@@ -35,7 +35,7 @@
 		for(var i in hs){
 			var src = hs[i].getAttribute('src');
 			if(src && src.match(pregQuote(CURRENT_FILE_NAME))){
-				return src.replace(new RegExp(pregQuote(CURRENT_FILE_NAME)+'*', 'ig'), '');
+				return src.replace(new RegExp(pregQuote(CURRENT_FILE_NAME)+'.*', 'ig'), '');
 			}
 		}
 		return getBasePath(docUrl || self.document.URL || self.location.href, confUrl || getConfigFilePath());
