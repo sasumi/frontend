@@ -311,7 +311,7 @@ caption .btn, caption .drop-list,
 /** tab 组件 ul.tab>li[class=active]>a **/
 .tab {border-bottom:1px solid #ccc; margin-top:10px; min-height:33px; clear:both;}
 .tab:after {content:""; display:block; clear:both;}
-.tab li {float:left; margin:5px 0 -1px 10px; text-align: center; color:gray; cursor:pointer;}
+.tab li {float:left; margin:5px 0 -1px 10px; text-align: center; color:gray; cursor:pointer; list-style:none;}
 .tab li a {min-width: 60px; color:gray; background-color:#eee; display:inline-block; border-radius:2px 2px 0 0; padding:4px 20px; border:1px solid #ccc;}
 .tab li a:hover{background-color:#fff;}
 .tab .active a {background-color:#fff; color:black; text-shadow:1px 1px 1px white; border-bottom-color:white}
