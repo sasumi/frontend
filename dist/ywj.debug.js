@@ -7219,7 +7219,7 @@ define('ywj/popup', function(require){
 	 */
 	Popup.prototype.close = function(){
 		if(this.onClose() === false){
-			return;
+			return false;
 		}
 		var _this = this;
 
@@ -7262,6 +7262,7 @@ define('ywj/popup', function(require){
 
 		//reset collection
 		window[POP_COLLECT_KEY] = Collections;
+		return true;
 	};
 
 	/**
@@ -7643,16 +7644,18 @@ define('ywj/popup', function(require){
 
 	/**
 	 * close current popup
+	 * @return bool 是否成功关闭
 	 */
 	Popup.closeCurrentPopup = function(){
 		if(!in_sub_win){
 			console.warn('No in sub window');
-			return;
+			return false;
 		}
 		var curPop = this.getCurrentPopup();
 		if(curPop){
-			curPop.close();
+			return curPop.close();
 		}
+		return true;
 	};
 
 	/**
