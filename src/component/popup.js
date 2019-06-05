@@ -624,7 +624,7 @@ define('ywj/popup', function(require){
 
 	/**
 	 * close current popup
-	 * @return bool 是否成功关闭
+	 * @return boolean 是否成功关闭
 	 */
 	Popup.closeCurrentPopup = function(){
 		if(!in_sub_win){
