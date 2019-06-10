@@ -1001,7 +1001,7 @@ define('ywj/AutoComponent', function(require){
 								continue;
 							}
 							if(Util.isFunction(args[i].nodeInit)){
-								args[i].nodeInit($node, all_data[c] || {});
+								args[i].nodeInit($node, all_data[c.toLowerCase()] || {});
 							}
 						}
 						bindUp($node, SUPPORT_EVENTS, function(e){
