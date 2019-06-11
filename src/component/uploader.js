@@ -16,6 +16,7 @@ define('ywj/uploader', function(require){
 	var Net = require('ywj/net');
 	var lang = require('lang/$G_LANGUAGE');
 	var Util = require('ywj/util');
+	require('ywj/imagescale');
 	var PRIVATES = {};
 	var _guid = 1;
 	var console = window.console || function(){};
@@ -191,7 +192,7 @@ define('ywj/uploader', function(require){
 
 		//img
 		if(UP.config.TYPE == Uploader.TYPE_IMAGE){
-			html += '<img src="'+data.thumb+'"/>'
+			html += '<img src="'+data.thumb+'" onload="window.__img_adjust__ && __img_adjust__(this)"/>'
 		} else {
 			var ext = get_ext(data.src);
 			html += '<span class="com-uploader-file-icon com-uploader-file-icon-'+ext+'"></span>';
