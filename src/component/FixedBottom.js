@@ -13,11 +13,11 @@ define('ywj/FixedBottom',function(require){
 			var width = $node.width();
 			var outer_height = $node.outerHeight();
 			var outer_width = $node.outerWidth();
-			var top = $node.offset().top;
 			var $shadow = $('<'+$node[0].nodeName+'>');
 			$shadow.css('visibility', 'hidden').width(outer_width).height(outer_height).hide();
 			$shadow.insertAfter($node);
 			$(window).scroll(function(){
+				var top = $node.offset().top;
 				var scroll_top = $(this).scrollTop();
 				var vh = Util.getRegion().visibleHeight;
 				if(scroll_top+vh > (top+outer_height)){
