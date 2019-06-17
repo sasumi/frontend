@@ -121,7 +121,7 @@ textarea[readonly],
 .readonly input[type=number],
 .readonly input[type=url],
 .readonly input[type=email],
-.readonly textarea {border-color:transparent; box-shadow:none;}
+.readonly textarea {border-color:transparent; box-shadow:none; padding-left:0; padding-right:0;}
 
 /** text readonly+disabled **/
 input[type=text][readonly][disabled],
