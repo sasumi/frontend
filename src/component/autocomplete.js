@@ -21,23 +21,27 @@ define('ywj/autocomplete', function(require){
 
 	return {
 		nodeInit: function($node, param){
-			var cgi = param.source;
-			if(!cgi){
-				console.warn('NO CGI SOURCE FOUND USING AUTOCOMPLETE COMPONENT');
+			if($node[0].tagName != 'INPUT' || $node.attr('readonly') || $node.attr('disabled')){
 				return;
 			}
-
+			if(!param.source){
+				console.warn('No cgi source found using autocomplete component');
+				return;
+			}
+			$node.attr('autocomplete', 'off');
 			var onselect = param.onselect || function(){};
 			if(Util.isString(onselect)){
 				onselect = window[onselect];
 			}
+
+			//默认严格模式
 			var strict = param.strict === undefined ? true : !!param.strict;
 			var required = $node.attr('required');
 			var disabled = $node.attr('disabled');
 
 			var $shadow_inp = $node;
 			if(strict){
-				disabled = disabled?'disabled="'+disabled+'"':'';
+				disabled = disabled ? 'disabled="' + disabled + '"' : '';
 				$shadow_inp = $('<input type="text" value="'+$node.val()+'" '+disabled+' class="'+$node.attr('class')+'" placeholder="'+($node.attr('placeholder') || '')+'">').insertBefore($node);
 				$node.css({
 					transition: 'none',
@@ -245,7 +249,7 @@ define('ywj/autocomplete', function(require){
 				}
 				show_loading();
 				tm = setTimeout(function(){
-					Net.get(cgi, {keyword:$shadow_inp.val()}, cb, {frontCache: true});
+					Net.get(param.source, {keyword:$shadow_inp.val()}, cb, {frontCache: true});
 				}, 200);
 			};
 		}
