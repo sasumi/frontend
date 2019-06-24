@@ -1,0 +1,41 @@
+@import (once) "define";
+
+//inner style
+.nowrap() {white-space:nowrap;}
+.center() {text-align:center;}
+.circle (@size:0.5em, @color:@fore-color) {
+	box-sizing:border-box;
+	display:inline-block;
+	width:@size;
+	height:@size;
+	margin-top:0.5em;
+	border:1px solid @color * 2;
+	border-radius:50%;
+}
+.dot (@size:0.5em, @color:@fore-color) {
+	.circle(@size, @color);
+	background-color:@color*2;
+}
+.square (@size:0.5em, @color:@fore-color) {
+	.dot(@size, @color);
+	border-radius:0;
+}
+.square-hole (@size:0.5em, @color:@fore-color) {
+	.square;
+	background-color:transparent;
+}
+
+.clear-fix {
+	&:after {content:""; display:block; clear:both;}
+}
+
+//default class name
+.caption {
+	font-size:1.4rem;
+	text-align:left;
+	font-weight:normal;
+	margin:0.5em 0 0;
+}
+.clear-fix {
+	&:after {content:""; display:block; clear:both;}
+}

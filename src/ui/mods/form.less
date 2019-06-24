@@ -1,8 +1,10 @@
 @charset "UTF-8";
-@import (once) "namespace";
+@import (once) "global";
 @{ywj-scope} {
   /** form & layout table **/
-  legend, caption, .caption {font-size:1.4em; width:100%; font-weight:normal; text-align:left; text-transform:capitalize; border-bottom:1px solid #dddddd; color:#555555; padding:0.5em 0; margin-bottom:0.5em;}
+  legend {
+    .caption;
+  }
   form > fieldset {margin-top:0; border:none;}
   fieldset ~ fieldset {margin-top:1.5em;}
 

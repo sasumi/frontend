@@ -1,13 +1,39 @@
 @charset "UTF-8";
-@import (once) "namespace";
+@import (once) "global";
 @{ywj-scope} {
-  /** tab 组件 ul.tab>li[class=active]>a **/
-  .tab {border-bottom:1px solid #cccccc; margin-top:10px; min-height:33px; clear:both;}
-  .tab:after {content:""; display:block; clear:both;}
-  .tab li {float:left; margin:5px 0 -1px 10px; text-align:center; color:gray; cursor:pointer; list-style:none;}
-  .tab li a {min-width:60px; color:gray; background-color:#eeeeee; display:inline-block; border-radius:2px 2px 0 0; padding:4px 20px; border:1px solid #cccccc;}
-  .tab li a:hover {background-color:#ffffff;}
-  .tab .active a {background-color:#ffffff; color:black; text-shadow:1px 1px 1px white; border-bottom-color:white}
-  .tab-content {padding:10px 0;}
-  .tab-content .disactive {display:none}
+	//tab 组件 ul.tab>li[class=active]>a
+	.tab {
+		border-bottom:1px solid #cccccc;
+		.clear-fix;
+		> li {
+			float:left;
+			margin:0.5em 0 -1px 0.5em;
+			text-align:center;
+			color:gray;
+			cursor:pointer;
+			> a, > span {
+				min-width:4em;
+				color:gray;
+				background-color:#eeeeee;
+				display:inline-block;
+				border-radius:3px 3px 0 0;
+				padding:0.25em 1em;
+				border:1px solid #cccccc;
+				
+				&:hover {
+					background-color:@back-color;
+					color:@fore-color;
+					text-decoration:none;
+				}
+			}
+		}
+		> .active {
+			> a, > span {
+				color:black;
+				text-shadow:1px 1px 1px white;
+				background-color:#ffffff;
+				border-bottom-color:white
+			}
+		}
+	}
 }

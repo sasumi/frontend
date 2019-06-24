@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" class="ywj-ui">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<link rel="stylesheet/less" href="../../dist/all.less">
+	<base target="sub-page">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script>
+		less = {
+			env: "development",
+			async: false,
+			fileAsync: false,
+			poll: 1000,
+			functions: {},
+			dumpLineNumbers: "comments",
+			relativeUrls: false,
+			rootpath: ":/a.com/"
+		};
+	</script>
+	<script src="../../dist/less.min.js"></script>
+	<link rel="stylesheet" href="../../src/vendor/awesome/css/font-awesome.min.css">
+
+	<style>
+		html, body {height:100%; box-sizing:border-box; overflow:hidden;}
+		[name=sub-page] {width:100%; border:none; height:calc(100% - 50px); margin-top:1em;}
+	</style>
+</head>
+<body>
+	<ul class="tab">
+		<li class="active"><a target="sub-page" href="text.html">文本</a></li>
+		<li><a href="list.html">列表</a></li>
+		<li><a href="button.html">按钮</a></li>
+		<li><a href="tab.html">标签页</a></li>
+		<li><a href="table.html">表格</a></li>
+		<li><a href="form.html">表单</a></li>
+	</ul>
+
+	<iframe src="button.html" name="sub-page" frameborder="0">
+
+	</iframe>
+
+</body>
+</html>

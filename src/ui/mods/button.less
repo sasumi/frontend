@@ -1,79 +1,74 @@
 @charset "UTF-8";
-@import (once) "namespace";
+@import (once) "global";
 @{ywj-scope} {
-  .btn, label, input, button, select {vertical-align:middle;}
-  .btn,
-  button,
-  input.btn,
-  [type=button],
-  [type=reset],
-  [type=submit] {background:linear-gradient(#f7f7f7, #dddddd); color:#555555; white-space:nowrap; text-align:center; border:1px solid #a6a6a6; min-width:50px; border-radius:1px; padding:0.1em 0.5em; cursor:pointer; display:inline-block; user-select:none; transition:all 0.30s ease-in-out;outline:none; box-sizing:border-box;}
-
-  .btn:focus,
-  button:focus,
-  [type=button]:focus,
-  [type=reset]:focus,
-  [type=submit]:focus { box-shadow:0 0 10px #cccccc;}
-
-  .btn:hover,
-  button:hover,
-  [type=button]:hover,
-  [type=reset]:hover,
-  [type=submit]:hover {border-color:gray;}
-
-  .btn:active,
-  button:active,
-  [type=button]:active,
-  [type=reset]:active,
-  [type=submit]:active {background:linear-gradient(#f7f7f7, #eeeeee); }
-
-  /** button weak **/
-  input.btn-weak,
-  button.btn-weak,
-  .btn-weak {background-color:#fbfbfb; border-color:#cccccc; color:#444444;}
-  input.btn-weak:focus,
-  button.btn-weak:focus,
-  .btn-weak:focus { box-shadow:0 0 10px #e7e7e7; outline-color:#ffffff}
-  input.btn-weak:hover,
-  button.btn-weak:hover,
-  .btn-weak:hover {background-color:#dddddd; color:#333333;}
-
-  /** button danger **/
-  .btn-danger {background-color:#f3b580; border:1px solid #eaac75; color:#ff5500;}
-  .btn-danger:hover {background-color:#ffffff; color:#ff5500;}
-
-  /** button small **/
-  input.btn-small,
-  .btn-small {font-size:0.8rem; padding:0.20rem 0.75rem 0.20rem 0.75rem;}
-
-  /** button disabled **/
-  button[disabled],
-  [type=button][disabled],
-  [type=submit][disabled],
-  [type=reset][disabled],
-  .btn-disabled {background-color:#eeeeee; border-color:#cccccc; color:#bbbbbb; text-shadow:1px 1px 1px white; cursor:default}
-  .btn-disabled:focus {box-shadow:none; outline:none;}
-  .btn-disabled:hover {background-color:#eeeeee; color:#bbbbbb;}
-
-  /** button readonly **/
-  @{readonly} [type=submit],
-  @{readonly} [type=reset] {display:none;}
-
-  /** button loading **/
-  input.btn-loading,
-  input.btn-loading:hover,
-  body .btn-loading,
-  body .btn-loading:hover {background-image:url("@{assert}img/btn-loading.gif"); background-repeat:no-repeat; background-position:center; transition:none; cursor:default;}
-  body .btn-loading:focus {outline:none;}
-
-  .small-btn {display:inline-block; margin:1px 3px; text-shadow:1px 1px 1px #cccccc; cursor:pointer; white-space:nowrap; color:#555555; vertical-align:middle}
-  .small-btn:hover {color:black;}
-  .small-btn:before {content:""; color:gray; padding-right:2px; display:inline-block; font-family:FontAwesome, serif}
-
-  .small-add-btn:before,
-  .small-down-btn:before,
-  .small-delete-btn:before {font-family:FontAwesome, serif}
-  .small-add-btn:before {content:"\f067"}
-  .small-down-btn:before {content:"\f0d7"}
-  .small-delete-btn:before {content:"\f00d"}
+	@button:.btn, input [type\=button], input [type\=submit], input [type\=reset], button;
+	
+	@{button} {
+		background:linear-gradient(#f7f7f7, #dddddd);
+		color:@fore-color;
+		.nowrap();
+		.center();
+		border:1px solid #a6a6a6;
+		min-width:50px;
+		border-radius:1px;
+		padding:0.1em 0.5em;
+		cursor:pointer;
+		display:inline-block;
+		user-select:none;
+		transition:all 0.30s ease-in-out;
+		outline:none;
+		box-sizing:border-box;
+		
+		:focus { box-shadow:0 0 10px #cccccc;}
+		:hover {border-color:gray;}
+		:active {background:linear-gradient(#f7f7f7, #eeeeee); }
+		
+		/** button weak **/
+		input.btn-weak,
+		button.btn-weak,
+		.btn-weak {background-color:#fbfbfb; border-color:#cccccc; color:#444444;}
+		input.btn-weak:focus,
+		button.btn-weak:focus,
+		.btn-weak:focus { box-shadow:0 0 10px #e7e7e7; outline-color:#ffffff}
+		input.btn-weak:hover,
+		button.btn-weak:hover,
+		.btn-weak:hover {background-color:#dddddd; color:#333333;}
+		
+		/** button danger **/
+		.btn-danger {background-color:#f3b580; border:1px solid #eaac75; color:#ff5500;}
+		.btn-danger:hover {background-color:#ffffff; color:#ff5500;}
+		
+		/** button small **/
+		input.btn-small,
+		.btn-small {font-size:0.8rem; padding:0.20rem 0.75rem 0.20rem 0.75rem;}
+		
+		/** button disabled **/
+		[@{disabled}] {
+			background-color:#eeeeee; border-color:#cccccc; color:#bbbbbb; text-shadow:1px 1px 1px white; cursor:default;
+			:focus {box-shadow:none; outline:none;}
+			:hover {background-color:#eeeeee; color:#bbbbbb;}
+		}
+		
+		/** button readonly **/
+		@{readonly} [type=submit],
+		@{readonly} [type=reset] {display:none;}
+		
+		/** button loading **/
+		input.btn-loading,
+		input.btn-loading:hover,
+		body .btn-loading,
+		body .btn-loading:hover {background-image:url("@{assert}img/btn-loading.gif"); background-repeat:no-repeat; background-position:center; transition:none; cursor:default;}
+		body .btn-loading:focus {outline:none;}
+		
+		.small-btn {display:inline-block; margin:1px 3px; text-shadow:1px 1px 1px #cccccc; cursor:pointer; white-space:nowrap; color:#555555; vertical-align:middle}
+		.small-btn:hover {color:black;}
+		.small-btn:before {content:""; color:gray; padding-right:2px; display:inline-block; font-family:FontAwesome, serif}
+		
+		.small-add-btn:before,
+		.small-down-btn:before,
+		.small-delete-btn:before {font-family:FontAwesome, serif}
+		.small-add-btn:before {content:"\f067"}
+		.small-down-btn:before {content:"\f0d7"}
+		.small-delete-btn:before {content:"\f00d"}
+	}
 }

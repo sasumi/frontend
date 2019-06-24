@@ -1,38 +1,54 @@
 @charset "UTF-8";
-@import (once) "namespace";
+@import (once) "global";
 @{ywj-scope} {
-  /** 数据表格 **/
-  .data-tbl {width:100%;}
-  .data-tbl th {text-align:left; line-height:1; font-weight:normal; padding:0.5rem; color:gray; text-transform:capitalize}
-  .data-tbl td {padding:0.5rem;}
-  .data-tbl thead tr {border-bottom:1px solid #eeeeee; background-color:rgba(238, 238, 238, 0.2)}
-  .data-tbl thead th { white-space:nowrap;}
-  .data-tbl tbody tr {border-bottom:1px dotted #dddddd; transition:background-color 0.20s ease-in-out;}
-  .data-tbl tbody tr:hover,
-  .data-tbl tbody tr.yc-row-checked {background-color:rgba(238, 238, 238, 0.52)}
-  .data-tbl tbody tr:last-child {border-bottom:none;}
-  .data-tbl caption {font-size:16px; text-align:left; text-transform:uppercase; padding:1rem 0; color:gray;;}
-  .data-tbl .col-min-center {width:20px; white-space:nowrap; text-align:center}
-  .data-tbl .col-min {width:20px; white-space:nowrap;}
-  .data-tbl .col-op,
-  .data-tbl .col-idx,
-  .data-tbl .col-chk {width:20px; white-space:nowrap; text-align:center}
-  .grid-data-tbl th,
-  .grid-data-tbl td {border:1px solid #eeeeee;}
-  /** 滚动数据表格 **/
-  .scroll-tbl tbody { display:block; max-height:300px; overflow-y:scroll; overflow-x:hidden;}
-  .scroll-tbl thead,
-  .scroll-tbl tbody tr {display:table;width:100%;table-layout:fixed;}
-  .scroll-tbl thead {width:calc(100% - 7px)}
-  /** 表格中的排序 **/
-  table .order-link {color:#bbbbbb;}
-  table .order-link:hover,
-  table .order-link:hover:after {text-decoration:none; color:#00aeff}
-  table .order-link:after {content:"\f0dc"; font-family:FontAwesome, serif; color:#cccccc; margin-left:4px; display:inline-block; vertical-align:middle;}
-  table .order-link-asc:after {content:"\f0de"; line-height:0; padding-top:5px;}
-  table .order-link-desc:after {content:"\f0dd"; line-height:0; padding-bottom:6px;}
-  table .order-link-asc,
-  table .order-link-desc,
-  table .order-link-asc:after,
-  table .order-link-desc:after {color:#00aeff}
+	.table {
+		border-collapse:collapse;
+		border-spacing:0;
+		
+		caption {.caption;}
+		th {
+			text-align:left;;
+			font-weight:normal;
+			padding:0.25rem 0.5rem;
+			background-color:#eeeeee;
+			text-shadow:1px 1px 1px white;
+		}
+		td {padding:0.25rem 0.5rem;}
+		thead {
+			th {
+				.nowrap();
+				color:gray;
+			}
+		}
+		tbody {
+			tr {
+				border-bottom:1px dotted #dddddd;
+				transition:background-color 0.20s ease-in-out;
+				&:hover, &@{active} {background-color:rgba(238, 238, 238, 0.52)}
+				&:last-child {border-bottom:none;}
+			}
+		}
+		th, td { //列样式
+			&.col-op,
+			&.col-idx,
+			&.col-chk,
+			&.col-min-center {width:20px; .nowrap(); .center();}
+			&.col-min {width:20px; .nowrap();}
+		}
+		
+		.sort {
+			color:gray;
+		}
+	}
+	
+	.table-grid {
+		.table;
+		th, td {border:1px solid #cccccc;}
+	}
+	
+	//滚动数据表格
+	.table-scroll tbody { display:block; max-height:300px; overflow-y:scroll; overflow-x:hidden;}
+	.table-scroll thead,
+	.table-scroll tbody tr {display:table;width:100%;table-layout:fixed;}
+	.table-scroll thead {width:calc(100% - 7px)}
 }

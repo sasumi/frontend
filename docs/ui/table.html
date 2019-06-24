@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" class="ywj-ui">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<link rel="stylesheet/less" href="../../dist/all.less">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script>
+		less = {
+			env: "development",
+			async: false,
+			fileAsync: false,
+			poll: 1000,
+			functions: {},
+			dumpLineNumbers: "comments",
+			relativeUrls: false,
+			rootpath: ":/a.com/"
+		};
+	</script>
+	<script src="../../dist/less.min.js"></script>
+	<link rel="stylesheet" href="../../src/vendor/awesome/css/font-awesome.min.css">
+</head>
+<body>
+<table class="table">
+	<caption>普通表格</caption>
+	<thead>
+	<tr>
+		<th class="col-idx">序号</th>
+		<th>名称</th>
+		<th>性别</th>
+		<th>地址</th>
+		<th>操作</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td class="col-idx">1</td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="col-idx">2</td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="col-idx">3</td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="col-idx">4</td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	</tbody>
+	<tfoot>
+	<tr>
+		<td colspan="5">总计：4人</td>
+	</tr>
+	</tfoot>
+</table>
+
+<table class="table">
+	<caption>侧边th表格</caption>
+	<tbody>
+	<tr>
+		<th>John</th>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<th>Michel Jackson</th>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<th>Live Chen</th>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<th>John</th>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	</tbody>
+	<tfoot>
+	<tr>
+		<td colspan="5">总计：4人</td>
+	</tr>
+	</tfoot>
+</table>
+
+<table class="table-grid">
+	<caption>网线表格</caption>
+	<thead>
+	<tr>
+		<th class="col-idx">序号</th>
+		<th>名称</th>
+		<th>性别</th>
+		<th>地址</th>
+		<th>操作</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td class="col-idx">1</td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="col-idx">2</td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="col-idx">3</td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="col-idx">4</td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	</tbody>
+	<tfoot>
+	<tr>
+		<td colspan="5">总计：4人</td>
+	</tr>
+	</tfoot>
+</table>
+
+<table class="table-grid">
+	<caption>网线表格</caption>
+	<thead>
+	<tr>
+		<th class="col-idx">序号</th>
+		<th>名称</th>
+		<th>性别</th>
+		<th>地址</th>
+		<th>操作</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td class="col-idx"><input type="checkbox"></td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr class="active">
+		<td class="col-idx"><input type="checkbox" checked></td>
+		<td>John</td>
+		<td>Male</td>
+		<td>选中项</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="col-idx"><input type="checkbox"></td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="col-idx"><input type="checkbox"></td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	</tbody>
+	<tfoot>
+	<tr>
+		<td colspan="5">总计：4人</td>
+	</tr>
+	</tfoot>
+</table>
+
+<table class="table-grid">
+	<caption>网线表格</caption>
+	<thead>
+	<tr>
+		<th class="col-idx">序号</th>
+		<th><a href="" class="sort">名称</a></th>
+		<th><a href="" class="sort sort-asc">性别</a></th>
+		<th>地址</th>
+		<th>操作</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td class="col-idx"><input type="checkbox"></td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr class="active">
+		<td class="col-idx"><input type="checkbox" checked></td>
+		<td>John</td>
+		<td>Male</td>
+		<td>选中项</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="col-idx"><input type="checkbox"></td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="col-idx"><input type="checkbox"></td>
+		<td>John</td>
+		<td>Male</td>
+		<td>Shenzhen Guangdong PRC.China</td>
+		<td>
+			<a href="">Edit</a>
+			<a href="">Delete</a>
+		</td>
+	</tr>
+	</tbody>
+	<tfoot>
+	<tr>
+		<td colspan="5">总计：4人</td>
+	</tr>
+	</tfoot>
+</table>
+</body>
+</html>
