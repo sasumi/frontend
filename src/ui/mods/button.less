@@ -1,23 +1,23 @@
 @charset "UTF-8";
 @import (once) "global";
 @{ywj-scope} {
-	@button:.btn, input [type\=button], input [type\=submit], input [type\=reset], button;
+	@button:.btn, input [type=button], input [type=submit], input [type=reset], button;
 	
 	@{button} {
-		background:linear-gradient(#f7f7f7, #dddddd);
-		color:@fore-color;
 		.nowrap();
 		.center();
+		cursor:pointer;
+		background:linear-gradient(#f7f7f7, #dddddd);
 		border:1px solid #a6a6a6;
-		min-width:50px;
+		min-width:5em;
 		border-radius:1px;
 		padding:0.1em 0.5em;
-		cursor:pointer;
 		display:inline-block;
 		user-select:none;
 		transition:all 0.30s ease-in-out;
 		outline:none;
 		box-sizing:border-box;
+		min-width: 6em;
 		
 		:focus { box-shadow:0 0 10px #cccccc;}
 		:hover {border-color:gray;}
