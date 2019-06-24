@@ -1,0 +1,37 @@
+@charset "UTF-8";
+@import (once) "namespace";
+.@{ywj-scope} {
+  @ACCESS_KEY: "#NOACCESS";
+
+  //access controller scope
+  [href*="@{ACCESS_KEY}"],
+  [data-action*="@{ACCESS_KEY}"] {display:none !important;}
+  [action*="@{ACCESS_KEY}"] input.txt,
+  [action*="@{ACCESS_KEY}"] textarea.txt {border-color:transparent; outline:none;}
+  [action*="@{ACCESS_KEY}"] input[type=submit],
+  [action*="@{ACCESS_KEY}"] .com-uploader-btn,
+  [action*="@{ACCESS_KEY}"] .batch-uploader-delete-btn,
+  [action*="@{ACCESS_KEY}"] .batch-uploader-add-new,
+  [action*="@{ACCESS_KEY}"] .com-uploader-file,
+  [action*="@{ACCESS_KEY}"] button[type=submit] {display:none}
+  [action*="@{ACCESS_KEY}"] .batch-uploader,
+  [action*="@{ACCESS_KEY}"].batch-uploader {background-color:transparent;}
+  [action*="@{ACCESS_KEY}"] .batch-uploader li,
+  [action*="@{ACCESS_KEY}"].batch-uploader li {border-color:transparent; background-color:transparent; height:100px;}
+
+  /** readonly **/
+  @{readonly} .com-uploader-btn,
+  @{readonly} .batch-uploader-delete-btn,
+  @{readonly} .batch-uploader-add-new,
+  @{readonly} .com-uploader-file,
+  @{readonly} .small-add-btn,
+  @{readonly} .small-delete-btn,
+  @{readonly} .batch-uploader,
+  @{readonly}.batch-uploader {background-color:transparent;}
+  @{readonly} .batch-uploader li,
+  @{readonly}.batch-uploader li {border-color:transparent; background-color:transparent; height:100px; margin:0; padding:0;}
+  @{readonly} .date-txt,
+  @{readonly} .date-time-txt {background-image:none;}
+  @{readonly} [type=submit],
+  @{readonly} [type=reset] {display:none;}
+}

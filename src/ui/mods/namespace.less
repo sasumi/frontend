@@ -1,0 +1,6 @@
+@import (once) "define";
+
+@global-scope:ywj-scope;
+@global-exclude-scope:ywj-exclude;
+@ywj-scope:@global-scope+"[class ^= .@{global-exclude-scope}]";
+@assert:'ui/assert';

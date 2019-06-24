@@ -1,0 +1,28 @@
+@charset "UTF-8";
+@import (once) "namespace";
+@{ywj-scope} {
+  /** form & layout table **/
+  legend, caption, .caption {font-size:1.4em; width:100%; font-weight:normal; text-align:left; text-transform:capitalize; border-bottom:1px solid #dddddd; color:#555555; padding:0.5em 0; margin-bottom:0.5em;}
+  form > fieldset {margin-top:0; border:none;}
+  fieldset ~ fieldset {margin-top:1.5em;}
+
+  .frm-tbl {border-collapse:collapse; border-spacing:0; width:100%; margin-bottom:10px;}
+  .frm-tbl > tbody > tr > td.col-label,
+  .frm-tbl > tbody > tr > th {width:60px; text-align:right; white-space:nowrap; vertical-align:top; padding-top:0.5em; padding-left:1em; text-transform:capitalize; font-weight:normal;}
+  .frm-tbl > tbody > tr > td.col-label label,
+  .frm-tbl > tbody > tr > th label {margin-right:0}
+  .frm-tbl > tbody > tr:nth-child(odd) {background-color:#fdfdfd}
+  .frm-tbl > tbody > tr > td {padding:0.4em 1em; min-height:30px;}
+  .frm-tbl > tbody > tr > td label {margin-right:7px;}
+  .frm-tbl td.col-action {padding:1em 1em}
+  .frm-tbl input[type=submit] {padding:0.3em 1rem}
+  .frm-tbl .f-captcha input.txt {width:100px;}
+  .frm-tbl .f-captcha img {vertical-align:middle; cursor:pointer;}
+  .frm-tbl .f-captcha .change-verify-img {vertical-align:middle;cursor:pointer}
+
+  /** input + .trigger **/
+  .frm-tbl .trigger {color:#cccccc;}
+  .frm-tbl [required] + .trigger:before {content:"*"; color:#ff8794; font-weight:bold; font-size:15px; vertical-align:middle; padding:0 0.25em;}
+  .frm-tbl [required]:focus + .trigger:before {color:red;}
+  .frm-tbl [required]:focus + .trigger {color:gray;}
+}

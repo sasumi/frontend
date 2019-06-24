@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import "../common/reset.css";
+@import "reset.css";
 body {font-family:Microsoft Yahei, verdana, helvetica, sans-serif; font-size:12px; background-color:white; overflow-y:scroll}
 a {color:#4267c5; text-decoration:none;}
 a:hover {color:#50a7ff }
