@@ -1,6 +1,15 @@
 @import (once) "define";
 
-@global-scope:ywj-scope;
-@global-exclude-scope:ywj-exclude;
-@ywj-scope:@global-scope+"[class ^= .@{global-exclude-scope}]";
+//ywj global scope
+@global-scope:.ywj-ui;
+
+//ywj ignore scope
+//@todo no support yet
+//@global-ignore-scope: :not(.ywj-ignore);
+//@ywj-scope:@global-scope @global-ignore-scope;
+
+//normal usage scope
+@ywj-scope:@global-scope;
+
+//assert resource path
 @assert:'ui/assert';
