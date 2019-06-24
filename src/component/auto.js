@@ -18,6 +18,9 @@ define('ywj/auto', function(require){
 				}
 			};
 			var update_select_holder = function($sel){
+				if(!$sel[0].options.length || $sel[0].selectedIndex < 0){
+					return;
+				}
 				var val = $sel[0].options[$sel[0].selectedIndex].getAttribute('value');
 				var empty = val === '' || val === null;
 				$sel.attr('placeholder', empty ? 'valid' : 'invalid');
