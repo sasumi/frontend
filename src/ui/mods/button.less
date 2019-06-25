@@ -3,7 +3,6 @@
 @{ywj-scope} {
 	@linear-color-light: #f7f7f7;
 	@linear-color-dark: #dddddd;
-	@border-color:#999;
 
 	.normal() {
 		.nowrap();
@@ -13,6 +12,8 @@
 		background:linear-gradient(@linear-color-light, @linear-color-dark);
 		border-radius:@border-radius;
 		padding:0.25em 1em;
+		height:2em;
+		line-height:1;
 		display:inline-block;
 		user-select:none;
 		box-sizing:border-box;
@@ -29,7 +30,7 @@
 	}
 
 	.primary() {
-		background:linear-gradient(@linear-color-light, @link-color);
+		background:linear-gradient(@linear-color-light, @linear-color-dark);
 	}
 
 	.weaker() {

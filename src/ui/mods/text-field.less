@@ -1,50 +1,66 @@
 @charset "UTF-8";
 @import (once) "global";
 @{ywj-scope} {
-	//@dates: [type=date],[type=month],[type=datetime-local],[type=datetime-local];
 	@dates: [type=date],[type=month],[type^=datetime];
+	@texts: [type=text], [type=password], [type=search], [type=url], [type=email], textarea;
+	@numbers: [type=number];
+	@files: [type=file];
 
-	@texts-normal: [type=text], [type=password], [type=search], [type=number], [type=url], [type=email], textarea;
-
-	@{texts-normal}, @{dates} {
-		border:1px solid #bbbbbb;
-		border-bottom-color:#dddddd;
-		border-right-color:#dddddd;
-		border-radius:2px;
+	@{texts}, @{dates}, @{files}, @{numbers} {
+		.sink-border(#bbb);
+		border-radius:@border-radius;
 		padding:0.1em 0.5em;
+		height:2em;
 		box-sizing:border-box;
+		width:190px;
 		transition:box-shadow 0.30s ease-in-out;
 		outline:none;
 
 		&:focus {
-			box-shadow:0 0 10px #dddddd;
+			box-shadow:0 0 10px fade(@fore-color, 20%);
 		}
 		&[disabled]{
-			border:1px solid #dddddd; border-left-color:#cccccc; border-top-color:#cccccc; background-image:none;
+			color: lighten(@fore-color, 40%);
+			border:1px solid #dddddd;
+			text-shadow:1px 1px 1px white;
+			border-left-color:#cccccc;
+			border-top-color:#cccccc;
 		}
 		&[readonly], &[readonly][disabled]{
-			border-color:transparent; box-shadow:none;
+			border-color:transparent;
+			box-shadow:none;
+			background-color:transparent;
 		}
 	}
-	[type=number] { text-align:center; width:50px; padding-left:0.25em; padding-right:0.25em; }
+	
+	@{numbers} {
+		padding-right:0;
+	}
 
 	@{dates} {
-		width:140px;
-		background:url("@{assert}/img/calendar.png") no-repeat 95% center;
-		&:focus {
+		background:url("/@{assert-path}/img/calendar.png") no-repeat 97% center;
+		padding-right:0;
+		&:focus, &:hover {
 			background:none;
 		}
+		&[disabled], &[readonly] {
+			background-image:none;
+		}
 	}
-	[type^=datetime] {width:180px}
-	[type^=datetime][step] { width:210px; }
-	[type=file] { padding:4px; }
+	
+	@{files} {
+		padding:0;
+		border:none;
+	}
 
-	/** textarea **/
-	textarea { width:auto; min-width:135px; min-height:27px; }
-
-	.rich-txt { width:800px; height:400px }
-	.small-txt { width:400px; height:50px; resize:vertical }
-
-	.code-zebra { padding:.5em; line-height:1.5; background:white; background-size:auto 3em; background-origin:content-box; background-image:linear-gradient(rgba(0, 0, 0, .03) 50%, transparent 0); }
-	input.long-txt { width:770px; }
+	//textarea
+	textarea {min-height:2em; resize:vertical}
+	
+	.code-zebra {
+		padding:.5em;
+		line-height:1.5;
+		background-size:auto 3em;
+		background-origin:content-box;
+		background:white linear-gradient(rgba(0, 0, 0, .03) 50%, transparent 0);
+	}
 }

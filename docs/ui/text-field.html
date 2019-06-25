@@ -53,6 +53,66 @@
 		</td>
 	</tr>
 	<tr>
+		<td>Input:password</td>
+		<td>
+			<input type="password" value="Hello World">
+		</td>
+		<td>
+			<input type="password" value="Hello World" disabled>
+		</td>
+		<td>
+			<input type="password" value="Hello World" readonly>
+		</td>
+	</tr>
+	<tr>
+		<td>Input:email</td>
+		<td>
+			<input type="email" value="abc@abc.com">
+		</td>
+		<td>
+			<input type="email" value="abc@abc.com" disabled>
+		</td>
+		<td>
+			<input type="email" value="abc@abc.com" readonly>
+		</td>
+	</tr>
+	<tr>
+		<td>Input:search</td>
+		<td>
+			<input type="search" value="Hello World">
+		</td>
+		<td>
+			<input type="search" value="Hello World" disabled>
+		</td>
+		<td>
+			<input type="search" value="Hello World" readonly>
+		</td>
+	</tr>
+	<tr>
+		<td>Input:url</td>
+		<td>
+			<input type="url" value="http://www.a.com">
+		</td>
+		<td>
+			<input type="url" value="http://www.a.com" disabled>
+		</td>
+		<td>
+			<input type="url" value="http://www.a.com" readonly>
+		</td>
+	</tr>
+	<tr>
+		<td>Input:email</td>
+		<td>
+			<input type="email" value="abc@abc.com">
+		</td>
+		<td>
+			<input type="email" value="abc@abc.com" disabled>
+		</td>
+		<td>
+			<input type="email" value="abc@abc.com" readonly>
+		</td>
+	</tr>
+	<tr>
 		<td>Input:number</td>
 		<td>
 			<input type="number" value="100">
@@ -64,7 +124,54 @@
 			<input type="number" value="-12.3" readonly>
 		</td>
 	</tr>
+	<tr>
+		<td>Input:date</td>
+		<td>
+			<input type="date" value="2019-05-10">
+		</td>
+		<td>
+			<input type="date" value="2019-05-10" disabled>
+		</td>
+		<td>
+			<input type="date" value="2019-05-10" readonly>
+		</td>
+	</tr>
+	<tr>
+		<td>Input:datetime-local</td>
+		<td>
+			<input type="datetime-local" value="2019-05-10T12:58">
+		</td>
+		<td>
+			<input type="datetime-local" value="2019-05-10T12:00" disabled>
+		</td>
+		<td>
+			<input type="datetime-local" value="2019-05-10T12:00" readonly>
+		</td>
+	</tr>
+	<tr>
+		<td>Input:file</td>
+		<td>
+			<input type="file" name="dd">
+		</td>
+		<td>
+			<input type="file" name="dd" disabled>
+		</td>
+		<td>
+			<input type="file" name="dd" readonly>
+		</td>
+	</tr>
 	</tbody>
 </table>
+
+<div class="caption">Textarea</div>
+<textarea name="" cols="30" rows="10">You can set options either programmatically
+	, by setting them on a less object before the script tag -
+	this then affects all initial link tags and programmatic
+	usage of less</textarea>
+
+<textarea class="code-zebra" cols="30" rows="10">You can set options either programmatically
+	, by setting them on a less object before the script tag -
+	this then affects all initial link tags and programmatic
+	usage of less</textarea>
 </body>
 </html>

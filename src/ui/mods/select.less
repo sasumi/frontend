@@ -1,17 +1,40 @@
 @charset "UTF-8";
 @import (once) "global";
-
 @{ywj-scope} {
-  /** select **/
-  select {border-radius:2px; width:186px; border:1px solid #bbbbbb; border-right-color:#dddddd; border-bottom-color:#dddddd; padding:0.06rem 0.5rem 0.35rem 0.25rem}
-  option {padding:0 6px}
-  select[placeholder="valid"] {color:gray;}
-  select[placeholder] option,
-  select[placeholder] optgroup {color:#333333;}
-  select[placeholder] option[value=''] {color:gray;}
-  /** select disabled + readonly **/
-  select[disabled] {border:1px solid #dddddd; border-left-color:#cccccc; border-top-color:#cccccc; background-image:none;}
-  select[readonly],
-  @{readonly-class} select {border-color:transparent; -webkit-appearance:none; background-image:none;}
-  select[readonly][disabled] {color:inherit}
+	//select
+	select {
+		.sink-border(@border-color);
+		border-radius:@border-radius;
+		color:@button-text-color;
+		padding:0.2em 1em 0.3em;
+		height:2em;
+		display:inline-block;
+		box-sizing:border-box;
+		vertical-align:bottom;
+		
+		&[disabled] {
+			border:1px solid #dddddd; border-left-color:#cccccc; border-top-color:#cccccc; background-image:none;
+		}
+		
+		&[readonly] {
+			border-color:transparent; -webkit-appearance:none; background-image:none;
+		}
+		
+		option {padding:0 6px}
+		&[placeholder="valid"] {color:gray;}
+		&[placeholder] option,
+		&[placeholder] optgroup {
+			color:lighten(@fore-color, 20%)
+		}
+		&[placeholder] option[value=''] {color:gray;}
+		
+		&[size][size^=1] {
+			color:red;
+		}
+	}
+	
+	[type=checkbox], [type=radio] {
+		margin:0 0.2em;
+		vertical-align:middle;
+	}
 }

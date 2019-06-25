@@ -1,28 +1,32 @@
 @charset "UTF-8";
 @import (once) "global";
 @{ywj-scope} {
-  /** form & layout table **/
-  legend:extend(.caption all){}
-  form > fieldset {margin-top:0; border:none;}
-  fieldset ~ fieldset {margin-top:1.5em;}
-
-  .frm-tbl {border-collapse:collapse; border-spacing:0; width:100%; margin-bottom:10px;}
-  .frm-tbl > tbody > tr > td.col-label,
-  .frm-tbl > tbody > tr > th {width:60px; text-align:right; white-space:nowrap; vertical-align:top; padding-top:0.5em; padding-left:1em; text-transform:capitalize; font-weight:normal;}
-  .frm-tbl > tbody > tr > td.col-label label,
-  .frm-tbl > tbody > tr > th label {margin-right:0}
-  .frm-tbl > tbody > tr:nth-child(odd) {background-color:#fdfdfd}
-  .frm-tbl > tbody > tr > td {padding:0.4em 1em; min-height:30px;}
-  .frm-tbl > tbody > tr > td label {margin-right:7px;}
-  .frm-tbl td.col-action {padding:1em 1em}
-  .frm-tbl input[type=submit] {padding:0.3em 1rem}
-  .frm-tbl .f-captcha input.txt {width:100px;}
-  .frm-tbl .f-captcha img {vertical-align:middle; cursor:pointer;}
-  .frm-tbl .f-captcha .change-verify-img {vertical-align:middle;cursor:pointer}
-
-  /** input + .trigger **/
-  .frm-tbl .trigger {color:#cccccc;}
-  .frm-tbl [required] + .trigger:before {content:"*"; color:#ff8794; font-weight:bold; font-size:15px; vertical-align:middle; padding:0 0.25em;}
-  .frm-tbl [required]:focus + .trigger:before {color:red;}
-  .frm-tbl [required]:focus + .trigger {color:gray;}
+	//form & layout table
+	legend:extend(.caption all) {}
+	form > fieldset {margin-top:0; border:none;}
+	fieldset ~ fieldset {margin-top:1.5em;}
+	
+	.form-table {
+		border-collapse:collapse;
+		border-spacing:0;
+		width:100%;
+		margin-bottom:10px;
+		
+		> tbody {
+			> tr {
+				> th,
+				> td.col-label {
+					width:60px; text-align:right; white-space:nowrap; vertical-align:top; padding-top:0.5em; padding-left:1em; text-transform:capitalize; font-weight:normal;
+				}
+				> td {
+					padding:0.4em 1em; min-height:30px;
+				}
+			}
+		}
+	}
+	
+	/** input + .trigger **/
+	.form-table [required] + .trigger:before {content:"*"; color:#ff8794; font-weight:bold; font-size:15px; vertical-align:middle; padding:0 0.25em;}
+	.form-table [required]:focus + .trigger:before {color:red;}
+	.form-table [required]:focus + .trigger {color:gray;}
 }
