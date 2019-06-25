@@ -1,8 +1,8 @@
 @charset "UTF-8";
 @import (once) "global";
 @{ywj-scope} {
-	//@dates: [type=date]\,[type=month]\,[type=datetime-local]\,[type=date]\,[type=month]\,[type=datetime-local];
-	@dates: [type=date];
+	//@dates: [type=date],[type=month],[type=datetime-local],[type=datetime-local];
+	@dates: [type=date],[type=month],[type^=datetime];
 
 	@texts-normal: [type=text], [type=password], [type=search], [type=number], [type=url], [type=email], textarea;
 
@@ -19,81 +19,32 @@
 		&:focus {
 			box-shadow:0 0 10px #dddddd;
 		}
+		&[disabled]{
+			border:1px solid #dddddd; border-left-color:#cccccc; border-top-color:#cccccc; background-image:none;
+		}
+		&[readonly], &[readonly][disabled]{
+			border-color:transparent; box-shadow:none;
+		}
 	}
 	[type=number] { text-align:center; width:50px; padding-left:0.25em; padding-right:0.25em; }
 
-	[type=month],
-	[type=date] { width:140px; background:url("@{assert}/img/calendar.png") no-repeat 95% center }
-	[type=datetime-local] { width:180px; background:url("@{assert}img/calendar.png") no-repeat 95% center }
-	[type=datetime-local][step] { width:210px; }
-
-	[type=date]:hover,
-	[type=month]:hover,
-	[type=datetime-local]:hover,
-	[type=date]:focus,
-	[type=month]:focus,
-	[type=datetime-local]:focus { background:none; }
+	@{dates} {
+		width:140px;
+		background:url("@{assert}/img/calendar.png") no-repeat 95% center;
+		&:focus {
+			background:none;
+		}
+	}
+	[type^=datetime] {width:180px}
+	[type^=datetime][step] { width:210px; }
 	[type=file] { padding:4px; }
-
-
-	/** text disabled **/
-	input[type=text][disabled],
-	input[type=password][disabled],
-	input[type=search][disabled],
-	input[type=date][disabled],
-	input[type=month][disabled],
-	input[type=datetime][disabled],
-	input[type=datetime-local][disabled],
-	input[type=time][disabled],
-	input[type=number][disabled],
-	input[type=url][disabled],
-	input[type=email][disabled],
-	textarea[disabled] { border:1px solid #dddddd; border-left-color:#cccccc; border-top-color:#cccccc; background-image:none; }
-
-	/** text readonly **/
-	input[type=text][readonly],
-	input[type=password][readonly],
-	input[type=search][readonly],
-	input[type=date][readonly],
-	input[type=month][readonly],
-	input[type=datetime][readonly],
-	input[type=datetime-local][readonly],
-	input[type=time][readonly],
-	input[type=number][readonly],
-	input[type=url][readonly],
-	input[type=email][readonly],
-	textarea[readonly],
-	@{readonly-class} input[type=text],
-	@{readonly-class} input[type=password],
-	@{readonly-class} input[type=search],
-	@{readonly-class} input[type=date],
-	@{readonly-class} input[type=month],
-	@{readonly-class} input[type=datetime],
-	@{readonly-class} input[type=datetime-local],
-	@{readonly-class} input[type=time],
-	@{readonly-class} input[type=number],
-	@{readonly-class} input[type=url],
-	@{readonly-class} input[type=email],
-	@{readonly-class} textarea { border-color:transparent; box-shadow:none; }
-
-	/** text readonly+disabled **/
-	input[type=text][readonly][disabled],
-	input[type=password][readonly][disabled],
-	input[type=search][readonly][disabled],
-	input[type=date][readonly][disabled],
-	input[type=month][readonly][disabled],
-	input[type=datetime][readonly][disabled],
-	input[type=datetime-local][readonly][disabled],
-	input[type=time][readonly][disabled],
-	input[type=number][readonly][disabled],
-	input[type=url][readonly][disabled],
-	input[type=email][readonly][disabled],
-	textarea[readonly][disabled] { color:inherit; background-color:inherit }
 
 	/** textarea **/
 	textarea { width:auto; min-width:135px; min-height:27px; }
-	.code-zebra { padding:.5em; line-height:1.5; background:white; background-size:auto 3em; background-origin:content-box; background-image:linear-gradient(rgba(0, 0, 0, .03) 50%, transparent 0); }
-	input.long-txt { width:770px; }
+
 	.rich-txt { width:800px; height:400px }
 	.small-txt { width:400px; height:50px; resize:vertical }
+
+	.code-zebra { padding:.5em; line-height:1.5; background:white; background-size:auto 3em; background-origin:content-box; background-image:linear-gradient(rgba(0, 0, 0, .03) 50%, transparent 0); }
+	input.long-txt { width:770px; }
 }
