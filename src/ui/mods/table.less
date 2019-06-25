@@ -1,11 +1,16 @@
 @charset "UTF-8";
 @import (once) "global";
+@import (once) "text";
+
 @{ywj-scope} {
 	.table {
 		border-collapse:collapse;
 		border-spacing:0;
 		
-		caption {.caption;}
+		caption {
+			.caption();
+		}
+
 		th {
 			text-align:left;;
 			font-weight:normal;

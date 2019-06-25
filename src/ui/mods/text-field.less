@@ -1,18 +1,12 @@
 @charset "UTF-8";
 @import (once) "global";
 @{ywj-scope} {
-	@{dates}: [type=date], [type=month], [type=datetime-local], [type=date], [type=month], [type=datetime-local];
+	//@dates: [type=date]\,[type=month]\,[type=datetime-local]\,[type=date]\,[type=month]\,[type=datetime-local];
+	@dates: [type=date];
 
-	@texts: @{text-class}, @{dates},
-	[type=text],
-	[type=password],
-	[type=search],
-	[type=number],
-	[type=url],
-	[type=email],
-	textarea;
+	@texts-normal: [type=text], [type=password], [type=search], [type=number], [type=url], [type=email], textarea;
 
-	@{texts} {
+	@{texts-normal}, @{dates} {
 		border:1px solid #bbbbbb;
 		border-bottom-color:#dddddd;
 		border-right-color:#dddddd;

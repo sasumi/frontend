@@ -2,9 +2,7 @@
 @import (once) "global";
 @{ywj-scope} {
   /** form & layout table **/
-  legend {
-    .caption;
-  }
+  legend:extend(.caption all){}
   form > fieldset {margin-top:0; border:none;}
   fieldset ~ fieldset {margin-top:1.5em;}
 

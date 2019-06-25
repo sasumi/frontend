@@ -28,6 +28,43 @@
 	</style>
 </head>
 <body>
-<input type="text" name="" id="">
+<div class="caption">Text Field</div>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Type</th>
+			<th>Normal State</th>
+			<th>Disabled</th>
+			<th>Readonly</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>Input:text</td>
+		<td>
+			<input type="text" value="Hello World">
+		</td>
+		<td>
+			<input type="text" value="Hello World" disabled>
+		</td>
+		<td>
+			<input type="text" value="Hello World" readonly>
+		</td>
+	</tr>
+	<tr>
+		<td>Input:number</td>
+		<td>
+			<input type="number" value="100">
+		</td>
+		<td>
+			<input type="number" value="100.001" disabled>
+		</td>
+		<td>
+			<input type="number" value="-12.3" readonly>
+		</td>
+	</tr>
+	</tbody>
+</table>
 </body>
 </html>

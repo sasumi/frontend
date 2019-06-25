@@ -1,9 +1,8 @@
-@import (once) "namespace";
 @import (once) "define";
 
 //inner style
-.nowrap() {white-space:nowrap;}
-.center() {text-align:center;}
+.nowrap() { white-space:nowrap; }
+.center() { text-align:center; }
 .circle (@size:0.5em, @color:@fore-color) {
 	box-sizing:border-box;
 	display:inline-block;
@@ -25,24 +24,11 @@
 	.square;
 	background-color:transparent;
 }
-
-.cube-border(@border-color, @border-width:1px){
+.cube-border(@border-color, @border-width:1px) {
 	border:@border-width solid @border-color;
 	border-top-color:lighten(@border-color, 20%);
 	border-left-color:lighten(@border-color, 20%);
 }
-
 .clear-fix {
-	&:after {content:""; display:block; clear:both;}
-}
-
-//default class name
-.caption {
-	font-size:1.4rem;
-	text-align:left;
-	font-weight:normal;
-	margin:0.5em 0 0;
-}
-.clear-fix {
-	&:after {content:""; display:block; clear:both;}
+	&:after { content:""; display:block; clear:both; }
 }

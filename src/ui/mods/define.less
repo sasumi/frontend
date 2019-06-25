@@ -1,9 +1,23 @@
+//ywj global scope
+@global-scope:.ywj-ui;
+
+//ywj ignore scope
+//@todo no support yet
+//@global-ignore-scope: :not(.ywj-ignore);
+//@ywj-scope:@global-scope @global-ignore-scope;
+
+//normal usage scope
+@ywj-scope:@global-scope;
+
+//assert resource path
+@assert:'ui/assert';
+
 //default class name
 @readonly-class:.readonly, [readonly];
 @disabled-class:.disabled, [disabled];
 @text-class:.text;
 @active-class:.active;
-@dis-active:.dis-active;
+@dis-active:.disactive;
 @border-radius: 2px;
 
 //default style
