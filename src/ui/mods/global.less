@@ -26,6 +26,12 @@
 	background-color:transparent;
 }
 
+.cube-border(@border-color, @border-width:1px){
+	border:@border-width solid @border-color;
+	border-top-color:lighten(@border-color, 20%);
+	border-left-color:lighten(@border-color, 20%);
+}
+
 .clear-fix {
 	&:after {content:""; display:block; clear:both;}
 }

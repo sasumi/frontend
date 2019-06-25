@@ -26,25 +26,49 @@
 
 <p>You can set options either programmatically,
 	<input type="button" value="文本中的按钮">
-	by setting them on a less object before the script tag - 
-	this then affects all initial link tags and programmatic usage of less</p>
+	by setting them on a less object before the script<br/> tag -
+	this then affects all initial link tags and programmatic usage of less
+</p>
+<p>this then affects all initial link tags and programmatic usage of less</p>
+<input type="submit" value="提交">
+<input type="reset" value="重置">
+<p>this then affects all initial link tags and programmatic usage of less</p>
 
 <table class="table">
+	<caption>按钮</caption>
 	<thead>
 		<tr>
 			<th>类型</th>
 			<th>正常状态</th>
 			<th>禁用状态(:disabled)</th>
-			<th>只读状态（:readonly）</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
 			<td>input:button</td>
 			<td><input type="button" value="我是一只按钮"></td>
-			<td><input type="button" value="我是一只按钮"></td>
-			<td><input type="button" value="我是一只按钮"></td>
+			<td><input type="button" disabled value="是一只按钮"></td>
 		</tr>
+
+		<tr>
+			<td>input:reset</td>
+			<td><input type="reset" value="我是一只按钮"></td>
+			<td><input type="reset" disabled value="是一只按钮"></td>
+		</tr>
+
+		<tr>
+			<td>input:submit</td>
+			<td><input type="submit" value="我是一只按钮"></td>
+			<td><input type="submit" disabled value="是一只按钮"></td>
+		</tr>
+
+		<tr>
+			<td>button</td>
+			<td><button>我是一只按钮</button></td>
+			<td><button disabled>是一只按钮</button></td>
+		</tr>
+
+
 
 	</tbody>
 </table>

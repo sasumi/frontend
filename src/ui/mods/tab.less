@@ -8,7 +8,7 @@
 		> li {
 			float:left;
 			margin:0.5em 0 -1px 0.5em;
-			text-align:center;
+			.center();
 			color:gray;
 			cursor:pointer;
 			> a, > span {
@@ -16,7 +16,7 @@
 				color:gray;
 				background-color:#eeeeee;
 				display:inline-block;
-				border-radius:3px 3px 0 0;
+				border-radius:@border-radius @border-radius 0 0;
 				padding:0.25em 1em;
 				border:1px solid #cccccc;
 				
