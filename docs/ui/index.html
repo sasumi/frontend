@@ -29,7 +29,7 @@
 </head>
 <body>
 	<ul class="tab">
-		<li class="active"><a target="sub-page" href="text.html">文本</a></li>
+		<li><a target="sub-page" href="text.html">文本</a></li>
 		<li><a href="list.html">列表</a></li>
 		<li><a href="button.html">按钮</a></li>
 		<li><a href="selector.html">选择</a></li>
@@ -38,10 +38,33 @@
 		<li><a href="table.html">表格</a></li>
 		<li><a href="form.html">表单</a></li>
 	</ul>
-
 	<iframe src="selector.html" name="sub-page" frameborder="0">
-
 	</iframe>
 
+	<script>
+		var tab_links = document.querySelectorAll('.tab a');
+		for(var i=0; i<tab_links.length; i++){
+			tab_links[i].addEventListener('click', function(){
+				location.hash = '#'+this.getAttribute('href');
+
+				var lis = document.querySelectorAll('.tab li');
+				for(var j=0; j<lis.length; j++){
+					lis[j].classList.remove('active');
+				}
+				this.parentNode.classList.add('active');
+			}, true);
+		}
+
+		if(location.hash){
+			var current = location.hash.replace('#', '');
+			document.querySelector('[name=sub-page]').setAttribute('src', current);
+
+			for(var i=0; i<tab_links.length; i++){
+				if(tab_links[i].getAttribute('href') == current){
+					tab_links[i].parentNode.classList.add('active');
+				}
+			}
+		}
+	</script>
 </body>
 </html>

@@ -12,7 +12,7 @@
 		padding:0.1em 0.5em;
 		height:2em;
 		box-sizing:border-box;
-		width:190px;
+		width:@form-element-default-width;
 		transition:box-shadow 0.30s ease-in-out;
 		outline:none;
 
@@ -38,7 +38,7 @@
 	}
 
 	@{dates} {
-		background:url("/@{assert-path}/img/calendar.png") no-repeat 97% center;
+		background:url("@{assert-path}/img/calendar.png") no-repeat 97% center;
 		padding-right:0;
 		&:focus, &:hover {
 			background:none;

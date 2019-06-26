@@ -3,16 +3,20 @@
 @import (once) "text";
 
 @{ywj-scope} {
-	.table {
+	table {
 		border-collapse:collapse;
 		border-spacing:0;
-		
+
+		caption, th {
+			text-align:left;
+		}
+	}
+
+	.table {
 		caption {
 			.caption();
 		}
-
 		th {
-			text-align:left;;
 			font-weight:normal;
 			padding:0.25rem 0.5rem;
 			background-color:#eeeeee;

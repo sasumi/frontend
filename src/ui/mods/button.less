@@ -3,6 +3,7 @@
 @{ywj-scope} {
 	@linear-color-light: #f7f7f7;
 	@linear-color-dark: #dddddd;
+	@disabled-color: #aaa;
 
 	.normal() {
 		.nowrap();
@@ -13,7 +14,7 @@
 		border-radius:@border-radius;
 		padding:0.25em 1em;
 		height:2em;
-		line-height:1;
+		line-height:initial;
 		display:inline-block;
 		user-select:none;
 		box-sizing:border-box;
@@ -39,7 +40,7 @@
 	}
 
 	.disabled(){
-		color: #aaa;
+		color: @disabled-color;
 		.cube-border(lighten(@border-color, 10%));
 		box-shadow:none;
 		&:focus, &:hover {box-shadow:none;}
@@ -48,6 +49,22 @@
 
 	.button, [type=button], button {
 		.normal;
+	}
+
+	a.button {
+		color:@button-text-color;
+		&:hover {
+			color:@button-text-color;
+			text-decoration:none;
+			cursor:default;
+		}
+		&[disabled] {
+			&:hover, &:active, &:focus{
+				.disabled();
+				color:@disabled-color;
+				outline:none;
+			}
+		}
 	}
 
 	[type=submit] {
