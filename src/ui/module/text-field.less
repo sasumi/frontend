@@ -14,7 +14,7 @@
 		transition:box-shadow 0.30s ease-in-out;
 		outline:none;
 
-		&:not(textarea[cols]){
+		&:not(textarea){
 			width:@form-element-default-width;
 		}
 
@@ -25,6 +25,7 @@
 		&:focus {
 			box-shadow:0 0 10px fade(@fore-color, 20%);
 		}
+		
 		&[disabled]{
 			color: lighten(@fore-color, 40%);
 			border:1px solid #dddddd;
@@ -32,6 +33,7 @@
 			border-left-color:#cccccc;
 			border-top-color:#cccccc;
 		}
+		
 		&[readonly], &[readonly][disabled]{
 			border-color:transparent;
 			box-shadow:none;
@@ -61,7 +63,10 @@
 
 	//textarea
 	textarea {min-height:2em;}
-
+	textarea:not([cols]) {
+		min-width:@form-element-default-width;
+	}
+	
 	.code-zebra {
 		padding:.5em;
 		line-height:1.5;

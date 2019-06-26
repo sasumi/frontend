@@ -1,0 +1,58 @@
+@charset "UTF-8";
+@import (once) "global";
+@import (once) "button";
+@{ywj-scope} {
+	@dropdown:.dropdown;
+	@dropdown-button:.dropdown-button;
+	
+	.triangle(@color: gray) {
+		&:after {
+			content:"";
+			display:inline-block;
+			width:0;
+			height:0;
+			margin-left:0.25em;
+			border:4px solid transparent;
+			border-top-color:@color;
+			vertical-align:middle;
+		}
+	}
+	
+	.dropdown() {
+		> dd {
+			display:none;
+			position:absolute;
+			background-color:@back-color;
+			padding:0.5em;
+			box-sizing:border-box;
+			box-shadow:1px 1px 10px fade(@fore-color, 20%);
+			border:1px solid @button-border-color;
+		}
+		
+		> dt > span,
+		> dt > a {
+			cursor:default;
+			.triangle();
+		}
+		
+		&:hover {
+			dd {display:block;}
+		}
+	}
+	
+	@{dropdown} {
+		.dropdown();
+		> dt > span,
+		> dt > a {
+		
+		}
+	}
+	
+	@{dropdown-button} {
+		.dropdown();
+		> dt > span,
+		> dt > a {
+			.normal-button();
+		}
+	}
+}

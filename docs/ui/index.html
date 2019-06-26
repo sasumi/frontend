@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>demo</title>
-	<link rel="stylesheet/less" href="../../dist/all.less">
+	<link rel="stylesheet/less" href="demo.less">
 	<base target="sub-page">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,9 +25,11 @@
 	<style>
 		html, body {height:100%; box-sizing:border-box; overflow:hidden;}
 		.ywj-ui body {display:flex; padding:0;}
-		#nav {flex:1; max-width:250px; box-sizing:border-box; padding-top:1em; background-color:#eee; border-right:1px solid #ccc;}
+		#nav {flex:1; max-width:200px; box-sizing:border-box; padding-top:1em; background-color:#eee; border-right:1px solid #ccc;}
 		#nav a {padding:0.5em 1em; display:block;}
 		#nav li {border-bottom:1px solid #ccc;}
+		#nav .active {background-color:#ffffff;}
+		#nav .active a {color:black}
 		[name=sub-page] {flex:1; border:none; }
 	</style>
 </head>
@@ -41,6 +43,9 @@
 		<li><a href="tab.html">标签页</a></li>
 		<li><a href="table.html">表格</a></li>
 		<li><a href="form.html">表单</a></li>
+		<li><hr></li>
+		<li><a href="pagination.html">分页</a></li>
+		<li><a href="dropdown.html">下拉列表</a></li>
 	</ul>
 	<iframe src="selector.html" name="sub-page" frameborder="0">
 	</iframe>

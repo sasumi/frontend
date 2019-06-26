@@ -1,0 +1,52 @@
+@charset "UTF-8";
+@import (once) "global";
+@{ywj-scope} {
+  @ACCESS_KEY: #NOACCESS;
+  //access controller scope
+  [href*="@{ACCESS_KEY}"],
+  [data-action*="@{ACCESS_KEY}"] {display:none !important;}
+  [action*="@{ACCESS_KEY}"] input.txt,
+  [action*="@{ACCESS_KEY}"] textarea.txt {border-color:transparent; outline:none;}
+  [action*="@{ACCESS_KEY}"] input[type=submit],
+  [action*="@{ACCESS_KEY}"] .com-uploader-btn,
+  [action*="@{ACCESS_KEY}"] .batch-uploader-delete-btn,
+  [action*="@{ACCESS_KEY}"] .batch-uploader-add-new,
+  [action*="@{ACCESS_KEY}"] .com-uploader-file,
+  [action*="@{ACCESS_KEY}"] button[type=submit] {display:none}
+  [action*="@{ACCESS_KEY}"] .batch-uploader,
+  [action*="@{ACCESS_KEY}"].batch-uploader {background-color:transparent;}
+  [action*="@{ACCESS_KEY}"] .batch-uploader li,
+  [action*="@{ACCESS_KEY}"].batch-uploader li {border-color:transparent; background-color:transparent; height:100px;}
+
+  /** readonly **/
+  @{readonly-class} .com-uploader-btn,
+  @{readonly-class} .batch-uploader-delete-btn,
+  @{readonly-class} .batch-uploader-add-new,
+  @{readonly-class} .com-uploader-file,
+  @{readonly-class} .small-add-btn,
+  @{readonly-class} .small-delete-btn,
+  @{readonly-class} .batch-uploader,
+  @{readonly-class}.batch-uploader {background-color:transparent;}
+  @{readonly-class} .batch-uploader li,
+  @{readonly-class}.batch-uploader li {border-color:transparent; background-color:transparent; height:100px; margin:0; padding:0;}
+  @{readonly-class} .date-txt,
+  @{readonly-class} .date-time-txt {background-image:none;}
+  @{readonly-class} [type=submit],
+  @{readonly-class} [type=reset] {display:none;}
+}
+/***
+ * ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
+ * │Esc│   │ F1│ F2│ F3│ F4│ │ F5│ F6│ F7│ F8│ │ F9│F10│F11│F12│ │P/S│S L│P/B│  ┌┐    ┌┐    ┌┐
+ * └───┘   └───┴───┴───┴───┘ └───┴───┴───┴───┘ └───┴───┴───┴───┘ └───┴───┴───┘  └┘    └┘    └┘
+ * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐ ┌───┬───┬───┐ ┌───┬───┬───┬───┐
+ * │~ `│! 1│@ 2│# 3│$ 4│% 5│^ 6│& 7│* 8│( 9│) 0│_ -│+ =│ BacSp │ │Ins│Hom│PUp│ │N L│ / │ * │ - │
+ * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┤ ├───┼───┼───┤ ├───┼───┼───┼───┤
+ * │ Tab │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │{ [│} ]│ | \ │ │Del│End│PDn│ │ 7 │ 8 │ 9 │   │
+ * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤ └───┴───┴───┘ ├───┼───┼───┤ + │
+ * │ Caps │ A │ S │ D │ F │ G │ H │ J │ K │ L │: ;│" '│ Enter  │               │ 4 │ 5 │ 6 │   │
+ * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────────┤     ┌───┐     ├───┼───┼───┼───┤
+ * │ Shift  │ Z │ X │ C │ V │ B │ N │ M │< ,│> .│? /│  Shift   │     │ ↑ │     │ 1 │ 2 │ 3 │   │
+ * ├─────┬──┴─┬─┴──┬┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┬────┤ ┌───┼───┼───┐ ├───┴───┼───┤ E││
+ * │ Ctrl│    │Alt │         Space         │ Alt│    │    │Ctrl│ │ ← │ ↓ │ → │ │   0   │ . │←─┘│
+ * └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
+ */
