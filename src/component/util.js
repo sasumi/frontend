@@ -718,7 +718,7 @@ define('ywj/util', function(require){
 		pregQuote: pregQuote,
 		resetNode: resetNode,
 		cutString: cutString,
-		explore: explode,
+		explode: explode,
 		fixCheckboxRequired: fix_checkbox_required,
 		setNodeSelectDisabled: setNodeSelectDisabled,
 		isEmptyObject: isEmptyObject,
