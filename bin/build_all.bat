@@ -20,4 +20,3 @@ java -jar closure-compiler.jar ^
 	--compilation_level BUNDLE
 
 echo Done
-pause
