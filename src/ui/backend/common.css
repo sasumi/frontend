@@ -225,7 +225,7 @@ select[placeholder] option[value=''] {color:gray;}
 select[disabled] {border:1px solid #ddd; border-left-color:#ccc; border-top-color:#ccc; background-image:none;}
 select[readonly],
 .readonly select {border-color:transparent; -webkit-appearance:none; background-image:none;}
-select[readonly][disabled] {color:inherit}
+select[readonly][disabled] {color:inherit; background-color:transparent}
 
 /** checkbox, radio disabled + readonly **/
 input[type=checkbox][disabled],
