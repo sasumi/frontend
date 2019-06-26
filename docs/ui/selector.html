@@ -22,15 +22,13 @@
 	<link rel="stylesheet" href="../../src/vendor/awesome/css/font-awesome.min.css">
 </head>
 <body>
-<div class="caption">选择</div>
+<h1>选择</h1>
 <select name="">
 	<option value="">请选择</option>
 	<option value="1">选项1</option>
 	<option value="3">选项3选项3选项3</option>
 	<option value="2">选项2</option>
 </select>
-
-<input type="text" name="" id="" placeholder="旁边有输入框对比">
 
 <hr>
 
@@ -42,9 +40,10 @@
 	<option value="2">选项2</option>
 </select>
 
-
 <h2>Readonly</h2>
-<select name="" readonly>
+<p>Select Readonly 需要配合disabled 才能禁止用户选择。</p>
+
+<select name="" readonly disabled>
 	<option value="">请选择</option>
 	<option value="1" selected>选项1</option>
 	<option value="3">选项3选项3选项3</option>
@@ -62,8 +61,6 @@
 	<option value="2">选项2</option>
 </select>
 
-<input type="text" name="">
-
 <div class="caption">checkbox & radio</div>
 <p>
 	<input type="checkbox" name="c1" id="c1">
@@ -75,19 +72,13 @@
 		<input type="checkbox" name="">
 		Label Out side
 	</label>
-
 <hr>
-	<div>Label Out side Radio</div>
-	<label>
-		<input type="radio" name="r1">Yes
-	</label>
-	<label>
-		<input type="radio" name="r1">No
-	</label>
-
-</p>
-
-<input type="button" value="button">
-<input type="reset" value="Reset">
+<div>Label Out side Radio</div>
+<label>
+	<input type="radio" name="r1" checked>Yes
+</label>
+<label>
+	<input type="radio" name="r1" disabled readonly>No
+</label>
 </body>
 </html>

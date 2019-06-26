@@ -9,6 +9,8 @@
 		.nowrap();
 		.center();
 		.cube-border(@border-color);
+		.no-decoration();
+
 		color: @button-text-color;
 		background:linear-gradient(@linear-color-light, @linear-color-dark);
 		border-radius:@border-radius;
@@ -19,14 +21,23 @@
 		user-select:none;
 		box-sizing:border-box;
 		min-width:6em;
-
 		transition: box-shadow 0.30s ease-in-out;
-		&:focus, &:hover { box-shadow:0 0 10px #cccccc; }
-		&:active { background:linear-gradient(@linear-color-dark, @linear-color-light); }
 
-		&[disabled],
-		&.disabled {
-			.disabled();
+		&^[disabled]:focus,
+		&^[disabled]:hover {
+			box-shadow:0 0 10px #cccccc;
+		}
+		&:active {
+			background:linear-gradient(@linear-color-dark, @linear-color-light);
+		}
+
+		&[disabled] {
+			color: @disabled-color !important;
+			.cube-border(lighten(@border-color, 10%));
+			background:linear-gradient(@linear-color-light, @linear-color-dark);
+			box-shadow:none;
+			text-shadow:1px 1px 1px white;
+			outline:none;
 		}
 	}
 
@@ -36,34 +47,18 @@
 
 	.weaker() {
 		color: lighten(@button-text-color, 40%);
-		.cube-border(lighten(@border-color, 10%));
-	}
-
-	.disabled(){
-		color: @disabled-color;
-		.cube-border(lighten(@border-color, 10%));
-		box-shadow:none;
-		&:focus, &:hover {box-shadow:none;}
-		text-shadow:1px 1px 1px white;
+		.cube-border(lighten(@border-color, 5%));
 	}
 
 	.button, [type=button], button {
 		.normal;
 	}
 
-	a.button {
+	body a.button {
+		cursor:default !important;
 		color:@button-text-color;
 		&:hover {
 			color:@button-text-color;
-			text-decoration:none;
-			cursor:default;
-		}
-		&[disabled] {
-			&:hover, &:active, &:focus{
-				.disabled();
-				color:@disabled-color;
-				outline:none;
-			}
 		}
 	}
 

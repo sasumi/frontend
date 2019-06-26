@@ -1,8 +1,11 @@
 @charset "UTF-8";
 @import (once) "global";
+@import (once) "text";
 @{ywj-scope} {
 	//form & layout table
-	legend:extend(.caption all) {}
+	legend {
+		.caption;
+	}
 	form > fieldset {margin-top:0; border:none;}
 	fieldset ~ fieldset {margin-top:1.5em;}
 	

@@ -1,4 +1,5 @@
 @import (once) "define";
+@import (once) "reset";
 
 //inner style
 .nowrap() { white-space:nowrap; }
@@ -34,6 +35,14 @@
 	border-top-color:darken(@border-color, 20%);
 	border-left-color:darken(@border-color, 20%);
 }
+
+.no-decoration() {
+	text-decoration:none;
+	&:hover {
+		text-decoration:none;
+	}
+}
+
 .clear-fix {
 	&:after { content:""; display:block; clear:both; }
 }

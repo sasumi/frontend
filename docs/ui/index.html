@@ -24,11 +24,15 @@
 
 	<style>
 		html, body {height:100%; box-sizing:border-box; overflow:hidden;}
-		[name=sub-page] {width:100%; border:none; height:calc(100% - 50px); margin-top:1em;}
+		.ywj-ui body {display:flex; padding:0;}
+		#nav {flex:1; max-width:250px; box-sizing:border-box; padding-top:1em; background-color:#eee; border-right:1px solid #ccc;}
+		#nav a {padding:0.5em 1em; display:block;}
+		#nav li {border-bottom:1px solid #ccc;}
+		[name=sub-page] {flex:1; border:none; }
 	</style>
 </head>
 <body>
-	<ul class="tab">
+	<ul class="list" id="nav">
 		<li><a target="sub-page" href="text.html">文本</a></li>
 		<li><a href="list.html">列表</a></li>
 		<li><a href="button.html">按钮</a></li>
@@ -42,17 +46,21 @@
 	</iframe>
 
 	<script>
-		var tab_links = document.querySelectorAll('.tab a');
+		var tab_links = document.querySelectorAll('#nav a');
+		var lis = document.querySelectorAll('#nav li');
+
 		for(var i=0; i<tab_links.length; i++){
 			tab_links[i].addEventListener('click', function(){
 				location.hash = '#'+this.getAttribute('href');
-
-				var lis = document.querySelectorAll('.tab li');
 				for(var j=0; j<lis.length; j++){
 					lis[j].classList.remove('active');
 				}
 				this.parentNode.classList.add('active');
 			}, true);
+		}
+
+		if(!location.hash){
+			location.hash = '#text.html';
 		}
 
 		if(location.hash){
