@@ -20,6 +20,30 @@ define('ywj/util', function(require){
 		return false;
 	};
 
+	/**
+	 * 字符切割
+	 * @param string 字符串
+	 * @param delimiter 分隔符
+	 * @param {boolean} clear_empty 是否清除掉空白字符串（默认清除）
+     * @return {Array}
+	 */
+	var explode = function(string, delimiter, clear_empty){
+		clear_empty = clear_empty === undefined ? true : !!clear_empty;
+		var result = [];
+		var item = string.split(delimiter);
+		for(var i in item){
+			if(clear_empty){
+				var val = $.trim(item[i]);
+				if(val.length){
+					result.push(val);
+				}
+			} else {
+				result.push(item[i]);
+			}
+		}
+		return result;
+	};
+
 	var htmlEscape = function(str){
 		return String(str)
 			.replace(/&/g, '&amp;')
@@ -84,7 +108,7 @@ define('ywj/util', function(require){
 	var isInt = function(value){
 		return !isNaN(value) &&
 			parseInt(Number(value)) == value && !isNaN(parseInt(value, 10));
-	}
+	};
 
 	/**
 	 * 判断一个对象是否为一个DOM 或者 BOM
@@ -694,6 +718,7 @@ define('ywj/util', function(require){
 		pregQuote: pregQuote,
 		resetNode: resetNode,
 		cutString: cutString,
+		explore: explode,
 		fixCheckboxRequired: fix_checkbox_required,
 		setNodeSelectDisabled: setNodeSelectDisabled,
 		isEmptyObject: isEmptyObject,
