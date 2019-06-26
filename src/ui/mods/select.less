@@ -1,0 +1,49 @@
+@charset "UTF-8";
+@import (once) "global";
+@{ywj-scope} {
+	//select
+	select {
+		.sink-border(@border-color);
+		border-radius:@border-radius;
+		color:@button-text-color;
+		padding:0.2em 0 0.3em 0;
+		height:2em;
+		width:@form-element-default-width;
+		display:inline-block;
+		box-sizing:border-box;
+		vertical-align:bottom;
+
+		&[disabled]{
+			color: lighten(@fore-color, 40%);
+			border:1px solid #dddddd;
+			text-shadow:1px 1px 1px white;
+			border-left-color:#cccccc;
+			border-top-color:#cccccc;
+		}
+
+		&[readonly], &[readonly][disabled]{
+			border-color:transparent;
+			box-shadow:none;
+			background-color:transparent;
+			-webkit-appearance: none;
+			&::-ms-expand {display: none;}
+		}
+
+		&[multiple] {
+			height:auto;
+		}
+		
+		&[placeholder="valid"] { color:gray; }
+		&[placeholder] option,
+		&[placeholder] optgroup {
+			color:lighten(@fore-color, 20%)
+		}
+		&[placeholder] option[value=''] { color:gray; }
+
+	}
+	
+	[type=checkbox], [type=radio] {
+		margin:0 0.2em;
+		vertical-align:middle;
+	}
+}

@@ -1,0 +1,42 @@
+@charset "UTF-8";
+@import (once) "global";
+@{ywj-scope} {
+	ul, ol {
+		list-style:none;
+	}
+	
+	//.list-circle：圆圈列表
+	//.list-num：数字自增列表
+	//.list-sq：方块列表
+	.list {
+		&-circle,
+		&-dot,
+		&-num,
+		&-sq-hole,
+		&-sq {
+			li {
+				padding-left:1em;
+				&:before {
+					content:"";
+					margin-left:-1em;
+					float:left;
+				}
+			}
+		}
+		
+		&-sq li:before {.square(0.5em, @fore-color);}
+		&-sq-hole li:before {.square-hole(0.5em, @fore-color);}
+		&-circle li:before {.circle(0.5em, @fore-color);}
+		&-dot li:before {.dot(0.5em, @fore-color);}
+		
+		&-num {
+			counter-reset:list-counter;
+			>li {
+				counter-increment:list-counter;
+				&:before {
+					content:counter(list-counter) ".";
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="ywj-ui">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+	<link rel="stylesheet/less" href="../../dist/all.less">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script>
+		less = {
+			env: "development",
+			async: false,
+			fileAsync: false,
+			poll: 1000,
+			functions: {},
+			dumpLineNumbers: "comments",
+			relativeUrls: false,
+			rootpath: ":/a.com/"
+		};
+	</script>
+	<script src="../../dist/less.min.js"></script>
+	<link rel="stylesheet" href="../../src/vendor/awesome/css/font-awesome.min.css">
+</head>
+<body>
+<h1>按钮</h1>
+
+<p>You can set options either programmatically,
+	<input type="button" value="文本中的按钮">
+	by setting them on a less object before the script<br/> tag -
+	this then affects all initial link tags and programmatic usage of less
+</p>
+<p>this then affects all initial link tags and programmatic usage of less</p>
+<input type="submit" value="提交">
+<input type="reset" value="重置">
+<p>this then affects all initial link tags and programmatic usage of less</p>
+
+<table class="table">
+	<caption>按钮</caption>
+	<thead>
+		<tr>
+			<th>类型</th>
+			<th>正常状态</th>
+			<th>禁用状态(:disabled)</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>input:button</td>
+			<td><input type="button" value="我是一只按钮"></td>
+			<td><input type="button" disabled value="是一只按钮"></td>
+		</tr>
+
+		<tr>
+			<td>input:reset</td>
+			<td><input type="reset" value="我是一只按钮"></td>
+			<td><input type="reset" disabled value="是一只按钮"></td>
+		</tr>
+
+		<tr>
+			<td>input:submit</td>
+			<td><input type="submit" value="我是一只按钮"></td>
+			<td><input type="submit" disabled value="是一只按钮"></td>
+		</tr>
+		<tr>
+			<td>button</td>
+			<td><button>我是一只按钮</button></td>
+			<td><button disabled>是一只按钮</button></td>
+		</tr>
+		<tr>
+			<td>a.button</td>
+			<td><a href="" class="button">我是一只按钮</a></td>
+			<td><a href="" class="button" disabled>是一只按钮</a></td>
+		</tr>
+		<tr>
+			<td>span.button</td>
+			<td><span class="button">我是一只按钮</span></td>
+			<td><span class="button" disabled>是一只按钮</span></td>
+		</tr>
+	</tbody>
+</table>
+
+</body>
+</html>

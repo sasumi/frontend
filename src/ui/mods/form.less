@@ -1,0 +1,32 @@
+@charset "UTF-8";
+@import (once) "global";
+@{ywj-scope} {
+	//form & layout table
+	legend:extend(.caption all) {}
+	form > fieldset {margin-top:0; border:none;}
+	fieldset ~ fieldset {margin-top:1.5em;}
+	
+	.form-table {
+		border-collapse:collapse;
+		border-spacing:0;
+		width:100%;
+		margin-bottom:10px;
+		
+		> tbody {
+			> tr {
+				> th,
+				> td.col-label {
+					width:60px; text-align:right; white-space:nowrap; vertical-align:top; padding-top:0.5em; padding-left:1em; text-transform:capitalize; font-weight:normal;
+				}
+				> td {
+					padding:0.4em 1em; min-height:30px;
+				}
+			}
+		}
+	}
+	
+	/** input + .trigger **/
+	.form-table [required] + .trigger:before {content:"*"; color:#ff8794; font-weight:bold; font-size:15px; vertical-align:middle; padding:0 0.25em;}
+	.form-table [required]:focus + .trigger:before {color:red;}
+	.form-table [required]:focus + .trigger {color:gray;}
+}

@@ -1,0 +1,39 @@
+@charset "UTF-8";
+@import (once) "global";
+@{ywj-scope} {
+	//tab 组件 ul.tab>li[class=active]>a
+	.tab {
+		border-bottom:1px solid #cccccc;
+		.clear-fix;
+		> li {
+			float:left;
+			margin:0.5em 0 -1px 0.5em;
+			.center();
+			color:gray;
+			cursor:pointer;
+			> a, > span {
+				min-width:4em;
+				color:gray;
+				background-color:#eeeeee;
+				display:inline-block;
+				border-radius:@border-radius @border-radius 0 0;
+				padding:0.25em 1em;
+				border:1px solid #cccccc;
+				
+				&:hover {
+					background-color:@back-color;
+					color:@fore-color;
+					text-decoration:none;
+				}
+			}
+		}
+		> .active {
+			> a, > span {
+				color:black;
+				text-shadow:1px 1px 1px white;
+				background-color:#ffffff;
+				border-bottom-color:white
+			}
+		}
+	}
+}

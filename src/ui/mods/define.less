@@ -1,0 +1,31 @@
+//ywj global scope
+@global-scope:.ywj-ui;
+
+//ywj ignore scope
+//@todo no support yet
+//@global-ignore-scope: :not(.ywj-ignore);
+//@ywj-scope:@global-scope @global-ignore-scope;
+
+//normal usage scope
+@ywj-scope:@global-scope;
+
+//assert resource path
+@assert-path: "..//src/ui/asset";
+
+//default class name
+@readonly-class: [readonly];
+@disabled-class: [disabled];
+@text-class:.text;
+@active-class:.active;
+@dis-active:.disactive;
+@border-radius: 2px;
+@border-color:#bbb;
+
+//default style
+@root-size:14px;
+@fore-color:#333333;
+@back-color:#ffffff;
+@link-color:#0a82ec;
+@button-text-color:darken(@fore-color, 20%);
+
+@form-element-default-width: 190px;

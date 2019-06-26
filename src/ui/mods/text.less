@@ -1,0 +1,50 @@
+@charset "UTF-8";
+@import (once) "global";
+
+//default class name
+.caption() {
+	font-size:1.4rem;
+	text-align:left;
+	font-weight:normal;
+	margin:0.5em 0 0;
+}
+
+@{ywj-scope} {
+	//title
+	h1, h2, h3, h4, h5, h6 {font-weight:normal; margin:0.5em 0 0;}
+	h1 {font-size:2rem;}
+	h2 {font-size:1.8rem;}
+	h3 {font-size:1.6rem;}
+	h4 {font-size:1.4rem;}
+	h5 {font-size:1.2rem;}
+	h6 {font-size:1rem;}
+	p {margin:0.5em 0;}
+	
+	hr {border:none; border-top:1px solid #cccccc; border-bottom:1px solid #ffffff;}
+
+	.caption {
+		.caption();
+	}
+
+	//link
+	.link {
+		color:@link-color;
+		text-decoration:none;
+		&:hover {
+			cursor:pointer;
+			color:@link-color - #222222;
+			text-decoration:underline;
+		}
+	}
+	
+	a:not([name]) {
+		.link;
+	}
+	
+	.sort {
+		.link;
+		&:after {content:"\f0dc"; font-size:0.8em; font-family:FontAwesome, serif; margin-left:4px; display:inline-block; vertical-align:middle;}
+		&-asc:after {content:"\f0de"; line-height:0; padding-top:5px;}
+		&-desc:after {content:"\f0dd"; line-height:0; padding-top:6px;}
+	}
+}
