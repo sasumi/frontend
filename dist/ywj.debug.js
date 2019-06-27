@@ -10492,14 +10492,23 @@ define('ywj/util', function(require){
 	/**
 	 * 字符切割
 	 * @param string 字符串
-	 * @param delimiter 分隔符
+	 * @param {string} delimiters 分隔符（支持多个）
 	 * @param {boolean} clear_empty 是否清除掉空白字符串（默认清除）
-     * @return {Array}
+	 * @return {Array}
 	 */
-	var explode = function(string, delimiter, clear_empty){
+	var explode = function(string, delimiters, clear_empty){
+		if(!string){
+			return [];
+		}
 		clear_empty = clear_empty === undefined ? true : !!clear_empty;
 		var result = [];
-		var item = string.split(delimiter);
+		var de1 = delimiters[0];
+		if(delimiters.length > 1){
+			for(var i=1; i<delimiters.length; i++){
+				string = string.replace(new RegExp(pregQuote(delimiters[i]), 'g'), de1);
+			}
+		}
+		var item = string.split(de1);
 		for(var i in item){
 			if(clear_empty){
 				var val = $.trim(item[i]);
