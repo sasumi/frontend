@@ -6076,8 +6076,10 @@ define('ywj/net', function(require){
 			},
 			error: function(aj, error){
 				if(aj.statusText === 'abort'){
+					console.log('ajax abort');
 					opt.onAbort();
 				} else {
+					console.error('ajax error:', error, aj);
 					opt.onError(error || aj.statusText || 'Error');
 				}
 			}
