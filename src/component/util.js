@@ -8,7 +8,7 @@ define('ywj/util', function(require){
 	/**
 	 * check item is in array
 	 * @param item
-	 * @param  {array} arr
+	 * @param {Array} arr
 	 * @return {boolean}
 	 */
 	var inArray = function(item, arr){

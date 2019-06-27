@@ -6074,11 +6074,11 @@ define('ywj/net', function(require){
 				}
 				opt.onSuccess(rsp);
 			},
-			error: function(e){
-				if(e.statusText === 'abort'){
+			error: function(aj, error){
+				if(aj.statusText === 'abort'){
 					opt.onAbort();
 				} else {
-					opt.onError(e.statusText || 'Error');
+					opt.onError(error || aj.statusText || 'Error');
 				}
 			}
 		});
@@ -10477,7 +10477,7 @@ define('ywj/util', function(require){
 	/**
 	 * check item is in array
 	 * @param item
-	 * @param  {array} arr
+	 * @param {Array} arr
 	 * @return {boolean}
 	 */
 	var inArray = function(item, arr){
