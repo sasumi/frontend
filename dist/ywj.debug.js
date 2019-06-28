@@ -10978,6 +10978,64 @@ define('ywj/util', function(require){
 		digits = digits === undefined ? 2 : digits;
 		var multiple = Math.pow(10, digits);
 		return Math.round(num * multiple) / multiple;
+	};
+
+	var LOG_KEY = '__local_log__';
+	var LO = window.localStorage;
+
+	/**
+	 * 保存日志到本地存储
+	 * @param message
+	 * @param data
+	 * @param max_count
+	 */
+	var saveLogToLocalStorage = function(message, data, max_count){
+		if(!LO){
+			console.warn('Local storage no support');
+			return;
+		}
+		max_count = max_count || 5000;
+		var save_data = LO[LOG_KEY] ? JSON.parse(LO[LOG_KEY]) : [];
+		if(save_data.length > max_count){
+			save_data.shift();
+		}
+		save_data.push({
+			time:new Date().getTime(), message:message, data:data
+		});
+		LO[LOG_KEY] = JSON.stringify(save_data);
+	};
+
+	/**
+	 * 从本地存储中获取日志
+	 * @param {Number} num 数量，默认为1
+	 * @returns {Array}|{Null}
+	 */
+	var getLogFromLocalStorage = function(num){
+		if(!LO){
+			console.warn('Local storage no support');
+			return null;
+		}
+		num = num || 1;
+		var save_data = LO[LOG_KEY] ? JSON.parse(LO[LOG_KEY]) : [];
+		if(save_data.length){
+			return save_data.slice(-num, num);
+		}
+		return [];
+	};
+
+	var printStorageLog = function(num){
+		var logs = getLogFromLocalStorage(num);
+		for(var i=0; i<logs.length; i++){
+			var ts = logs[i][0];
+			var message = logs[i][1];
+			var data = logs[i][2];
+			var time = (new Date(ts*1000)).toUTCString();
+		}
+		console.info('Log from localStorage:', time, message, data);
+	};
+
+	if(!window['printStorageLog']){
+		window['printStorageLog'] = printStorageLog;
 	}
 
 	/**
@@ -11183,7 +11241,7 @@ define('ywj/util', function(require){
 		selectorEscape: selectorEscape,
 		htmlUnescape: htmlUnescape,
 		rectInLayout: rectInLayout,
-		rectAssoc:rectAssoc,
+		rectAssoc: rectAssoc,
 		pregQuote: pregQuote,
 		resetNode: resetNode,
 		cutString: cutString,
@@ -11200,9 +11258,12 @@ define('ywj/util', function(require){
 		isString: isString,
 		accessObject: accessObject,
 		getU8StrLen: getU8StrLen,
+		getLogFromLocalStorage: getLogFromLocalStorage,
+		saveLogToLocalStorage: saveLogToLocalStorage,
+		printStorageLog: printStorageLog,
 		guid: guid,
 		copy: copy,
-		copyFormatted:copyFormatted,
+		copyFormatted: copyFormatted,
 		resolveExt: resolve_ext,
 		resolveFileName: resolve_file_name,
 		findParent: findParent,

@@ -1,16 +1,22 @@
 @charset "UTF-8";
 @import (once) "global";
+
+@popup-menu:.popup-menu;
+
 .popup-menu() {
 	position:absolute;
 	background-color:@back-color;
 	min-width:120px;
-	padding:0.25em 0;
+	padding:0.25em 3px;
 	border-radius:@border-radius;
 	box-sizing:border-box;
-	box-shadow:1px 1px 10px fade(@fore-color, 20%);
+	box-shadow:3px 3px 10px fade(@fore-color, 20%);
 	border:1px solid lighten(@button-border-color, 20%);
 
-	> li, > a, > span {
+	//menu 支持 div>a，div>span，ul>li>a 三种结构体
+	> li > a,
+	> a,
+	> span {
 		display:block;
 		color:@fore-color;
 		text-decoration:none;
@@ -21,13 +27,14 @@
 		}
 	}
 }
+
 @{ywj-scope} {
 	@menu-bar:.menu-bar;
 	@menu-item-color:@fore-color;
 	@menu-item-min-width:0;
-	@popup-menu:.popup-menu;
 
 	@{menu-bar} {
+		.clear-fix;
 		> li {
 			float:left;
 			color:@menu-item-color;

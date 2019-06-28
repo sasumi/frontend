@@ -509,7 +509,84 @@ define('ywj/util', function(require){
 		digits = digits === undefined ? 2 : digits;
 		var multiple = Math.pow(10, digits);
 		return Math.round(num * multiple) / multiple;
+	};
+
+	var LOG_KEY = '__local_log__';
+	var LO = window.localStorage;
+
+	/**
+	 * 保存日志到本地存储
+	 * @param message
+	 * @param data
+	 * @param max_count
+	 */
+	var saveLogToLocalStorage = function(message, data, max_count){
+		if(!LO){
+			console.warn('Local storage no support');
+			return;
+		}
+		max_count = max_count || 1000;
+		var save_data = LO[LOG_KEY] ? JSON.parse(LO[LOG_KEY]) : [];
+		if(save_data.length > max_count){
+			save_data.shift();
+		}
+		save_data.push({
+			uuid: uuidv4(),
+			time: new Date().getTime(),
+			message: message,
+			data: data
+		});
+		LO[LOG_KEY] = JSON.stringify(save_data);
+	};
+
+	/**
+	 * 从本地存储中获取日志
+	 * @param {Number} num 数量，默认为1
+	 * @returns {Array}|{Null}
+	 */
+	var getLogFromLocalStorage = function(num){
+		if(!LO){
+			console.warn('Local storage no support');
+			return null;
+		}
+		num = num || 1;
+		var save_data = LO[LOG_KEY] ? JSON.parse(LO[LOG_KEY]) : [];
+		if(save_data.length){
+			return save_data.slice(-num, num);
+		}
+		return [];
+	};
+
+	/**
+	 * 打印日志
+	 * @param num
+	 */
+	var printStorageLog = function(num){
+		var logs = getLogFromLocalStorage(num);
+		for(var i=0; i<logs.length; i++){
+			var log = logs[i];
+			var time = (new Date(log.time*1000)).toUTCString();
+			console.info('Log from localStorage:', time, log.message, log.data, log.uuid);
+		}
+	};
+
+	if(!window['printStorageLog']){
+		window['printStorageLog'] = printStorageLog;
 	}
+
+	var tailfStorageLogStop = function(){
+
+	};
+
+	var tailfStorageLog = function(check_interval){
+
+
+		check_interval = check_interval || 1000;
+
+		setTimeout(function(){
+			tailfStorageLog(check_interval);
+		}, check_interval);
+	};
 
 	/**
 	 * 获取指定容器下的表单元素的值
@@ -679,6 +756,17 @@ define('ywj/util', function(require){
 		return '_ywj_guid_' + (++__guid);
 	};
 
+	/**
+	 * UUID version 4
+	 * @returns {string}
+	 */
+	var uuidv4 = function(){
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
+	};
+
 	return {
 		isMobile: isMobile,
 		KEYS: {
@@ -714,7 +802,7 @@ define('ywj/util', function(require){
 		selectorEscape: selectorEscape,
 		htmlUnescape: htmlUnescape,
 		rectInLayout: rectInLayout,
-		rectAssoc:rectAssoc,
+		rectAssoc: rectAssoc,
 		pregQuote: pregQuote,
 		resetNode: resetNode,
 		cutString: cutString,
@@ -731,9 +819,13 @@ define('ywj/util', function(require){
 		isString: isString,
 		accessObject: accessObject,
 		getU8StrLen: getU8StrLen,
+		getLogFromLocalStorage: getLogFromLocalStorage,
+		saveLogToLocalStorage: saveLogToLocalStorage,
+		printStorageLog: printStorageLog,
 		guid: guid,
+		uuidv4: uuidv4,
 		copy: copy,
-		copyFormatted:copyFormatted,
+		copyFormatted: copyFormatted,
 		resolveExt: resolve_ext,
 		resolveFileName: resolve_file_name,
 		findParent: findParent,
