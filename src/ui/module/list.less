@@ -1,6 +1,8 @@
 @charset "UTF-8";
 @import (once) "global";
 @{ywj-scope} {
+	@list-class-prefix: .list;
+	
 	ul, ol {
 		list-style:none;
 	}
@@ -8,7 +10,7 @@
 	//.list-circle：圆圈列表
 	//.list-num：数字自增列表
 	//.list-sq：方块列表
-	.list {
+	@{list-class-prefix} {
 		&-circle,
 		&-dot,
 		&-num,
