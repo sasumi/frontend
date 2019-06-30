@@ -1,12 +1,29 @@
 @charset "UTF-8";
 @import (once) "global";
 @{ywj-scope} {
-  .pagination {margin:1rem 0; color:#cccccc; text-align:right; display:block;}
-  .pagination .page_num {color:gray;}
-  .pagination-0 { visibility:hidden;}
-  .pagination em,
-  .pagination span,
-  .pagination a {display:inline-block; padding:0 7px; font-style:normal}
-  .pagination a:hover {background-color:#00aeff; color:white;}
-  .pagination .active {}
+	@pagination-class:.pagination;
+	@pagination-num-class:.pagination-num;
+	
+	@{pagination-class} {
+		margin:1rem 0;
+		color:#cccccc;
+		display:block;
+		
+		@{pagination-num-class} {color:gray;}
+		&-0 {
+			visibility:hidden;
+		}
+		
+		em,
+		span,
+		a {
+			display:inline-block;
+			padding:0 7px;
+			font-style:normal;
+			&:hover {
+				background-color:darken(@back-color, 10%);
+				color:darken(@fore-color, 20%);
+			}
+		}
+	}
 }

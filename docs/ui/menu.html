@@ -27,17 +27,129 @@
 			<a href="">文件</a>
 			<ul>
 				<li><a href="">新建</a></li>
-				<li><a href="">编辑</a></li>
 				<li><a href="">保存</a></li>
 				<li class="separator"></li>
 				<li><a href="">退出</a></li>
 			</ul>
 		</li>
-		<li><a href="">菜单项2</a></li>
-		<li><a href="">菜单项3</a></li>
-		<li><a href="">菜单项4</a></li>
+		<li>
+			<a href="">多级子菜单</a>
+			<ul>
+				<li><a href="">撤销</a></li>
+				<li><a href="" disabled>重做</a></li>
+				<li class="separator"></li>
+				<li>
+					<a href="">查看</a>
+					<ul>
+						<li><a href="">工具栏</a></li>
+						<li><a href="">状态栏</a></li>
+						<li><a href="">打印预览</a></li>
+						<li class="separator"></li>
+						<li>
+							<a href="">布局</a>
+							<ul>
+								<li><a href="">两栏模式</a></li>
+								<li><a href="">三栏模式</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="">选项</a>
+							<ul>
+								<li><a href="">自由布局</a></li>
+								<li><a href="">自由布局</a></li>
+								<li><a href="">自由布局</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li><a href="">退出</a></li>
+			</ul>
+		</li>
+		<li>
+			<span>SPAN项目</span>
+			<ul>
+				<li disabled><a href="">禁用</a></li>
+				<li><a href="">启用</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="">菜单项4</a>
+			<ul>
+				<li><a href="">工具栏</a></li>
+				<li><a href="">状态栏</a></li>
+				<li><a href="">打印预览</a></li>
+				<li class="separator"></li>
+				<li disabled="">
+					<a href="">子菜单禁用</a>
+					<ul>
+						<li><a href="">两栏模式</a></li>
+						<li><a href="">三栏模式</a></li>
+					</ul>
+				</li>
+			</ul>
+		</li>
 		<li><a href="">菜单项5</a></li>
 	</ul>
 	<p style="background-color:green; color:white;">绿色背景防遮罩测试。</p>
+
+	<div id="ctx">
+		右键菜单，<br/>
+		在这里点鼠标邮件
+	</div>
+
+	<ul class="popup-menu" id="ctx-menu" style="display:none;">
+		<li><a href="">复制</a></li>
+		<li disabled><a href="">粘贴</a></li>
+		<li class="separator"></li>
+		<li><a href="">查看</a></li>
+	</ul>
+
+	<br/><br/><br/><br/><br/><br/><br/>
+	<div class="caption">面板菜单 - PopupMenu</div>
+
+	<ul class="popup-menu" >
+		<li>
+			<span>查看</span>
+			<ul>
+				<li><a href="">大图标</a></li>
+				<li><a href="">中等图标</a></li>
+				<li><a href="">小图标</a></li>
+				<li class="separator"></li>
+				<li><a href="">自动排列图标</a></li>
+			</ul>
+		</li>
+		<li><a href="">刷新</a></li>
+		<li class="separator"></li>
+		<li disabled><a href="">粘贴</a></li>
+		<li class="separator"></li>
+		<li>
+			<a href="">新建</a>
+			<ul>
+				<li><a href="">文件夹</a></li>
+				<li class="separator"></li>
+				<li>
+					<span>文件</span>
+					<ul>
+						<li><a href="">文本文件</a></li>
+						<li><a href="">Word文档</a></li>
+						<li><a href="">Excel文档</a></li>
+						<li><a href="">PowerPoint文档</a></li>
+						<li disabled=""><span>MindMap</span></li>
+					</ul>
+				</li>
+				<li class="separator"></li>
+				<li><a href="">OneNote文档</a></li>
+			</ul>
+		</li>
+		<li><a href="">文件夹属性</a></li>
+	</ul>
+
+	<script>
+		document.getElementById('ctx').addEventListener('contextmenu', function(e){
+			document.getElementById('ctx-menu').style.display = 'block';
+			e.preventDefault();
+			return false;
+		}, false);
+	</script>
 </body>
 </html>

@@ -2,34 +2,102 @@
 @import (once) "global";
 @import (once) "text";
 @{ywj-scope} {
-	//form & layout table
-	legend {
-		.caption;
-	}
-	form > fieldset {margin-top:0; border:none;}
-	fieldset ~ fieldset {margin-top:1.5em;}
+	@form:.form;
+	@form-table:.form-table;
+	@form-table-button-row:.form-button-row;
+	@form-table-vertical-tile:.form-table-vertical-tile;
+	@form-table-vertical-tile-fixed:.form-table-vertical-tile-fixed;
 	
-	.form-table {
+	//form & layout table
+	@{form} {
+		legend {
+			.caption;
+			padding:0;
+			width:100%;
+			display:block;
+			margin-bottom:0.5em;
+		}
+		> fieldset {
+			margin-top:0;
+			border:none;
+		}
+		fieldset ~ fieldset {margin-top:1.5em;}
+	}
+	
+	@{form-table} {
 		border-collapse:collapse;
 		border-spacing:0;
 		width:100%;
 		margin-bottom:10px;
-		
+		caption {
+			.caption();
+		}
 		> tbody {
 			> tr {
-				> th,
-				> td.col-label {
-					width:60px; text-align:right; white-space:nowrap; vertical-align:top; padding-top:0.5em; padding-left:1em; text-transform:capitalize; font-weight:normal;
+				> th {
+					width:60px;
+					white-space:nowrap;
+					vertical-align:top;
+					padding:0.5em 0 0 0.5em;
+					font-weight:normal;
 				}
 				> td {
 					padding:0.4em 1em; min-height:30px;
 				}
+				&:nth-child(even) {
+					background-color:darken(@back-color, 2%);
+				}
+			}
+			> @{form-table-button-row}:nth-child(even) {
+				background-color:transparent;
 			}
 		}
 	}
 	
-	/** input + .trigger **/
-	.form-table [required] + .trigger:before {content:"*"; color:#ff8794; font-weight:bold; font-size:15px; vertical-align:middle; padding:0 0.25em;}
-	.form-table [required]:focus + .trigger:before {color:red;}
-	.form-table [required]:focus + .trigger {color:gray;}
+	@{form-table-vertical-tile},
+	@{form-table-vertical-tile-fixed} {
+		border-collapse:collapse;
+		border-spacing:0;
+		width:100%;
+		margin-bottom:10px;
+		caption {
+			.caption();
+		}
+		
+		> tbody,
+		> tbody > tr,
+		> tbody > tr > th,
+		> tbody > tr > td {
+			display:block;
+		}
+		
+		> tbody > tr > th {
+			font-weight:bold;
+		}
+		
+		> tbody > tr > th,
+		> tbody > tr > td {
+			padding:0.1em 0;
+		}
+		
+		> tbody > tr {
+			padding:0.5em 0;
+			
+			&:nth-child(even) {
+				background-color:darken(@back-color, 2%);
+			}
+		}
+	}
+	
+	@{form-table-vertical-tile-fixed} {
+		input[type=text],
+		input[type=password],
+		select,
+		textarea,
+		[type=submit],
+		[type=reset] {width:100%;}
+		
+		[type=submit],
+		[type=reset] {padding:0.75em 0; height:auto; margin-bottom:0.5em;}
+	}
 }

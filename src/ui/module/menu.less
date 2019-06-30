@@ -1,45 +1,119 @@
 @charset "UTF-8";
 @import (once) "global";
-
 @popup-menu:.popup-menu;
+@menu-min-width:120px;
+@menu-padding:0.25em 3px;
+
+.hide-sub-menu() {
+	border:none;
+	box-shadow:none;
+	padding:0;
+	> li {display:none;}
+}
+
+.show-sub-menu() {
+	padding:@menu-padding;
+	box-shadow:3px 3px 10px fade(@fore-color, 20%);
+	border:1px solid lighten(@button-border-color, 20%);
+	> li {display:block;}
+}
 
 .popup-menu() {
 	position:absolute;
+	z-index:1;
 	background-color:@back-color;
-	min-width:120px;
-	padding:0.25em 3px;
+	min-width:@menu-min-width;
+	padding:@menu-padding;
 	border-radius:@border-radius;
 	box-sizing:border-box;
 	box-shadow:3px 3px 10px fade(@fore-color, 20%);
 	border:1px solid lighten(@button-border-color, 20%);
-
-	//menu 支持 div>a，div>span，ul>li>a 三种结构体
+	
+	li {position:relative;}
+	
+	//menu 支持 ul>li>a，ul>li>a 两种结构体
 	> li > a,
-	> a,
-	> span {
+	> li > span {
 		display:block;
 		color:@fore-color;
+		cursor:default;
 		text-decoration:none;
+		white-space:nowrap;
 		padding:0.25em 1em;
-		&:hover {
+		&:not([disabled]):hover {
 			text-shadow:1px 1px 1px white;
 			background-color:darken(@back-color, 5%);
 		}
 	}
+	
+	*[disabled] span:hover,
+	*[disabled] a:hover {
+		background-color:transparent !important;
+	}
+	*[disabled] span,
+	span[disabled] {
+		color:lighten(@fore-color, 50%) !important;
+	}
+	
+	li ul {
+		left: 100%;
+		top: 0;
+		.hide-sub-menu();
+		&:before {
+			.triangle-right();
+		}
+	}
+	
+	li:hover>ul {
+		&:before {
+			margin:0.35em 0 0 -1.3em; //fixed position
+		}
+		.show-sub-menu();
+	}
+}
+
+.triangle-right(@color: gray;){
+	content:"";
+	width:0;
+	height:0;
+	display:block;
+	position:absolute;
+	margin:0.7em 0 0 -1em;
+	border:4px solid transparent;
+	border-left-color:@color;
 }
 
 @{ywj-scope} {
 	@menu-bar:.menu-bar;
+	@popup-menu-class: .popup-menu;
 	@menu-item-color:@fore-color;
 	@menu-item-min-width:0;
-
+	
+	@{popup-menu-class} {
+		.popup-menu();
+	}
+	@{popup-menu-class} ul {
+		.popup-menu();
+	}
+	
+	.dropdown @{popup-menu-class},
+	.dropdown-right @{popup-menu-class}{
+		position:relative;
+		background-color:transparent;
+		padding:0;
+		box-shadow:none;
+		border:none;
+	}
+	
 	@{menu-bar} {
 		.clear-fix;
 		> li {
 			float:left;
 			color:@menu-item-color;
+			position:relative;
 			> span,
 			> a {
+				cursor:default;
 				min-width:@menu-item-min-width;
 				display:inline-block;
 				text-align:center;
@@ -56,12 +130,19 @@
 			&:last-child:after {
 				display:none;
 			}
+			
+			//一级菜单显示（通过display属性控制）
+			&:hover > ul {display:block;}
+			
+			//一级菜单样式
 			> ul {
 				display:none;
 				.popup-menu();
-			}
-			&:hover {
-				>ul {display:block;}
+				
+				//多级菜单
+				ul {
+					.popup-menu();
+				}
 			}
 		}
 	}

@@ -31,7 +31,7 @@
 		.separator();
 	}
 	hr {
-		height:1px;
+		height:0;
 		border:none;
 		.separator;
 	}
@@ -44,7 +44,7 @@
 	.link {
 		.no-decoration;
 		color:@link-color;
-		&:hover {
+		&:not([disabled]):hover {
 			cursor:pointer;
 			color:@link-color - #222222;
 		}
@@ -52,6 +52,14 @@
 	
 	a:not([name]) {
 		.link;
+	}
+	
+	*[disabled] a:not([name]),
+	a[disabled],
+	.link[disabled],
+	*[disabled] .link{
+		color:lighten(@fore-color, 50%) !important;
+		cursor:default !important;
 	}
 	
 	.sort {

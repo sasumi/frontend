@@ -22,40 +22,131 @@
 	<link rel="stylesheet" href="../../src/vendor/awesome/css/font-awesome.min.css">
 </head>
 <body>
-
 <form action="" class="form">
-	<fieldset>
-		<legend>表单标题</legend>
-		<p>
-			<label>姓名：</label>
-			<input type="text" name="name" id="">
-		</p>
-		<p>
-			<label>性别：</label>
-			<label><input type="radio" name="gender" id=""> 男</label>
-			<label><input type="radio" name="gender" id=""> 女</label>
-		</p>
-		<p>
-			<label>分组：</label>
-			<select name="" id="">
-				<option value="">请选择分组</option>
-				<option value="">分组1</option>
-			</select>
-		</p>
-		<p>
-			<label for="">备注：</label>
-			<textarea name="" id="" cols="50" rows="5"></textarea>
-		</p>
-		<p>
-			<label for="">备注2：</label>
-			<textarea name="" id=""></textarea>
-		</p>
-	</fieldset>
-	<fieldset class="form-button-wrap">
-		<input type="submit" value="Submit">
-		<input type="reset" value="Reset">
-	</fieldset>
+	<table class="form-table">
+		<caption>双列表单表格</caption>
+		<tr>
+			<th><label>姓名</label></th>
+			<td>
+				<input type="text" name="name">
+			</td>
+		</tr>
+		<tr>
+			<th><label>性别</label></th>
+			<td>
+				<label><input type="radio" name="gender"> 男</label>
+				<label><input type="radio" name="gender"> 女</label>
+			</td>
+		</tr>
+		<tr>
+			<th><label>用户分组</label></th>
+			<td>
+				<select>
+					<option value="">请选择分组</option>
+					<option value="">分组1</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th><label>备注</label></th>
+			<td>
+				<textarea cols="50" rows="5"></textarea>
+			</td>
+		</tr>
+		<tr class="form-button-row">
+			<th></th>
+			<td>
+				<input type="submit" value="Submit">
+				<input type="reset" value="Reset">
+			</td>
+		</tr>
+	</table>
 </form>
 
+<hr>
+
+<form action="" class="form">
+	<table class="form-table-vertical-tile">
+		<caption>单列表单表格</caption>
+		<tr>
+			<th><label>姓名</label></th>
+			<td>
+				<input type="text" name="name">
+			</td>
+		</tr>
+		<tr>
+			<th><label>性别</label></th>
+			<td>
+				<label><input type="radio" name="gender"> 男</label>
+				<label><input type="radio" name="gender"> 女</label>
+			</td>
+		</tr>
+		<tr>
+			<th><label>用户分组</label></th>
+			<td>
+				<select>
+					<option value="">请选择分组</option>
+					<option value="">分组1</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th><label>备注</label></th>
+			<td>
+				<textarea cols="50" rows="5"></textarea>
+			</td>
+		</tr>
+		<tr class="form-button-row">
+			<th></th>
+			<td>
+				<input type="submit" value="Submit">
+				<input type="reset" value="Reset">
+			</td>
+		</tr>
+	</table>
+</form>
+
+<hr>
+
+<form action="" class="form">
+	<table class="form-table-vertical-tile-fixed">
+		<caption>单列表单表格 - 固定宽度</caption>
+		<tr>
+			<th><label>姓名</label></th>
+			<td>
+				<input type="text" name="name">
+			</td>
+		</tr>
+		<tr>
+			<th><label>性别</label></th>
+			<td>
+				<label><input type="radio" name="gender"> 男</label>
+				<label><input type="radio" name="gender"> 女</label>
+			</td>
+		</tr>
+		<tr>
+			<th><label>用户分组</label></th>
+			<td>
+				<select>
+					<option value="">请选择分组</option>
+					<option value="">分组1</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th><label>备注</label></th>
+			<td>
+				<textarea cols="50" rows="5"></textarea>
+			</td>
+		</tr>
+		<tr class="form-button-row">
+			<th></th>
+			<td>
+				<input type="submit" value="保存数据">
+				<input type="reset" value="重置表单">
+			</td>
+		</tr>
+	</table>
+</form>
 </body>
 </html>

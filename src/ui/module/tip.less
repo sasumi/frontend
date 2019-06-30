@@ -1,0 +1,23 @@
+@charset "UTF-8";
+@import (once) "global";
+@{ywj-scope} {
+	@tip-class: .tip;
+	
+	@{tip-class} {
+		position:relative;
+		
+		&:after {
+			display:none;
+			content:attr(data-tip);
+			position:absolute;
+			left:0;
+			top: 100%;
+			padding:1em;
+			border:1px solid darken(@back-color, 10%);
+			box-shadow:1px 1px 10px darken(@back-color, 5%)
+		}
+		&:hover:after {
+			display:inline-block;
+		}
+	}
+}
