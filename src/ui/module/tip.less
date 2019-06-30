@@ -8,8 +8,9 @@
 		
 		&:after {
 			display:none;
-			content:attr(data-tip);
+			content:"&#9650" attr(data-tip);
 			position:absolute;
+			border-radius:@border-radius;
 			left:0;
 			top: 100%;
 			padding:1em;
