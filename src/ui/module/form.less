@@ -7,6 +7,7 @@
 	@form-table-button-row:.form-button-row;
 	@form-table-vertical-tile:.form-table-vertical-tile;
 	@form-table-vertical-tile-fixed:.form-table-vertical-tile-fixed;
+	@form-search-list: .form-search-list;
 	
 	//form & layout table
 	@{form} {
@@ -99,5 +100,17 @@
 		
 		[type=submit],
 		[type=reset] {padding:0.75em 0; height:auto; margin-bottom:0.5em;}
+	}
+
+	@{form-search-list} {
+		display:inline;
+		>li {
+			display:inline-block;
+			margin-right:1em;
+			padding:0.25em 0;
+			&:last-child {
+				margin-right:0.5em;
+			}
+		}
 	}
 }

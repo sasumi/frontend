@@ -20,13 +20,53 @@
 	</script>
 	<script src="../../dist/less.min.js"></script>
 	<link rel="stylesheet" href="../../src/vendor/awesome/css/font-awesome.min.css">
-	<style>
-		.phone-frame {width:400px; border:10px solid #666; box-sizing:border-box; position:relative; border-bottom-width:80px; border-top-width:80px; border-radius:50px; padding:1em;}
-		.phone-frame:before {content:""; position:absolute; width:80px; height:8px; background-color:#ffffff; border-radius:5px; left:50%; top:-80px; margin:30px 0 0 -40px;}
-		.phone-frame:after {content:""; display:block; position:absolute; bottom:-70px; left:50%; margin-left:-30px; width:60px; height:60px; background-color:#fff; border-radius:100%;}
-	</style>
 </head>
 <body>
+
+<form action="" class="form" style="width:600px;">
+	<fieldset>
+		<legend>搜索表单</legend>
+		<ul class="form-search-list">
+			<li>
+				<label for="">名称：</label>
+				<input type="text" name="" id="">
+			</li>
+			<li>
+				<label>用户组：</label>
+				<select>
+					<option value="">请选择分组</option>
+					<option value="">分组1</option>
+				</select>
+			</li>
+			<li>
+				<label>描述：</label>
+				<input type="text" name="kw" placeholder="描述关键字"/>
+			</li>
+			<li>
+				<label>生日：</label>
+				<input type="date" name="d" id="" placeholder="开始"> -
+				<input type="date" name="d" id="" placeholder="结束">
+			</li>
+			<li>
+				<label>性别：</label>
+				<input type="radio" name="gd" id=""> 男
+				<input type="radio" name="gd" id=""> 女
+			</li>
+			<li>
+				<label for="">分类：</label>
+				<select name="" id="" placeholder="">
+					<option value="">请选择分类</option>
+					<option value="">用户分类1</option>
+					<option value="">用户分类1</option>
+					<option value="">用户分类1</option>
+				</select>
+			</li>
+		</ul>
+		<input type="submit" value="搜索">
+		<input type="reset" value="重置">
+	</fieldset>
+</form>
+
 <form action="" class="form">
 	<table class="form-table">
 		<caption>双列表单表格</caption>
@@ -112,6 +152,7 @@
 </form>
 
 <hr>
+
 
 <div class="phone-frame">
 	<form action="" class="form">

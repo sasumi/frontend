@@ -4,7 +4,6 @@
 	<meta charset="UTF-8">
 	<title>demo</title>
 	<link rel="stylesheet/less" href="demo.less">
-	<base target="sub-page">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script>
@@ -25,32 +24,54 @@
 	<style>
 		html, body {height:100%; box-sizing:border-box; overflow:hidden;}
 		.ywj-ui body {display:flex; padding:0;}
-		#nav {flex:1; max-width:200px; box-sizing:border-box; padding-top:1em; background-color:#eee; border-right:1px solid #ccc;}
+		.ywj-ui aside {flex:1; max-width:200px; box-sizing:border-box; background-color:#eee; border-right:1px solid #ccc;}
+		.ywj-ui aside h2 {margin:0; text-shadow:1px 1px 1px white; padding:0.5em; font-size:18px;}
+
+		.mode {padding:0 1em;}
+
 		#nav a {padding:0.5em 1em; display:block;}
 		#nav li:not(.separator) {border-bottom:1px solid #ccc;}
 		#nav .active {background-color:#ffffff;}
 		#nav .active a {color:black}
-		[name=sub-page] {flex:1; border:none; }
+		#sub-page-container {flex:1; border:none; box-sizing:border-box; padding-bottom:2em;}
+		#sub-page-container iframe {width:100%; height:100%;}
+
+		#view-frame {height:100%;}
+		.phone-frame {margin:1em 0 1em 1em; width:400px; border:10px solid #666; box-sizing:border-box; position:relative; border-bottom-width:80px; border-top-width:80px; border-radius:50px}
+		.phone-frame:before {content:""; position:absolute; width:80px; height:8px; background-color:#ffffff; border-radius:5px; left:50%; top:-80px; margin:30px 0 0 -40px;}
+		.phone-frame:after {content:""; display:block; position:absolute; bottom:-70px; left:50%; margin-left:-30px; width:60px; height:60px; background-color:#fff; border-radius:100%;}
 	</style>
 </head>
 <body>
-	<ul class="list" id="nav">
-		<li><a target="sub-page" href="text.html">文本</a></li>
-		<li><a href="list.html">列表</a></li>
-		<li><a href="button.html">按钮</a></li>
-		<li><a href="selector.html">选择</a></li>
-		<li><a href="text-field.html">文本输入</a></li>
-		<li><a href="tab.html">标签页</a></li>
-		<li><a href="table.html">表格</a></li>
-		<li><a href="form.html">表单</a></li>
-		<li class="separator"></li>
-		<li><a href="menu.html">菜单</a></li>
-		<li><a href="tip.html">提示</a></li>
-		<li><a href="pagination.html">分页</a></li>
-		<li><a href="dropdown.html">下拉列表</a></li>
-	</ul>
-	<iframe src="selector.html" name="sub-page" frameborder="0">
-	</iframe>
+	<aside>
+		<h2>组件列表</h2>
+
+		<div class="mode">
+			<a href="#web">Web</a> | <a href="#mobile">移动终端</a>
+		</div>
+
+		<ul class="list" id="nav">
+			<li><a target="sub-page" href="text.html">文本</a></li>
+			<li><a target="sub-page" href="list.html">列表</a></li>
+			<li><a target="sub-page" href="button.html">按钮</a></li>
+			<li><a target="sub-page" href="selector.html">选择</a></li>
+			<li><a target="sub-page" href="text-field.html">文本输入</a></li>
+			<li><a target="sub-page" href="tab.html">标签页</a></li>
+			<li><a target="sub-page" href="table.html">表格</a></li>
+			<li><a target="sub-page" href="form.html">表单</a></li>
+			<li class="separator"></li>
+			<li><a target="sub-page" href="menu.html">菜单</a></li>
+			<li><a target="sub-page" href="tip.html">提示</a></li>
+			<li><a target="sub-page" href="pagination.html">分页</a></li>
+			<li><a target="sub-page" href="dropdown.html">下拉列表</a></li>
+		</ul>
+	</aside>
+	<div id="sub-page-container" >
+		<div id="view-frame" class="phone-frame">
+			<iframe src="selector.html" name="sub-page" frameborder="0">
+			</iframe>
+		</div>
+	</div>
 
 	<script>
 		var tab_links = document.querySelectorAll('#nav a');
