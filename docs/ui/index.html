@@ -24,10 +24,10 @@
 	<style>
 		html, body {height:100%; box-sizing:border-box; overflow:hidden;}
 		.ywj-ui body {display:flex; padding:0;}
-		.ywj-ui aside {flex:1; max-width:200px; box-sizing:border-box; background-color:#eee; border-right:1px solid #ccc;}
+		.ywj-ui aside {flex:1; max-width:250px; box-sizing:border-box; background-color:#eee; border-right:1px solid #ccc;}
 		.ywj-ui aside h2 {margin:0; text-shadow:1px 1px 1px white; padding:0.5em; font-size:18px;}
 
-		.mode {padding:0 1em;}
+		.mode {padding:1em 0.5em;}
 
 		#nav a {padding:0.5em 1em; display:block;}
 		#nav li:not(.separator) {border-bottom:1px solid #ccc;}
@@ -36,6 +36,7 @@
 		#sub-page-container {flex:1; border:none; box-sizing:border-box; padding-bottom:2em;}
 		#sub-page-container iframe {width:100%; height:100%;}
 
+		.mode {background-color:white;}
 		#view-frame {height:100%;}
 		.phone-frame {margin:1em 0 1em 1em; width:400px; border:10px solid #666; box-sizing:border-box; position:relative; border-bottom-width:80px; border-top-width:80px; border-radius:50px}
 		.phone-frame:before {content:""; position:absolute; width:80px; height:8px; background-color:#ffffff; border-radius:5px; left:50%; top:-80px; margin:30px 0 0 -40px;}
@@ -47,7 +48,7 @@
 		<h2>组件列表</h2>
 
 		<div class="mode">
-			<a href="#web">Web</a> | <a href="#mobile">移动终端</a>
+			<a href="?web" class="button">Web</a>  <a href="?mobile" class="button">移动终端</a>
 		</div>
 
 		<ul class="list" id="nav">
@@ -67,7 +68,7 @@
 		</ul>
 	</aside>
 	<div id="sub-page-container" >
-		<div id="view-frame" class="phone-frame">
+		<div id="view-frame">
 			<iframe src="selector.html" name="sub-page" frameborder="0">
 			</iframe>
 		</div>
@@ -76,6 +77,10 @@
 	<script>
 		var tab_links = document.querySelectorAll('#nav a');
 		var lis = document.querySelectorAll('#nav li');
+
+		if(window.location.href.indexOf('?mobile') >= 0){
+			document.getElementById('view-frame').classList.add('phone-frame');
+		}
 
 		for(var i=0; i<tab_links.length; i++){
 			tab_links[i].addEventListener('click', function(){
