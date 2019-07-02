@@ -1,7 +1,6 @@
 @charset "UTF-8";
 @import (once) "global";
 
-
 .normal-button() {
 	.nowrap();
 	.center();
@@ -13,6 +12,7 @@
 	border-radius:@border-radius;
 	padding:0.25em 1em;
 	height:2em;
+	cursor:pointer;
 	line-height:initial;
 	display:inline-block;
 	vertical-align:middle;
@@ -21,10 +21,13 @@
 	min-width:6em;
 	transition: box-shadow 0.30s ease-in-out;
 	
-	&^[disabled]:focus,
-	&^[disabled]:hover {
+	&:focus,
+	&:hover {
+		color:@button-text-color;
+		background:linear-gradient(lighten(@button-background-start, 5%), lighten(@button-background-end, 5%));
 		box-shadow:0 0 10px #cccccc;
 	}
+	
 	&:active {
 		background:linear-gradient(@button-background-end, @button-background-start);
 	}
@@ -50,11 +53,10 @@
 	}
 
 	.button, [type=button], button {
-		.normal-button;
+		.normal-button();
 	}
 
 	body a.button {
-		cursor:default !important;
 		color:@button-text-color;
 		&:hover {
 			color:@button-text-color;
@@ -62,12 +64,12 @@
 	}
 
 	[type=submit] {
-		.normal-button;
-		.primary;
+		.normal-button();
+		.primary();
 	}
 
 	.button-weak, [type=reset] {
-		.normal-button;
-		.weaker;
+		.normal-button();
+		.weaker();
 	}
 }

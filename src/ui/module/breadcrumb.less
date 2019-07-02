@@ -1,0 +1,29 @@
+@charset "UTF-8";
+@import (once) "global";
+@import (once) "text";
+@{ywj-scope} {
+	@breadcrumb:.breadcrumb;
+	
+	.triangle-right(){
+		width:0;
+		height:0;
+		content:"";
+		display:inline-block;
+		vertical-align:middle;
+		border:0.3em solid transparent;
+		border-left-color:lighten(@fore-color, 50%);
+		margin:0 0.5em 0 0.7em;
+	}
+	
+	@{breadcrumb} {
+		> li {
+			float:left;
+			
+			&:after {
+				.triangle-right();
+			}
+			&:last-child:after {display:none;}
+		}
+		
+	}
+}

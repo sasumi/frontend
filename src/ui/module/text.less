@@ -44,13 +44,13 @@
 	.link {
 		.no-decoration;
 		color:@link-color;
-		&:not([disabled]):hover {
+		&:hover {
 			cursor:pointer;
 			color:@link-color - #222222;
 		}
 	}
 	
-	a:not([name]) {
+	a {
 		.link;
 	}
 	
@@ -58,8 +58,11 @@
 	a[disabled],
 	.link[disabled],
 	*[disabled] .link{
-		color:lighten(@fore-color, 50%) !important;
+		@color:lighten(@fore-color, 50%) !important;
 		cursor:default !important;
+		&:hover {
+			color:@color
+		}
 	}
 	
 	.sort {

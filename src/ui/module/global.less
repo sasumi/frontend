@@ -35,6 +35,9 @@
 	border-right-color:lighten(@border-color, 20%);
 	border-bottom-color:lighten(@border-color, 20%);
 }
+.transition(@dim: all, @time: 0.1s, @effect: linear) {
+	transition:@dim @time @effect;
+}
 
 .no-decoration() {
 	text-decoration:none;

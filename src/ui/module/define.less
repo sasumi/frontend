@@ -9,13 +9,14 @@
 //normal usage scope
 @ywj-scope:@global-scope;
 
+@ywj-prefix: y;
+
 //assert resource path
 @assert-path: "..//src/ui/asset";
 
 //default class name
 @readonly-class: [readonly];
-@text-class:.text;
-@active-class:.active;
+@active-class: .@{ywj-prefix}active;
 @dis-active:.disactive;
 @border-radius: 2px;
 @form-element-default-width: 190px;
