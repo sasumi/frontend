@@ -286,6 +286,10 @@ define('ywj/popup', function(require){
 		var _this = this;
 		var loop = function(){
 			try {
+				//popup destroyed
+				if(!_this.container){
+					return;
+				}
 				var fr = $('iframe', _this.container)[0];
 				var w = fr.contentWindow;
 				var b = w.document.body;
