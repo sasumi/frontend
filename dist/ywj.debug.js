@@ -6074,11 +6074,13 @@ define('ywj/net', function(require){
 				}
 				opt.onSuccess(rsp);
 			},
-			error: function(e){
-				if(e.statusText === 'abort'){
+			error: function(aj, error){
+				if(aj.statusText === 'abort'){
+					console.log('ajax abort');
 					opt.onAbort();
 				} else {
-					opt.onError(e.statusText || 'Error');
+					console.error('ajax error:', error, aj);
+					opt.onError(error || aj.statusText || 'Error');
 				}
 			}
 		});
@@ -10477,7 +10479,7 @@ define('ywj/util', function(require){
 	/**
 	 * check item is in array
 	 * @param item
-	 * @param  {array} arr
+	 * @param {Array} arr
 	 * @return {boolean}
 	 */
 	var inArray = function(item, arr){
@@ -10492,14 +10494,23 @@ define('ywj/util', function(require){
 	/**
 	 * 字符切割
 	 * @param string 字符串
-	 * @param delimiter 分隔符
+	 * @param {string} delimiters 分隔符（支持多个）
 	 * @param {boolean} clear_empty 是否清除掉空白字符串（默认清除）
-     * @return {Array}
+	 * @return {Array}
 	 */
-	var explode = function(string, delimiter, clear_empty){
+	var explode = function(string, delimiters, clear_empty){
+		if(!string){
+			return [];
+		}
 		clear_empty = clear_empty === undefined ? true : !!clear_empty;
 		var result = [];
-		var item = string.split(delimiter);
+		var de1 = delimiters[0];
+		if(delimiters.length > 1){
+			for(var i=1; i<delimiters.length; i++){
+				string = string.replace(new RegExp(pregQuote(delimiters[i]), 'g'), de1);
+			}
+		}
+		var item = string.split(de1);
 		for(var i in item){
 			if(clear_empty){
 				var val = $.trim(item[i]);
@@ -10994,13 +11005,16 @@ define('ywj/util', function(require){
 			console.warn('Local storage no support');
 			return;
 		}
-		max_count = max_count || 5000;
+		max_count = max_count || 1000;
 		var save_data = LO[LOG_KEY] ? JSON.parse(LO[LOG_KEY]) : [];
 		if(save_data.length > max_count){
 			save_data.shift();
 		}
 		save_data.push({
-			time:new Date().getTime(), message:message, data:data
+			uuid: uuidv4(),
+			time: new Date().getTime(),
+			message: message,
+			data: data
 		});
 		LO[LOG_KEY] = JSON.stringify(save_data);
 	};
@@ -11023,20 +11037,36 @@ define('ywj/util', function(require){
 		return [];
 	};
 
+	/**
+	 * 打印日志
+	 * @param num
+	 */
 	var printStorageLog = function(num){
 		var logs = getLogFromLocalStorage(num);
 		for(var i=0; i<logs.length; i++){
-			var ts = logs[i][0];
-			var message = logs[i][1];
-			var data = logs[i][2];
-			var time = (new Date(ts*1000)).toUTCString();
+			var log = logs[i];
+			var time = (new Date(log.time*1000)).toUTCString();
+			console.info('Log from localStorage:', time, log.message, log.data, log.uuid);
 		}
-		console.info('Log from localStorage:', time, message, data);
 	};
 
 	if(!window['printStorageLog']){
 		window['printStorageLog'] = printStorageLog;
 	}
+
+	var tailfStorageLogStop = function(){
+
+	};
+
+	var tailfStorageLog = function(check_interval){
+
+
+		check_interval = check_interval || 1000;
+
+		setTimeout(function(){
+			tailfStorageLog(check_interval);
+		}, check_interval);
+	};
 
 	/**
 	 * 获取指定容器下的表单元素的值
@@ -11206,6 +11236,17 @@ define('ywj/util', function(require){
 		return '_ywj_guid_' + (++__guid);
 	};
 
+	/**
+	 * UUID version 4
+	 * @returns {string}
+	 */
+	var uuidv4 = function(){
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
+	};
+
 	return {
 		isMobile: isMobile,
 		KEYS: {
@@ -11262,6 +11303,7 @@ define('ywj/util', function(require){
 		saveLogToLocalStorage: saveLogToLocalStorage,
 		printStorageLog: printStorageLog,
 		guid: guid,
+		uuidv4: uuidv4,
 		copy: copy,
 		copyFormatted: copyFormatted,
 		resolveExt: resolve_ext,
