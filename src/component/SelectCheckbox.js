@@ -7,9 +7,22 @@ define('ywj/SelectCheckbox', function(require){
 	var util = require('ywj/util');
 
 	return {
-		nodeInit: function(sel){
-			var $sel = $(sel);
+		nodeInit: function($sel){
 			$sel.hide();
+			if($sel.attr('disabled') || $sel.attr('readonly')){
+				var selected_options = [];
+				$sel.find('option').each(function(){
+					if(this.selected){
+						selected_options.push($(this).text());
+					}
+				});
+				if(selected_options.length){
+					html = '<dl class="select-cb"><dt>' + selected_options.join('') + '</dt></dl>';
+					$(html).insertAfter($sel);
+				}
+				console.info('ignore for select checkbox:',$sel[0]);
+				return;
+			}
 
 			var html = '<dd><label class="select-title">'+$sel[0].options[0].text+'</label>';
 			var checked_val = '';
