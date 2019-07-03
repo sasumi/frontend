@@ -3985,7 +3985,7 @@ define('ywj/fixdate', function(require){
 define('ywj/FixedBottom',function(require){
 	var Util = require('ywj/util');
 	var cls = 'fixed-bottom';
-	var css = '.'+cls+' {position:fixed; bottom:0; background-color:white}';
+	var css = '.'+cls+' {position:fixed; bottom:0; background-color:#ffffffd9}';
 	$('<style>'+css+'</style>').appendTo($('head'));
 
 	return {
