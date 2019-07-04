@@ -236,11 +236,13 @@ define('ywj/net', function(require){
 				}
 				opt.onSuccess(rsp);
 			},
-			error: function(e){
-				if(e.statusText === 'abort'){
+			error: function(aj, error){
+				if(aj.statusText === 'abort'){
+					console.log('ajax abort');
 					opt.onAbort();
 				} else {
-					opt.onError(e.statusText || 'Error');
+					console.error('ajax error:', error, aj);
+					opt.onError(error || aj.statusText || 'Error');
 				}
 			}
 		});

@@ -57,6 +57,5 @@
 .com-uploader-error .com-uploader-file,
 .com-uploader-error .com-uploader-progress,
 .com-uploader-error .com-uploader-upload,
-.com-uploader-error .com-uploader-cancel,
-.com-uploader-error .com-uploader-delete
+.com-uploader-error .com-uploader-cancel
 {display:none;}

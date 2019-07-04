@@ -65,10 +65,11 @@ define('ywj/popup', function(require){
 
 		this.config = $.extend({}, {
 			ID_PRE: 'popup-dialog-id-pre',
-			title: lang('对话框'),				//标题
-			content: lang('测试'),				//content.src content.id
+			title: lang('对话框'),			//标题
+			content: lang('测试'),			//content.src content.id
 			width: 400,						//宽度
-			moveEnable: undefined,				//框体可移动
+			height: 0,                      //高度（0表示自动检测）
+			moveEnable: undefined,			//框体可移动
 			moveTriggerByContainer: false,	//内容可触发移动
 			zIndex: 1000,					//高度
 			modal: true,					//模态对话框
@@ -80,7 +81,7 @@ define('ywj/popup', function(require){
 				dialog: 'PopupDialog',
 				head: 'PopupDialog-hd',
 				body: 'PopupDialog-bd',
-				textCon: 'PopupDialog-text',
+				textContent: 'PopupDialog-text',
 				iframe: 'PopupDialog-bd-frm',
 				container: 'PopupDialog-dom-ctn',
 				foot: 'PopupDialog-ft'
@@ -286,6 +287,10 @@ define('ywj/popup', function(require){
 		var _this = this;
 		var loop = function(){
 			try {
+				//popup destroyed
+				if(!_this.container){
+					return;
+				}
 				var fr = $('iframe', _this.container)[0];
 				var w = fr.contentWindow;
 				var b = w.document.body;
@@ -469,8 +474,8 @@ define('ywj/popup', function(require){
 		}
 		$node.attr(POPUP_ON_LOADING, 1);
 		var src = Net.mergeCgiUri($node.attr('href') || $node.data('href'), {'ref':'iframe'});
-		var width = parseFloat($node.data('width')) || DEF_POPUP_WIDTH;
-		var height = parseFloat($node.data('height')) || 0;
+		var width = param.width || DEF_POPUP_WIDTH;
+		var height = param.height || 0;
 		var title = $node.attr('title') || $node.html() || $node.data('title') || $node.val() || '';
 		var force_refresh = param['forcerefresh'];
 		var onSuccess = $node.data('onsuccess');
@@ -493,15 +498,12 @@ define('ywj/popup', function(require){
 			title: title,
 			content: {src:src},
 			width: width,
+			height: height,
 			moveEnable: undefined,
 			topCloseBtn: true,
 			topRefreshBtn: false,
 			buttons: []
 		}, param);
-
-		if(height){
-			conf.height = height;
-		}
 
 		Popup.showPopInTop(conf, function(p){
 			p.onShow = function(){
@@ -652,12 +654,15 @@ define('ywj/popup', function(require){
 		//构建基础框架
 		this.container = $('<div class="'+this.config.cssClass.dialog+'" style="left:-9999px" id="'+id+'"></div>').appendTo($('body'));
 
+		//固定高度
+		var height_style = this.config.height ? ' style="height:'+this.config.height+'px" ' : '';
+
 		//构建内容容器
-		var content = '<div class="'+this.config.cssClass.body+'">';
+		var content = '<div class="'+this.config.cssClass.body+'"' + height_style+ '>';
 		if(typeof(this.config.content) == 'string'){
-			content += '<div class="'+this.config.cssClass.textCon+'">'+this.config.content+'</div>';
+			content += '<div class="'+this.config.cssClass.textContent+'">'+this.config.content+'</div>';
 		} else if(this.config.content.src){
-			content += '<iframe allowtransparency="true" guid="'+this.guid+'" src="'+this.config.content.src+'" class="'+this.config.cssClass.iframe+'" frameborder=0></iframe>';
+			content += '<iframe allowtransparency="true"'+height_style+'guid="'+this.guid+'" src="'+this.config.content.src+'" class="'+this.config.cssClass.iframe+'" frameborder=0></iframe>';
 		} else if(this.config.content.id){
 			content += $(this.config.content.id).html();
 		}else{

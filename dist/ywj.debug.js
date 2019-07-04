@@ -3985,7 +3985,7 @@ define('ywj/fixdate', function(require){
 define('ywj/FixedBottom',function(require){
 	var Util = require('ywj/util');
 	var cls = 'fixed-bottom';
-	var css = '.'+cls+' {position:fixed; bottom:0; background-color:white}';
+	var css = '.'+cls+' {position:fixed; bottom:0; background-color:#ffffffd9}';
 	$('<style>'+css+'</style>').appendTo($('head'));
 
 	return {
@@ -6074,11 +6074,13 @@ define('ywj/net', function(require){
 				}
 				opt.onSuccess(rsp);
 			},
-			error: function(e){
-				if(e.statusText === 'abort'){
+			error: function(aj, error){
+				if(aj.statusText === 'abort'){
+					console.log('ajax abort');
 					opt.onAbort();
 				} else {
-					opt.onError(e.statusText || 'Error');
+					console.error('ajax error:', error, aj);
+					opt.onError(error || aj.statusText || 'Error');
 				}
 			}
 		});
@@ -7145,10 +7147,11 @@ define('ywj/popup', function(require){
 
 		this.config = $.extend({}, {
 			ID_PRE: 'popup-dialog-id-pre',
-			title: lang('对话框'),				//标题
-			content: lang('测试'),				//content.src content.id
+			title: lang('对话框'),			//标题
+			content: lang('测试'),			//content.src content.id
 			width: 400,						//宽度
-			moveEnable: undefined,				//框体可移动
+			height: 0,                      //高度（0表示自动检测）
+			moveEnable: undefined,			//框体可移动
 			moveTriggerByContainer: false,	//内容可触发移动
 			zIndex: 1000,					//高度
 			modal: true,					//模态对话框
@@ -7160,7 +7163,7 @@ define('ywj/popup', function(require){
 				dialog: 'PopupDialog',
 				head: 'PopupDialog-hd',
 				body: 'PopupDialog-bd',
-				textCon: 'PopupDialog-text',
+				textContent: 'PopupDialog-text',
 				iframe: 'PopupDialog-bd-frm',
 				container: 'PopupDialog-dom-ctn',
 				foot: 'PopupDialog-ft'
@@ -7366,6 +7369,10 @@ define('ywj/popup', function(require){
 		var _this = this;
 		var loop = function(){
 			try {
+				//popup destroyed
+				if(!_this.container){
+					return;
+				}
 				var fr = $('iframe', _this.container)[0];
 				var w = fr.contentWindow;
 				var b = w.document.body;
@@ -7549,8 +7556,8 @@ define('ywj/popup', function(require){
 		}
 		$node.attr(POPUP_ON_LOADING, 1);
 		var src = Net.mergeCgiUri($node.attr('href') || $node.data('href'), {'ref':'iframe'});
-		var width = parseFloat($node.data('width')) || DEF_POPUP_WIDTH;
-		var height = parseFloat($node.data('height')) || 0;
+		var width = param.width || DEF_POPUP_WIDTH;
+		var height = param.height || 0;
 		var title = $node.attr('title') || $node.html() || $node.data('title') || $node.val() || '';
 		var force_refresh = param['forcerefresh'];
 		var onSuccess = $node.data('onsuccess');
@@ -7573,15 +7580,12 @@ define('ywj/popup', function(require){
 			title: title,
 			content: {src:src},
 			width: width,
+			height: height,
 			moveEnable: undefined,
 			topCloseBtn: true,
 			topRefreshBtn: false,
 			buttons: []
 		}, param);
-
-		if(height){
-			conf.height = height;
-		}
 
 		Popup.showPopInTop(conf, function(p){
 			p.onShow = function(){
@@ -7732,12 +7736,15 @@ define('ywj/popup', function(require){
 		//构建基础框架
 		this.container = $('<div class="'+this.config.cssClass.dialog+'" style="left:-9999px" id="'+id+'"></div>').appendTo($('body'));
 
+		//固定高度
+		var height_style = this.config.height ? ' style="height:'+this.config.height+'px" ' : '';
+
 		//构建内容容器
-		var content = '<div class="'+this.config.cssClass.body+'">';
+		var content = '<div class="'+this.config.cssClass.body+'"' + height_style+ '>';
 		if(typeof(this.config.content) == 'string'){
-			content += '<div class="'+this.config.cssClass.textCon+'">'+this.config.content+'</div>';
+			content += '<div class="'+this.config.cssClass.textContent+'">'+this.config.content+'</div>';
 		} else if(this.config.content.src){
-			content += '<iframe allowtransparency="true" guid="'+this.guid+'" src="'+this.config.content.src+'" class="'+this.config.cssClass.iframe+'" frameborder=0></iframe>';
+			content += '<iframe allowtransparency="true"'+height_style+'guid="'+this.guid+'" src="'+this.config.content.src+'" class="'+this.config.cssClass.iframe+'" frameborder=0></iframe>';
 		} else if(this.config.content.id){
 			content += $(this.config.content.id).html();
 		}else{
@@ -8298,9 +8305,22 @@ define('ywj/SelectCheckbox', function(require){
 	var util = require('ywj/util');
 
 	return {
-		nodeInit: function(sel){
-			var $sel = $(sel);
+		nodeInit: function($sel){
 			$sel.hide();
+			if($sel.attr('disabled') || $sel.attr('readonly')){
+				var selected_options = [];
+				$sel.find('option').each(function(){
+					if(this.selected){
+						selected_options.push($(this).text());
+					}
+				});
+				if(selected_options.length){
+					html = '<dl class="select-cb"><dt>' + selected_options.join('') + '</dt></dl>';
+					$(html).insertAfter($sel);
+				}
+				console.info('ignore for select checkbox:',$sel[0]);
+				return;
+			}
 
 			var html = '<dd><label class="select-title">'+$sel[0].options[0].text+'</label>';
 			var checked_val = '';
@@ -10477,7 +10497,7 @@ define('ywj/util', function(require){
 	/**
 	 * check item is in array
 	 * @param item
-	 * @param  {array} arr
+	 * @param {Array} arr
 	 * @return {boolean}
 	 */
 	var inArray = function(item, arr){
@@ -10492,14 +10512,23 @@ define('ywj/util', function(require){
 	/**
 	 * 字符切割
 	 * @param string 字符串
-	 * @param delimiter 分隔符
+	 * @param {string} delimiters 分隔符（支持多个）
 	 * @param {boolean} clear_empty 是否清除掉空白字符串（默认清除）
-     * @return {Array}
+	 * @return {Array}
 	 */
-	var explode = function(string, delimiter, clear_empty){
+	var explode = function(string, delimiters, clear_empty){
+		if(!string){
+			return [];
+		}
 		clear_empty = clear_empty === undefined ? true : !!clear_empty;
 		var result = [];
-		var item = string.split(delimiter);
+		var de1 = delimiters[0];
+		if(delimiters.length > 1){
+			for(var i=1; i<delimiters.length; i++){
+				string = string.replace(new RegExp(pregQuote(delimiters[i]), 'g'), de1);
+			}
+		}
+		var item = string.split(de1);
 		for(var i in item){
 			if(clear_empty){
 				var val = $.trim(item[i]);
