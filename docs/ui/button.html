@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>demo</title>
-	<link rel="stylesheet/less" href="demo.less">
+	<link rel="stylesheet/less" href="demo.less#!watch">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script>
@@ -33,6 +33,29 @@
 <input type="submit" value="提交">
 <input type="reset" value="重置">
 <p>this then affects all initial link tags and programmatic usage of less</p>
+
+<h2>正常</h2>
+<p>
+	<button>正常效果按钮</button>
+	<input type="text" name="" id="" placeholder="搭配输入框">
+</p>
+<p>
+	<input type="submit" value="提交按钮">
+	<input type="button" class="button-weak" value="示弱效果按钮">
+	<input type="reset" value="例如Reset">
+	<a href="" class="button-weak">A链接都是可以的</a>
+	<input type="button" class="button-outlined" value="框线按钮">
+	<input type="button" class="button-outlined" disabled value="框线按钮禁用">
+</p>
+
+<p>
+	<input type="button" class="button-weak" disabled value="禁用效果">
+</p>
+
+<p>
+	<a href="" class="button-primary">主按钮（Primary）</a>
+	<input type="button" value="主按钮（Primary）" class="button-primary">
+</p>
 
 <table class="table">
 	<caption>按钮</caption>

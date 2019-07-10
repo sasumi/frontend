@@ -1,11 +1,18 @@
 @charset "UTF-8";
 @import (once) "global";
 
+@button-class: .button, [type=button], [type=submit], button;
+@button-weak-class: .button-weak, [type=reset];
+@button-outlined: .button-outlined;
+@button-primary: .button-primary;
+
 .normal-button() {
 	.nowrap();
 	.center();
-	.cube-border(@button-border-color);
 	.no-decoration();
+	
+	border:none;
+	outline:none;
 	
 	color: @button-text-color;
 	background:linear-gradient(@button-background-start, @button-background-end);
@@ -13,63 +20,88 @@
 	padding:0.25em 1em;
 	height:2em;
 	cursor:pointer;
-	line-height:initial;
+	letter-spacing:0.1em;
+	line-height:1;
 	display:inline-block;
-	vertical-align:middle;
+	vertical-align:bottom;
 	user-select:none;
-	box-sizing:border-box; l
+	box-sizing:border-box;
 	min-width:6em;
+	box-shadow:@box-shadow-normal;
 	transition: box-shadow 0.30s ease-in-out;
+	will-change: box-shadow, background, color;
 	
 	&:focus,
-	&:hover {
+	&:hover,
+	&:active{
 		color:@button-text-color;
 		background:linear-gradient(lighten(@button-background-start, 5%), lighten(@button-background-end, 5%));
-		box-shadow:0 0 10px #cccccc;
+		box-shadow:@box-shadow-active;
 	}
 	
-	&:active {
-		background:linear-gradient(@button-background-end, @button-background-start);
-	}
-	
-	&[disabled] {
+	&[disabled], &[disabled]:hover, &[disabled]:focus {
 		color:@button-disabled-text-color !important;
-		.cube-border(lighten(@button-border-color, 10%));
-		background:linear-gradient(@button-background-start, @button-background-end);
-		box-shadow:none;
 		text-shadow:1px 1px 1px white;
-		outline:none;
+		cursor:default;
+		background:linear-gradient(darken(@back-color, 10%), darken(@back-color, 10%));
+		box-shadow:none;
 	}
 }
 
 @{ywj-scope} {
 	.primary() {
-		background:linear-gradient(@button-background-start, @button-background-end);
+		line-height:2em;
+		height:2.5em;
 	}
 
 	.weaker() {
-		color: lighten(@button-text-color, 40%);
-		.cube-border(lighten(@button-border-color, 5%));
-	}
-
-	.button, [type=button], button {
-		.normal-button();
-	}
-
-	body a.button {
-		color:@button-text-color;
+		color: @button-text-color;
+		background:linear-gradient(lighten(@button-background-start, 15%), lighten(@button-background-end, 15%));
+		&:focus,
 		&:hover {
 			color:@button-text-color;
+			background:linear-gradient(lighten(@button-background-start, 20%), lighten(@button-background-end, 20%));
+			box-shadow:@box-shadow-active;
 		}
 	}
 
-	[type=submit] {
+	@{button-class} {
 		.normal-button();
-		.primary();
 	}
 
-	.button-weak, [type=reset] {
+	@{button-weak-class} {
 		.normal-button();
 		.weaker();
+	}
+
+	@{button-outlined} {
+		color:@link-color;
+		border:1px solid lighten(@link-color, 10%);
+		background:none;
+		&:focus,
+		&:hover,
+		&:active{
+			color:@link-color;
+			background:linear-gradient(darken(@back-color, 5%), darken(@back-color, 5%));
+			box-shadow:@box-shadow-active;
+		}
+		
+		&[disabled], &[disabled]:hover, &[disabled]:focus {
+			color:@link-color;
+			border:1px solid lighten(@fore-color, 60%);
+			background:none;
+		}
+	}
+	
+	a {
+		&@{button-class},
+		&@{button-weak-class} {
+			line-height:1.5;
+		}
+	}
+	
+	@{button-primary} {
+		.normal-button();
+		.primary();
 	}
 }

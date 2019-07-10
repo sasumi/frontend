@@ -1,4 +1,4 @@
-@import (once) "define";
+@import (reference) "define";
 @import (once) "reset";
 
 //inner style
@@ -38,14 +38,12 @@
 .transition(@dim: all, @time: 0.1s, @effect: linear) {
 	transition:@dim @time @effect;
 }
-
 .no-decoration() {
 	text-decoration:none;
 	&:hover {
 		text-decoration:none;
 	}
 }
-
 .clear-fix {
 	&:after { content:""; display:block; clear:both; }
 }
