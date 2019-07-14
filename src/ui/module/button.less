@@ -18,12 +18,12 @@
 	background:linear-gradient(@button-background-start, @button-background-end);
 	border-radius:@border-radius;
 	padding:0.25em 1em;
-	height:2em;
+	height:@form-element-height;
 	cursor:pointer;
 	letter-spacing:0.1em;
 	line-height:1;
 	display:inline-block;
-	vertical-align:bottom;
+	vertical-align:middle;
 	user-select:none;
 	box-sizing:border-box;
 	min-width:6em;
@@ -50,8 +50,8 @@
 
 @{ywj-scope} {
 	.primary() {
-		line-height:2em;
-		height:2.5em;
+		height:@form-element-height * 1.2;
+		line-height:@form-element-height * 1;
 	}
 
 	.weaker() {
