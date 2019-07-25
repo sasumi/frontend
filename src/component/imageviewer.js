@@ -22,7 +22,7 @@ define('ywj/imageviewer', function(require){
 				<span class="iv-zoom-btn iv-zoom-out" title="放大"></span>\
 				<span class="iv-zoom-btn iv-zoom-real" title="原始尺寸"></span>\
 				<span class="iv-zoom-btn iv-zoom-in" title="缩小"></span>\
-				<a href="javascript:void(0);" target="_blank" class="iv-zoom-btn iv-zoom-src">原图</a>\
+				<a href="javascript:void(0);" target="_blank" class="iv-zoom-btn iv-zoom-src">原图<span class="iv-image-size-abs"></span></a>\
 			</div>\
 			<div class="iv-list">\
 				<span class="iv-list-left"></span>\
@@ -114,6 +114,8 @@ define('ywj/imageviewer', function(require){
 		var $img = $container.find('.iv-img');
 		var $prev = $container.find('.iv-prev-btn');
 
+		var $size_abs = $container.find('.iv-image-size-abs');
+
 		var $zoom_in = $container.find('.iv-zoom-in');
 		var $zoom_real = $container.find('.iv-zoom-real');
 		var $zoom_out = $container.find('.iv-zoom-out');
@@ -151,6 +153,7 @@ define('ywj/imageviewer', function(require){
 			img.onload = function(){
 				clearTimeout(loader_tm);
 				update_image($img, this.width, this.height);
+				$size_abs.html('('+this.width + 'x' + this.height + ')');
 				$img.attr('src', src);
 			};
 			img.src = src;

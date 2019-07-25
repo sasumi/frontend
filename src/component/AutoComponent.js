@@ -28,11 +28,22 @@ define('ywj/AutoComponent', function(require){
 		return cs;
 	};
 
+	/**
+	 * 检测节点是否拥有组件
+	 * @param $node
+	 * @param component_name
+	 * @returns {*}
+	 */
 	var nodeHasComponent = function($node, component_name){
 		var cs = parseComponents($node.data(COMPONENT_FLAG_KEY));
 		return Util.inArray(component_name, cs);
 	};
 
+	/**
+	 * 获取节点所有组件参数
+	 * @param $node
+	 * @returns {{}}
+	 */
 	var getDataParam = function($node){
 		var param = {};
 		for(var i=0; i<$node[0].attributes.length; i++){
@@ -53,6 +64,17 @@ define('ywj/AutoComponent', function(require){
 			}
 		}
 		return param;
+	};
+
+	/**
+	 * 根据组件名称获取参数
+	 * @param $node
+	 * @param component_name
+	 */
+	var getDataParamByComponent = function($node, component_name){
+		var all = getDataParam($node);
+		var c = component_name.replace(new RegExp('^'+DEFAULT_NS+'/'),'').toLowerCase();
+		return all[c] || {};
 	};
 
 	/**
@@ -145,10 +167,11 @@ define('ywj/AutoComponent', function(require){
 	return {
 		parseComponents: parseComponents,
 		nodeHasComponent: nodeHasComponent,
+		getDataParamByComponent: getDataParamByComponent,
 		initComplete: function(callback){
 			if(INIT_COMPLETED){
 				callback();
-			} else {
+			}else{
 				INIT_CALLBACK.push(callback);
 			}
 		}

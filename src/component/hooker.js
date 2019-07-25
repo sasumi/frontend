@@ -23,12 +23,13 @@ define('ywj/hooker', function(require){
 		var trigger_flag = false;
 
 		//缺省调用为监听方法
-		var hk = function(callback){
-			return hk.listen(callback);
+		var hk = function(callback, recursive){
+			return hk.listen(callback, recursive);
 		};
 
 		/**
-		 * 事件触发（强制为异步）
+		 * 事件触发
+		 * （强制为异步）
 		 * @returns {boolean|null}
 		 */
 		hk.fire = function(){

@@ -82,6 +82,9 @@ define('ywj/autocomplete', function(require){
 
 			var _stop_load_ = false;
 			$shadow_inp.on('keydown keyup change mouseup', function(e){
+				if(is_node_disabled()){
+					return;
+				}
 				if(e.keyCode == Util.KEYS.UP){
 					move_cursor(true);
 					return false;
@@ -204,6 +207,9 @@ define('ywj/autocomplete', function(require){
 			};
 
 			var show_panel = function(list, message, error){
+				if(is_node_disabled()){
+					return;
+				}
 				create_panel();
 				if(error){
 					$PANEL.addClass(PANEL_ERROR_CLASS).html('<dt>'+Util.htmlEscape(message)+'</dt>');
@@ -231,6 +237,10 @@ define('ywj/autocomplete', function(require){
 				if(strict){
 					$shadow_inp.addClass(INPUT_MISS_MATCH);
 				}
+			};
+
+			var is_node_disabled = function(){
+				return $node.attr('readonly') || $node.attr('disabled');
 			};
 
 			var show_loading = function(){

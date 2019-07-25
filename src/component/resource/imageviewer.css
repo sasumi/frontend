@@ -17,7 +17,7 @@
 .image-viewer-container .iv-close-btn:hover {opacity:1;}
 .image-viewer-container .iv-close-btn:before {content:"×"; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; font-size:28px; color:white;}
 
-.image-viewer-container .iv-zoom-wrap {z-index:1; position:absolute; top:10px; opacity:0.2; width:300px; left:50%; margin-left:-150px; text-align:center; transition:opacity 1s ease-out;}
+.image-viewer-container .iv-zoom-wrap {z-index:1; position:absolute; top:10px; opacity:0.7; width:400px; left:50%; margin-left:-200px; text-align:center; transition:opacity 1s ease-out;}
 .image-viewer-container .iv-zoom-wrap:hover {opacity:1;}
 .image-viewer-container .iv-zoom-btn {display:inline-block; vertical-align:middle; cursor:pointer; padding:5px 20px; margin:0 3px; background-color:black; opacity:0.7; color:white; border-radius:3px;}
 .image-viewer-container .iv-zoom-btn:hover {opacity:1}

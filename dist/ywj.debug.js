@@ -730,6 +730,9 @@ define('ywj/autocomplete', function(require){
 
 			var _stop_load_ = false;
 			$shadow_inp.on('keydown keyup change mouseup', function(e){
+				if(is_node_disabled()){
+					return;
+				}
 				if(e.keyCode == Util.KEYS.UP){
 					move_cursor(true);
 					return false;
@@ -852,6 +855,9 @@ define('ywj/autocomplete', function(require){
 			};
 
 			var show_panel = function(list, message, error){
+				if(is_node_disabled()){
+					return;
+				}
 				create_panel();
 				if(error){
 					$PANEL.addClass(PANEL_ERROR_CLASS).html('<dt>'+Util.htmlEscape(message)+'</dt>');
@@ -879,6 +885,10 @@ define('ywj/autocomplete', function(require){
 				if(strict){
 					$shadow_inp.addClass(INPUT_MISS_MATCH);
 				}
+			};
+
+			var is_node_disabled = function(){
+				return $node.attr('readonly') || $node.attr('disabled');
 			};
 
 			var show_loading = function(){
@@ -953,11 +963,22 @@ define('ywj/AutoComponent', function(require){
 		return cs;
 	};
 
+	/**
+	 * 检测节点是否拥有组件
+	 * @param $node
+	 * @param component_name
+	 * @returns {*}
+	 */
 	var nodeHasComponent = function($node, component_name){
 		var cs = parseComponents($node.data(COMPONENT_FLAG_KEY));
 		return Util.inArray(component_name, cs);
 	};
 
+	/**
+	 * 获取节点所有组件参数
+	 * @param $node
+	 * @returns {{}}
+	 */
 	var getDataParam = function($node){
 		var param = {};
 		for(var i=0; i<$node[0].attributes.length; i++){
@@ -978,6 +999,17 @@ define('ywj/AutoComponent', function(require){
 			}
 		}
 		return param;
+	};
+
+	/**
+	 * 根据组件名称获取参数
+	 * @param $node
+	 * @param component_name
+	 */
+	var getDataParamByComponent = function($node, component_name){
+		var all = getDataParam($node);
+		var c = component_name.replace(new RegExp('^'+DEFAULT_NS+'/'),'').toLowerCase();
+		return all[c] || {};
 	};
 
 	/**
@@ -1070,10 +1102,11 @@ define('ywj/AutoComponent', function(require){
 	return {
 		parseComponents: parseComponents,
 		nodeHasComponent: nodeHasComponent,
+		getDataParamByComponent: getDataParamByComponent,
 		initComplete: function(callback){
 			if(INIT_COMPLETED){
 				callback();
-			} else {
+			}else{
 				INIT_CALLBACK.push(callback);
 			}
 		}
@@ -4118,12 +4151,13 @@ define('ywj/hooker', function(require){
 		var trigger_flag = false;
 
 		//缺省调用为监听方法
-		var hk = function(callback){
-			return hk.listen(callback);
+		var hk = function(callback, recursive){
+			return hk.listen(callback, recursive);
 		};
 
 		/**
-		 * 事件触发（强制为异步）
+		 * 事件触发
+		 * （强制为异步）
 		 * @returns {boolean|null}
 		 */
 		hk.fire = function(){
@@ -4340,7 +4374,7 @@ define('ywj/imageviewer', function(require){
 				<span class="iv-zoom-btn iv-zoom-out" title="放大"></span>\
 				<span class="iv-zoom-btn iv-zoom-real" title="原始尺寸"></span>\
 				<span class="iv-zoom-btn iv-zoom-in" title="缩小"></span>\
-				<a href="javascript:void(0);" target="_blank" class="iv-zoom-btn iv-zoom-src">原图</a>\
+				<a href="javascript:void(0);" target="_blank" class="iv-zoom-btn iv-zoom-src">原图<span class="iv-image-size-abs"></span></a>\
 			</div>\
 			<div class="iv-list">\
 				<span class="iv-list-left"></span>\
@@ -4432,6 +4466,8 @@ define('ywj/imageviewer', function(require){
 		var $img = $container.find('.iv-img');
 		var $prev = $container.find('.iv-prev-btn');
 
+		var $size_abs = $container.find('.iv-image-size-abs');
+
 		var $zoom_in = $container.find('.iv-zoom-in');
 		var $zoom_real = $container.find('.iv-zoom-real');
 		var $zoom_out = $container.find('.iv-zoom-out');
@@ -4469,6 +4505,7 @@ define('ywj/imageviewer', function(require){
 			img.onload = function(){
 				clearTimeout(loader_tm);
 				update_image($img, this.width, this.height);
+				$size_abs.html('('+this.width + 'x' + this.height + ')');
 				$img.attr('src', src);
 			};
 			img.src = src;
@@ -9535,9 +9572,9 @@ define('ywj/tip', function(require){
 	 */
 	var calDir = function(){
 		var $body = $('body');
-		var container = this.getDom();
-		var width = container.outerWidth();
-		var height = container.outerHeight();
+		var $container = this.getDom();
+		var width = $container.outerWidth();
+		var height = $container.outerHeight();
 		var px = this.rel_tag.offset().left;
 		var py = this.rel_tag.offset().top;
 		var rh = this.rel_tag.outerHeight();
@@ -9566,7 +9603,6 @@ define('ywj/tip', function(require){
 				return TRY_DIR_MAP[i];
 			}
 		}
-		console.warn('no dir hit, use default:', 11);
 		return 11;
 	};
 
@@ -9603,9 +9639,9 @@ define('ywj/tip', function(require){
 	var updatePosition = function(){
 		var vars = PRIVATE_VARS[this.guid];
 		var dir = vars.opt.dir;
-		var container = this.getDom();
-		var width = container.outerWidth();
-		var height = container.outerHeight();
+		var $container = this.getDom();
+		var width = $container.outerWidth();
+		var height = $container.outerHeight();
 		var px = this.rel_tag.offset().left;
 		var py = this.rel_tag.offset().top;
 		var rh = this.rel_tag.outerHeight();
@@ -9614,12 +9650,12 @@ define('ywj/tip', function(require){
 		if(dir == 'auto'){
 			dir = calDir.call(this);
 		}
-		container.attr('class', 'ywj-tip-container-wrap ywj-tip-'+dir);
+		$container.attr('class', 'ywj-tip-container-wrap ywj-tip-'+dir);
 		var offset = getDirOffset(dir, width, height, rh, rw);
 		var x = px + offset[0];
 		var y = py + offset[1];
 
-		container.css({
+		$container.css({
 			left: parseInt(x,10),
 			top: parseInt(y,10)
 		});
@@ -9646,17 +9682,18 @@ define('ywj/tip', function(require){
 			width: 'auto',
 			dir: 'auto'
 		}, opt || {});
-		console.log(opt.width);
 		var html =
-			'<div class="ywj-tip-container-wrap" style="display:none; width:'+opt.width+'px;">'+
+			'<div class="ywj-tip-container-wrap" style="display:none;">'+
 				'<s class="ywj-tip-arrow ywj-tip-arrow-pt"></s>'+
 				'<s class="ywj-tip-arrow ywj-tip-arrow-bg"></s>'+
 				(opt.closeBtn ? '<span class="ywj-tip-close">&#10005;</span>' : '')+
-				'<div class="ywj-tip-content" style="max-width:'+opt.width+'px;">'+content+'</div>'+
+				'<div class="ywj-tip-content" ra="adfs">'+content+'</div>'+
 			'</div>';
 
 		PRIVATE_VARS[this.guid].opt = opt;
-		PRIVATE_VARS[this.guid].container = $(html).appendTo($('body'));
+		var $container = $(html).appendTo($('body'));
+		$container.css('width', opt.width);
+		PRIVATE_VARS[this.guid].container = $container;
 		OBJ_COLLECTION[this.guid] = this;
 		bindEvent.call(this);
 	};
@@ -9672,6 +9709,10 @@ define('ywj/tip', function(require){
 	};
 
 	Tip.prototype.show = function(){
+		//去重判断，避免onShow时间多次触发
+		if(this.isShow()){
+			return;
+		}
 		var vars = PRIVATE_VARS[this.guid];
 		var _this = this;
 		this.getDom().show().stop().animate({opacity:1}, 'fast');
@@ -9684,6 +9725,10 @@ define('ywj/tip', function(require){
 		}
 	};
 
+	Tip.prototype.isShow = function(){
+		return this.getDom().is(':visible');
+	};
+
 	Tip.prototype.hide = function(){
 		var _this = this;
 		this.getDom().stop().animate({opacity:0}, 'fast', function(){_this.getDom().hide()});
@@ -9693,6 +9738,12 @@ define('ywj/tip', function(require){
 	Tip.prototype.destroy = function(){
 		this.getDom().remove();
 		this.onDestory.fire(this);
+	};
+
+	Tip.hideAll = function(){
+		for(var i in OBJ_COLLECTION){
+			OBJ_COLLECTION[i].hide();
+		}
 	};
 
 	Tip.show = function(content, rel_tag, opt){
@@ -9726,6 +9777,7 @@ define('ywj/tip', function(require){
 
 			obj = new Tip(content, rel_tag, opt);
 			$(rel_tag).data(GUID_BIND_KEY, obj.guid);
+
 			obj.getDom().hover(show, hide);
 			$(rel_tag).hover(show, hide);
 		}
@@ -9745,28 +9797,35 @@ define('ywj/tip', function(require){
 			var loading = false;
 			obj = Tip.bind('loading...', rel_tag, opt);
 			obj.onShow(function(){
-				if(!loading){
-					loading = true;
-					loader(function(html){
-						obj.updateContent(html);
-					}, function(error){
-						obj.updateContent(error);
-					});
+				if(loading){
+					return;
 				}
-			});
+				loading = true;
+				loader(function(html){
+					loading = false;
+					obj.updateContent(html);
+				}, function(error){
+					loading = false;
+					obj.updateContent(error);
+				});
+			}, opt.refresh);
 		}
 	};
-	
+
+	/**
+	 * @param $node
+	 * @param {Object} param {url, content, refresh}
+	 */
 	Tip.nodeInit = function($node, param){
 		var url = param.url;
 		var content = param.content;
 		if(url){
-			Tip.bindAsync($node, function(succ, err){
+			Tip.bindAsync($node, function(on_success, on_error){
 				Net.get(url, null, function(rsp){
 					if(rsp && !rsp.code){
-						succ(rsp.data);
+						on_success(rsp.data);
 					} else {
-						err(rsp.message);
+						on_error(rsp.message);
 					}
 				});
 			},param);
