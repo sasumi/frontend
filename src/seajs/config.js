@@ -1,10 +1,6 @@
 (function(){
 	//auto detected browser language
-	window['G_LANGUAGE'] = window['G_LANGUAGE']
-		|| (navigator.language || navigator.userLanguage).replace('-', '_')
-		|| 'zh_CN';
-
-	console.info('Language detected:', window['G_LANGUAGE']);
+	window['G_LANGUAGE'] = detected_lang();
 
 	/**
 	 * patch on after resolve function
@@ -12,6 +8,32 @@
 	 */
 	var __seajs_org_resolve__ = seajs.resolve;
 	var __seajs_after_resolve_list = [];
+
+	/**
+	 * 侦测浏览器语言
+	 * @returns {String}
+	 */
+	function detected_lang(){
+		var SUPPORT_LANGUAGES = ['de_DE', 'en_US', 'zh_CN'];
+		var DEFAULT_LANGUAGE = 'zh_CN';
+
+		var lang = window['G_LANGUAGE']
+			|| (navigator.language || navigator.userLanguage).replace('-', '_')
+			|| 'zh_CN';
+
+		var supported = false;
+		SUPPORT_LANGUAGES.forEach(function(v){
+			if(v == lang){
+				supported = true;
+			}
+		});
+		if(supported){
+			console.log('Language detected:', lang);
+		} else {
+			console.warn('Language ['+lang+'] no supported, use default setting:', DEFAULT_LANGUAGE);
+		}
+		return supported ? lang : DEFAULT_LANGUAGE;
+	}
 
 	/**
 	 * add after resolve event
