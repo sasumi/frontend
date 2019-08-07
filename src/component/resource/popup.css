@@ -20,5 +20,11 @@
 .PopupDialog-confirm-text:before {content:"\f071"; font-family:FontAwesome, serif; color:orange; font-size:38px; display:inline-block; width:53px; position:absolute; margin:0 0 0 -48px}
 .PopupDialog-alert-text {}
 
+.PopupDialog-prompt-title {font-weight:bold; font-size:120%; line-height:1.8; margin:-14px 10px 5px 10px;}
+.PopupDialog-prompt-text-wrap {margin:0 10px;}
+.PopupDialog-prompt-text-wrap input,
+.PopupDialog-prompt-text-wrap textarea {box-sizing:border-box; width:100%;}
+.PopupDialog-prompt-text-wrap textarea {height:50px; resize:vertical}
+
 /** animate **/
 .PopupDialog-Ani-show {margin-top:0; opacity:1}

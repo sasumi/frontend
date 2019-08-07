@@ -26,7 +26,9 @@ define('ywj/SelectCombo', function(require){
 			var required = $sel.attr('required');
 			var place_holder = $sel[0].options[0].value == '' ? $sel[0].options[0].text : '';
 			var w = $sel.outerWidth()-10;
+			w = w > 0 ? w+'px' : 'auto';
 			var h = $sel.outerHeight()-4;
+			h = h > 0 ? h+'px' : 'auto';
 			var txt = $sel[0].options[$sel[0].selectedIndex].text;
 			if(txt == place_holder){
 				txt = '';
@@ -37,7 +39,7 @@ define('ywj/SelectCombo', function(require){
 
 			//Structure
 			var $com = $('<div class="combo">' +
-				'<input type="text" class="combo-txt-inp" value="'+$.trim(txt)+'" placeholder="'+place_holder+'" style="width:'+w+'px; height:'+h+'px; margin:2px 0 0 2px;"/>'+
+				'<input type="text" class="combo-txt-inp" value="'+$.trim(txt)+'" placeholder="'+place_holder+'" style="width:'+w+'; height:'+h+'; margin:2px 0 0 2px;"/>'+
 				'<span class="combo-trigger"></span>'+
 				'<ul></ul>'+
 				'</div>').insertBefore($sel);

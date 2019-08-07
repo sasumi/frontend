@@ -348,7 +348,7 @@ define('ywj/popup', function(require){
 	 * @param  onConfirm
 	 * @param  onCancel
 	 * @param  {Object} config
-	 * @return {Object}
+	 * @return {Popup}
 	 */
 	Popup.showConfirm = function(title, content, onConfirm, onCancel, config){
 		var pop;
@@ -394,7 +394,7 @@ define('ywj/popup', function(require){
 	 * @param  {String|Object} content
 	 * @param  onSubmit
 	 * @param  {Object} config
-	 * @return {Object}
+	 * @return {Popup}
 	 */
 	Popup.showAlert = function(title, content, onSubmit, config){
 		var pop;
@@ -422,6 +422,54 @@ define('ywj/popup', function(require){
 		}, config);
 		pop = new Popup(conf);
 		pop.show();
+		return pop;
+	};
+
+	/**
+	 * 显示输入对话框
+	 * @param  {String} title 提示标题
+	 * @param  {String} init_value 初始值
+	 * @param  {Function} onSubmit
+	 * @param  {Function} onCancel
+	 * @param  {Boolean} as_text 是否支持多行文本
+	 * @param  {Object} config
+	 * @return {Popup}
+	 */
+	Popup.showPrompt = function(title, init_value, onSubmit, onCancel, as_text, config){
+		init_value = init_value ? Util.htmlEscape(init_value) : '';
+		var content = '<div class="PopupDialog-prompt-title">'+title+'</div>'
+			+ '<div class="PopupDialog-prompt-text-wrap">'+(!as_text ? '<input type="text" value="'+init_value+'">' : '<textarea>'+init_value+'</textarea>')+'</div>';
+
+		var conf = $.extend({
+			title: ''
+		}, config);
+
+		var pop;
+
+		var submit_callback = function(){
+			if(!onSubmit){
+				return;
+			}
+			var val = $.trim(pop.container.find(':input').val());
+			if(val){
+				return onSubmit(val);
+			}
+		};
+
+		pop = Popup.showConfirm(title, content, submit_callback, onCancel, conf);
+		pop.container.find(':input').focus();
+
+		if(!as_text){
+			pop.container.find('[type=text]').on('keydown', function(e){
+				if(e.keyCode == Util.KEYS.ENTER){
+					var ret = submit_callback();
+					if(ret !== false){
+						pop.close();
+					}
+				}
+			})
+		}
+
 		return pop;
 	};
 
