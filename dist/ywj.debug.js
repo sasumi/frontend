@@ -11116,7 +11116,7 @@ define('ywj/util', function(require){
 		digits = digits === undefined ? 2 : digits;
 		var multiple = Math.pow(10, digits);
 		return Math.round(num * multiple) / multiple;
-	}
+	};
 
 	/**
 	 * 获取指定容器下的表单元素的值
@@ -11188,6 +11188,21 @@ define('ywj/util', function(require){
 	var rectInLayout = function(rect, layout){
 		return between(rect.top, layout.top, layout.top + layout.height) && between(rect.left, layout.left, layout.left + layout.width) //左上角
 			&& between(rect.top+rect.height, layout.top, layout.top + layout.height) && between(rect.left+rect.width, layout.left, layout.left + layout.width); //右下角
+	};
+
+	/**
+	 * 矩形置中
+	 * @param rect
+	 * @param layout
+	 * @returns {{left: number, top: number}}
+	 */
+	var rectCenter = function(rect, layout){
+		layout.top = layout.top || 0;
+		layout.left = layout.left || 0;
+		return {
+			left: layout.left + layout.width / 2 - rect.width / 2,
+			top: layout.top + layout.top / 2 - rect.height / 2
+		}
 	};
 
 	/**
@@ -11322,6 +11337,7 @@ define('ywj/util', function(require){
 		htmlUnescape: htmlUnescape,
 		rectInLayout: rectInLayout,
 		rectAssoc:rectAssoc,
+		rectCenter:rectCenter,
 		pregQuote: pregQuote,
 		resetNode: resetNode,
 		cutString: cutString,

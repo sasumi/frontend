@@ -279,7 +279,7 @@ input.long-txt {width:770px;}
 .readonly .date-time-txt {background-image:none;}
 
 /** form & layout table **/
-legend, caption, .caption {font-size:1.4em; width:100%; font-weight:normal; text-align:left; text-transform:capitalize; border-bottom:1px solid #ddd; color:#555; padding:0.5em 0; margin-bottom:0.5em;}
+legend, caption, .caption {font-size:1.4em; width:100%; font-weight:normal; text-align:left; border-bottom:1px solid #ddd; color:#555; padding:0.5em 0; margin-bottom:0.5em;}
 form > fieldset {margin-top:0; border:none;}
 fieldset ~ fieldset{margin-top:1.5em;}
 
