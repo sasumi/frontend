@@ -97,7 +97,7 @@ define('ywj/AutoComponent', function(require){
 		})
 	};
 
-	$(function(){
+	$(document).ready(function(){
 		//使用异步，一定程度可以缓解data-component组件如果在调用AutoComponent组件方法的时候，
 		//出现的互相嵌套等待的情况，但是这种情况是没太好的办法解耦。
 		setTimeout(function(){

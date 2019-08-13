@@ -1032,7 +1032,7 @@ define('ywj/AutoComponent', function(require){
 		})
 	};
 
-	$(function(){
+	$(document).ready(function(){
 		//使用异步，一定程度可以缓解data-component组件如果在调用AutoComponent组件方法的时候，
 		//出现的互相嵌套等待的情况，但是这种情况是没太好的办法解耦。
 		setTimeout(function(){
@@ -10891,7 +10891,7 @@ define('ywj/util', function(require){
 
 	/**
 	 * trans collection to array
-	 * @param {Object} coll, dom collection
+	 * @param {Object} col dom collection
 	 */
 	var toArray = function(col){
 		if(col.item){
@@ -11201,7 +11201,7 @@ define('ywj/util', function(require){
 		layout.left = layout.left || 0;
 		return {
 			left: layout.left + layout.width / 2 - rect.width / 2,
-			top: layout.top + layout.top / 2 - rect.height / 2
+			top: layout.top + layout.height / 2 - rect.height / 2
 		}
 	};
 
