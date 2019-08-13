@@ -293,7 +293,7 @@ define('ywj/util', function(require){
 
 	/**
 	 * trans collection to array
-	 * @param {Object} coll, dom collection
+	 * @param {Object} col dom collection
 	 */
 	var toArray = function(col){
 		if(col.item){
