@@ -649,7 +649,9 @@ define('ywj/popup', function(require){
 		}
 		interval = interval || 50;
 		var pop = Popup.getCurrentPopup();
-		pop.autoResize(interval);
+		if(pop){
+			pop.autoResize(interval);
+		}
 	};
 
 	/**
