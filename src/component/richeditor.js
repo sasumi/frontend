@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2016/6/8.
- */
 define('ywj/richeditor', function(require){
 	var Util = require('ywj/util');
 	return {
@@ -28,17 +25,16 @@ define('ywj/richeditor', function(require){
 			require.async('ueditor_'+mode+'_config', function(config){
 				require.async('ueditor', function(){
 					window.UEDITOR_CONFIG = config;
-					var ue = UE.getEditor(id);
-					$node.change(function(){
-						ue.setContent($node.val());
-					});
-					setTimeout(function(){
-						ue.setContent($node.val());
-						ue.setHeight(h+'px');
-						ue.addListener( "contentchange", function () {
+					var editor = UE.getEditor(id);
+
+					editor.addListener("ready", function(){
+						editor.setContent($node.val());
+						editor.setHeight(h+'px');
+						editor.addListener("contentchange", function () {
+							$node.val(this.getContent()).trigger('change');
 							window['EDITOR_CONTENT_CHANGED_FLAG'] = true;
 						} );
-					}, 1000);
+					});
 				});
 			});
 		}
