@@ -9,7 +9,7 @@ table{border-collapse:collapse;border-spacing:0}
 p {margin:1em 0;}
 del { color:#b2b2b2; text-decoration:line-through }
 footer {clear:both}
-label { cursor:pointer; margin-right:0.5em}
+label {margin-right:0.5em}
 label:last-child { margin-right:0; }
 label input { margin-right:3px; }
 hr {border:2px solid #ddd; border-bottom:none;}
