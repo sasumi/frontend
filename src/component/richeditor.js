@@ -23,6 +23,8 @@ define('ywj/richeditor', function(require){
 	};
 
 	var on_ue_load = [];
+	var on_ui_ready = [];
+
 	var UEDITOR_ON_LOAD = 'UEDITOR_ON_LOAD';
 	var UEDITOR_HOME_URL = window.UEDITOR_HOME_URL || getUEBasePath();
 	var UEDITOR_INT_URL = window.UEDITOR_INT_URL || UEDITOR_HOME_URL + 'php/controller.php';
@@ -32,8 +34,35 @@ define('ywj/richeditor', function(require){
 	};
 
 	return {
+		/**
+		 * on editor ui render ready
+		 * @param callback
+		 */
+		onEditorUIReady: function(callback){
+			on_ui_ready.push(callback);
+		},
+
+		/**
+		 * on UEditor class loaded
+		 * @param callback
+		 */
 		onUELoad: function(callback){
 			on_ue_load.push(callback)
+		},
+
+		/**
+		 * 显示工具条按钮
+		 * @param editor
+		 * @param command
+		 */
+		showToolbarButton: function(editor, command){
+			editor.ui.toolbars.forEach(function(toolbar){
+				toolbar.items.forEach(function(item){
+					if(item.className == 'edui-for-'+command){
+						$(item.getDom()).find('.edui-icon').css('display', 'inline-block');
+					}
+				});
+			});
 		},
 
 		getEditorByNode: function($node){
@@ -79,6 +108,11 @@ define('ywj/richeditor', function(require){
 						$node.val(this.getContent()).trigger('change');
 						window['EDITOR_CONTENT_CHANGED_FLAG'] = true;
 					} );
+				});
+				editor.addListener('afteruiready', function(){
+					on_ui_ready.forEach(function(cb){
+						cb(editor);
+					});
 				});
 			});
 		}

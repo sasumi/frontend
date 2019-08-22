@@ -25715,7 +25715,7 @@ UE.ui = baidu.editor.ui = {};
             this.initUIBase();
             this.Stateful_init();
             if(this.cssRules){
-                utils.cssRule('edui-customize-'+this.name+'-style',this.cssRules);
+                utils.cssRule('edui-customize-'+(this.name || '')+'-style',this.cssRules);
             }
         },
         getHtmlTpl: function (){

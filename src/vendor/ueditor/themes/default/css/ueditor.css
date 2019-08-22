@@ -32,8 +32,7 @@
 
 div.edui-box {
     position: relative;
-    display: -moz-inline-box !important;
-    display: inline-block !important;
+    display: inline-block;
     vertical-align: top;
 }
 
