@@ -129,6 +129,7 @@
 			'jqueryanchor': vendor_source_path + '/jquery/jqueryanchor.js',
 			'jquery/highlight': vendor_source_path + '/jquery/jquery.highlight.js',
 			'jquery/ui': vendor_source_path + '/jquery/ui/jquery-ui.min.js',
+			'jquery/lazyload': vendor_source_path + '/jquery/jquery.lazyload.min.js',
 			'jquery/ui/timepicker': vendor_source_path + '/jquery/ui/jquery-ui-timepicker-addon.js',
 			'jquery/ui/tooltip': vendor_source_path + '/jquery/ui/jquery-ui-tooltip-addon.js',
 			'lazyload': vendor_source_path + '/lazyload/lazyload.js',
