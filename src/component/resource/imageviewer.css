@@ -32,6 +32,7 @@
 .image-viewer-container .iv-list {position:absolute; z-index:1; bottom:0; width:100%; height:58px; overflow:hidden; opacity:0.2; transition:opacity 1s ease-out;}
 .image-viewer-container .iv-list:hover {opacity:1;}
 .image-viewer-container .iv-list-wrap {display:block; width:100%; overflow-x:auto; padding:2px 0; margin:0 30px;}
+.image-viewer-container .iv-list-wrap img {display:block;}
 .image-viewer-container .iv-list ul {display:block; text-align:center; margin:0 auto;}
 .image-viewer-container .iv-list li {display:inline-block;}
 .image-viewer-container .iv-list li span {cursor:pointer; width:60px; height:50px; text-align:center; margin:0 5px; overflow:hidden; display:inline-block; box-shadow:1px 1px 5px black;}
