@@ -96,6 +96,18 @@ define('ywj/util', function(require){
 	};
 
 	/**
+	 * open link without referer
+	 * @param link
+	 * @returns {boolean}
+	 */
+	var openLinkWithoutReferer = function(link){
+		var instance = window.open("about:blank");
+		instance.document.write("<meta http-equiv=\"refresh\" content=\"0;url="+link+"\">");
+		instance.document.close();
+		return false;
+	};
+
+	/**
 	 * check object is plain object
 	 * @param  obj
 	 * @return {Boolean}
@@ -738,8 +750,8 @@ define('ywj/util', function(require){
 		selectorEscape: selectorEscape,
 		htmlUnescape: htmlUnescape,
 		rectInLayout: rectInLayout,
-		rectAssoc:rectAssoc,
-		rectCenter:rectCenter,
+		rectAssoc: rectAssoc,
+		rectCenter: rectCenter,
 		pregQuote: pregQuote,
 		resetNode: resetNode,
 		cutString: cutString,
@@ -749,6 +761,7 @@ define('ywj/util', function(require){
 		isEmptyObject: isEmptyObject,
 		isPlainObject: isPlainObject,
 		isFunction: isFunction,
+		openLinkWithoutReferer: openLinkWithoutReferer,
 		isInt: isInt,
 		isScalar: isScalar,
 		isBomOrDom: isBomOrDom,
@@ -758,7 +771,7 @@ define('ywj/util', function(require){
 		getU8StrLen: getU8StrLen,
 		guid: guid,
 		copy: copy,
-		copyFormatted:copyFormatted,
+		copyFormatted: copyFormatted,
 		resolveExt: resolve_ext,
 		resolveFileName: resolve_file_name,
 		findParent: findParent,
