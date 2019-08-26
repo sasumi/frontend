@@ -8383,11 +8383,21 @@ define('ywj/richeditor', function(require){
 			return null;
 		},
 
+		/**
+		 * 支持参数：name="" mode="lite", mode="normal" buttons="undo,redo,image..." morebuttons="link,unlink..."
+		 * @param $node
+		 * @param param
+		 */
 		nodeInit: function($node, param){
 			var id = Util.guid();
 			var name = $node.attr('name');
 			var mode = param.mode || 'lite'; //默认使用lite类型
-			var buttons = param.buttons ? param.buttons.split(',') : null;
+			var buttons = param.buttons ? [param.buttons.split(',')] : [MODE_BUTTON_LIST[mode]];
+			var more_buttons = param.morebuttons ? param.morebuttons.split(',') : null;
+			if(more_buttons){
+				buttons[buttons.length-1] = buttons[buttons.length-1].concat(more_buttons);
+			}
+
 			var w = $node.width() || 400;
 			var h = $node.height() || 300;
 
@@ -8400,9 +8410,9 @@ define('ywj/richeditor', function(require){
 			$(script).insertAfter($node);
 
 			var UEDITOR_CONFIG = {
-				UEDITOR_HOME_URL: UEDITOR_HOME_URL,                //根目录
-				serverUrl: UEDITOR_INT_URL,                        //服务器统一请求接口路径
-				toolbars: buttons || [MODE_BUTTON_LIST[mode]]      //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的从新定义
+				UEDITOR_HOME_URL: UEDITOR_HOME_URL,                 //根目录
+				serverUrl: UEDITOR_INT_URL,                         //服务器统一请求接口路径
+				toolbars: buttons                                   //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的从新定义
 			};
 
 			require.async('ueditor', function(){
