@@ -4664,14 +4664,15 @@ define('ywj/imageviewer', function(require){
 		});
 
 		var wheel_tm;
-		$body.on('mousewheel', function(e){
+		var msw_evt =(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
+		$body.on(msw_evt, function(e){
+			var org_event = e.originalEvent;
 			if(!$container){
 				return;
 			}
 			clearTimeout(wheel_tm);
 			wheel_tm = setTimeout(function(){
-				var delta = e.detail? e.detail*(-120) : e.wheelDelta;
-				delta = delta || e.originalEvent.deltaY;
+				var delta = org_event.detail || org_event.wheelDelta || org_event.deltaY;
 				if(delta > 0){
 					$next.trigger('click');
 				} else {
