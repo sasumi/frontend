@@ -3,18 +3,19 @@
  */
 define('ywj/confirm', function(require){
 	var Pop = require('ywj/popup');
-	var pass = false;
 	var lang = require('lang/$G_LANGUAGE');
 
 	return {
 		nodeClick: function($node){
-			if(!pass){
+			if(!$node.data('confirm-pass')){
 				var msg = $node.data('confirm-message');
 				var title = lang('确认');
 				Pop.showConfirm(title, msg, function(){
-					pass = true;
-					setTimeout(function(){pass = false}, 50);
-					$node.trigger('click');
+					$node.data('confirm-pass', 1);
+					setTimeout(function(){
+						$node.data('confirm-pass', 0);
+					});
+					$node[0].click();
 				}, null, {with_icon:true});
 				return false;
 			}
