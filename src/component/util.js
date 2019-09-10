@@ -245,7 +245,7 @@ define('ywj/util', function(require){
 					} else {
 						$all_chks.attr('required', 'required');
 					}
-				});
+				}).triggerHandler('change');
 			}
 		});
 	};
