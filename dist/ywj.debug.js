@@ -9871,7 +9871,7 @@ define('ywj/tip', function(require){
 				'<s class="ywj-tip-arrow ywj-tip-arrow-pt"></s>'+
 				'<s class="ywj-tip-arrow ywj-tip-arrow-bg"></s>'+
 				(opt.closeBtn ? '<span class="ywj-tip-close">&#10005;</span>' : '')+
-				'<div class="ywj-tip-content" ra="adfs">'+content+'</div>'+
+				'<div class="ywj-tip-content">'+content+'</div>'+
 			'</div>';
 
 		PRIVATE_VARS[this.guid].opt = opt;
