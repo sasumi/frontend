@@ -687,7 +687,7 @@ define('ywj/popup', function(require){
 		if(curPop){
 			return curPop.close();
 		}
-		return true;
+		return false;
 	};
 
 	/**
