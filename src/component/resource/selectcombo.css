@@ -1,6 +1,6 @@
 .combo { position:relative; display:inline-block; line-height:20px;}
 .combo .combo-txt-inp {border:none; outline:none; padding-left:5px; position:absolute; background-color:white; font-family:"Tahoma", "Helvetica", "Microsoft YaHei New", "Microsoft YaHei", "宋体", "SimSun", "STXihei", "华文细黑", sans-serif}
-.combo>ul { position:absolute; z-index:10; background-color:white; border:1px solid #ddd; border-radius:3px; padding:3px; max-height:300px; overflow-x:hidden; overflow-y:auto; box-shadow:1px 2px 10px #ccc}
+.combo>ul { position:absolute; z-index:10; background-color:white; border:1px solid #ddd; border-radius:3px; padding:3px; max-height:300px; max-width:400px; overflow-x:hidden; overflow-y:auto; box-shadow:1px 2px 10px #ccc}
 .combo li {padding:3px 5px; border-bottom:1px dotted #eee; color:#333; white-space:nowrap; cursor:pointer;}
 .combo li:last-child {border-bottom-color:white;}
 .combo li:hover {color:#009EFF; background-color:#FBFDFF; border-color:transparent}
