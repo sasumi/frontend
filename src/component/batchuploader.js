@@ -152,13 +152,16 @@ define('ywj/batchuploader', function(require){
 		});
 
 		var $new_tab = $(new_tab_html).appendTo($list);
-		$new_tab.find('input').change(function(){
+		$new_tab.find('input[type=file]').change(function(){
 			for(var i=0; i<this.files.length; i++){
 				var u = add_new(_this);
 				var formData = new FormData();
 				formData.append(this.name, this.files[i]);
 				u.send(formData);
 			}
+
+			//重置file为空，避免选择相同图片不能触发change事件
+			$(this).val('');
 		});
 
 		$container.delegate('.batch-uploader-delete-btn', 'click', function(){
