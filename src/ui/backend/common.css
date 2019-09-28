@@ -328,10 +328,10 @@ caption .btn, caption .drop-list,
 .data-tbl tbody tr:hover,
 .data-tbl tbody tr.yc-row-checked {background-color:rgba(238, 238, 238, 0.52)}
 .data-tbl tbody tr:last-child {border-bottom:none;}
-.data-tbl caption {font-size:16px; text-align:left; text-transform:uppercase; padding:1rem 0; color:gray;;}
-.data-tbl .col-min-center {width:20px; white-space:nowrap; text-align:center}
-.data-tbl .col-min {width:20px; white-space:nowrap;}
+.data-tbl caption {font-size:16px; text-align:left; text-transform:uppercase; padding:1rem 0; color:gray;}
 .data-tbl .col-op,
+.data-tbl .col-min {width:20px; white-space:nowrap;}
+.data-tbl .col-min-center,
 .data-tbl .col-idx,
 .data-tbl .col-chk {width:20px; white-space:nowrap; text-align:center}
 
