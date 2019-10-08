@@ -8458,7 +8458,8 @@ define('ywj/richeditor', function(require){
 
 				var editor = UE.getEditor(id, UEDITOR_CONFIG);
 				editor.addListener("ready", function(){
-					editor.setContent($node.val());
+					editor.setContent('');
+					editor.execCommand('insertHtml', $node.val(), true);
 					editor.setHeight(h+'px');
 					editor.addListener("contentchange", function () {
 						$node.val(this.getContent()).trigger('change');
