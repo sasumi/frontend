@@ -8350,7 +8350,7 @@ define('ywj/richeditor', function(require){
 	var MODE_BUTTON_LIST = {
 		lite: ['undo', 'redo', 'fontfamily', 'fontsize', 'bold', 'italic', 'underline', 'strikethrough', 'removeformat',
 			'forecolor', 'backcolor', 'formatmatch', 'insertorderedlist', 'insertunorderedlist',
-			'link', 'unlink'],
+			'link', 'unlink', 'source'],
 
 		normal: [
 			'fontfamily', 'fontsize', 'undo', 'redo', 'bold', 'italic', 'underline', 'strikethrough', 'removeformat', 'blockquote',
