@@ -10878,7 +10878,7 @@ define('ywj/util', function(require){
 
 	var isScalar = function(value){
 		var type = getType(value);
-		return type == 'number' || type == 'boolean' || type == 'string' || type == 'null' || type == 'undefined';
+		return type === 'number' || type === 'boolean' || type === 'string' || type === 'null' || type === 'undefined';
 	};
 
 	/**
@@ -10888,7 +10888,7 @@ define('ywj/util', function(require){
 	 */
 	var isInt = function(value){
 		return !isNaN(value) &&
-			parseInt(Number(value)) == value && !isNaN(parseInt(value, 10));
+			parseInt(Number(value)) === value && !isNaN(parseInt(value, 10));
 	};
 
 	/**
@@ -10904,7 +10904,7 @@ define('ywj/util', function(require){
 			//Node, Event, Window
 			return value['nodeType'] || value['srcElement'] || (value['top'] && value['top'] == Y.W.top);
 		}else{
-			return getType(value) != 'object' && getType(value) != 'function';
+			return getType(value) !== 'object' && getType(value) !== 'function';
 		}
 	};
 
@@ -10914,7 +10914,7 @@ define('ywj/util', function(require){
 	 * @return {Boolean}
 	 */
 	var isBoolean = function(obj){
-		return getType(obj) == 'boolean';
+		return getType(obj) === 'boolean';
 	};
 
 	/**
@@ -10923,7 +10923,7 @@ define('ywj/util', function(require){
 	 * @return {Boolean}
 	 */
 	var isString = function(obj){
-		return getType(obj) == 'string';
+		return getType(obj) === 'string';
 	};
 
 	/**
@@ -10932,7 +10932,7 @@ define('ywj/util', function(require){
 	 * @return {Boolean}
 	 */
 	var isArray = function(obj){
-		return getType(obj) == 'array';
+		return getType(obj) === 'array';
 	};
 
 	/**
@@ -11011,12 +11011,40 @@ define('ywj/util', function(require){
 	};
 
 	/**
+	 * 修正浏览器 datalist触发时，未能显示全部option list
+	 * @param $inputs
+	 */
+	var fix_datalist_option = function($inputs){
+		var DATA_KEY = 'data-initialize-value';
+		$inputs.each(function(){
+			var $inp = $(this);
+			var already_has_placeholder = $inp.attr('placeholder');
+			$inp.mousedown(function(){
+				if(!already_has_placeholder){
+					$inp.attr('placeholder', this.value);
+				}
+				if(this.value){
+					$inp.data(DATA_KEY, this.value);
+					$inp.val('');
+				}
+			}).on('blur', function(){
+				if($inp.val() === '' && $inp.data(DATA_KEY) !== null){
+					$inp.val($inp.data(DATA_KEY));
+				}
+				if(!already_has_placeholder){
+					$inp.attr('placeholder', '');
+				}
+			})
+		});
+	};
+
+	/**
 	 * check object is a function
 	 * @param  obj
 	 * @return {Boolean}
 	 */
 	var isFunction = function(obj){
-		return getType(obj) == 'function';
+		return getType(obj) === 'function';
 	};
 
 	/**
@@ -11517,6 +11545,7 @@ define('ywj/util', function(require){
 		cutString: cutString,
 		explode: explode,
 		fixCheckboxRequired: fix_checkbox_required,
+		fixDatalistOption: fix_datalist_option,
 		setNodeSelectDisabled: setNodeSelectDisabled,
 		isEmptyObject: isEmptyObject,
 		isPlainObject: isPlainObject,
