@@ -11012,6 +11012,7 @@ define('ywj/util', function(require){
 
 	/**
 	 * 修正浏览器 datalist触发时，未能显示全部option list
+	 * @todo 在触发时，会出现不能用删除（退格）键删除原来的数值
 	 * @param $inputs
 	 */
 	var fix_datalist_option = function($inputs){
