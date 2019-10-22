@@ -11201,6 +11201,13 @@ define('ywj/util', function(require){
 		return rect;
 	};
 
+	var scrollTo = function($el, $container){
+		$container.animate({scrollTop: $container.scrollTop() + $el.offset().top}, {
+			duration: 'medium',
+			easing: 'swing'
+		});
+	};
+
 	/**
 	 * 中英文字符串截取（中文按照2个字符长度计算）
 	 * @param str
@@ -11517,6 +11524,7 @@ define('ywj/util', function(require){
 		cloneConfigCaseInsensitive: cloneConfigCaseInsensitive,
 		htmlEscape: htmlEscape,
 		selectorEscape: selectorEscape,
+		scrollTo: scrollTo,
 		htmlUnescape: htmlUnescape,
 		rectInLayout: rectInLayout,
 		rectAssoc: rectAssoc,
