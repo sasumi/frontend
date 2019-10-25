@@ -62,6 +62,19 @@ define('ywj/util', function(require){
 			.replace(/>/g, '&gt;');
 	};
 
+	var htmlEscapeObject = function(obj){
+		if(isString(obj)){
+			return htmlEscape(obj);
+		} else if(isScalar(obj)){
+			return obj;
+		} else {
+			for(var i in obj){
+				obj[i] = htmlEscapeObject(obj[i]);
+			}
+			return obj;
+		}
+	};
+
 	var selectorEscape = function(str){
 		return (window.CSS && CSS.escape) ? CSS.escape(str) : str.replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&");
 	};
@@ -783,6 +796,7 @@ define('ywj/util', function(require){
 		getType: getType,
 		cloneConfigCaseInsensitive: cloneConfigCaseInsensitive,
 		htmlEscape: htmlEscape,
+		htmlEscapeObject: htmlEscapeObject,
 		selectorEscape: selectorEscape,
 		scrollTo: scrollTo,
 		htmlUnescape: htmlUnescape,
