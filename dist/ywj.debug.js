@@ -10561,7 +10561,7 @@ define('ywj/uploader', function(require){
 			html += '<span class="com-uploader-name">'+Util.htmlEscape(data.name)+'</span>';
 		}
 		PRIVATES[UP.id].container.find('.'+COM_CLASS_CONTENT).html(html);
-		PRIVATES[UP.id].input.val(data.value);
+		PRIVATES[UP.id].input.val(data.value).trigger('change');
 		PRIVATES[UP.id].input.data('src', data.src);
 		PRIVATES[UP.id].input.data('thumb', data.thumb);
 		UP.onSuccess(message, data);
@@ -10640,7 +10640,7 @@ define('ywj/uploader', function(require){
 		});
 
 		PRI.container.find('.com-uploader-delete').click(function(){
-			PRI.input.val('');
+			PRI.input.val('').trigger('change');
 			update_dom_state(_this, COM_CLASS_UPLOAD_NORMAL);
 			on_delete(_this);
 		});
