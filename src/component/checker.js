@@ -9,7 +9,7 @@ define('ywj/checker', function(require){
 	var tm;
 
 	return {
-		nodeInit: function($cur, param){
+		nodeInit: function($mater_check, param){
 			var target = param.target;
 			var hidetip = param.hidetip;
 			var quick_check = param.qc;
@@ -17,7 +17,7 @@ define('ywj/checker', function(require){
 			//缺省只针对table里面的checkbox有效
 			var $chk_list = $('input[type=checkbox]:not([disabled]):not([readonly]):not([data-component])', target || 'table');
 			if(!$chk_list.size()){
-				$cur.attr('disabled', 'disabled');
+				$mater_check.attr('disabled', 'disabled');
 				return;
 			}
 
@@ -30,8 +30,8 @@ define('ywj/checker', function(require){
 					s += '<li data-count="'+arr[i]+'">'+arr[i]+'</li>';
 				}
 				s += '</ul></span>';
-				var $nav = $(s).insertBefore($cur);
-				$nav.find('.quick-checker-chk').prepend($cur).click(function(e){
+				var $nav = $(s).insertBefore($mater_check);
+				$nav.find('.quick-checker-chk').prepend($mater_check).click(function(e){
 					if(e.target.tagName == 'SPAN'){
 						return false;
 					}
@@ -89,28 +89,29 @@ define('ywj/checker', function(require){
 				var all_count = tmp[1];
 
 				var update_trigger_tip = function(check_count, total){
-					$cur.attr('title', '已选择('+check_count+'/'+total+')');
-					$cur.trigger('check_change', {count:check_count, total:total});
+					$mater_check.attr('title', '已选择('+check_count+'/'+total+')');
+					$mater_check.trigger('check_change', {count:check_count, total:total});
 				};
 
-				$cur[0].indeterminate = false;
-				$cur.attr('checked', false);
+				$mater_check[0].indeterminate = false;
+				$mater_check.attr('checked', false);
 				if(has_checked == all_count){
-					$cur.attr('checked', true);
+					$mater_check.attr('checked', true);
 					update_trigger_tip(has_checked, all_count);
 				} else if(has_checked){
-					$cur[0].indeterminate = true;
-					$cur.attr('checked', true);
+					$mater_check[0].indeterminate = true;
+					$mater_check.attr('checked', true);
 					update_trigger_tip(has_checked, all_count);
 				} else {
-					$cur.attr('checked', false);
+					$mater_check.attr('checked', false);
 					update_trigger_tip(0, all_count);
 				}
 			};
 
 			//更新选择框
 			var update_check = function(toState){
-				$chk_list.attr('checked', !!toState).trigger('change');
+				//这里使用triggerHandler，不用trigger，避免触发太多原生事件，影响性能
+				$chk_list.attr('checked', !!toState).triggerHandler('change');
 			};
 
 			//支持shift多选
@@ -133,13 +134,13 @@ define('ywj/checker', function(require){
 				}
 			};
 
-			$cur.change(function(){
-				var toState = $(this).data('flag') === undefined || $(this).data('flag') == '1';
-				if($(this).attr('type') == 'checkbox'){
+			$mater_check.change(function(){
+				var toState = $mater_check.data('flag') === undefined || $mater_check.data('flag') == '1';
+				if($mater_check.attr('type') === 'checkbox'){
 					toState = this.checked;
 				}
 				update_check(toState);
-				show_tip($cur);
+				//show_tip($mater_check);
 			});
 
 			$chk_list.change(function(){
@@ -162,7 +163,7 @@ define('ywj/checker', function(require){
 
 			//增强支持单个容器下，父级容器点击辅助
 			var _pc = false; //防止fix-head重复监听
-			$chk_list.add($cur).parent().each(function(){
+			$chk_list.add($mater_check).parent().each(function(){
 				var $p = $(this);
 				if($p.children().length == 1){
 					$p.click(function(e){
