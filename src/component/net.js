@@ -240,9 +240,9 @@ define('ywj/net', function(require){
 				if(aj.statusText === 'abort'){
 					console.log('ajax abort');
 					opt.onAbort();
-				} else {
+				}else{
 					console.error('ajax error:', error, aj);
-					opt.onError(error || aj.statusText || 'Error');
+					opt.onError(aj.responseText || aj.statusText || error || 'Error');
 				}
 			}
 		});
@@ -328,7 +328,6 @@ define('ywj/net', function(require){
 			if(!data[name]){
 				data[name] = [];
 			}
-
 			if(this.type == 'radio'){
 				if(this.checked){
 					data[name].push(this.value);
@@ -374,12 +373,12 @@ define('ywj/net', function(require){
 		xhr.open('GET', url, true);
 		xhr.responseType = "blob";
 		xhr.onreadystatechange = function () {
-			if (xhr.readyState == 4) {
+			if (xhr.readyState === 4) {
 				if(success)success(xhr.response);
 			}
 		};
 		xhr.send(null);
-	}
+	};
 
 	var postByForm = function(url, data){
 		var iframe = document.createElement("iframe");
