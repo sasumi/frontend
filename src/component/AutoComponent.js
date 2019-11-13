@@ -113,7 +113,7 @@ define('ywj/AutoComponent', function(require){
 					var all_data = getDataParam($node);
 					var cs = parseComponents($node.data(COMPONENT_FLAG_KEY));
 					if(!_LS[cs]){
-						console.info('%cLoad COM: '+cs.join(','), 'color:green');
+						console.debug('%cLoad COM: '+cs.join(','), 'color:green');
 						_LS[cs] = true;
 					}
 					require.async(cs, function(){

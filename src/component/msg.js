@@ -94,8 +94,8 @@ define('ywj/msg', function(require){
 		$('<div></div>').appendTo($WRAPPER);
 
 		//keep message while mouse on
-		this.container.on('mousemove', function(){_this._mouse_on = true; console.log('mouse on');});
-		this.container.on('mouseout', function(){_this._mouse_on = false; console.log('mouse leave');});
+		this.container.on('mousemove', function(){_this._mouse_on = true; console.debug('mouse on');});
+		this.container.on('mouseout', function(){_this._mouse_on = false; console.debug('mouse leave');});
 
 		this.container.show();
 		var _this = this;

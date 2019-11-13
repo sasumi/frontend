@@ -175,7 +175,7 @@ define('ywj/fileuploader', function(require){
 		} else {
 			on_error(UP, rsp.message || lang('后台有点忙，请稍后重试'));
 		}
-		console.log('response string:', rsp_str,'response json:', rsp);
+		console.debug('response string:', rsp_str,'response json:', rsp);
 	};
 
 	/**
@@ -312,7 +312,7 @@ define('ywj/fileuploader', function(require){
 			var url = PRI.input.data('src') || PRI.input.val();
 			var name = PRI.container.find('.com-fileuploader-file-name').val();
 			name = name || get_name(PRI.input.val());
-			console.log('download:', name, url);
+			console.debug('download:', name, url);
 			Net.download(url, name);
 		});
 

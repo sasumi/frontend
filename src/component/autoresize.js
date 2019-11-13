@@ -24,12 +24,12 @@ define('ywj/autoresize', function(require){
 						.replace(/\n/g, '<br/>')
 						.replace(/\s/g, '&nbsp;')
 						.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
-					console.log(html);
+					console.debug('Resolve resize html', html);
 					$shadow.html(html);
 					$text.stop().animate({
 						height:$shadow.height()+OFFSET
 					}, 'fast', function(){
-						console.log('done');
+						console.debug('resize done');
 					});
 				})
 			}

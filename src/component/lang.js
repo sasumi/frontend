@@ -16,7 +16,7 @@ define('ywj/lang', function(require){
 		}
 		if(!PACKAGE[text]){
 			if(!tmp[text]){
-				console.warn('translate fail:' + text, window['G_LANGUAGE'], PACKAGE);
+				console.log('translate fail:' + text, window['G_LANGUAGE'], PACKAGE);
 				tmp[text] = true;
 			}
 			return text;

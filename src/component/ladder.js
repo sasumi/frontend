@@ -87,7 +87,7 @@ define('ywj/ladder', function(require){
 					if(m){
 						//match anchor link node
 						if($(aim).size() && $(aim)[0].tagName == 'A'){
-							console.info('ladder hit a:'+aim);
+							console.debug('ladder hit a:'+aim);
 							return;
 						}
 						scroll_to(aim, $(this));

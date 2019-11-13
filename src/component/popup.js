@@ -813,7 +813,7 @@ define('ywj/popup', function(require){
 				region.visibleWidth = pr.visibleWidth;
 			}
 		} catch(ex){
-			console.log(ex);
+			console.info(ex);
 		}
 		return region;
 	};

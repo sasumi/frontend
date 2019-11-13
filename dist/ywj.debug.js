@@ -839,7 +839,7 @@ define('ywj/autocomplete', function(require){
 				}
 				var data = LAST_DATA[$dd.index()-1];
 				if(data.disabled){
-					console.log('disabled');
+					console.debug('data disabled', data);
 					return false;
 				}
 
@@ -1048,7 +1048,7 @@ define('ywj/AutoComponent', function(require){
 					var all_data = getDataParam($node);
 					var cs = parseComponents($node.data(COMPONENT_FLAG_KEY));
 					if(!_LS[cs]){
-						console.info('%cLoad COM: '+cs.join(','), 'color:green');
+						console.debug('%cLoad COM: '+cs.join(','), 'color:green');
 						_LS[cs] = true;
 					}
 					require.async(cs, function(){
@@ -1139,12 +1139,12 @@ define('ywj/autoresize', function(require){
 						.replace(/\n/g, '<br/>')
 						.replace(/\s/g, '&nbsp;')
 						.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
-					console.log(html);
+					console.debug('Resolve resize html', html);
 					$shadow.html(html);
 					$text.stop().animate({
 						height:$shadow.height()+OFFSET
 					}, 'fast', function(){
-						console.log('done');
+						console.debug('resize done');
 					});
 				})
 			}
@@ -3152,7 +3152,7 @@ define('ywj/counter', function(require){
 
 			if($node[0].tagName === 'TEXTAREA'){
 				bindTextareaOnResize($node, function(){
-					console.log("on resize");
+					console.debug("Counter on resize");
 					show($node, max);
 				});
 			}
@@ -3342,10 +3342,10 @@ define('ywj/datetimepicker', function(require){
 			$dom.find('.ywj-tip-content').addClass('com-dpt-tip-content-wrap');
 			$('body').click(function(e){
 				if(e.target == $dom[0] || $.contains($dom[0], e.target) || e.target == $relate_node[0]){
-					console.log('inside');
+					console.debug('inside');
 					return;
 				}
-				console.log('click outside');
+				console.debug('click outside');
 				hide_common_panel();
 			});
 
@@ -3910,7 +3910,7 @@ define('ywj/fileuploader', function(require){
 		} else {
 			on_error(UP, rsp.message || lang('后台有点忙，请稍后重试'));
 		}
-		console.log('response string:', rsp_str,'response json:', rsp);
+		console.debug('response string:', rsp_str,'response json:', rsp);
 	};
 
 	/**
@@ -4047,7 +4047,7 @@ define('ywj/fileuploader', function(require){
 			var url = PRI.input.data('src') || PRI.input.val();
 			var name = PRI.container.find('.com-fileuploader-file-name').val();
 			name = name || get_name(PRI.input.val());
-			console.log('download:', name, url);
+			console.debug('download:', name, url);
 			Net.download(url, name);
 		});
 
@@ -4655,7 +4655,7 @@ define('ywj/imageviewer', function(require){
 			$prev[idx == 0 ? 'addClass':'removeClass'](NAV_DISABLE_CLASS).attr('title', idx == 0 ? '已经是第一张':'');
 			$next[idx == (total-1) ? 'addClass' : 'removeClass'](NAV_DISABLE_CLASS).attr('title', idx == (total-1) ? '已经是最后一张':'');
 			var src = $iv_list.eq(idx).attr('href');
-			console.info('load image:['+idx+']'+src);
+			console.debug('load image:['+idx+']'+src);
 			clearTimeout(loader_tm);
 			loader_tm = setTimeout(function(){
 				$img.attr('src', LOADING_SRC);
@@ -5299,7 +5299,7 @@ define('ywj/ladder', function(require){
 					if(m){
 						//match anchor link node
 						if($(aim).size() && $(aim)[0].tagName == 'A'){
-							console.info('ladder hit a:'+aim);
+							console.debug('ladder hit a:'+aim);
 							return;
 						}
 						scroll_to(aim, $(this));
@@ -5839,8 +5839,8 @@ define('ywj/msg', function(require){
 		$('<div></div>').appendTo($WRAPPER);
 
 		//keep message while mouse on
-		this.container.on('mousemove', function(){_this._mouse_on = true; console.log('mouse on');});
-		this.container.on('mouseout', function(){_this._mouse_on = false; console.log('mouse leave');});
+		this.container.on('mousemove', function(){_this._mouse_on = true; console.debug('mouse on');});
+		this.container.on('mouseout', function(){_this._mouse_on = false; console.debug('mouse leave');});
 
 		this.container.show();
 		var _this = this;
@@ -6275,11 +6275,11 @@ define('ywj/net', function(require){
 			},
 			error: function(aj, error){
 				if(aj.statusText === 'abort'){
-					console.log('ajax abort');
+					console.info('ajax abort');
 					opt.onAbort();
 				}else{
 					console.error('ajax error:', error, aj);
-					opt.onError(aj.responseText || error || aj.statusText || 'Error');
+					opt.onError(aj.responseText || aj.statusText || error || 'Error');
 				}
 			}
 		});
@@ -6448,7 +6448,7 @@ define('ywj/net', function(require){
 		document.body.appendChild(form);
 		form.submit();
 		form.onload = function(){
-			console.log('onload');
+			console.debug('Form onload');
 			form.parentNode.removeChild(form);
 			iframe.parentNode.removeChild(iframe);
 		};
@@ -8093,7 +8093,7 @@ define('ywj/popup', function(require){
 				region.visibleWidth = pr.visibleWidth;
 			}
 		} catch(ex){
-			console.log(ex);
+			console.info(ex);
 		}
 		return region;
 	};
@@ -10625,8 +10625,7 @@ define('ywj/uploader', function(require){
 		} else {
 			on_error(UP, rsp.message || lang('后台有点忙，请稍后重试'));
 		}
-		console.log('response string:', rsp_str);
-		console.log('response json:', rsp);
+		console.debug('response string:', rsp_str, 'response json:', rsp);
 	};
 
 	/**

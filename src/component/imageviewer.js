@@ -142,7 +142,7 @@ define('ywj/imageviewer', function(require){
 			$prev[idx == 0 ? 'addClass':'removeClass'](NAV_DISABLE_CLASS).attr('title', idx == 0 ? '已经是第一张':'');
 			$next[idx == (total-1) ? 'addClass' : 'removeClass'](NAV_DISABLE_CLASS).attr('title', idx == (total-1) ? '已经是最后一张':'');
 			var src = $iv_list.eq(idx).attr('href');
-			console.info('load image:['+idx+']'+src);
+			console.debug('load image:['+idx+']'+src);
 			clearTimeout(loader_tm);
 			loader_tm = setTimeout(function(){
 				$img.attr('src', LOADING_SRC);

@@ -238,7 +238,7 @@ define('ywj/net', function(require){
 			},
 			error: function(aj, error){
 				if(aj.statusText === 'abort'){
-					console.log('ajax abort');
+					console.info('ajax abort');
 					opt.onAbort();
 				}else{
 					console.error('ajax error:', error, aj);
@@ -411,7 +411,7 @@ define('ywj/net', function(require){
 		document.body.appendChild(form);
 		form.submit();
 		form.onload = function(){
-			console.log('onload');
+			console.debug('Form onload');
 			form.parentNode.removeChild(form);
 			iframe.parentNode.removeChild(iframe);
 		};

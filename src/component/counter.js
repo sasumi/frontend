@@ -93,7 +93,7 @@ define('ywj/counter', function(require){
 
 			if($node[0].tagName === 'TEXTAREA'){
 				bindTextareaOnResize($node, function(){
-					console.log("on resize");
+					console.debug("Counter on resize");
 					show($node, max);
 				});
 			}

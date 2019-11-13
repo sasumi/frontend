@@ -180,10 +180,10 @@ define('ywj/datetimepicker', function(require){
 			$dom.find('.ywj-tip-content').addClass('com-dpt-tip-content-wrap');
 			$('body').click(function(e){
 				if(e.target == $dom[0] || $.contains($dom[0], e.target) || e.target == $relate_node[0]){
-					console.log('inside');
+					console.debug('inside');
 					return;
 				}
-				console.log('click outside');
+				console.debug('click outside');
 				hide_common_panel();
 			});
 

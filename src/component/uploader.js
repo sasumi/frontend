@@ -160,8 +160,7 @@ define('ywj/uploader', function(require){
 		} else {
 			on_error(UP, rsp.message || lang('后台有点忙，请稍后重试'));
 		}
-		console.log('response string:', rsp_str);
-		console.log('response json:', rsp);
+		console.debug('response string:', rsp_str, 'response json:', rsp);
 	};
 
 	/**

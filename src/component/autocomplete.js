@@ -191,7 +191,7 @@ define('ywj/autocomplete', function(require){
 				}
 				var data = LAST_DATA[$dd.index()-1];
 				if(data.disabled){
-					console.log('disabled');
+					console.debug('data disabled', data);
 					return false;
 				}
 
