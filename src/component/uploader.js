@@ -157,10 +157,11 @@ define('ywj/uploader', function(require){
 		}
 		if(rsp.code == '0'){
 			on_success(UP, rsp.message, rsp.data);
+			console.debug('response string:', rsp_str, 'response json:', rsp);
 		} else {
 			on_error(UP, rsp.message || lang('后台有点忙，请稍后重试'));
+			console.log('response string:', rsp_str, 'response json:', rsp);
 		}
-		console.debug('response string:', rsp_str, 'response json:', rsp);
 	};
 
 	/**
