@@ -5367,7 +5367,7 @@ define('ywj/lang', function(require){
 		}
 		if(!PACKAGE[text]){
 			if(!tmp[text]){
-				console.warn('translate fail:' + text, window['G_LANGUAGE'], PACKAGE);
+				console.debug('translate fail:' + text, window['G_LANGUAGE'], PACKAGE);
 				tmp[text] = true;
 			}
 			return text;
@@ -7863,6 +7863,7 @@ define('ywj/popup', function(require){
 	 */
 	Popup.fire = function(key, p1, p2){
 		if(!in_sub_win){
+			debugger;
 			console.warn('No in sub window');
 			return;
 		}
@@ -7908,7 +7909,7 @@ define('ywj/popup', function(require){
 	 */
 	Popup.resizeCurrentPopup = function(){
 		if(!in_sub_win){
-			console.warn('No in sub window');
+			console.debug('No in sub window');
 			return;
 		}
 		$(window).on('load', function(){
@@ -7924,7 +7925,7 @@ define('ywj/popup', function(require){
 	 */
 	Popup.autoResizeCurrentPopup = function(interval){
 		if(!in_sub_win){
-			console.warn('No in sub window');
+			console.debug('No in sub window');
 			return;
 		}
 		interval = interval || 50;

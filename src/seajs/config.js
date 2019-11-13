@@ -28,9 +28,9 @@
 			}
 		});
 		if(supported){
-			console.log('Language detected:', lang);
+			console.debug('Language detected:', lang);
 		} else {
-			console.warn('Language ['+lang+'] no supported, use default setting:', DEFAULT_LANGUAGE);
+			console.debug('Language ['+lang+'] no supported, use default setting:', DEFAULT_LANGUAGE);
 		}
 		return supported ? lang : DEFAULT_LANGUAGE;
 	}
