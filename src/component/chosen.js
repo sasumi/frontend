@@ -39,6 +39,15 @@ define('ywj/chosen', function(require){
 			return '';
 		};
 
+	var htmlEscape = function(text){
+		return String(text)
+			.replace(/&/g, '&amp;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#39;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;');
+	};
+
 	SelectParser = (function(){
 		function SelectParser(){
 			this.options_index = 0;
@@ -274,7 +283,7 @@ define('ywj/chosen', function(require){
 			option_el.className = classes.join(" ");
 			option_el.style.cssText = option.style;
 			option_el.setAttribute("data-option-array-index", option.array_index);
-			option_el.innerHTML = option.search_text;
+			option_el.innerHTML = htmlEscape(option.search_text);
 			return this.outerHTML(option_el);
 		};
 
@@ -972,6 +981,7 @@ define('ywj/chosen', function(require){
 			choice = $('<li />', {
 				"class": "search-choice"
 			}).html("<span>" + item.html + "</span>");
+
 			if(item.disabled){
 				choice.addClass('search-choice-disabled');
 			}else{
