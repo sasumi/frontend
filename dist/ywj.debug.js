@@ -1709,6 +1709,15 @@ define('ywj/chosen', function(require){
 			return '';
 		};
 
+	var htmlEscape = function(text){
+		return String(text)
+			.replace(/&/g, '&amp;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#39;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;');
+	};
+
 	SelectParser = (function(){
 		function SelectParser(){
 			this.options_index = 0;
@@ -2642,6 +2651,7 @@ define('ywj/chosen', function(require){
 			choice = $('<li />', {
 				"class": "search-choice"
 			}).html("<span>" + item.html + "</span>");
+
 			if(item.disabled){
 				choice.addClass('search-choice-disabled');
 			}else{
@@ -10623,10 +10633,11 @@ define('ywj/uploader', function(require){
 		}
 		if(rsp.code == '0'){
 			on_success(UP, rsp.message, rsp.data);
+			console.debug('response string:', rsp_str, 'response json:', rsp);
 		} else {
 			on_error(UP, rsp.message || lang('后台有点忙，请稍后重试'));
+			console.log('response string:', rsp_str, 'response json:', rsp);
 		}
-		console.debug('response string:', rsp_str, 'response json:', rsp);
 	};
 
 	/**
