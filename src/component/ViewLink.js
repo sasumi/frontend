@@ -16,8 +16,18 @@ define('ywj/ViewLink', function(require){
 
 	return {
 		nodeInit: function($node, param){
-			var val = $node.val() || $node.text();
+			if($node[0].tagName === 'A'){
+				$node.click(function(){
+					var url = $(this).attr('href');
+					if(is_link(url)){
+						Util.openLinkWithoutReferer(url);
+						return false;
+					}
+				});
+				return;
+			}
 
+			var val = $node.val() || $node.text();
 			if(val || input_able($node)){
 				var $view_btn = $node.next('.open-link');
 				if(!$view_btn.size()){
