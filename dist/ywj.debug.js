@@ -483,7 +483,6 @@ define('ywj/async', function(require){
 				};
 				if(timeout !== undefined){
 					opt.timeout = parseInt(timeout, 10)*1000;
-<<<<<<< Updated upstream
 				}
 				Net.request(url, data, opt);
 				return false;
@@ -636,171 +635,11 @@ define('ywj/auto', function(require){
 				for(var i=0;i<query_arr.length;i++){
 					var tmp = query_arr[i].split('=');
 					$(this).prepend('<input name="'+escape(decodeURIComponent(tmp[0]))+'" type="hidden" value="'+escape(decodeURIComponent(tmp[1]))+'" />');
-=======
->>>>>>> Stashed changes
-				}
-				Net.request(url, data, opt);
-				return false;
-			}
-<<<<<<< Updated upstream
-		});
-	};
-
-=======
-		}
-	}
-});
-//../src/component/auto.js
-define('ywj/auto', function(require){
-	var lang = require('lang/$G_LANGUAGE');
-	var $ = require('jquery');
-
-	/**
-	 * 绑定事件
-	 */
-	var bindEvent = function(){
-		var $body = $('body');
-
-		//select placeholder 效果
-		(function(){
-			var patch_select_title = function($sel, empty){
-				if(empty){
-					$sel.removeAttr('title');
-				} else {
-					$sel.attr('title', $sel.children().first().text());
-				}
-			};
-			var update_select_holder = function($sel){
-				if(!$sel[0].options.length || $sel[0].selectedIndex < 0){
-					return;
-				}
-				var val = $sel[0].options[$sel[0].selectedIndex].getAttribute('value');
-				var empty = val === '' || val === null;
-				$sel.attr('placeholder', empty ? 'valid' : 'invalid');
-				patch_select_title($sel, empty);
-			};
-			$('select[placeholder]').change(function(){
-				update_select_holder($(this));
-			}).each(function(){
-				update_select_holder($(this));
-			});
-		})();
-
-		//表格操作
-		(function(){
-			$body.delegate('*[rel=row-delete-btn]', 'click', function(){
-				var row = $(this).parentsUntil('tr').parent();
-				var allow_empty=$(this).data("allow-empty") || false;
-				require.async('ywj/table', function(T){
-					T.deleteRow(row,allow_empty);
-				});
-			});
-
-			$body.delegate('*[rel=row-up-btn]', 'click', function(){
-				var row = $(this).parentsUntil('tr').parent();
-				require.async('ywj/table', function(T){
-					T.moveUpRow(row);
-				});
-			});
-
-			$body.delegate('*[rel=row-down-btn]', 'click', function(){
-				var row = $(this).parentsUntil('tr').parent();
-				require.async('ywj/table', function(T){
-					T.moveDownRow(row);
-				});
-			});
-
-			$body.delegate('*[rel=row-append-btn]', 'click', function(e){
-				var $table = $(this).closest('table');
-				var $tbl = $('tbody', $table).eq(0);
-				var tpl = $(this).data('tpl');
-				require.async('ywj/table', function(T){
-					T.appendRow($('#'+tpl).text(), $tbl);
-				});
-				e.stopPropagation();
-			});
-		})();
-
-		//日期组件预加载
-		if($('input.date-time-txt:not([data-component])').size() || $('input.date-txt:not([data-component])').size()){
-			require.async('ywj/timepicker', function(){
-				var $dt = $('input.date-time-txt:not([data-component])');
-				var $d = $('input.date-txt:not([data-component])');
-				$dt.datetimepicker({
-					dateFormat: 'yy-mm-dd',
-					timeFormat: 'HH:mm:ss'
-				});
-				$d.datepicker({
-					dateFormat: 'yy-mm-dd'
-				});
-				$dt.data('date-widget-loaded', 1);
-				$d.data('date-widget-loaded', 1);
-			});
-		}
-
-		$.each(['input.date-time-txt:not([data-component])', 'input.date-txt:not([data-component])'], function(idx, s){
-			if($(s).size()){
-				require.async('ywj/timepicker', function(){
-					var opt = {dateFormat: 'yy-mm-dd'};
-					if(s.indexOf('time') >= 0){
-						opt.timeFormat = 'HH:mm:ss'
-					}
-					$(s).datetimepicker(opt);
-					$(s).data('date-widget-loaded', 1);
-				});
-			}
-			$body.delegate(s, 'click', function(){
-				if(!$(this).data('date-widget-loaded')){
-					var _this = this;
-					require.async('ywj/timepicker', function(){
-						var opt = {dateFormat: 'yy-mm-dd'};
-						if(s.indexOf('time') >= 0){
-							opt.timeFormat = 'HH:mm:ss'
-						}
-						$(_this).datetimepicker(opt);
-						$(_this).data('date-widget-loaded', 1);
-						$(_this).trigger('click');
-					});
-				}
-			});
-		});
-	};
-
-	/**
-	 * 处理器
-	 * 里面的处理逻辑都需要做好去重
-	 */
-	var handler = function(){
-		//表格空值填充
-		$('table[data-empty-fill]').each(function(){
-			var empty = $('tbody td', this).size() == 0 || $('td', this).size() == $('thead td').size();
-			if(empty){
-				var cs = Math.max($('tr>td', this).size(),$('tr>th', this).size());
-				var con = $('tbody', this).size() ? $('tbody', this) : $(this);
-				$('<tr class="row-empty"><td colspan="'+(cs || 1)+'"><div class="data-empty"> '+lang("无数据")+'</div></td></tr>').appendTo(con);
-			}
-		});
-
-		//表单自动将get参数写到隐藏域中
-		$('form').each(function(){
-			var action = this.getAttribute('action');
-			if($(this).data('form-get-fixed') || !action){
-				return;
-			}
-			$(this).data('form-get-fixed', 1);
-
-			if(!this.method || (this.method.toLowerCase() == 'get' && action.indexOf('?') >= 0)){
-				var query_str = action.substring(action.lastIndexOf("?")+1, action.length);
-				var query_arr = query_str.split('&');
-				for(var i=0;i<query_arr.length;i++){
-					var tmp = query_arr[i].split('=');
-					$(this).prepend('<input name="'+escape(decodeURIComponent(tmp[0]))+'" type="hidden" value="'+escape(decodeURIComponent(tmp[1]))+'" />');
 				}
 			}
 		});
 	};
 
->>>>>>> Stashed changes
 	$(function(){
 		bindEvent();
 		handler();
@@ -1039,7 +878,6 @@ define('ywj/autocomplete', function(require){
 					}
 				}
 			};
-<<<<<<< Updated upstream
 
 			var show_empty = function(){
 				create_panel();
@@ -1112,80 +950,6 @@ define('ywj/AutoComponent', function(require){
 		var tmp = attr.split(',');
 		var cs = [];
 
-=======
-
-			var show_empty = function(){
-				create_panel();
-				$PANEL.addClass(PANEL_ERROR_CLASS).html('<dt>没有匹配结果</dt>');
-				if(strict){
-					$shadow_inp.addClass(INPUT_MISS_MATCH);
-				}
-			};
-
-			var is_node_disabled = function(){
-				return $node.attr('readonly') || $node.attr('disabled');
-			};
-
-			var show_loading = function(){
-				create_panel();
-				$PANEL.addClass(PANEL_LOADING_CLASS).html('<dt>loading...</dt>');
-				$shadow_inp.addClass(INPUT_LOADING);
-			};
-
-			var hide_panel = function(){
-				$PANEL && $PANEL.hide();
-				$shadow_inp.removeClass(INPUT_LOADING);
-			};
-
-			//前端缓存
-			var CACHE_MAP = {};
-			var tm = null;
-			var load_data = function(keyword){
-				clearTimeout(tm);
-				keyword = $.trim(keyword);
-				if(!keyword){
-					hide_panel();
-					return;
-				}
-				var cb = function(rsp){
-					if(rsp.code == 0){
-						show_panel(rsp.data, rsp.message);
-					} else {
-						show_panel(null, rsp.message, true);
-					}
-					CACHE_MAP[keyword] = rsp;
-				};
-				if(CACHE_MAP[keyword]){
-					cb(CACHE_MAP[keyword]);
-					return;
-				}
-				show_loading();
-				tm = setTimeout(function(){
-					Net.get(param.source, {keyword:keyword}, cb, {frontCache: true});
-				}, 200);
-			};
-		}
-	};
-});
-//../src/component/AutoComponent.js
-/**
- * Created by Administrator on 2016/6/12.
- */
-define('ywj/AutoComponent', function(require){
-	var $ = require('jquery');
-	var Util = require('ywj/util');
-	var COMPONENT_FLAG_KEY = 'component';
-	var COMPONENT_BIND_FLAG_KEY = 'component-init-bind';
-	var SUPPORT_EVENTS = 'click mousedown mouseup keydown keyup';
-	var DEFAULT_NS = 'ywj';
-	var INIT_COMPLETED = false;
-	var INIT_CALLBACK = [];
-
-	var parseComponents = function(attr){
-		var tmp = attr.split(',');
-		var cs = [];
-
->>>>>>> Stashed changes
 		$.each(tmp, function(k, v){
 			v = $.trim(v);
 			if(v){
@@ -1388,24 +1152,14 @@ define('ywj/autoresize', function(require){
 	}
 });
 //../src/component/Base64.js
-<<<<<<< Updated upstream
-/**
- * Created by sasumi on 2014/12/2.
- */
-=======
->>>>>>> Stashed changes
 define('ywj/Base64', function(){
 	var KEY_STR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 	var utf8_decode = function(e){
 		var t = "";
 		var n = 0;
-<<<<<<< Updated upstream
-		var r = c1 = c2 = 0;
-=======
 		var r = 0,
 			c1 = 0,
 			c2 = 0;
->>>>>>> Stashed changes
 		while(n < e.length){
 			r = e.charCodeAt(n);
 			if(r < 128){
@@ -1478,11 +1232,7 @@ define('ywj/Base64', function(){
 			var n, r, i;
 			var s, o, u, a;
 			var f = 0;
-<<<<<<< Updated upstream
-			text = text.replace(/++[++^A-Za-z0-9+/=]/g, "");
-=======
 			text = text.replace(/\+\+[++^A-Za-z0-9+/=]/g, "");
->>>>>>> Stashed changes
 			while(f < text.length){
 				s = KEY_STR.indexOf(text.charAt(f++));
 				o = KEY_STR.indexOf(text.charAt(f++));
@@ -1503,8 +1253,6 @@ define('ywj/Base64', function(){
 			return t
 		},
 	};
-<<<<<<< Updated upstream
-
 	return Base64;
 });
 //../src/component/batchuploader.js
@@ -1514,17 +1262,6 @@ define('ywj/Base64', function(){
 define('ywj/batchuploader', function(require){
 	var console = window['console'];
 
-=======
-	return Base64;
-});
-//../src/component/batchuploader.js
-/**
- * Created by Administrator on 2016/5/6.
- */
-define('ywj/batchuploader', function(require){
-	var console = window['console'];
-
->>>>>>> Stashed changes
 	require('ywj/resource/batchuploader.css');
 	var $ = require('jquery');
 	var Util = require('ywj/util');
@@ -2214,11 +1951,7 @@ define('ywj/chosen', function(require){
 			option_el.className = classes.join(" ");
 			option_el.style.cssText = option.style;
 			option_el.setAttribute("data-option-array-index", option.array_index);
-<<<<<<< Updated upstream
 			option_el.innerHTML = option.search_text;
-=======
-			option_el.innerHTML = htmlEscape(option.search_text);
->>>>>>> Stashed changes
 			return this.outerHTML(option_el);
 		};
 
@@ -9506,337 +9239,6 @@ define('ywj/SelectTree', function(require){
 					left: $sel.offset().left
 				}).show();
 				return false;
-<<<<<<< Updated upstream
-			});
-			$sel.on('keydown', function(e){
-				if(e.keyCode == Util.KEYS.TAB){
-					$panel.hide();
-				}
-			});
-			$('body').mousedown(function(e){
-				var target = e.target;
-				if(target == $sel[0] || target == $panel[0] || $.contains($panel[0], target)){
-				} else {
-					$panel.hide();
-				}
-			});
-			$panel.delegate('s', 'click', function(){
-				var $li = $(this).closest('li').toggleClass('expand');
-				if(!$li.hasClass('expand')){
-					$li.find('li').removeClass('expand');
-				}
-			});
-			$panel.delegate('.ti', 'click', function(){
-				$panel.find('.active').removeClass('active');
-				$(this).closest('li').addClass('active');
-				$sel[0].selectedIndex = $panel.find('.ti').index(this);
-				$($sel[0]).trigger('onselected');
-				$panel.hide();
-			});
-		}
-	}
-});
-//../src/component/selectui.js
-define('ywj/selectui', function(require){
-	require('ywj/resource/selectui.css');
-	var $ = require('jquery');
-	var Util = require('ywj/util');
-
-	var ACT_CLASS = 'com-select-ui-trigger';
-
-	var init = function($node, param){
-		var name = $node.attr('name');
-		var triggerevent = param.triggerevent || 'click';
-		var selected = $node[0].selectedIndex;
-		var value = $node[0].options[selected].value;
-		var readonly = $node.attr('readonly');
-		var disabled = $node.attr('disabled');
-		var required = $node.attr('required'); //@todo
-		var multiple = $node.attr('multiple'); //@todo
-
-		var html = '<dl class="com-select-ui '+(disabled ? 'com-select-ui-disabled':'')+(readonly ? ' com-select-ui-readonly':'')+'" data-name="'+Util.htmlEscape(name)+'" data-value="'+Util.htmlEscape(value)+'">';
-		html += '<dt>'+$($node[0].options[selected]).text()+'</dt>';
-		html += '<dd><ul>';
-
-		var build_opt = function(label, v){
-			if(v !== undefined){
-				var guid = Util.guid();
-				return '<li' + (value === v ? ' class="active"' : '')+'>'+
-					'<label tabindex="0" data-value="'+Util.htmlEscape(v)+'">'+Util.htmlEscape(label)+'</label></li>';
-			}
-			return '<li><span>'+Util.htmlEscape(label)+'</span></li>';
-		};
-
-		$node.children().each(function(){
-			if(this.tagName == 'OPTGROUP'){
-				html += build_opt(this.label);
-				$(this).children().each(function(){
-					html += build_opt($(this).text(), this.value);
-				});
-			} else {
-				html += build_opt($(this).text(), this.value);
-			}
-		});
-		html += '</ul></dd></dl>';
-		var $sel = $(html).insertAfter($node);
-		$sel.delegate('label', 'click', function(ev){
-			var val = $(this).data('value');
-			$node.val(val).trigger('change');
-			$sel.find('li').removeClass('active');
-			$sel.find('li').each(function(){
-				var $lbl = $(this).find('label');
-				if($lbl.data('value') === val){
-					$sel.find('dt').html($lbl.html());
-					$(this).addClass('active');
-				}
-			});
-			$sel.attr('data-value', val);
-			ev.stopPropagation();
-			hide();
-			return false;
-		});
-
-		var _SHOW_INIT_ = false;
-		var show = function(){
-			$sel.addClass(ACT_CLASS);
-			var h = $sel.find('.active').offset().top - $sel.offset().top;
-			if(!_SHOW_INIT_ && h > $sel.find('dd').outerHeight()){
-				var t = h - $sel.find('.active').outerHeight();
-				$sel.find('dd').animate({'scrollTop':t}, 'fast');
-			};
-			_SHOW_INIT_ = true;
-		};
-		var hide = function(){$sel.removeClass(ACT_CLASS);};
-
-		//toggle
-		$sel.on(triggerevent, show);
-		$('body').on(triggerevent, function(event){
-			if($sel[0] == event.target || $.contains($sel[0], event.target)){
-
-			} else {
-				hide();
-			}
-		});
-		$('body').on('keyup', function(e){
-			if(e.keyCode == Util.KEYS.ESC){
-				hide();
-			}
-		});
-		$node.hide();
-	}
-
-	return {
-		nodeInit: init
-	}
-});
-//../src/component/simform.js
-/**
- * Created by Administrator on 2016/6/27.
- */
-define('ywj/simform', function(require){
-	var $ = require('jquery');
-	var Util = require('ywj/util');
-
-	var build_form = function(param){
-		param = $.extend({
-			method: 'post',
-			target: '',
-			action: '',
-			data: ''
-		}, param);
-
-		var $form = $('<form action="'+param.action+'" '+(param.target ? 'target="'+param.target+'"':'')+' method="'+param.method+'" style="display:none;">').appendTo('body');
-		var data_list = param.data.split('&');
-		for(var i=0; i<data_list.length; i++){
-			var tmp = data_list[i].split('=');
-			$('<input type="hidden" name="'+Util.htmlEscape(tmp[0])+'" value="'+Util.htmlEscape(tmp[1])+'"/>').appendTo($form);
-		}
-		return $form;
-	};
-
-	return {
-		buildForm: build_form,
-		nodeClick: function($node, param){
-			param.action = param.action || $node.attr('href');
-			var $form = build_form(param);
-			$form.submit();
-			return false;
-		}
-	}
-});
-//../src/component/slide.js
-/**
- * Created by sasumi on 5/12/2014.
- */
-define('ywj/slide', function(require){
-	var PRIVATE_VARS = {};
-	var util = require('ywj/util');
-
-	/**
-	 * bind trigger event
-	 * @param slide
-	 * @param content
-	 */
-	var bindEvent = function(slide, content){
-		var hovering = false;
-		var hover_check_time = 50;
-
-		$(content).mouseover(function(){
-			hovering = true;
-			slide.pause();
-		});
-
-		$(content).mouseout(function(){
-			hovering = false;
-			setTimeout(function(){
-				if(!hovering){
-					slide.resume();
-				}
-			}, hover_check_time);
-		});
-	};
-
-	var Slide = function(content, option){
-		var guid = util.guid();
-		PRIVATE_VARS[guid] = {};
-		PRIVATE_VARS[guid].content_list = $(content).children();
-
-		this.guid = guid;
-		this.index = 0;
-		this.option = $.extend({
-			interval: 3000
-		}, option);
-
-		bindEvent(this, content);
-	};
-
-	/**
-	 * 添加控制器
-	 * @param $control
-	 * @param event
-	 */
-	Slide.prototype.addControl = function($control, event){
-		var s = this;
-		event = event || 'mouseover';
-		$($control).children().each(function(k, v){
-			$(this)[event](function(){
-				s.switchTo(k);
-				s.pause();
-				return false;
-			});
-		});
-	};
-
-	/**
-	 * animate
-	 * @param fromCon
-	 * @param toCon
-	 * @param callback
-	 */
-	Slide.prototype.animate = function(fromCon, toCon, callback){
-		fromCon.animate({opacity: 0}, 100, null, function(){fromCon.hide();});
-		toCon.show().animate({opacity: 0}, 0).animate({opacity: 1}, 100);
-		callback();
-	};
-
-	/**
-	 * on switch to slide
-	 * @param fromNode
-	 * @param toNode
-	 */
-	Slide.prototype.onSwitchTo = function(fromNode, toNode){};
-
-
-	/**
-	 * 切换到指定
-	 * @param idx
-	 * @param callback
-	 */
-	Slide.prototype.switchTo = function(idx, callback){
-		callback = callback || function(){};
-		if(idx == this.index){
-			callback();
-			return;
-		}
-
-		var from = PRIVATE_VARS[this.guid].content_list.eq(this.index);
-		var to = PRIVATE_VARS[this.guid].content_list.eq(idx);
-		this.animate(from, to, callback);
-		this.onSwitchTo(from, to);
-		this.index = idx;
-	};
-
-	/**
-	 * 切换到下一个
-	 */
-	Slide.prototype.switchToNext = function(){
-		var total = PRIVATE_VARS[this.guid].content_list.size();
-		var idx = (this.index == total - 1) ? 0 : (this.index+1);
-		this.switchTo(idx);
-	};
-
-	/**
-	 * 切换到上一个
-	 */
-	Slide.prototype.switchToPre = function(){
-		var total = PRIVATE_VARS[this.guid].content_list.size();
-		var idx = (this.index == 0) ? (total-1) : (this.index-1);
-		this.switchTo(idx);
-	};
-
-	/**
-	 * start/resume slide loop
-	 */
-	Slide.prototype.start = function(idx){
-		//console.log('start');
-		idx = idx !== undefined ? idx : this.index;
-		this.stop();
-		PRIVATE_VARS[this.guid].stop = false;
-		this.run(idx);
-	};
-
-	/**
-	 * 暂停
-	 */
-	Slide.prototype.pause = function(){
-		//console.log('pause');
-		clearTimeout(PRIVATE_VARS[this.guid].timer);
-		PRIVATE_VARS[this.guid].stop = true;
-	};
-
-	/**
-	 * 恢复
-	 */
-	Slide.prototype.resume = function(){
-		//console.log('resume');
-		if(!PRIVATE_VARS[this.guid].stop){
-			//console.log('resume fail');
-			return;
-		}
-		//console.log('resume true');
-		PRIVATE_VARS[this.guid].stop = false;
-		this.run(this.index);
-	};
-
-	/**
-	 * stop slide change loop
-	 */
-	Slide.prototype.stop = function(){
-		//console.log('stop');
-		this.index = 0;
-		clearTimeout(PRIVATE_VARS[this.guid].timer);
-		PRIVATE_VARS[this.guid].stop = true;
-	};
-
-	/**
-	 * run slide change loop
-	 * @param from
-	 */
-	Slide.prototype.run = function(from){
-		if(PRIVATE_VARS[this.guid].stop){
-			//console.log('run false');
-			return;
-=======
 			});
 			$sel.on('keydown', function(e){
 				if(e.keyCode == Util.KEYS.TAB){
@@ -10208,54 +9610,8 @@ define('ywj/table',function(require){
 					PROGRESS_URL: window.UPLOAD_PROGRESS_URL
 				});
 			});
->>>>>>> Stashed changes
-		}
-
-		var _this = this, guid = this.guid;
-		var total = PRIVATE_VARS[guid].content_list.size();
-		var to = from == (total-1) ? 0 : (from+1);
-
-		PRIVATE_VARS[this.guid].timer = setTimeout(function(){
-			var fromNode = PRIVATE_VARS[guid].content_list.eq(from);
-			var toNode = PRIVATE_VARS[guid].content_list.eq(to);
-			_this.animate(fromNode, toNode, function(){
-				_this.onSwitchTo(fromNode, toNode);
-				_this.run(to);
-				_this.index = to;
-			});
-		}, this.option.interval);
-	};
-<<<<<<< Updated upstream
-	return Slide;
-});
-//../src/component/table.js
-/**
- * 表格的相关操作
- */
-define('ywj/table',function(require){
-	//删除
-	var delRow = function(row, allow_empty){
-		if(!allow_empty && row.parent().children().size() == 1){
-			return false;
-		}
-		row.remove();
-	};
-
-	//追加
-	//TODO 暂时不支持ie8
-	var appendRow = function(tpl, table){
-		var app = $(tpl).appendTo(table);
-		if($('input[rel=upload-image]', app).size()){
-			require.async('ywj/uploader', function(U){
-				new U($('input[rel=upload-image]', app), {
-					UPLOAD_URL: window.UPLOAD_URL,
-					PROGRESS_URL: window.UPLOAD_PROGRESS_URL
-				});
-			});
 		}
 	};
-=======
->>>>>>> Stashed changes
 
 	//上移
 	var moveUp = function(row){
@@ -12669,7 +12025,6 @@ define('ywj/ViewLink', function(require){
 
 	return {
 		nodeInit: function($node, param){
-<<<<<<< Updated upstream
 			if($node[0].tagName === 'A'){
 				$node.click(function(){
 					var url = $(this).attr('href');
@@ -12682,10 +12037,6 @@ define('ywj/ViewLink', function(require){
 			}
 
 			var val = $node.val() || $node.text();
-=======
-			var val = $node.val() || $node.text();
-
->>>>>>> Stashed changes
 			if(val || input_able($node)){
 				var $view_btn = $node.next('.open-link');
 				if(!$view_btn.size()){
