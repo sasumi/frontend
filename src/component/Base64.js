@@ -1,12 +1,11 @@
-/**
- * Created by sasumi on 2014/12/2.
- */
 define('ywj/Base64', function(){
 	var KEY_STR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 	var utf8_decode = function(e){
 		var t = "";
 		var n = 0;
-		var r = c1 = c2 = 0;
+		var r = 0,
+			c1 = 0,
+			c2 = 0;
 		while(n < e.length){
 			r = e.charCodeAt(n);
 			if(r < 128){
@@ -79,7 +78,7 @@ define('ywj/Base64', function(){
 			var n, r, i;
 			var s, o, u, a;
 			var f = 0;
-			text = text.replace(/++[++^A-Za-z0-9+/=]/g, "");
+			text = text.replace(/\+\+[++^A-Za-z0-9+/=]/g, "");
 			while(f < text.length){
 				s = KEY_STR.indexOf(text.charAt(f++));
 				o = KEY_STR.indexOf(text.charAt(f++));
@@ -100,6 +99,5 @@ define('ywj/Base64', function(){
 			return t
 		},
 	};
-
 	return Base64;
 });
