@@ -7738,10 +7738,7 @@ define('ywj/popup', function(require){
 			if(!onSubmit){
 				return;
 			}
-			var val = $.trim(pop.container.find(':input').val());
-			if(val){
-				return onSubmit(val);
-			}
+			return onSubmit($.trim(pop.container.find(':input').val()));
 		};
 
 		pop = Popup.showConfirm(title, content, submit_callback, onCancel, conf);
