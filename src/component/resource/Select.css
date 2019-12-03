@@ -28,15 +28,16 @@
 .com-select-grid .com-select-panel {min-width: 300px; padding: 10px;}
 .com-select-grid .com-select-panel dd {float:left;}
 
-.com-select-shadow {display:inline-block;min-width:80px;height:27px; box-sizing:border-box;position:relative;border:1px solid #bbbbbb;border-right-color:#dddddd;border-bottom-color:#dddddd;background-color:white;vertical-align:middle;text-align: left; padding: 3px 35px 3px 3px;}
+.com-select-shadow {display:inline-block;min-width:80px;min-height:27px;box-sizing:border-box;position:relative;border:1px solid #bbbbbb;border-right-color:#dddddd;border-bottom-color:#dddddd;background-color:white;vertical-align:middle;text-align: left;padding: 0 30px 3px 0;}
 .com-select-shadow:after {content:""; position:absolute; border:4px solid transparent; border-top-color:gray; right:5px; top:10px;}
 .com-select-shadow-clean {position:absolute;right: 16px;top: 3px;cursor: pointer;color: black;}
 .com-select-shadow-clean:after {content:"\e849";font-family:iconfont, serif;font-size: 12px;}
 .com-select-shadow-item,
-.com-select-shadow-placeholder {cursor:default; margin-right:3px; padding:2px 5px; display: inline-block;line-height: 16px;word-break: break-all;}
+.com-select-shadow-placeholder {cursor:default;margin: 3px 0 0 3px;padding:2px 5px;display: inline-block;line-height: 16px;word-break: break-all;}
 .com-select-shadow-placeholder {color: #aaa;}
-.com-select-shadow-item {background-color: #00517617;cursor:pointer;}
-.com-select-shadow-item:after {content:"\e849"; font-family:iconfont, serif; margin-left:0.2em;}
 .com-select-shadow-item:hover:after {color:#0a82ec;}
-.com-select-shadow-trigger {position:absolute; margin:10px 0 0 -12px; cursor:pointer; width:0; height:0; border:4px solid transparent; border-top-color:#666;}
 
+.com-select-multiple .com-select-shadow-item {background-color: #00517617;cursor:pointer;}
+.com-select-multiple .com-select-shadow-item:after {content:"\e849"; font-family:iconfont, serif; margin-left:0.2em;}
+
+.com-select-shadow-trigger {position:absolute; margin:10px 0 0 -12px; cursor:pointer; width:0; height:0; border:4px solid transparent; border-top-color:#666;}
