@@ -1,8 +1,10 @@
 define('ywj/Select', function(require){
 	require('ywj/resource/Select.css');
 	const $ = require('jquery');
+	const _ = require('jquery/highlight');
 	const Util = require('ywj/util');
 	const h = Util.htmlEscape;
+	const DATA_CHANGING_EVENT = 'com-select-changing';
 
 	//CSS类名定义
 	const SHADOW_SELECT_CLASS = 'com-select-shadow';
@@ -66,6 +68,17 @@ define('ywj/Select', function(require){
 			}
 		});
 		return map;
+	};
+
+	const safe_trigger_change = ($el)=>{
+		$el.data(DATA_CHANGING_EVENT, 1).triggerHandler('change');
+		setTimeout(function(){
+			$el.data(DATA_CHANGING_EVENT, 0);
+		}, 0);
+	};
+
+	const safe_trigger_changing = ($el)=>{
+		return $el.data(DATA_CHANGING_EVENT) === 1;
 	};
 
 	/**
@@ -191,16 +204,6 @@ define('ywj/Select', function(require){
 	};
 
 	/**
-	 * 高亮搜索结果
-	 * @param $el
-	 * @param kw
-	 */
-	const highlight = ($el, kw)=>{
-		let $panel = get_panel($el);
-
-	};
-
-	/**
 	 * 显示（构建、绑定事件）面板
 	 * @param $el
 	 * @param param
@@ -220,7 +223,7 @@ define('ywj/Select', function(require){
 	const hide_panel = ($el)=>{
 		let $panel = get_panel($el);
 		if($panel){
-			$panel.find('dl').hide();
+			$panel.hide();
 		}
 	};
 
@@ -261,9 +264,11 @@ define('ywj/Select', function(require){
 			let $shadow_item = $(`<span class="${SHADOW_SELECT_ITEM_CLASS}" title="删除">${h(name)}</span>`).appendTo($shadow_input);
 			$shadow_item.data('value', val);
 			$el.find('option').filter(function(){return value_compare(this.value, val);}).attr('selected', 'selected');
-			$el.triggerHandler('change');
+
+			safe_trigger_change($el);
 		} else {
-			$el.val(val).triggerHandler('change');
+			$el.val(val);
+			safe_trigger_change($el);
 		}
 	};
 
@@ -271,6 +276,12 @@ define('ywj/Select', function(require){
 		let vs = get_values($el);
 		let $items = get_available_items($el);
 		let $current_item = $items.filter(function(){return value_compare($(this).data('value'), val);});
+
+		//已经取消，节约性能
+		if(!$current_item.hasClass(OPTION_ITEM_CHECKED_CLASS)){
+			return;
+		}
+
 		$current_item.removeClass(OPTION_ITEM_CHECKED_CLASS);
 
 		if(is_select($el)){
@@ -283,8 +294,15 @@ define('ywj/Select', function(require){
 			}
 			return;
 		}
+		$el.val('');
+		safe_trigger_change($el);
+	};
 
-		$el.val('').triggerHandler('change');
+	const deselect_all = ($el, param) => {
+		let values = get_values($el);
+		$.each(values, function(k, val){
+			deselect_item($el, val);
+		});
 	};
 
 	const remove_placeholder = ($node)=>{
@@ -305,6 +323,25 @@ define('ywj/Select', function(require){
 
 		$(`<span class="${SHADOW_SELECT_PLACEHOLDER}">${h(placeholder)}</span>`).appendTo($shadow_input);
 		$shadow_input.find('.'+SHADOW_SELECT_CLEAN_CLASS).hide();
+	};
+
+	const search = ($el, kw)=>{
+		kw = $.trim(kw);
+		let $items = get_available_items($el);
+		let match_value = null;
+		$items.each(function(){
+			let $item = $(this);
+			$item.removeHighlight();
+			let text = $item.text();
+			if(text.indexOf(kw) >= 0){
+				$item.highlight(kw);
+				if(match_value === null && kw.toLowerCase() === text.toLowerCase()){
+					match_value = $item.data('value');
+				}
+			}
+		});
+		console.log('matche' ,match_value);
+		return match_value;
 	};
 
 	const init_panel = ($el, param)=>{
@@ -333,14 +370,27 @@ define('ywj/Select', function(require){
 				$panel.css({
 					width: $el.outerWidth(),
 					maxWidth: $el.outerWidth(),
-					overflow: 'hidden',
 					position: 'absolute',
 					left: pos.left,
 					top: pos.top + $el.outerHeight(),
 				}).show();
 			});
+
+			$el.on('change input keyup', function(){
+				if(safe_trigger_changing($el)){
+					return;
+				}
+				let hit_value = search($el, this.value, true);
+				console.log('hit_value', hit_value);
+				if(hit_value === null){
+					deselect_all($el, param);
+				} else {
+					select_item($el, hit_value, param);
+				}
+			});
+
 			$body.click(function(e){
-				if(e.target !== $el[0] && e.target !== $panel[0] && !$.contains($panel[0], e.target)){
+				if(!Util.contains($(e.target), $panel)){
 					$panel.hide();
 				}
 			});
@@ -371,34 +421,24 @@ define('ywj/Select', function(require){
 			$panel = get_panel($el);
 			$items = get_available_items($el);
 
-			let click_child = false;
-			$shadow.on('click focus', '*', (e) => {
-				let $target = $(e.target);
-				click_child = $target.hasClass(SHADOW_SELECT_ITEM_CLASS) || $target.hasClass(SHADOW_SELECT_CLEAN_CLASS);
-			});
-			$shadow.on('click focus', (e) => {
-				setTimeout(()=>{
-					if(!click_child){
-						show_panel($el, param);
-					}
-				}, 100);
+			$shadow.on('click', () => {
+				show_panel($el, param);
 			});
 
 			$shadow.delegate('.'+SHADOW_SELECT_ITEM_CLASS, 'click', function(e){
 				deselect_item($el, $(this).data('value'), param);
+				e.stopPropagation();
 			});
 
-			$panel_wrap.delegate('.'+SHADOW_SELECT_CLEAN_CLASS, 'click', ()=>{
+			$panel_wrap.delegate('.'+SHADOW_SELECT_CLEAN_CLASS, 'click', (e)=>{
 				$items.filter('.'+OPTION_ITEM_CHECKED_CLASS).each(function(){
 					deselect_item($el, $(this).data('value'), param);
 				});
+				e.stopPropagation();
 			});
 
 			$body.click(function(e){
-				if(e.target !== $panel[0] &&
-					e.target !== $shadow[0] &&
-					!$.contains($panel[0], e.target) &&
-					!$.contains($shadow[0], e.target)){
+				if(!Util.contains($(e.target), $panel, $shadow)){
 					$panel.hide();
 				}
 			});
@@ -409,6 +449,9 @@ define('ywj/Select', function(require){
 			let val = $this.data('value');
 			let to_select = !$this.hasClass(OPTION_ITEM_CHECKED_CLASS);
 			to_select ? select_item($el, val, param) : deselect_item($el, val, param);
+			if(to_select && !param.multiple){
+				hide_panel($el);
+			}
 		});
 
 		$panel.find('.'+PANEL_SELECT_ALL).click(function(){
@@ -465,12 +508,13 @@ define('ywj/Select', function(require){
 
 	const init = function($el, param){
 		let opt_count = get_options($el).length;
+		let multiple = $el.attr('multiple');
 		param = $.extend(true, {
 			with_search: opt_count > 7,
-			as_grid: true,
+			as_grid: !!multiple,
 			placeholder: get_placeholder($el),
 			required: $el.attr('required'),
-			multiple: $el.attr('multiple')
+			multiple: multiple
 		}, param || {});
 
 		if(!is_select($el) && !is_input_list($el)){

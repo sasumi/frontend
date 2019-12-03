@@ -394,6 +394,25 @@ define('ywj/util', function(require){
 	};
 
 	/**
+	 * 检测多个容器是包含target
+	 * @param $target
+	 * @param $ctn1
+	 * @returns {boolean}
+	 */
+	var contains = function($target, $ctn1){
+		var containers = arguments;
+		toArray(containers).shift();
+		var hit = false;
+		$.each(containers, function(k, $ctn){
+			if($ctn[0] === $target[0] || $.contains($ctn[0], $target[0])){
+				hit = true;
+				return false;
+			}
+		});
+		return hit;
+	};
+
+	/**
 	 * access object property by statement
 	 * @param statement
 	 * @param obj
@@ -803,6 +822,7 @@ define('ywj/util', function(require){
 		rectInLayout: rectInLayout,
 		rectAssoc: rectAssoc,
 		rectCenter: rectCenter,
+		contains:contains,
 		pregQuote: pregQuote,
 		resetNode: resetNode,
 		cutString: cutString,
