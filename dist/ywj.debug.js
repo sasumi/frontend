@@ -2224,9 +2224,9 @@ define('ywj/chosen', function(require){
 			return true;
 		};
 
-		AbstractChosen.default_multiple_text = "Select Some Options";
-		AbstractChosen.default_single_text = "Select an Option";
-		AbstractChosen.default_no_result_text = "No results match";
+		AbstractChosen.default_multiple_text = "请选择";
+		AbstractChosen.default_single_text = "请选择";
+		AbstractChosen.default_no_result_text = "没有匹配结果";
 		return AbstractChosen;
 	})();
 
