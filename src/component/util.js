@@ -400,8 +400,8 @@ define('ywj/util', function(require){
 	 * @returns {boolean}
 	 */
 	var contains = function($target, $ctn1){
-		var containers = arguments;
-		toArray(containers).shift();
+		var containers = toArray(arguments);
+		containers.shift();
 		var hit = false;
 		$.each(containers, function(k, $ctn){
 			if($ctn[0] === $target[0] || $.contains($ctn[0], $target[0])){

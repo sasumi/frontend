@@ -9,7 +9,7 @@
 .com-select-panel-select-inverse:before {content:"反选"}
 
 .com-select-panel {position:absolute;box-shadow: 2px 2px 20px #bbb;background-color:#ffffff;width: 100%;z-index:1;border: 1px solid #bbb;padding:5px 0;border-radius: 3px;}
-.com-select-panel input[type=search] {display:block;border:none;border-radius:0;border-bottom:1px solid #ccc;margin-bottom: 10px;margin-left: 5px;margin-right: 5px;}
+.com-select-panel input[type=search] {display:block;border:none;border-radius:0;border-bottom:1px solid #ccc;margin: 0 5px 10px 5px;width: calc(100% - 10px);max-width: 150px;}
 .com-select-panel input[type=search]:focus {border-bottom-color:#45aaf1}
 .com-select-panel dl {max-height:200px;overflow-y:auto;clear:both;}
 .com-select-panel dt {padding-left: 10px;color: #bbb;display:flex;clear:both;margin-right: 10px;}
@@ -17,6 +17,7 @@
 .com-select-panel dd {display:block;padding: 5px 10px 5px 5px;cursor: pointer;transition:all 0.1s linear;outline:none;color: #555;}
 .com-select-panel dd:nth-child(even) {}
 .com-select-panel dd:not(.com-select-item-disabled):hover {background-color: #ddd;/* color: white; */}
+.com-select-panel dd var {color:#aaa; display:block; margin-left:25px; font-style:normal;}
 .com-select-panel .com-select-item-disabled {color: #ccc;background-color:transparent;cursor:default;text-shadow: 1px 1px 1px white;}
 
 .com-select-panel .com-select-item:before {content:"\e75e";font-family:iconfont, serif;font-size: 14px;vertical-align:middle;display: inline-block;margin-right: 0.2em;height: 20px;text-align: center;width: 20px;overflow: hidden;line-height: 18px;}

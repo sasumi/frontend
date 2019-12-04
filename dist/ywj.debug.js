@@ -8638,8 +8638,10 @@ define('ywj/ScrollFix', function (require) {
 define('ywj/Select', function(require){
 	require('ywj/resource/Select.css');
 	const $ = require('jquery');
+	const _ = require('jquery/highlight');
 	const Util = require('ywj/util');
 	const h = Util.htmlEscape;
+	const DATA_CHANGING_EVENT = 'com-select-changing';
 
 	//CSS类名定义
 	const SHADOW_SELECT_CLASS = 'com-select-shadow';
@@ -8662,8 +8664,8 @@ define('ywj/Select', function(require){
 	const OPTION_ITEM_CHECKED_CLASS = 'com-select-item-selected';
 	const OPTION_ITEM_DISABLED_CLASS = 'com-select-item-disabled';
 
-	const is_input_list = ($el)=>{
-		return $el[0].tagName === 'INPUT' && $el.attr('list');
+	const is_input = ($el)=>{
+		return $el[0].tagName === 'INPUT';
 	};
 
 	const is_select = ($el)=>{
@@ -8671,7 +8673,7 @@ define('ywj/Select', function(require){
 	};
 
 	const get_values = ($el)=>{
-		if(is_input_list($el)){
+		if(is_input($el)){
 			return [$el.val()];
 		}
 		let values = [];
@@ -8683,12 +8685,12 @@ define('ywj/Select', function(require){
 		return values;
 	};
 
-	const value_compare = (val1, val2)=>{
+	const value_equal = (val1, val2)=>{
 		return val1.toString().length === val2.toString().length && val1 == val2;
 	};
 
 	const get_values_map = ($el)=>{
-		if(is_input_list($el)){
+		if(is_input($el)){
 			let val = $el.val();
 			let obj = {};
 			if(val){
@@ -8706,6 +8708,31 @@ define('ywj/Select', function(require){
 	};
 
 	/**
+	 * 判断数据是否需要显示value，仅当value与label不一致情况才需要显示
+	 * @param {Array} options
+	 * @returns {boolean}
+	 */
+	const check_value_require_for_datalist = (options)=>{
+		for(let k in options){
+			if(!value_equal(options[k].label, options[k].value)){
+				return true;
+			}
+		}
+		return false;
+	};
+
+	const safe_trigger_change = ($el)=>{
+		$el.data(DATA_CHANGING_EVENT, 1).triggerHandler('change');
+		setTimeout(function(){
+			$el.data(DATA_CHANGING_EVENT, 0);
+		}, 0);
+	};
+
+	const safe_trigger_changing = ($el)=>{
+		return $el.data(DATA_CHANGING_EVENT) === 1;
+	};
+
+	/**
 	 * 如果是分组模式，格式为：[{label:lbl, options:options}, ...]
 	 * 如果是普通模式，格式为：options: [{label:lbl, value:val}, {label:lbl, disabled:true}...]
 	 * @param $el
@@ -8714,7 +8741,7 @@ define('ywj/Select', function(require){
 	const get_options = ($el, as_tile)=>{
 		let opts = [];
 
-		if(is_input_list($el)){
+		if(is_input($el)){
 			let list_id = $el.attr('list');
 			$('datalist#'+list_id).find('option').each(function(){
 				let val = $(this).attr('value');
@@ -8753,7 +8780,7 @@ define('ywj/Select', function(require){
 	 * @returns {string|*|string}
 	 */
 	const get_placeholder = ($el)=>{
-		if(is_input_list($el)){
+		if(is_input($el)){
 			return $el.attr('placeholder') || '';
 		}
 		if(is_select($el)){
@@ -8768,20 +8795,24 @@ define('ywj/Select', function(require){
 		return '';
 	};
 
-	const build_options = (options, multiple)=>{
+	const build_options = (options, show_value = false)=>{
 		let html = `<dl>`;
-		let tmp_name = 'com-select-tmp-option-name' + Util.guid();
 		$.each(options, (k, opt)=>{
 			if(opt.options){
 				html += `<dt>${h(opt.label)}</dt>`;
 				$.each(opt.options, (k, sub_opt)=>{
-					html += `<dd ${sub_opt.disabled ? '' : 'tabindex="0"'} class="${OPTION_ITEM_CLASS} ${sub_opt.disabled ? OPTION_ITEM_DISABLED_CLASS : ''}" data-value="${h(sub_opt.value)}">`+
-							`${h(sub_opt.label)}</dd>`;
+					html +=
+						`<dd ${sub_opt.disabled ? '' : 'tabindex="0"'} class="${OPTION_ITEM_CLASS} ${sub_opt.disabled ? OPTION_ITEM_DISABLED_CLASS : ''}" data-value="${h(sub_opt.value)}">`+
+							`<label>${h(sub_opt.label)}</label>`+
+							(show_value ? `<var>${h(sub_opt.value)}</var>` : '')+
+						`</dd>`;
 				});
 			} else {
 				html +=
 					`<dd ${opt.disabled ? '' : 'tabindex="0"'} class="${OPTION_ITEM_CLASS} ${opt.disabled ? OPTION_ITEM_DISABLED_CLASS : ''}" data-value="${h(opt.value)}">`+
-					`${h(opt.label)}</dd>`;
+						`<label>${h(opt.label)}</label>`+
+						(show_value ? `<var>${h(opt.value)}</var>` : '')+
+					`</dd>`;
 			}
 		});
 		return html;
@@ -8828,16 +8859,6 @@ define('ywj/Select', function(require){
 	};
 
 	/**
-	 * 高亮搜索结果
-	 * @param $el
-	 * @param kw
-	 */
-	const highlight = ($el, kw)=>{
-		let $panel = get_panel($el);
-
-	};
-
-	/**
 	 * 显示（构建、绑定事件）面板
 	 * @param $el
 	 * @param param
@@ -8867,16 +8888,16 @@ define('ywj/Select', function(require){
 		}
 
 		let $items = get_available_items($el);
-		let $current_item = $items.filter(function(){return value_compare($(this).data('value'), val);});
-		let values = get_values_map($el);
-		if(values[val] !== undefined){
-			return;
-		}
-
+		let $current_item = $items.filter(function(){return value_equal($(this).data('value'), val);});
 		if(!param.multiple){
 			$items.removeClass(OPTION_ITEM_CHECKED_CLASS);
 		}
 		$current_item.addClass(OPTION_ITEM_CHECKED_CLASS);
+
+		let values = get_values_map($el);
+		if(values[val] !== undefined){
+			return;
+		}
 
 		if(is_select($el)){
 			remove_placeholder($el);
@@ -8885,7 +8906,7 @@ define('ywj/Select', function(require){
 			let options = get_options($el, true);
 			let name = val;
 			$.each(options, function(){
-				if(value_compare(this.value, val)){
+				if(value_equal(this.value, val)){
 					name = this.label;
 					return false;
 				}
@@ -8894,34 +8915,40 @@ define('ywj/Select', function(require){
 			if(!param.multiple){
 				$shadow_input.find('.'+SHADOW_SELECT_ITEM_CLASS).remove();
 			}
-
-			let $shadow_item = $(`<span class="${SHADOW_SELECT_ITEM_CLASS}" title="删除">${h(name)}</span>`).appendTo($shadow_input);
+			let $shadow_item = $(`<span class="${SHADOW_SELECT_ITEM_CLASS}" ${param.multiple ? 'title="删除"':''}>${h(name)}</span>`).appendTo($shadow_input);
 			$shadow_item.data('value', val);
-			$el.find('option').filter(function(){return value_compare(this.value, val);}).attr('selected', 'selected');
-			$el.triggerHandler('change');
+			$el.find('option').filter(function(){return value_equal(this.value, val);}).attr('selected', 'selected');
+			safe_trigger_change($el);
 		} else {
-			$el.val(val).triggerHandler('change');
+			$el.val(val);
+			safe_trigger_change($el);
 		}
 	};
 
 	const deselect_item = ($el, val, param)=>{
 		let vs = get_values($el);
 		let $items = get_available_items($el);
-		let $current_item = $items.filter(function(){return value_compare($(this).data('value'), val);});
+		let $current_item = $items.filter(function(){return value_equal($(this).data('value'), val);});
+
+		//已经取消，节约性能
+		if(!$current_item.hasClass(OPTION_ITEM_CHECKED_CLASS)){
+			return;
+		}
+
 		$current_item.removeClass(OPTION_ITEM_CHECKED_CLASS);
 
 		if(is_select($el)){
-			$el.find('option').filter(function(){return value_compare(this.value, val);}).removeAttr('selected');
+			$el.find('option').filter(function(){return value_equal(this.value, val);}).removeAttr('selected');
 			let $shadow_input = get_shadow_input($el);
-			$shadow_input.find('.'+SHADOW_SELECT_ITEM_CLASS).filter(function(){return value_compare($(this).data('value'), val);}).remove();
+			$shadow_input.find('.'+SHADOW_SELECT_ITEM_CLASS).filter(function(){return value_equal($(this).data('value'), val);}).remove();
 			let vs = get_values($el);
 			if(!vs.length){
 				add_placeholder($el);
 			}
 			return;
 		}
-
-		$el.val('').triggerHandler('change');
+		$el.val('');
+		safe_trigger_change($el);
 	};
 
 	const remove_placeholder = ($node)=>{
@@ -8944,6 +8971,41 @@ define('ywj/Select', function(require){
 		$shadow_input.find('.'+SHADOW_SELECT_CLEAN_CLASS).hide();
 	};
 
+	const search_label_value = ($el, kw)=>{
+		kw = $.trim(kw);
+		let $items = get_available_items($el);
+		let match_value = null;
+
+		let $item = $(this);
+		$item.removeHighlight();
+
+		//优先匹配value
+		$items.each(function(){
+			let $item = $(this);
+			let value = $item.data('value');
+			if(value.indexOf(kw) >= 0){
+				$item.find('var').highlight(kw);
+				if(match_value === null && kw.toLowerCase() === value.toLowerCase()){
+					match_value = value;
+				}
+			}
+		});
+
+		//匹配label
+		$items.each(function(){
+			let $item = $(this);
+			let $label = $item.find('label');
+			let label = $label.text();
+			if(label.indexOf(kw) >= 0){
+				$label.highlight(kw);
+				if(match_value === null && kw.toLowerCase() === label.toLowerCase()){
+					match_value = $item.data('value');
+				}
+			}
+		});
+		return match_value;
+	};
+
 	const init_panel = ($el, param)=>{
 		let $body = $('body');
 		let options = get_options($el);
@@ -8955,11 +9017,13 @@ define('ywj/Select', function(require){
 		let $panel, $items;
 
 		//text模式，禁用多选、搜索
-		if(is_input_list($el)){
+		if(is_input($el)){
+			let options = get_options($el, true);
+			let show_value = check_value_require_for_datalist(options);
 			let html =
 				`<div class="${SELECT_CLASS} ${param.as_grid ? SELECT_AS_GRID_CLASS : ''}" id="${panel_id}" style="display:none;">` +
 					`<div class="${PANEL_CLASS}">`+
-						build_options(options, param.multiple) +
+						build_options(options, show_value) +
 					`</div>`+
 				`</div>`;
 			$panel = $(html).insertAfter($el);
@@ -8976,10 +9040,31 @@ define('ywj/Select', function(require){
 				}).show();
 			});
 
-
+			//searching
+			$el.on('change input keyup', function(){
+				if(safe_trigger_changing($el)){
+					return;
+				}
+				let hit_value = search_label_value($el, this.value, true);
+				console.log('hit_value', hit_value);
+				if(top.debug){
+					debugger;
+				}
+				if(hit_value === null){
+					let $items = get_available_items($el);
+					$items.removeClass(OPTION_ITEM_CHECKED_CLASS);
+					if(is_select($el)){
+						let $shadow_input = get_shadow_input($el);
+						$shadow_input.find('.'+SHADOW_SELECT_ITEM_CLASS).remove();
+						add_placeholder($el);
+					}
+				} else {
+					select_item($el, hit_value, param);
+				}
+			});
 
 			$body.click(function(e){
-				if(e.target !== $el[0] && e.target !== $panel[0] && !$.contains($panel[0], e.target)){
+				if(!Util.contains($(e.target), $el, $panel)){
 					$panel.hide();
 				}
 			});
@@ -8995,7 +9080,7 @@ define('ywj/Select', function(require){
 					`<div class="${PANEL_CLASS}" style="display:none;" id="${panel_id}">`+
 						(param.multiple ? `<span class="${PANEL_SELECT_BTN} ${PANEL_SELECT_INVERSE}"></span> <span class="${PANEL_SELECT_BTN} ${PANEL_SELECT_ALL}"></span>` : '')+
 						(param.with_search ? `<input type="search" placeholder="请输入搜索">` : '')+
-						build_options(options, param.multiple) +
+						build_options(options) +
 					`</div>`+
 				`</div>`;
 			let $panel_wrap = $(html).insertAfter($el);
@@ -9014,10 +9099,12 @@ define('ywj/Select', function(require){
 				show_panel($el, param);
 			});
 
-			$shadow.delegate('.'+SHADOW_SELECT_ITEM_CLASS, 'click', function(e){
-				deselect_item($el, $(this).data('value'), param);
-				e.stopPropagation();
-			});
+			if(param.multiple){
+				$shadow.delegate('.'+SHADOW_SELECT_ITEM_CLASS, 'click', function(e){
+					deselect_item($el, $(this).data('value'), param);
+					e.stopPropagation();
+				});
+			}
 
 			$panel_wrap.delegate('.'+SHADOW_SELECT_CLEAN_CLASS, 'click', (e)=>{
 				$items.filter('.'+OPTION_ITEM_CHECKED_CLASS).each(function(){
@@ -9027,10 +9114,8 @@ define('ywj/Select', function(require){
 			});
 
 			$body.click(function(e){
-				if(e.target !== $panel[0] &&
-					e.target !== $shadow[0] &&
-					!$.contains($panel[0], e.target) &&
-					!$.contains($shadow[0], e.target)){
+				let contains = Util.contains($(e.target), $panel, $shadow);
+				if(!contains){
 					$panel.hide();
 				}
 			});
@@ -9039,7 +9124,14 @@ define('ywj/Select', function(require){
 		$items.click(function(e){
 			let $this = $(this);
 			let val = $this.data('value');
-			let to_select = !$this.hasClass(OPTION_ITEM_CHECKED_CLASS);
+			let to_select = false;
+
+			//单选
+			if(!param.multiple){
+				to_select = true;
+			} else {
+				to_select = !$this.hasClass(OPTION_ITEM_CHECKED_CLASS);
+			}
 			to_select ? select_item($el, val, param) : deselect_item($el, val, param);
 			if(to_select && !param.multiple){
 				hide_panel($el);
@@ -9077,7 +9169,7 @@ define('ywj/Select', function(require){
 		});
 	};
 
-	const update_select_to_shadow = ($select)=>{
+	const update_select_to_shadow = ($select, param)=>{
 		let $shadow_input = get_shadow_input($select);
 
 		let map = get_values_map($select);
@@ -9087,7 +9179,7 @@ define('ywj/Select', function(require){
 		//填充数据
 		$.each(map, (val, name)=>{
 			hits = true;
-			let $shadow_item = $(`<span class="${SHADOW_SELECT_ITEM_CLASS}" title="删除">${h(name)}</span>`).appendTo($shadow_input);
+			let $shadow_item = $(`<span class="${SHADOW_SELECT_ITEM_CLASS}" ${param.multiple ? 'title="删除"':''}>${h(name)}</span>`).appendTo($shadow_input);
 			$shadow_item.data('value', val);
 		});
 
@@ -9109,7 +9201,7 @@ define('ywj/Select', function(require){
 			multiple: multiple
 		}, param || {});
 
-		if(!is_select($el) && !is_input_list($el)){
+		if(!is_select($el) && !is_input($el)){
 			throw "Select component only support input[list] or select";
 		}
 		init_panel($el, param);
@@ -11736,8 +11828,8 @@ define('ywj/util', function(require){
 	 * @returns {boolean}
 	 */
 	var contains = function($target, $ctn1){
-		var containers = arguments;
-		toArray(containers).shift();
+		var containers = toArray(arguments);
+		containers.shift();
 		var hit = false;
 		$.each(containers, function(k, $ctn){
 			if($ctn[0] === $target[0] || $.contains($ctn[0], $target[0])){
