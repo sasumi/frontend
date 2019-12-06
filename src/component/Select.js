@@ -261,7 +261,13 @@ define('ywj/Select', function(require){
 	const hide_panel = ($el)=>{
 		let $panel = get_panel($el);
 		if($panel){
-			$panel.hide();
+			let k = 'com-select-timeout';
+			clearTimeout($el.data(k));
+			console.log($el.data(k));
+			let tm = setTimeout(function(){
+				$panel.hide();
+			}, 50);
+			$el.data(k, tm);
 		}
 	};
 
@@ -452,6 +458,7 @@ define('ywj/Select', function(require){
 
 		//text模式，禁用多选、搜索
 		if(is_input($el)){
+			let hide_timer = null;
 			let options = get_options($el, true);
 			let show_value = check_value_require_for_datalist(options);
 			let html =
@@ -479,10 +486,18 @@ define('ywj/Select', function(require){
 				search_label_value($el, param);
 			};
 
+			let hide = ()=>{
+				clearTimeout(hide_timer);
+				hide_timer = setTimeout(()=>{
+					$panel.hide();
+				}, 100);
+			};
+
 			$el.on('focus click', show);
+			$el.on('blur', hide);
 
 			//searching
-			$el.on('change input keydown', (e)=>{
+			$el.on('input keydown', (e)=>{
 				if(safe_trigger_changing($el)){
 					return;
 				}
@@ -504,13 +519,13 @@ define('ywj/Select', function(require){
 							//select focus
 							if($focus_item){
 								select_item($el, $focus_item.data('value'), param);
-								hide_panel($el);
+								hide();
 								return false;
 							}
 							break;
 
 						case Util.KEYS.ESC:
-							hide_panel($el);
+							hide();
 							return false;
 					}
 				}
@@ -615,19 +630,6 @@ define('ywj/Select', function(require){
 		update_to_panel($el);
 	};
 
-	const init_input = ($el, param)=>{
-		$el.on('focus click', () => {
-			return show_panel($el, param);
-		});
-		$el.on('keyup', function(e){
-			if(e.keyCode === Util.KEYS.ESC){
-				hide_panel($el);
-			} else if(e.keyCode === Util.KEYS.DOWN || e.keyCode === Util.KEYS.UP){
-				//move tab
-			}
-		});
-	};
-
 	const update_select_to_shadow = ($select, param)=>{
 		let $shadow_input = get_shadow_input($select);
 
@@ -663,6 +665,17 @@ define('ywj/Select', function(require){
 		if(!is_select($el) && !is_input($el)){
 			throw "Select component only support input[list] or select";
 		}
+
+		if(is_input($el)){
+			let list_id = $el.attr('list');
+			if(!list_id){
+				throw "No list attribute found in element";
+			}
+			if(!$('#'+list_id).size()){
+				throw "No relative list node found";
+			}
+		}
+
 		init_panel($el, param);
 	};
 	return {

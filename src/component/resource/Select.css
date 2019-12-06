@@ -8,7 +8,7 @@
 .com-select-panel-select-all:before {content:"全选"}
 .com-select-panel-select-inverse:before {content:"反选"}
 
-.com-select-panel {position:absolute;box-shadow: 2px 2px 20px #bbb;background-color:#ffffff;width: 100%;z-index:1;border: 1px solid #bbb;padding:5px 0;border-radius: 3px;}
+.com-select-panel {position:absolute;box-shadow: 2px 2px 20px #bbb;background-color:#ffffff;width: 100%;z-index:1;border: 1px solid #bbb;padding:5px 0;border-radius: 3px;box-sizing: border-box;}
 .com-select-panel input[type=search] {display:block;border:none;border-radius:0;border-bottom:1px solid #ccc;margin: 0 5px 10px 5px;width: calc(100% - 10px);max-width: 150px;}
 .com-select-panel input[type=search]:focus {border-bottom-color:#45aaf1}
 .com-select-panel dl {max-height:200px;overflow-y:auto;clear:both;}
@@ -23,7 +23,7 @@
 .com-select-panel .com-select-item:before {content:"\e75e";font-family:iconfont, serif;font-size: 14px;vertical-align:middle;display: inline-block;margin-right: 0.2em;height: 20px;text-align: center;width: 20px;overflow: hidden;line-height: 18px;}
 .com-select-panel .com-select-item-selected {color:#0095de}
 .com-select-panel .com-select-item-selected:before {content:" \e75f"}
-.com-select-panel .com-select-item-focus {background-color: #00aeff2b;outline: 1px solid white;}
+.com-select-panel .com-select-item-focus {background-color: #00aeff2b;outline: 1px solid white;border-bottom:1px solid #00aeff30;border-top: 1px solid #00aeff30;}
 .com-select-multiple .com-select-item:before {content:"\e6c4";}
 .com-select-multiple .com-select-item-selected:before {content:"\e608";font-size: 12px;}
 
