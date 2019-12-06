@@ -24,7 +24,9 @@ define('ywj/Select', function(require){
 	const PANEL_SELECT_INVERSE = 'com-select-panel-select-inverse';
 
 	const OPTION_ITEM_CLASS = 'com-select-item';
+	const OPTION_ITEM_HIGHLIGHT_CLASS = 'sel-hl';
 	const OPTION_ITEM_CHECKED_CLASS = 'com-select-item-selected';
+	const OPTION_ITEM_FOCUS_CLASS = 'com-select-item-focus';
 	const OPTION_ITEM_DISABLED_CLASS = 'com-select-item-disabled';
 
 	const is_input = ($el)=>{
@@ -68,6 +70,24 @@ define('ywj/Select', function(require){
 			}
 		});
 		return map;
+	};
+
+	const highlight = ($text_node, kw)=>{
+		let txt = $text_node.text();
+		//remove old highlight
+		if($text_node.find('.'+OPTION_ITEM_HIGHLIGHT_CLASS).size()){
+			$text_node.text($text_node.text());
+		}
+		if(!kw){
+			return false;
+		}
+		let idx = txt.toLowerCase().indexOf(kw.toLowerCase());
+		if(idx < 0){
+			return false;
+		}
+		txt = txt.substring(0, idx)+`<span class="${OPTION_ITEM_HIGHLIGHT_CLASS}">${h(kw)}</span>`+txt.substring(idx+kw.length);
+		$text_node.html(txt);
+		return true;
 	};
 
 	/**
@@ -246,10 +266,6 @@ define('ywj/Select', function(require){
 	};
 
 	const select_item = ($el, val, param) => {
-		if(top.debug){
-			debugger;
-		}
-
 		let $items = get_available_items($el);
 		let $current_item = $items.filter(function(){return value_equal($(this).data('value'), val);});
 		if(!param.multiple){
@@ -289,7 +305,6 @@ define('ywj/Select', function(require){
 	};
 
 	const deselect_item = ($el, val, param)=>{
-		let vs = get_values($el);
 		let $items = get_available_items($el);
 		let $current_item = $items.filter(function(){return value_equal($(this).data('value'), val);});
 
@@ -334,38 +349,94 @@ define('ywj/Select', function(require){
 		$shadow_input.find('.'+SHADOW_SELECT_CLEAN_CLASS).hide();
 	};
 
-	const search_label_value = ($el, kw)=>{
-		kw = $.trim(kw);
+	const add_focus = ($item)=>{
+		remove_all_focus($item.parent().children());
+		$item.addClass(OPTION_ITEM_FOCUS_CLASS);
+		Util.scrollTo($item, $item.parent());
+	};
+
+	const remove_all_focus = ($items)=>{
+		$items.removeClass(OPTION_ITEM_FOCUS_CLASS);
+	};
+
+	const move_focus = ($el, up = false)=>{
+		let $items = get_available_items($el);
+		let $focus_item = $items.filter('.'+OPTION_ITEM_FOCUS_CLASS);
+		if(!$focus_item.size()){
+			return;
+		}
+		let idx = $focus_item.index();
+		let match_idx_list = [];
+		$items.find('.'+OPTION_ITEM_HIGHLIGHT_CLASS).each(function(){
+			let $item = $(this).closest('.'+OPTION_ITEM_CLASS);
+			let idx = $item.index();
+			if(!Util.inArray(idx, match_idx_list)){
+				match_idx_list.push($item.index());
+			}
+		});
+
+		if(match_idx_list.length < 2){
+			return;
+		}
+
+		let current = parseInt(Util.arrayIndex(match_idx_list, idx), 10);
+		let next;
+		if(top.debug){
+			debugger;
+		}
+		if(!up){
+			next = current === (match_idx_list.length-1) ? 0 : (current+1);
+		} else {
+			next = current === 0 ? (match_idx_list.length - 1) : (current-1);
+		}
+		add_focus($items.eq(match_idx_list[next]));
+	};
+
+	const search_label_value = ($el, param)=>{
+		let kw = $.trim($el.val());
 		let $items = get_available_items($el);
 		let match_value = null;
 
-		let $item = $(this);
-		$item.removeHighlight();
+		let $first_hl = null;
+		let $first_match = null;
 
 		//优先匹配value
 		$items.each(function(){
 			let $item = $(this);
+			let $label = $item.find('label');
+			let $var = $item.find('var');
+			let label = $label.text();
 			let value = $item.data('value');
-			if(value.indexOf(kw) >= 0){
-				$item.find('var').highlight(kw);
-				if(match_value === null && kw.toLowerCase() === value.toLowerCase()){
-					match_value = value;
+			$item.removeClass(OPTION_ITEM_CHECKED_CLASS);
+			if(highlight($var, kw)){
+				if(!$first_hl){
+					$first_hl = $item;
 				}
+			}
+			if(match_value === null && kw.toLowerCase() === value.toLowerCase()){
+				match_value = value;
+				$first_match = $item;
+				select_item($el, value, param);
+			}
+			if(highlight($label, kw)){
+				if(!$first_hl){
+					$first_hl = $item;
+				}
+			}
+			if(match_value === null && kw.toLowerCase() === label.toLowerCase()){
+				match_value = value;
+				$first_match = $item;
+				select_item($el, value, param);
 			}
 		});
 
-		//匹配label
-		$items.each(function(){
-			let $item = $(this);
-			let $label = $item.find('label');
-			let label = $label.text();
-			if(label.indexOf(kw) >= 0){
-				$label.highlight(kw);
-				if(match_value === null && kw.toLowerCase() === label.toLowerCase()){
-					match_value = $item.data('value');
-				}
-			}
-		});
+		if($first_match){
+			add_focus($first_match);
+		} else if($first_hl){
+			add_focus($first_hl);
+		} else {
+			remove_all_focus($items);
+		}
 		return match_value;
 	};
 
@@ -392,7 +463,11 @@ define('ywj/Select', function(require){
 			$panel = $(html).insertAfter($el);
 			$items = get_available_items($el);
 			$el.removeAttr('list');
-			$el.on('focus', ()=>{
+
+			let show = ()=>{
+				if($panel.is(':visible')){
+					return;
+				}
 				let pos = $el.offset();
 				$panel.css({
 					width: $el.outerWidth(),
@@ -401,29 +476,50 @@ define('ywj/Select', function(require){
 					left: pos.left,
 					top: pos.top + $el.outerHeight(),
 				}).show();
-			});
+				search_label_value($el, param);
+			};
+
+			$el.on('focus click', show);
 
 			//searching
-			$el.on('change input keyup', function(){
+			$el.on('change input keydown', (e)=>{
 				if(safe_trigger_changing($el)){
 					return;
 				}
-				let hit_value = search_label_value($el, this.value, true);
-				console.log('hit_value', hit_value);
-				if(top.debug){
-					debugger;
-				}
-				if(hit_value === null){
-					let $items = get_available_items($el);
-					$items.removeClass(OPTION_ITEM_CHECKED_CLASS);
-					if(is_select($el)){
-						let $shadow_input = get_shadow_input($el);
-						$shadow_input.find('.'+SHADOW_SELECT_ITEM_CLASS).remove();
-						add_placeholder($el);
+				show();
+				if(e.type === 'keydown'){
+					let $focus_item = $items.filter('.'+OPTION_ITEM_FOCUS_CLASS);
+					$focus_item = $focus_item.size() ? $focus_item : null;
+
+					switch(e.keyCode){
+						case Util.KEYS.DOWN:
+							$focus_item && move_focus($el, false);
+							return;
+
+						case Util.KEYS.UP:
+							$focus_item && move_focus($el, true);
+							return;
+
+						case Util.KEYS.ENTER:
+							//select focus
+							if($focus_item){
+								select_item($el, $focus_item.data('value'), param);
+								hide_panel($el);
+								return false;
+							}
+							break;
+
+						case Util.KEYS.ESC:
+							hide_panel($el);
+							return false;
 					}
-				} else {
-					select_item($el, hit_value, param);
 				}
+				search_label_value($el, param);
+			});
+
+			$el.on('keydoxxwn', (e)=>{
+
+
 			});
 
 			$body.click(function(e){

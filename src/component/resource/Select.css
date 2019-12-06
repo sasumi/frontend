@@ -23,6 +23,7 @@
 .com-select-panel .com-select-item:before {content:"\e75e";font-family:iconfont, serif;font-size: 14px;vertical-align:middle;display: inline-block;margin-right: 0.2em;height: 20px;text-align: center;width: 20px;overflow: hidden;line-height: 18px;}
 .com-select-panel .com-select-item-selected {color:#0095de}
 .com-select-panel .com-select-item-selected:before {content:" \e75f"}
+.com-select-panel .com-select-item-focus {background-color: #00aeff2b;outline: 1px solid white;}
 .com-select-multiple .com-select-item:before {content:"\e6c4";}
 .com-select-multiple .com-select-item-selected:before {content:"\e608";font-size: 12px;}
 
@@ -42,3 +43,4 @@
 .com-select-multiple .com-select-shadow-item:after {content:"\e849"; font-family:iconfont, serif; margin-left:0.2em;}
 
 .com-select-shadow-trigger {position:absolute; margin:10px 0 0 -12px; cursor:pointer; width:0; height:0; border:4px solid transparent; border-top-color:#666;}
+.sel-hl {color:#00afff; font-weight:bold;}
