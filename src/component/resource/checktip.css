@@ -9,6 +9,6 @@
 .quick-checker ul {position:absolute; display:none; background-color:white; width:100%;}
 .quick-checker:hover ul {display:block;}
 .quick-checker:hover .quick-checker-chk {background-color:white; border-color:#ccc;}
-.quick-checker li {padding:1px 8px; cursor:pointer; border-left:1px solid #ccc; border-right:1px solid #ccc;}
+.quick-checker li {padding: 4px 8px;cursor:pointer;border-left:1px solid #ccc;border-right:1px solid #ccc;font-weight:normal;color: #00a0e9;}
 .quick-checker li:last-child {border-bottom:1px solid #ccc;}
 .quick-checker li:hover {background-color:#eee;}

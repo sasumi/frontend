@@ -12,7 +12,6 @@ define('ywj/checker', function(require){
 		nodeInit: function($mater_check, param){
 			var target = param.target;
 			var hidetip = param.hidetip;
-			var quick_check = param.qc;
 
 			//缺省只针对table里面的checkbox有效
 			var $chk_list = $('input[type=checkbox]:not([disabled]):not([readonly]):not([data-component])', target || 'table');
@@ -21,25 +20,40 @@ define('ywj/checker', function(require){
 				return;
 			}
 
-			if(quick_check !== undefined){
-				var arr = quick_check ? quick_check.split(',') : [10,20,50,80,100];
+			//如有quick，至少显示全选、反选
+			if(param.quick !== undefined){
+				var arr = param.quick ? param.quick.split(',') : [];
 				var s = '<span class="quick-checker">';
 				s += '<span class="quick-checker-chk"></span>';
 				s += '<ul>';
+				s += '<li data-count="-1">全选</li>';
+				s += '<li data-count="-2">反选</li>';
 				for(var i=0; i<arr.length; i++){
 					s += '<li data-count="'+arr[i]+'">'+arr[i]+'</li>';
 				}
 				s += '</ul></span>';
 				var $nav = $(s).insertBefore($mater_check);
 				$nav.find('.quick-checker-chk').prepend($mater_check).click(function(e){
-					if(e.target.tagName == 'SPAN'){
+					if(e.target.tagName === 'SPAN'){
 						return false;
 					}
 				});
 				$nav.find('li').click(function(){
 					var count = $(this).data('count');
-					$chk_list.attr('checked', false);
-					$chk_list.slice(0, count).attr('checked', true).trigger('change');
+					switch(count){
+						case -1:
+							$chk_list.attr('checked', true).triggerHandler('change');
+							break;
+						case -2:
+							var $ed = $chk_list.filter(':checked');
+							var $un = $chk_list.filter(':not(:checked)');
+							$un.attr('checked', true).triggerHandler('change');
+							$ed.removeAttr('checked').triggerHandler('change');
+							break;
+						default:
+							$chk_list.attr('checked', false);
+							$chk_list.slice(0, count).attr('checked', true).triggerHandler('change');
+					}
 					return false;
 				});
 			}
@@ -140,7 +154,7 @@ define('ywj/checker', function(require){
 					toState = this.checked;
 				}
 				update_check(toState);
-				//show_tip($mater_check);
+				show_tip($mater_check);
 			});
 
 			$chk_list.change(function(){
