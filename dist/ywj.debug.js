@@ -6417,8 +6417,8 @@ define('ywj/muloperate',function(require){
 					return false;
 				}
 			});
-
-			$(selector).delegate(scope,"change",update_state);
+			//由于对接checker的触发时间是triggerHandler
+			$(selector + ' ' + scope).on("change", update_state);
 			update_state();
 		}
 	};
