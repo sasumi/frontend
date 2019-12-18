@@ -12411,8 +12411,12 @@ define('ywj/util', function(require){
 		return rect;
 	};
 
-	var scrollTo = function($el, $container){
-		$container.animate({scrollTop: $container.scrollTop() + $el.offset().top - $container.offset().top}, {
+	var scrollTo = function($el, $container, offset){
+		offset = offset || {left:0, top:0}; //偏移量
+		$container.animate({
+			scrollTop: $container.scrollTop() + $el.offset().top - $container.offset().top + offset.top,
+			scrollLeft: $container.scrollLeft() + $el.offset().left - $container.offset().left + offset.left
+		}, {
 			duration: 'fast',
 			easing: 'swing'
 		});

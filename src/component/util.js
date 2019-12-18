@@ -493,8 +493,12 @@ define('ywj/util', function(require){
 		return rect;
 	};
 
-	var scrollTo = function($el, $container){
-		$container.animate({scrollTop: $container.scrollTop() + $el.offset().top - $container.offset().top}, {
+	var scrollTo = function($el, $container, margin){
+		margin = margin || {left:0, top:0}; //偏移量
+		$container.animate({
+			scrollTop: $container.scrollTop() + $el.offset().top - $container.offset().top - margin.top,
+			scrollLeft: $container.scrollLeft() + $el.offset().left - $container.offset().left - margin.left
+		}, {
 			duration: 'fast',
 			easing: 'swing'
 		});
