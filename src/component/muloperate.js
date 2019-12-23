@@ -41,6 +41,7 @@ define('ywj/muloperate',function(require){
 					$btn[has_checked ? 'removeClass' : 'addClass'](BTN_DISABLED_CLASS);
 				}
 				$btn[has_checked ? 'removeClass' : 'addClass']('muloperate-disabled');
+				$btn[has_checked ? 'removeAttr' : 'attr']('disabled', 'disabled');
 
 				if($btn[0].tagName === 'INPUT' || $btn[0].tagName === 'BUTTON'){
 					$btn.attr('disabled', !has_checked);
