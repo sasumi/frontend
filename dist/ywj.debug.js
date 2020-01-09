@@ -7779,6 +7779,7 @@ define('ywj/popup', function(require){
 			var iframe = $('iframe', _this.container);
 			if(iframe.size()){
 				updateIframeHeight.call(_this, iframe[0]);
+				iframe.focus();
 			}
 
 			//更新对话框位置信息
