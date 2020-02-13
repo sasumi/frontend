@@ -57,7 +57,8 @@ define('ywj/LodopPrinter', function(require){
 	 */
 	const setPrinterConfig = (lodop, option = {}) => {
 		option = Object.assign({
-			PrinterIndex: 0,
+			PrinterName: null,
+			PrinterIndex: null,
 			Orient: 1, //方向
 			Copies: 1, //份数
 			PageWidth: '100%',
@@ -65,6 +66,17 @@ define('ywj/LodopPrinter', function(require){
 			FontSize: null,
 			Bold: null
 		}, option);
+
+		if(option.PrinterName){
+			let printer_list = getPrinterListViaLodop(lodop);
+			option.PrinterIndex = printer_list.findIndex(val=>val === option.PrinterName);
+		}
+
+		if(option.PrinterIndex === null){
+			console.warn('printer index no set, use 0 as default.', option);
+			option.PrinterIndex = 0;
+		}
+
 		lodop.PRINT_INIT("");
 		lodop.SET_PRINT_MODE('WINDOW_DEFPRINTER', option.PrinterIndex);
 		lodop.SET_PRINTER_INDEX(option.PrinterIndex);
@@ -256,14 +268,18 @@ define('ywj/LodopPrinter', function(require){
 	const getPrinterList = ()=>{
 		return new Promise((resolve, reject) => {
 			ready().then(lodop=>{
-				let printers = [];
-				let printer_count = lodop.GET_PRINTER_COUNT();
-				for(let i = 0; i < printer_count; i++){
-					printers[i] = lodop.GET_PRINTER_NAME(i);
-				}
-				resolve(printers);
+				resolve(getPrinterListViaLodop(lodop));
 			}, reject);
 		});
+	};
+
+	const getPrinterListViaLodop = (lodop)=>{
+		let printers = [];
+		let printer_count = lodop.GET_PRINTER_COUNT();
+		for(let i = 0; i < printer_count; i++){
+			printers[i] = lodop.GET_PRINTER_NAME(i);
+		}
+		return printers;
 	};
 
 	/**
@@ -271,6 +287,7 @@ define('ywj/LodopPrinter', function(require){
 	 * @param {Object} tag_config {tag: {PrinterName:'Printer1', other config item}, ...}
 	 */
 	const savePrinterConfig = (tag_config)=>{
+		console.log('printer config saved', tag_config)
 		LS.setItem(LS_KEY, JSON.stringify(tag_config));
 	};
 
@@ -311,7 +328,7 @@ define('ywj/LodopPrinter', function(require){
 	 */
 	const getPrinterConfigByTagAuto = (tag)=>{
 		return new Promise((resolve, reject) => {
-			let cfg = savePrinterConfigByTag(tag);
+			let cfg = getPrinterConfigByTag(tag);
 			if(cfg){
 				resolve(cfg);
 				return;
