@@ -287,7 +287,7 @@ define('ywj/LodopPrinter', function(require){
 	 * @param {Object} tag_config {tag: {PrinterName:'Printer1', other config item}, ...}
 	 */
 	const savePrinterConfig = (tag_config)=>{
-		console.log('printer config saved', tag_config)
+		console.log('printer config saved', tag_config);
 		LS.setItem(LS_KEY, JSON.stringify(tag_config));
 	};
 
@@ -297,7 +297,7 @@ define('ywj/LodopPrinter', function(require){
 	 * @param config
 	 */
 	const savePrinterConfigByTag = (tag, config) => {
-		let cfg = getPrinterConfig()
+		let cfg = getPrinterConfig();
 		cfg[tag] = config;
 		savePrinterConfig(cfg);
 	};
@@ -319,12 +319,12 @@ define('ywj/LodopPrinter', function(require){
 	const getPrinterConfigByTag = (tag)=>{
 		let cfg = getPrinterConfig();
 		return cfg[tag];
-	}
+	};
 
 	/**
 	 * get printer config by tag auto show setup dialog
 	 * @param tag
-	 * @returns {Promise<unknown>}
+	 * @returns {Promise<mixed>}
 	 */
 	const getPrinterConfigByTagAuto = (tag)=>{
 		return new Promise((resolve, reject) => {
@@ -337,7 +337,7 @@ define('ywj/LodopPrinter', function(require){
 				resolve(savePrinterConfigByTag(tag));
 			}, reject);
 		});
-	}
+	};
 
 	/**
 	 * 检查lodop版本
@@ -392,7 +392,7 @@ define('ywj/LodopPrinter', function(require){
 			});
 		};
 
-		return (resolve = EMPTY_FN, reject = EMPTY_FN) => {
+		return (resolve = ()=>{}, reject = ()=>{}) => {
 			success_callbacks.push(resolve);
 			error_callbacks.push(reject);
 			if(req_flag){
