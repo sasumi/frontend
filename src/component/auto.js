@@ -135,13 +135,13 @@ define('ywj/auto', function(require){
 				return;
 			}
 			$(this).data('form-get-fixed', 1);
-
 			if(!this.method || (this.method.toLowerCase() == 'get' && action.indexOf('?') >= 0)){
 				var query_str = action.substring(action.lastIndexOf("?")+1, action.length);
 				var query_arr = query_str.split('&');
 				for(var i=0;i<query_arr.length;i++){
 					var tmp = query_arr[i].split('=');
-					$(this).prepend('<input name="'+escape(decodeURIComponent(tmp[0]))+'" type="hidden" value="'+escape(decodeURIComponent(tmp[1]))+'" />');
+					var $input = $('<input type="hidden">').appendTo(this);
+					$input.attr('name', decodeURIComponent(tmp[0])).val(decodeURIComponent(tmp[1]));
 				}
 			}
 		});
