@@ -5838,6 +5838,7 @@ define('ywj/liteladder', function(require){
 define('ywj/LodopPrinter', function(require){
 	const Pop = require('ywj/popup');
 	const Net = require('ywj/net');
+	const Msg = require('ywj/msg');
 	const _ = require('jquery');
 	const LS = window.localStorage;
 	const LS_KEY = 'lodop_printer_map';
@@ -6167,6 +6168,7 @@ define('ywj/LodopPrinter', function(require){
 				resolve(cfg);
 				return;
 			}
+			Msg.showInfo('请设置打印机');
 			showPrinterSetup(tag).then(()=>{
 				resolve(savePrinterConfigByTag(tag));
 			}, reject);
@@ -6198,9 +6200,7 @@ define('ywj/LodopPrinter', function(require){
 				} else {
 					resolve(lodop);
 				}
-			}, (error)=>{
-				reject(error);
-			})
+			}, reject)
 		});
 	};
 
@@ -6251,13 +6251,21 @@ define('ywj/LodopPrinter', function(require){
 				flush_callback(false, 'CLodop脚本加载超时。');
 			}, CHECK_TIMEOUT);
 
+			//预防Socket未初始化完毕（Lodop前端开发坑人）
+			window.On_CLodop_Opened = (lodop)=>{
+				flush_callback(true, lodop);
+				delete(window.On_CLodop_Opened);
+			};
+
 			$.getScript(LOCAL_SCRIPT).done(() => {
 				req_flag = true;
 				clearTimeout(checker);
 				if(typeof window['getCLodop'] == 'function'){
 					lodop = window['getCLodop']();
 					if(lodop){
-						flush_callback(true, lodop);
+						if(!window.On_CLodop_Opened){
+							flush_callback(true, lodop);
+						}
 					}else{
 						flush_callback(false, 'getCLodop() 调用失败。');
 					}
