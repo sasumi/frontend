@@ -1,5 +1,12 @@
 (function () {
+    var domain = getParam('domain');
+    if(domain){
+        console.info('domain detected:', domain);
+        document.domain = domain;
+    }
+
     var parent = window.parent;
+
     //dialog对象
     dialog = parent.$EDITORUI[window.frameElement.id.replace( /_iframe$/, '' )];
     //当前打开dialog的编辑器实例
@@ -75,7 +82,10 @@
             }
         } );
     }
-
-
+    function getParam(param, url){
+        var r = new RegExp("(\\?|#|&)"+param+"=([^&#]*)(&|#|$)");
+        var m = (url || location.href).match(r);
+        return (!m? null :m[2]);
+    }
 })();
 
