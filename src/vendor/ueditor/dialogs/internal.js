@@ -1,9 +1,5 @@
 (function () {
-    var domain = getParam('domain');
-    if(domain){
-        console.info('domain detected:', domain);
-        document.domain = domain;
-    }
+    tryFrame();
 
     var parent = window.parent;
 
@@ -82,10 +78,30 @@
             }
         } );
     }
-    function getParam(param, url){
-        var r = new RegExp("(\\?|#|&)"+param+"=([^&#]*)(&|#|$)");
-        var m = (url || location.href).match(r);
-        return (!m? null :m[2]);
-    }
+
+    function tryFrame(){
+        var frame = window.frameElement;
+        if(!frame){
+            var try_domains = function(domain){
+                console.log('Trying domain:',domain);
+                try {
+                    window.document.domain = domain;
+                    if(!window.frameElement){
+                        throw("window frameElement access deny.");
+                    }
+                    return window.frameElement;
+                } catch (ex){
+                    console.warn(ex);
+                    var tmp = domain.split('.');
+                    if(tmp.length > 1){
+                        return try_domains(tmp.slice(1).join('.'));
+                    }
+                    throw("window frameElement try fail:"+tmp.join('.'));
+                }
+            };
+            frame = try_domains(location.host);
+        }
+        return frame;
+    };
 })();
 

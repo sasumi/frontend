@@ -146,7 +146,7 @@ define('ywj/util', function(require){
 
 	/**
 	 * 判断一个对象是否为一个DOM 或者 BOM
-	 * @paramvalue
+	 * @param value
 	 * @return {Boolean}
 	 **/
 	var isBomOrDom = function(value){
@@ -426,6 +426,31 @@ define('ywj/util', function(require){
 		}catch(ex){
 		}
 		return tmp;
+	};
+
+	var tryFrame = function(){
+		var frame = window.frameElement;
+		if(!frame){
+			var try_domains = function(domain){
+				console.log('Trying domain:',domain);
+				try {
+					window.document.domain = domain;
+					if(!window.frameElement){
+						throw("window frameElement access deny.");
+					}
+					return window.frameElement;
+				} catch (ex){
+					console.warn(ex);
+					var tmp = domain.split('.');
+					if(tmp.length > 1){
+						return try_domains(tmp.slice(1).join('.'));
+					}
+					throw("window frameElement try fail:"+tmp.join('.'));
+				}
+			};
+			frame = try_domains(location.host);
+		}
+		return frame;
 	};
 
 	/**
@@ -807,6 +832,7 @@ define('ywj/util', function(require){
 		},
 		getRegion: getRegion,
 		getNodeRegionInTop: getNodeRegionInTop,
+		tryFrame:tryFrame,
 		toArray: toArray,
 		round: round,
 		between: between,

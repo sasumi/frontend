@@ -27796,7 +27796,6 @@ UE.ui = baidu.editor.ui = {};
                 (function (cmd) {
                     editorui[cmd] = function (editor, iframeUrl, title) {
                         iframeUrl = iframeUrl || (editor.options.iframeUrlMap || {})[cmd] || iframeUrlMap[cmd];
-	                    iframeUrl += '?domain='+document.domain;
                         title = editor.options.labelMap[cmd] || editor.getLang("labelMap." + cmd) || '';
 
                         var dialog;
