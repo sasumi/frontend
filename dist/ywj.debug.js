@@ -946,6 +946,15 @@ define('ywj/AutoComponent', function(require){
 	var INIT_COMPLETED = false;
 	var INIT_CALLBACK = [];
 
+	/**
+	 * check object is a function
+	 * @param  obj
+	 * @return {Boolean}
+	 */
+	var isFunction = function(obj){
+		return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase() === 'function';
+	};
+
 	var parseComponents = function(attr){
 		var tmp = attr.split(',');
 		var cs = [];
@@ -1058,7 +1067,7 @@ define('ywj/AutoComponent', function(require){
 							if(!args[i]){
 								continue;
 							}
-							if(Util.isFunction(args[i].nodeInit)){
+							if(isFunction(args[i].nodeInit)){
 								args[i].nodeInit($node, all_data[c.toLowerCase()] || {});
 							}
 						}
@@ -1072,7 +1081,7 @@ define('ywj/AutoComponent', function(require){
 								}
 								var c = cs[i].replace(new RegExp('^'+DEFAULT_NS+'/'),'');
 								var param = all_data[c] || all_data[c.toLowerCase()] || {};
-								if(Util.isFunction(args[i][method])){
+								if(isFunction(args[i][method])){
 									if(args[i][method]($node, param) === false){
 										e.stopImmediatePropagation(); //stop other jQuery event binding
 										e.preventDefault();
