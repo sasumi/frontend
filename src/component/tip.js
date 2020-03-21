@@ -33,6 +33,7 @@ define('ywj/tip', function(require){
 	 * @returns {number}
 	 */
 	var calDir = function(){
+		var $html = $('html');
 		var $body = $('body');
 		var $container = this.getDom();
 		var width = $container.outerWidth();
@@ -42,8 +43,8 @@ define('ywj/tip', function(require){
 		var rh = this.rel_tag.outerHeight();
 		var rw = this.rel_tag.outerWidth();
 
-		var scroll_left = $body.scrollLeft();
-		var scroll_top = $body.scrollTop();
+		var scroll_left = $body.scrollLeft() || $html.scrollLeft();
+		var scroll_top = $body.scrollTop() || $html.scrollTop();
 
 		var viewRegion = Util.getRegion();
 
@@ -109,7 +110,7 @@ define('ywj/tip', function(require){
 		var rh = this.rel_tag.outerHeight();
 		var rw = this.rel_tag.outerWidth();
 
-		if(dir == 'auto'){
+		if(dir === 'auto'){
 			dir = calDir.call(this);
 		}
 		$container.attr('class', 'ywj-tip-container-wrap ywj-tip-'+dir);
